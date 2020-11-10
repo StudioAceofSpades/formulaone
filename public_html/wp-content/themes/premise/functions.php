@@ -137,7 +137,7 @@ function saos_configure_link($link) {
     return $link;
 }
 
-function saos_output_link($link, $classes) {
+function saos_output_link($link, $classes="") {
 	$link = saos_configure_link($link);
 	if($link) {
 		echo '<a class="'.$classes.'" href="'.$link['url'].'" target="'.$link['target'].'">'.$link['title'].'</a>';
