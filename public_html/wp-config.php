@@ -54,16 +54,10 @@ define('SECURE_AUTH_SALT', 'lh|p[jQ-@Jf~cE)&[iZ}blTT[T^(ys[9 >nJ qS]LDP|@v}lk$Z8
 define('LOGGED_IN_SALT',   '(A./%aKv.,utQ1S5#gE|Qxi^3{M^|KVtGNmC}ot[&:2;h@$.KT|aPBLc0|]J1gaH');
 define('NONCE_SALT',       'T;i(5N:UZdd,)-wm:0Kg^Or.}+dQ-w0DEfbr*yz^MJ2|AU7dc|B. zL[/>$[1D!7');
 
-/** Enable W3 Total Cache */
-define('WP_CACHE', false); // Added by W3 Total Cache
-
-
 $table_prefix = 'wp_';
 
 define('WPLANG', '');
-
 define( 'WP_DEBUG', false );
-define('DISABLE_WP_CRON', true);
 
 /* That's all, stop editing! Happy blogging. */
 
