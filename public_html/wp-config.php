@@ -58,6 +58,7 @@ $table_prefix = 'wp_';
 
 define('WPLANG', '');
 define( 'WP_DEBUG', false );
+define('CONCATENATE_SCRIPTS', false);
 
 /* That's all, stop editing! Happy blogging. */
 
