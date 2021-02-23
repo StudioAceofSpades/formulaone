@@ -28,7 +28,7 @@ E-Mail: jon@studioaceofspade.com
             <img src="<?php bloginfo('template_directory'); ?>/img/demo.png">
         </a>
     </h1>
-
 	<?php include(locate_template('parts/navigation.php')); ?>
-
 </header>
+
+<main id="main">
