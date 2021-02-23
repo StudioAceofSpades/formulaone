@@ -96,4 +96,4 @@ gulp.task('watch', function() {
             log('File ' + event.path + ' was ' + event.type + ', running tasks...');
         });
 });
-gulp.task('default', ['dev', 'watch']);
+gulp.task('default', gulp.series('dev', 'watch'));
