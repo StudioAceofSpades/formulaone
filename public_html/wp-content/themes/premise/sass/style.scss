@@ -21,17 +21,7 @@
 
 /** Layouts **/
 @import 'layouts/header';
+@import 'layouts/hero';
 
 /** Components **/
 @import 'components/buttons';
-@import 'components/cms-header';
-@import 'components/cms-text-area';
-@import 'components/cms-single-image-block';
-@import 'components/cms-dual-image-block';
-@import 'components/cms-blockquote';
-@import 'components/cms-video';
-@import 'components/cms-call-to-action';
-@import 'components/cms-big-image';
-
-/** Pages **/
-@import 'pages/contact';
