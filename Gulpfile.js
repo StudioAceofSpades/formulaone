@@ -1,5 +1,3 @@
-
-const  webfontsGenerator  =  require('webfonts-generator');
 const  fs                 =  require('fs');
 const  gulp               =  require('gulp');
 const  sass               =  require('gulp-sass');
