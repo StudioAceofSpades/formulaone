@@ -22,6 +22,10 @@
 /** Layouts **/
 @import 'layouts/header';
 @import 'layouts/hero';
+@import 'layouts/footer';
 
 /** Components **/
 @import 'components/buttons';
+
+/** Pages **/
+@import 'pages/home';

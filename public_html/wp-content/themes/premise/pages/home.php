@@ -4,12 +4,21 @@ if (CFCT_DEBUG) { cfct_banner(__FILE__); }
 
 get_header(); ?>
 
-<div id="home">
+<body id="top-of-page">
+    <?php include(locate_template('parts/header.php')); ?>
+    <div id="home">
 
-    <?php include(get_stylesheet_directory() . '/parts/hero.php'); ?>
+        <?php include(get_stylesheet_directory() . '/parts/hero.php'); ?>
 
-	<?php cfct_loop(); ?>
+        <section class="about bg-white">
+            <div class="container">
+                hdudhusds
+            </div>
+        </section>
 
-</div>
+    </div>
+
+    <?php include(locate_template('parts/footer.php')); ?>
+</body>
 
 <?php get_footer(); ?>
