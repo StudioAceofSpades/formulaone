@@ -1,88 +1,138 @@
-footer {
+.footer {
     background-color: $dark-gray;
-    padding: 30px 15px;
-    justify-content: center;
-    position: relative;
+    padding-top: 60px;
 
-    .brand {
-        margin-bottom: 20px;
+    a,
+    p,
+    .title {
+        color: $white;
+        text-align: center;
     }
 
-    .archive {
-        display: inline-block;
-        font-size: 22px;
-        font-weight: 700;
-        line-height: 30px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: $dark-gray;
-        -webkit-text-stroke-width: unset;
-    }
-    .sec {
-        display: block;
-        margin: 0 0 0;
+    a,
+    p {
+        font-size: 14px;
+        line-height: 22px;
+        margin-bottom: 10px;
 
-        a {
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 19px;
-            display: inline-block;
-        }
-    }
-
-    .secondary{
-        nav{
-            ul{
-                li{
-                    a{
-                        font-size: 14px;
-                        font-weight: bold;
-                        line-height: 19px;
-                        letter-spacing: 0.1em;
-                    }
-                }
-            }
-        }
-    }
-    
-
-    nav {
-        ul {
+        &:last-of-type {
             margin-bottom: 0;
-            border: 0;
-            text-align: center;
-
-            li {
-                display: inline-block;
-
-                a {
-                    font-size: 17px;
-                }
-            }
         }
     }
 
     a {
-        color: $white;
-        font-size: 15px;
-        text-transform: uppercase;
-        font-weight: 700;
-        letter-spacing: 1px;
-        line-height: 1;
-        padding: 10px 20px;
+        &:visited {
+            color: $white;
+        }
 
         &:hover {
             text-decoration: none;
+        }
+    }
+    
+    p {
+        a {
+            border-bottom: 1px solid transparent;
+
+            &:hover {
+                border-bottom: 1px solid $white;
+            }
+        }
+    }
+
+    .title {
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 20px;
+    }
+
+
+    ul {
+        list-style-type: none;
+        margin-bottom: 0;
+
+        li {
+            margin-bottom: 15px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            a {
+                display: block;
+                background-color: $dark-gray;
+                padding: 15px 20px;
+                border: 1px solid transparent;
+
+                &:hover {
+                    border: 1px solid $white;
+                }
+            }
+        }
+    }
+
+    .newsletter {
+        input[type="submit"] {
+            display: inline-block;
+            font-family: $body-font;
+            border-radius: 20px;
+            padding: 9px 20px;
+            margin: 0;
+            font-size: 15px;
+            line-height: 18px;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 400;
+            color: $white;
+            cursor: pointer;
+            box-shadow: 0 3px 5px -5px rgba(0,0,0,.3);
+            outline: none;
+            width: 100%;
+            border: 0;
+            background-size: 200% auto;
+            // background-image:
+            //     linear-gradient(
+            //         90deg,
+            //         rgba($blue, 1)    0%,
+            //         rgba($dark-gray, 1)   50%,
+            //         rgba($white, 1)    100%,
+            //     )
+            // ;
+
+            &:hover {
+                color: $white;
+                background-position-x: 100%;
+            }
+        }
+
+        .validation_error {
             color: $dark-gray;
         }
 
-        &.terms {
-            margin: 15px 0;
-        }
-        &.logout {
-            display: none;
-            margin: -15px 0 15px;
+        .validation_message  {
+            margin: -15px 0 20px;
             color: $dark-gray;
+        }
+
+        .gform_confirmation_message {
+            color: $blue;
+        }
+    }
+
+    .social {
+        text-align: center;
+        font-size: 0;
+        margin-top: 15px;
+
+        a {
+            display: inline-block;
+            font-size: 18px;
+            width: 25px;
+            height: 25px;
+            margin: 0 5px;
+            background-color: $white;
+            color: $dark-gray;
+            line-height: 25px;
 
             &:hover {
                 color: $dark-gray;
@@ -90,77 +140,44 @@ footer {
         }
     }
 
-    .social {
-        margin-bottom: 40px;
+    .sub-footer {
+        background-color: $dark-gray;
+        line-height: 36px;
+        margin-top: 60px;
+        text-align: center;
+        color: $white;
+        font-size: 14px;
+
         a {
-            padding: 0 8px;
-            font-size: 24px;
+            text-transform: uppercase;
+            color: $white;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 0;
+            padding: 0 10px;
+            line-height: 36px;
 
             &:hover {
-                color: $dark-gray;
+                background-color: $dark-gray;
             }
         }
     }
 }
 
-// @include media-breakpoint-down(lg) {
-//     footer {
-//         padding: 25px 15px;
+@include media-breakpoint-down(md) {
+    .footer {
+        padding-top: 30px;
 
-//         nav {
-//             ul {
-//                 li {
-//                     a {
-//                         padding: 10px 15px;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
-// @include media-breakpoint-down(md) {
-//     footer {
+        .title {
+            margin-top: 30px;
+        }
+    }
+}
 
-//         .archive{
-//             margin-bottom: 15px;
-//         }
-//         .sec{
-//             display: flex;
-//             flex-wrap: wrap;
-
-//             .archive{
-//                 display: block;
-//                 width: 100%;
-//                 order: 1;
-//                 text-align: center;
-//                 margin: 0 0 10px;
-//             }
-//             a {
-//                 order: 2;
-//                 width: 100%;
-//                 display: block;
-//                 text-align: center !important;
-//                 margin: 0 0 10px;
-//                 padding: 0;
-//             }
-//         }
-//     }
-    
-//     footer nav.desktop {
-//         display: block !important;
-
-//         ul {
-//             display: block;
-//             text-align: center;
-//         }
-//     }
-//     footer .mm-trigger {
-//         display: none !important;
-//     }
-// }
-// @include media-breakpoint-down(xs) {
-//     footer nav.desktop ul li {
-//         display: block;
-//         width: 100%;
-//     }
-// }
+@include media-breakpoint-down(sm) {
+    .footer {
+        form {
+            text-align: center;
+        }
+    }
+}
