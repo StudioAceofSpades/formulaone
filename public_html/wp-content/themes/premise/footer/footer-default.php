@@ -5,32 +5,34 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-lg-3">
-                <?php if($icon = get_field('logo','options')): ?>
-                <div class = "img">
-                    <img src="<?php echo $icon['url']; ?>" alt = "logo image">
+            <!-- <div class="col d-flex flex-grow-1 justify-content-end"> -->
+                <div class="col-md-6 col-lg-3">
+                    <?php if($icon = get_field('logo','options')): ?>
+                    <div class = "img">
+                        <img src="<?php echo $icon['url']; ?>" alt = "logo image">
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <?php if($header = get_field('newsletter_header','options')): ?>
-                <div class="title"><?php echo $header; ?></div>
-                <?php endif; ?>
-                <div class="newsletter">
-                    <?php the_field('newsletter_script','options'); ?>
-                </div> 
-            </div>
-            <div class="col-md-6 col-lg-3" n  >
-                <?php if($header = get_field('site_map_header','options')) : ?>
-                <div class="title"><?php echo $header; ?></div>
-                <?php endif; ?>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <?php if($header = get_field('contact_header','options')): ?>
-                <div class="title"><?php echo $header; ?></div>
-                <?php endif; ?>
-                <?php the_field('contact_info','options'); ?>
-            </div>
+                <div class="col-md-6 col-lg-3">
+                    <?php if($header = get_field('newsletter_header','options')): ?>
+                    <div class="title"><?php echo $header; ?></div>
+                    <?php endif; ?>
+                    <div class="newsletter">
+                        <?php the_field('newsletter_script','options'); ?>
+                    </div> 
+                </div>
+                <div class="col-md-6 col-lg-3" n  >
+                    <?php if($header = get_field('site_map_header','options')) : ?>
+                    <div class="title"><?php echo $header; ?></div>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <?php if($header = get_field('contact_header','options')): ?>
+                    <div class="title"><?php echo $header; ?></div>
+                    <?php endif; ?>
+                    <?php the_field('contact_info','options'); ?>
+                </div>
+            <!-- </div> -->
         </div>
     </div>
     <!-- <div class="sub-footer">

@@ -10,7 +10,7 @@ get_header(); ?>
 
         <section class="about bg-white">
             <div class="container">
-                
+                TEST
             </div>
         </section>
 
