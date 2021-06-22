@@ -4,6 +4,7 @@
 .header {
 	position: relative;
 	z-index: 100;
+<<<<<<< Updated upstream
 }
 
 .secondary {
@@ -121,42 +122,117 @@ ul {
       }
 
   }
+=======
+>>>>>>> Stashed changes
 
-/* =============================================================================
-   Navigation
-   ========================================================================== */
-.navigation {
-    display: inline-block;
-    font-size: 0;
-    float: right;
+    .secondary {
+        background-color: black;
+        font-size: 14px;
+    }
 
-      
-    li {
-        display: inline-block;
+    .brand {
+        width: 200px;
+        float: left;
     }
-    a {
-        font-size: 16px;
-        line-height: 30px;
-        display: block;
-        padding: 0 10px;
-    }
-    .dropdown {
-        position: relative;
-    }
-    .dropdown-wrapper {
-        display: none;
+
+    .formulaicon {
         position: absolute;
-        top: 30px;
-        right: 0;
+        margin: 20px 0 0 40px;
+    }
+
+    .button {
+        background-color: $orange;
+        line-height: 12px;
+        height: 40px;
+        margin: 5px 50px 0 0;
+    }
+
+    .phone {
+        color: $orange;
+    }
+
+    .phone:hover {
+        color: white;
+    }
+
+    .fa-linkedin, .fa-facebook, .fa-youtube {
+        color: $orange;
+
+    }
+
+    li {
+        float: left;
+    }
+    
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    
+    li a:hover {
+        text-decoration: none;
+        color: $orange;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .main {
+        background-color: #212224;
+        color: white;
+        font-family: $display-font;
+        font-size: 18px;
 
         li {
-            display: block;
-            border-bottom: 1px solid rgba(0,0,0,.6);
+            margin: 0 10px 0 20px;
 
-            &:last-child {
-                border-bottom: 0;
-            }
         }
+
     }
 
+    /* =============================================================================
+    Navigation
+    ========================================================================== */
+    .navigation {
+        display: inline-block;
+        font-size: 0;
+        float: right;
+
+        
+        li {
+            display: inline-block;
+        }
+        a {
+            font-size: 16px;
+            line-height: 30px;
+            display: block;
+            padding: 0 10px;
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-wrapper {
+            display: none;
+            position: absolute;
+            top: 30px;
+            right: 0;
+
+            li {
+                display: block;
+                border-bottom: 1px solid rgba(0,0,0,.6);
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+
+    }
 }

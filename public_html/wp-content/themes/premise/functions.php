@@ -18,7 +18,7 @@ function saos_load_scripts() {
     wp_enqueue_script('scripts', get_stylesheet_directory_uri().'/js/script.js', false, null);
     wp_enqueue_script('icons', 'https://kit.fontawesome.com/993c45b2e6.js', false, null);
     
-    wp_enqueue_style('fonts', '//fonts.googleapis.com/css?family=Roboto:300,400,700', array(), false, 'all');
+    wp_enqueue_style('fonts', 'https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap', array(), false, 'all');
 
     if(ENVIRONMENT == "development") {
         wp_enqueue_style('main', get_stylesheet_directory_uri().'/devcss/style.css', array(), false, 'all');
