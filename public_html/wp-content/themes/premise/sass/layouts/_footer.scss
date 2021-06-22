@@ -36,10 +36,16 @@
             opacity: 0.2;
             margin: 6px;
 
-            &::placeholder {
-                color: white;
-    }
+            input::placeholder {
+                color: $white;
+                opacity: 0 !important;
+            }
+            
+
+            
         }
+
+        
         
     }
     }
@@ -133,14 +139,14 @@
         input[type="submit"] {
             display: inline-block;
             font-family: $body-font;
-            border-radius: 20px;
+            background-color: $orange;
             padding: 9px 20px;
             margin: 0;
-            font-size: 15px;
-            line-height: 18px;
+            font-size: 18px;
+            line-height: 150%;
             text-transform: uppercase;
             text-align: center;
-            font-weight: 400;
+            font-weight: normal;
             color: $white;
             cursor: pointer;
             box-shadow: 0 3px 5px -5px rgba(0,0,0,.3);
@@ -148,6 +154,7 @@
             width: 100%;
             border: 0;
             background-size: 200% auto;
+            width: calc(99% - 10px) !important;
             &:hover {
                 color: $white;
                 background-position-x: 100%;
@@ -176,6 +183,12 @@
                 background-color: $dark-gray;
             }
         }
+    }
+
+    .sub-footer{
+
+        background-color: $black;
+
     }
 }
 

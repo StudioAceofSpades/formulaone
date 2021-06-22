@@ -35,24 +35,23 @@
             <!-- </div> -->
         </div>
     </div>
-    <!-- <div class="sub-footer">
-        <div class="container">
+    <div class="sub-footer">
+        <!-- <nav class="secondary"> -->
             <div class="row">
-                <div class="col d-flex justify-content-around">
+                <div class="col">
                     <?php if($link = get_field('privacy_policy_link','options')): ?>
                         <?php saos_output_link($link); ?>
                     <?php endif; ?>
-                    <div class="d-none d-sm-inline">&copy; <?php echo date('Y'); ?> FORMULA ONE</div>
                     <?php if($link = get_field('terms_&_conditions_link','options')): ?>
                         <?php saos_output_link($link); ?>
                     <?php endif; ?>
                 </div>
+                <div class="endstack">
+                    <div class="d-none d-sm-inline">&copy; <?php echo date('Y'); ?> 2021 Formula Trailers. All Rights Reserved. </div>
+                </div>
             </div>
-            <div class="row d-xs-block d-sm-none">
-                <div class="col">&copy; <?php echo date('Y'); ?> 2021 Formula Trailers. All Rights Reserved. </div>
-            </div>
-        </div>
-    </div> -->
+        <!-- </nav> -->
+    </div>
 </footer>
 
 <?php the_field('scripts','options'); ?>
