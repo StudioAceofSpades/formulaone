@@ -28,6 +28,8 @@
             border: 2px solid #F05A28;
             box-sizing: border-box;
             background-color: #212224;
+            // width: 100%;
+            // width: calc(99% - 10px) !important;
         
 
         input {
@@ -40,13 +42,7 @@
                 color: $white;
                 opacity: 0 !important;
             }
-            
-
-            
         }
-
-        
-        
     }
     }
 
@@ -108,32 +104,50 @@
         font-size: 24px;
         font-weight: 300;
         line-height: 150%;
+        margin-bottom: 20px;
     }
 
-
-    ul {
-        list-style-type: none;
-        margin-bottom: 0;
-
-        li {
-            margin-bottom: 15px;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-
-            a {
-                display: block;
-                background-color: $dark-gray;
-                padding: 15px 20px;
-                border: 1px solid transparent;
-
-                &:hover {
-                    border: 1px solid $white;
+    .contact{
+        margin-left: 25%;
+        
+        p {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 36px;
+            text-align: left;
+        }
+    }
+    .cover{
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 27%;
+    }
+    .site1 {
+        ul {
+            list-style-type: none;
+            margin-bottom: 0;
+            li {
+                &:last-child {
+                    margin-bottom: 0;
                 }
             }
         }
     }
+
+    .site2 {
+        ul {
+            list-style-type: none;
+            margin-bottom: 0;
+            li {
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                
+            }
+        }
+    }
+    
 
     .newsletter {
         input[type="submit"] {
@@ -149,12 +163,11 @@
             font-weight: normal;
             color: $white;
             cursor: pointer;
-            box-shadow: 0 3px 5px -5px rgba(0,0,0,.3);
             outline: none;
-            width: 100%;
+            width: 80% !important;
             border: 0;
             background-size: 200% auto;
-            width: calc(99% - 10px) !important;
+            // width: calc(99% - 10px) !important;
             &:hover {
                 color: $white;
                 background-position-x: 100%;
@@ -166,10 +179,8 @@
         background-color: $dark-gray;
         line-height: 36px;
         margin-top: 60px;
-        text-align: center;
         color: $white;
         font-size: 14px;
-
         a {
             text-transform: uppercase;
             color: $white;
@@ -206,6 +217,9 @@
     .footer {
         form {
             text-align: center;
+        }
+        .contact{
+            // font-size: 12px;
         }
     }
 }

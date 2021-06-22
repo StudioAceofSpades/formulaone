@@ -5,7 +5,7 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <!-- <div class="col d-flex flex-grow-1 justify-content-end"> -->
+            <div class="col d-flex flex-grow-1 justify-content-end">
                 <div class="col-md-6 col-lg-3">
                     <?php if($icon = get_field('logo','options')): ?>
                     <div class = "img">
@@ -21,22 +21,52 @@
                         <?php the_field('newsletter_script','options'); ?>
                     </div> 
                 </div>
-                <div class="col-md-6 col-lg-3" n  >
+                <div class="col-md-6 col-lg-3">
                     <?php if($header = get_field('site_map_header','options')) : ?>
                     <div class="title"><?php echo $header; ?></div>
                     <?php endif; ?>
+                    <div class="cover">
+                        <div class="site1">
+                            <?php if( have_rows('site_map_links_left','options') ): ?>
+                                <ul>
+                                <?php while (have_rows('site_map_links_left','options')) : the_row(); ?>
+                                    <?php if($link = get_sub_field('links')): ?>
+                                        <li>
+                                            <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endwhile; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div class="site2">
+                            <?php if( have_rows('site_map_links_right','options') ): ?>
+                                <ul>
+                                <?php while (have_rows('site_map_links_right','options')) : the_row(); ?>
+                                    <?php if($link = get_sub_field('links_right')): ?>
+                                        <li>
+                                            <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endwhile; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <?php if($header = get_field('contact_header','options')): ?>
                     <div class="title"><?php echo $header; ?></div>
                     <?php endif; ?>
-                    <?php the_field('contact_info','options'); ?>
+                    <div class="contact">
+                        <?php the_field('contact_info','options'); ?>
+                    </div>
                 </div>
-            <!-- </div> -->
+            </div>
         </div>
     </div>
     <div class="sub-footer">
-        <!-- <nav class="secondary"> -->
+        <div class="container">
             <div class="row">
                 <div class="col">
                     <?php if($link = get_field('privacy_policy_link','options')): ?>
@@ -50,7 +80,7 @@
                     <div class="d-none d-sm-inline">&copy; <?php echo date('Y'); ?> 2021 Formula Trailers. All Rights Reserved. </div>
                 </div>
             </div>
-        <!-- </nav> -->
+        </div>
     </div>
 </footer>
 

@@ -244,8 +244,8 @@
             "default_value": "",
             "tabs": "all",
             "toolbar": "basic",
-            "media_upload": 1,
-            "delay": 0
+            "media_upload": 0,
+            "delay": 1
         },
         {
             "key": "field_60cb77b484276",
@@ -295,5 +295,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624297712
+    "modified": 1624381402
 }
