@@ -29,12 +29,20 @@ E-Mail: jon@studioaceofspade.com
                 <img src="<?php bloginfo('template_directory'); ?>/img/Group 33.png" alt="<?php bloginfo('name'); ?>" class="formulaicon">
             </a>
                 <div class="col d-flex justify-content-end">
+                <?php if(have_rows('top_navigation','options')): ?>
                     <ul>
-                        <li><a class="active" href="#home">Resources</a></li>
-                        <li><a href="#news">Dealer Login</a></li>
-                        <li><a href="#contact">About</a></li>
-                        <li><a href="#about">Careers</a></li>
+                    <?php 
+                    while(have_rows('top_navigation','options')) : 
+                        the_row(); 
+                        $link = get_sub_field('menu_link'); ?>
+                        <li>
+                                        <?php saos_output_link($link); ?>
+                        </li>
+                        <?php endwhile; ?>
+
                     </ul>
+                    <?php endif; ?>
+
                     <ul>
                     <li><a class="phone" href="tel:888-622-0828">888-622-0828</a></li>
                         <li>
