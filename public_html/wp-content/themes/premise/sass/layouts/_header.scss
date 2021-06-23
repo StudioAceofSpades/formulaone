@@ -4,126 +4,6 @@
 .header {
 	position: relative;
 	z-index: 100;
-<<<<<<< Updated upstream
-}
-
-.secondary {
-    background-color: black;
-    padding: 10px 0 10px 0;
-    font-family: $font;
-
-    .top-menu-links {
-        ul {
-            li {
-                a {
-                color: white;
-                margin: 0 10px 0 10px;
-                    .fa-facebook {
-                        font-size: 20px;
-                    }
-                }
-                a:hover {
-                    color: $orange;
-                }
-            }
-        }
-    }
-
-    .top-menu-social {
-        margin-right: 50px;
-
-        ul {
-            li {
-                a {
-                    color: $orange;
-                    margin: 0 10px 0 10px;
-                }
-                
-                a:hover {
-                    color: white;
-                }
-            }
-        }
-    }
-}
-
-.brand {
-    width: 200px;
-    float: left;
-}
-
-.formulaicon {
-    position: absolute;
-    margin: 15px 0 0 40px;
-}
-
-.button {
-    background-color: $orange;
-    padding: 10px 15px 10px 15px;
-    margin: 0 50px 0 0;
-}
-
-.phone {
-    color: $orange;
-}
-
-.phone:hover {
-    color: white;
-}
-
-
-
-.main {
-    padding: 20px 0 20px 0;
-
-    .primary {
-        .primary-links {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-        }
-  
-    }
-}
-
-li {
-    float: left;
-  }
-  
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  li a:hover {
-      text-decoration: none;
-      color: $orange;
-  }
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .main {
-      background-color: #212224;
-      color: white;
-      font-family: $display-font;
-      font-size: 18px;
-
-      li {
-          margin: 0 10px 0 20px;
-
-      }
-
-  }
-=======
->>>>>>> Stashed changes
 
     .secondary {
         background-color: black;
@@ -187,8 +67,10 @@ ul {
     .main {
         background-color: #212224;
         color: white;
-        font-family: $display-font;
         font-size: 18px;
+        font-family: $font;
+        font-weight: 600;
+        padding: 15px 0 15px 0;
 
         li {
             margin: 0 10px 0 20px;
