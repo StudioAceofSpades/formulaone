@@ -45,23 +45,19 @@ E-Mail: jon@studioaceofspade.com
                         <div class="top-menu-social">
                             <ul>
                             <li><a class="phone" href="tel:888-622-0828">888-622-0828</a></li>
+                            <?php if(have_rows('social_media', 'options')): ?>
+                                <?php while(have_rows('social_media', 'options')): 
+                                    the_row(); ?>
                                 <li>
-                                    <a href="#" target="_blank">
-                                        <i class="fab fa-facebook"></i>
-                                    </a>
-                                </li><li>
-                                    <a href="#" target="_blank">
-                                        <i class="fab fa-youtube"></i>
+                                    <a href="<?php the_sub_field('link'); ?>" target="_blank">
+                                        <i class="fab fa-<?php the_sub_field('icon'); ?>"></i>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#" target="_blank">
-                                    <i class="fab fa-linkedin"></i>                            
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </ul>
                     </div>
+                 </div>
             </div>
         </nav>
     <div class="main">
