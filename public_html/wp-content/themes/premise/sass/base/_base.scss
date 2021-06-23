@@ -16,6 +16,14 @@ a:visited {
     }
 }
 
+@include media-breakpoint-up(xl) {
+    .container {
+        max-width: 100%;
+        padding-left: 80px;
+        padding-right: 80px; 
+    }
+}
+
 a,
 a:link,
 a:hover,
