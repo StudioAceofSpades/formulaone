@@ -16,7 +16,6 @@
     "url": "https://github.com/studioaceofspades/premise/issues"
   },
   "homepage": "https://github.com/studioaceofspades/premise#readme",
-  "dependencies": {},
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",

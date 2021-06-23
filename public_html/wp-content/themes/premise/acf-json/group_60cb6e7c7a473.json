@@ -75,9 +75,9 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "text",
-            "media_upload": 0,
+            "tabs": "all",
             "toolbar": "full",
+            "media_upload": 1,
             "delay": 0
         },
         {
@@ -194,7 +194,7 @@
             "key": "field_60cb776b84275",
             "label": "Contact Info",
             "name": "contact_info",
-            "type": "wysiwyg",
+            "type": "repeater",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -203,11 +203,51 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 1
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_60d37f4583124",
+                    "label": "Icon Text",
+                    "name": "icon_text",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_60d37f4f83125",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
         },
         {
             "key": "field_60cb77b484276",
@@ -257,5 +297,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624385812
+    "modified": 1624473462
 }
