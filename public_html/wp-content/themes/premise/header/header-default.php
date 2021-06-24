@@ -44,7 +44,11 @@ E-Mail: jon@studioaceofspade.com
                         </div>
                         <div class="top-menu-social">
                             <ul>
-                            <li><a class="phone" href="tel:888-622-0828">888-622-0828</a></li>
+                            <?php if($phone_link = get_field('phone_number_link', 'options')): ?>
+                                <?php if($phone = get_field('phone_number', 'options')): ?>
+                                <li><a class="phone" href="<?php echo $phone_link; ?>"><?php echo $phone; ?></a></li>
+                                <?php endif; ?>
+                            <?php endif; ?>
                             <?php if(have_rows('social_media', 'options')): ?>
                                 <?php while(have_rows('social_media', 'options')): 
                                     the_row(); ?>
@@ -64,17 +68,20 @@ E-Mail: jon@studioaceofspade.com
         <div class="row justify-content-between">
             <div class="col d-flex flex-grow-1 justify-content-end">
                 <nav class="primary">
-                        <ul>
-                            <div class="primary-links">
-                                <li><a class="active" href="#home">Cargo</a></li>
-                                <li><a href="#news">Racing</a></li>
-                                <li><a href="#contact">Commercial</a></li>
-                                <li><a href="#about">Recreational</a></li>
-                                <li><a href="#about">Contact</a></li>
-                            <li><a class="button" href="#about">Build Yours</a></li>
-                            </div>
-
-                        </ul>
+                    <div class="primary-links">
+                        <?php if(have_rows('main_navigation','options')): ?>
+                                <ul>
+                                    <?php 
+                                    while(have_rows('main_navigation','options')) : 
+                                        the_row(); 
+                                        $link = get_sub_field('main_menu_link'); ?>
+                                        <li>
+                                            <?php saos_output_link($link); ?>
+                                        </li>
+                                    <?php endwhile; ?>
+                                </ul>
+                        <?php endif; ?>
+                    </div>
                 </nav>
             </div>
         </div>
