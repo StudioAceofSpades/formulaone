@@ -52,17 +52,33 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                </div>
-                <div class="col-md-6 col-lg-3 footer-block">
+            </div>
+            <div class="col-md-6 col-lg-3 footer-block">
                 <?php if($header = get_field('contact_header','options')): ?>
                 <h3 class="title"><?php echo $header; ?></h3>
                 <?php endif; ?>
                 <div class="contact">
-                    <?php the_field('contact_info','options'); ?>
-                </div>
+                <?php if( have_rows('contact_info','options') ): ?>
+                    <ul>
+                        <?php while (have_rows('contact_info','options')) : the_row(); ?>
+                        <?php 
+                        $icon = get_sub_field('icon');
+                        $icon_text = get_sub_field('icon_text');
+                        
+                        if($icon && $icon_text): ?>
+                            <li>
+                                <a href="#" target="_blank">
+                                <i class="fas fa-<?php the_sub_field('icon'); ?>"><?php echo $icon_text; ?></i>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endwhile; ?>
+                    </ul>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+    </div>
     <div class="sub-footer">
         <div class="container">
             <div class="row">
