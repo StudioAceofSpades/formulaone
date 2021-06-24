@@ -3,8 +3,8 @@
     "title": "Global Footer Settings",
     "fields": [
         {
-            "key": "field_60cb6ea48426f",
-            "label": "Footer Layout",
+            "key": "field_60d4970d6bb3f",
+            "label": "LOGO",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "placement": "left",
+            "placement": "top",
             "endpoint": 0
         },
         {
@@ -41,6 +41,22 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_60d497366bb40",
+            "label": "Newsletter",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
         },
         {
             "key": "field_60cb71ff84271",
@@ -79,6 +95,22 @@
             "toolbar": "full",
             "media_upload": 1,
             "delay": 0
+        },
+        {
+            "key": "field_60d497546bb41",
+            "label": "Sitemap",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
         },
         {
             "key": "field_60cb73c684273",
@@ -172,6 +204,22 @@
             ]
         },
         {
+            "key": "field_60d4976b6bb42",
+            "label": "Contact",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_60cb774784274",
             "label": "Contact Header",
             "name": "contact_header",
@@ -250,6 +298,22 @@
             ]
         },
         {
+            "key": "field_60d4978b6bb43",
+            "label": "Secondary footer",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_60cb77b484276",
             "label": "Privacy Policy Link",
             "name": "privacy_policy_link",
@@ -297,5 +361,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624473462
+    "modified": 1624545230
 }

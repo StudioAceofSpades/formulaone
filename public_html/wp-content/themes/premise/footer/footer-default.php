@@ -55,7 +55,7 @@
             </div>
             <div class="col-md-6 col-lg-3 footer-block">
                 <?php if($header = get_field('contact_header','options')): ?>
-                <h3 class="title"><?php echo $header; ?></h3>
+                <h3 class="titlee"><?php echo $header; ?></h3>
                 <?php endif; ?>
                 <div class="contact">
                 <?php if( have_rows('contact_info','options') ): ?>
@@ -68,7 +68,7 @@
                         if($icon && $icon_text): ?>
                             <li>
                                 <a href="#" target="_blank">
-                                <i class="fas fa-<?php the_sub_field('icon'); ?>"><?php echo $icon_text; ?></i>
+                                    <i class="fas fa-<?php the_sub_field('icon'); ?>"></i><h5 class="text"><?php echo $icon_text; ?></h5>
                                 </a>
                             </li>
                         <?php endif; ?>
