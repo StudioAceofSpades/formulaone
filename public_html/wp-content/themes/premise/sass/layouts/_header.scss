@@ -40,6 +40,11 @@
 
     }
 
+    .fa-linkedin:hover, .fa-facebook:hover, .fa-youtube:hover {
+        color: $white;
+        transition: all 0.3s ease;
+    }
+
     li {
         float: left;
     }
@@ -82,6 +87,11 @@
                     line-height: 12px;
                     height: 40px;
                     margin: 5px 50px 0 10px;
+                }
+
+                &:last-child:hover {
+                    background-color: white;
+                    transition: all 0.3s ease;
                 }
             }
         }
