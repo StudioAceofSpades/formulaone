@@ -68,7 +68,7 @@
                         if($icon && $icon_text): ?>
                             <li>
                                 <a href="#" target="_blank">
-                                    <i class="fas fa-<?php the_sub_field('icon'); ?>"></i><h5 class="text"><?php echo $icon_text; ?></h5>
+                                    <i class="fas fa-<?php the_sub_field('icon'); ?>"></i><span class="text"><?php echo $icon_text; ?></span>
                                 </a>
                             </li>
                         <?php endif; ?>

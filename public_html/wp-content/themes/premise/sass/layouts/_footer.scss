@@ -13,20 +13,24 @@
             float: none;
 
             svg:not(:root).svg-inline--fa{
+                position: absolute;
+                top: 4px;
                 color: $orange;
-                margin-right: 14px;
             }
             a{
+                position: relative;
+                display: block;
                 color: $white;
                 font-size: 18px;
                 font-weight: 400;
                 line-height: 36px;
             }
-            h5.text {
-                display: inline;
+            span.text {
+                display: block;
                 color: $white;
-                line-height: 36px;
-                font-size: 14px;
+                line-height: 25px;
+                font-size: 18px;
+                padding-left: 25px;
             }
         }
     }
@@ -82,18 +86,16 @@
         }
         .ginput_container {
             border: 2px solid #F05A28;
-            box-sizing: border-box;
             background-color: #212224;
-            width: 100;
 
             input {
-                background-color: #FFFFFF;
-                opacity: 0.2;
+                background-color: rgb(255, 255, 255, 0.2);
                 margin: 6px;
                 inline-size: -webkit-fill-available;
-                padding-left: 18px;
+                padding: 5px;
                 font-size: 18px;
                 font-weight: 400;
+                color: $white;
             }
             input::placeholder {
                 color: $black;
