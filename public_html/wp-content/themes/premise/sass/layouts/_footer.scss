@@ -32,6 +32,10 @@
                 font-size: 18px;
                 padding-left: 25px;
             }
+
+            :hover{
+                color: $orange;
+            }
         }
     }
 
@@ -87,6 +91,9 @@
         .ginput_container {
             border: 2px solid #F05A28;
             background-color: #212224;
+            :hover{
+                // color: $orange;
+            }
 
             input {
                 background-color: rgb(255, 255, 255, 0.2);
@@ -96,10 +103,17 @@
                 font-size: 18px;
                 font-weight: 400;
                 color: $white;
+                    :focus{
+                        background-color: #F05A28;
+                    }
+
             }
             input::placeholder {
                 color: $black;
                 opacity: 1 !important;
+            }
+            input:focus {
+                background-color: #a8a19e;
             }
         }
     }
@@ -113,6 +127,14 @@
         display: flex;
         max-width: 210px;
         margin: 0 auto;
+
+        ul{
+            li{
+                :hover{
+                    color: $orange;
+                }
+            }
+        }
     }
     .cover {
         display: flex;
