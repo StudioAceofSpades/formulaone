@@ -42,7 +42,21 @@
 
     .fa-linkedin:hover, .fa-facebook:hover, .fa-youtube:hover {
         color: $white;
+        font-size: 20px;
         transition: all 0.3s ease;
+    }
+
+    .top-menu-social {
+        ul {
+            li {
+                .phone {
+                    font-size: 14px;
+                }
+                a {
+                    font-size: 20px;
+                }
+            }
+        }
     }
 
     li {
@@ -55,11 +69,10 @@
         text-align: center;
         padding: 14px 16px;
         text-decoration: none;
-    }
-    
-    li a:hover {
-        text-decoration: none;
-        color: $orange;
+        &:hover {
+            text-decoration: none;
+            color: $orange;
+        }
     }
 
     ul {

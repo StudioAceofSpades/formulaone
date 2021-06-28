@@ -25,7 +25,11 @@ E-Mail: jon@studioaceofspade.com
         <nav class="secondary">
             <div class="row">
                 <a href="<?php bloginfo('url'); ?>" class="brand">
-                    <img src="<?php bloginfo('template_directory'); ?>/img/formula-trailer-logo.png" alt="<?php bloginfo('name'); ?>" class="formulaicon">
+                <?php if($image = get_field('logo_image','options')): ?>
+                <div class="formulaicon">
+                    <img src="<?php echo $image['url']; ?>" alt = "logo image">
+                </div>
+                <?php endif; ?>
                 </a>
                     <div class="col d-flex justify-content-end">
                         <div class="top-menu-links">
