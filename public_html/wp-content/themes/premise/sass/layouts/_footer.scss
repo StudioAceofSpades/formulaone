@@ -11,6 +11,7 @@
 
         li {
             float: none;
+
             svg:not(:root).svg-inline--fa{
                 color: $orange;
                 margin-right: 14px;
@@ -28,56 +29,6 @@
                 font-size: 14px;
             }
         }
-    }
-
-    .gform_wrapper {
-
-        display:block;
-        margin: 0 auto;
-
-         h3.gform_title{
-            display: none;
-        }
-
-        .gform_body {
-            color: $white;
-            font-size: 14px;
-            line-height: 150%;
-            text-transform: uppercase;
-            font-weight: normal;
-            font-family: 'Work Sans';
-        }
-
-        
-        .ginput_container {
-            border: 2px solid #F05A28;
-            box-sizing: border-box;
-            background-color: #212224;
-            width: 100;
-
-        input {
-
-            background-color: #FFFFFF;
-            opacity: 0.2;
-            margin: 6px;
-            inline-size: -webkit-fill-available;
-            padding-left: 18px;
-            font-size: 18px;
-            font-weight: 400;
-        }
-        input::placeholder {
-            color: $black;
-            opacity: 1 !important;
-        }
-    }
-    }
-
-    .img{
-        
-        display: flex;
-        max-width: 210px;
-        margin: 0 auto;
-        margin-top: 25%;
     }
 
     a {
@@ -101,44 +52,70 @@
     }
 
     h3 {
-
         display: flex;
         max-width: 210px;
         margin: 0 auto;
         color: $white;
         font-weight: 300;
         margin-bottom: 20px;
-        // width: calc(100% - 110px);
-        // margin: 0 auto;
-        // margin-bottom: 15px;
-        
+
+        &.title{
+            font-size: 22px;
+        }
     }
 
-    h3.title{
-        font-size: 22px;
-    }
+    .gform_wrapper {
+        display:block;
+        margin: 0 auto;
 
-    .titlee {
-        margin-bottom: 10px;
-    }
+        h3.gform_title{
+            display: none;
+        }
 
-    .contact{
+        .gform_body {
+            color: $white;
+            font-size: 14px;
+            line-height: 150%;
+            text-transform: uppercase;
+            font-weight: normal;
+            font-family: 'Work Sans';
+        }
+        .ginput_container {
+            border: 2px solid #F05A28;
+            box-sizing: border-box;
+            background-color: #212224;
+            width: 100;
+
+            input {
+                background-color: #FFFFFF;
+                opacity: 0.2;
+                margin: 6px;
+                inline-size: -webkit-fill-available;
+                padding-left: 18px;
+                font-size: 18px;
+                font-weight: 400;
+            }
+            input::placeholder {
+                color: $black;
+                opacity: 1 !important;
+            }
+        }
+    }
+    .img {
         display: flex;
         max-width: 210px;
         margin: 0 auto;
-        // width: calc(100% - 145px);
-        // margin: 0 auto;
-
+        margin-top: 25%;
     }
-
+    .contact {
+        display: flex;
+        max-width: 210px;
+        margin: 0 auto;
+    }
     .cover {
         display: flex;
         max-width: 210px;
         margin: 0 auto;
-
-        .site {
-            width: 50%;
-        }
 
         a {
             display: block;
@@ -149,16 +126,11 @@
         li + li {
             margin-top: 15px;
         }
-    }
-    .vl {
 
-        width: 2px;
-        height: 200px;
-        border-right: 6px solid rgba(255, 255, 255, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        .site {
+            width: 50%;
         }
+    }
     .footer-block {
         position: relative;
 
@@ -218,48 +190,43 @@
             border: 0;
             background-size: 200% auto;
             margin-top: 10px;
+
             &:hover {
                 color: $white;
-                background-position-x: 100%;
             }
         }
     }
 
     .sub-footer {
-        background-color: $black;
-        line-height: 21px;
-        margin-top: 60px;
+        background: $black;
         color: $white;
-        font-size: 14px;
-        font-weight: 400;
+        margin: 60px 0 0;
+
         a {
             text-transform: uppercase;
             color: $white;
             display: inline-block;
-            font-size: 16px;
-            margin-bottom: 0;
-            padding: 0 10px;
-            line-height: 36px;
+            margin: 0 20px 0 0;
+            font-size: 14px;
+            line-height: 40px;
 
             &:hover {
-                background-color: $black;
+                color: $orange;
             }
         }
         .endstack{
-            margin-top: 5px;
             p {
                 display: inline-block;
-                padding: 0 10px;
                 font-size: 14px;
-                line-height: 1px;
+                line-height: 40px;
+                opacity: .75;
+                padding: 0 0 0 10px;
+                margin: 0;
                 color: $white;
-                opacity: 0.75;
-
             }
         }
     }
 }
-
 @include media-breakpoint-down(md) {
     .footer {
         padding-top: 30px;
@@ -269,7 +236,6 @@
         }
     }
 }
-
 @include media-breakpoint-down(sm) {
     .footer {
         form {
