@@ -5,64 +5,9 @@
 	position: relative;
 	z-index: 100;
 
-    .secondary {
-        background-color: black;
-        font-size: 14px;
-    }
-
-    .brand {
-        width: 200px;
-        float: left;
-    }
-
-    .formulaicon {
-        position: absolute;
-        margin: 20px 0 0 40px;
-    }
-
-    .button {
-        background-color: $orange;
-        line-height: 12px;
-        height: 40px;
-        margin: 5px 50px 0 0;
-    }
-
-    .phone {
-        color: $orange;
-    }
-
-    .phone:hover {
-        color: white;
-    }
-
-    .fa-linkedin, .fa-facebook, .fa-youtube {
-        color: $orange;
-
-    }
-
-    .fa-linkedin:hover, .fa-facebook:hover, .fa-youtube:hover {
-        color: $white;
-        font-size: 20px;
-        transition: all 0.3s ease;
-    }
-
-    .top-menu-social {
-        ul {
-            li {
-                .phone {
-                    font-size: 14px;
-                }
-                a {
-                    font-size: 20px;
-                }
-            }
-        }
-    }
-
     li {
         float: left;
     }
-    
     li a {
         display: block;
         color: white;
@@ -74,7 +19,6 @@
             color: $orange;
         }
     }
-
     ul {
         list-style-type: none;
         margin: 0;
@@ -82,6 +26,55 @@
         overflow: hidden;
     }
 
+    .secondary {
+        background-color: black;
+        font-size: 14px;
+    }
+    .brand {
+        width: 200px;
+        float: left;
+    }
+    .formulaicon {
+        position: absolute;
+        margin: 20px 0 0 40px;
+    }
+    .button {
+        background-color: $orange;
+        line-height: 12px;
+        height: 40px;
+        margin: 5px 50px 0 0;
+    }
+    .phone {
+        color: $orange;
+    }
+    .phone:hover {
+        color: white;
+    }
+    .fa-linkedin, 
+    .fa-facebook, 
+    .fa-youtube {
+        color: $orange;
+        transition: all .3s linear;
+
+        &:hover {
+            color: $white;
+        }
+
+    }
+    .top-menu-social {
+        ul {
+            margin-right: -15px;
+
+            li {
+                .phone {
+                    font-size: 14px;
+                }
+                a {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
     .main {
         background-color: #212224;
         color: white;
@@ -91,7 +84,6 @@
         padding: 15px 0 15px 0;
 
         ul {
-
             li {
                 margin: 0 10px 0 20px;
                 
@@ -99,16 +91,14 @@
                     background-color: $orange;
                     line-height: 12px;
                     height: 40px;
-                    margin: 5px 50px 0 10px;
+                    margin: 5px 0 0 20px;
                 }
-
                 &:last-child:hover {
                     background-color: white;
                     transition: all 0.3s ease;
                 }
             }
         }
-
     }
 
     /* =============================================================================
@@ -118,7 +108,6 @@
         display: inline-block;
         font-size: 0;
         float: right;
-
         
         li {
             display: inline-block;
@@ -147,6 +136,5 @@
                 }
             }
         }
-
     }
 }

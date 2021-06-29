@@ -23,73 +23,79 @@ E-Mail: jon@studioaceofspade.com
 <body id="top-of-page">
     <header class="header cf">
         <nav class="secondary">
-            <div class="row">
-                <a href="<?php bloginfo('url'); ?>" class="brand">
-                <?php if($image = get_field('logo_image','options')): ?>
-                <div class="formulaicon">
-                    <img src="<?php echo $image['url']; ?>" alt = "logo image">
-                </div>
-                <?php endif; ?>
-                </a>
+            <div class="container">
+                <div class="row">
+                    <a href="<?php bloginfo('url'); ?>" class="brand">
+                        <?php if($image = get_field('logo_image','options')): ?>
+                        <div class="formulaicon">
+                            <img src="<?php echo $image['url']; ?>" alt="Formula Trailers">
+                        </div>
+                        <?php endif; ?>
+                    </a>
                     <div class="col d-flex justify-content-end">
                         <div class="top-menu-links">
                             <?php if(have_rows('top_navigation','options')): ?>
-                                <ul>
+                            <ul>
                                 <?php 
                                 while(have_rows('top_navigation','options')) : 
                                     the_row(); 
-                                    $link = get_sub_field('menu_link'); ?>
-                                    <li>
-                                        <?php saos_output_link($link); ?>
-                                    </li>
-                            <?php endwhile; ?>
-                                </ul>
+                                    $link = get_sub_field('menu_link'); 
+                                    ?>
+                                    <li><?php saos_output_link($link); ?></li>
+                                <?php endwhile; ?>
+                            </ul>
                             <?php endif; ?>
                         </div>
                         <div class="top-menu-social">
                             <ul>
-                            <?php if($phone_link = get_field('phone_number_link', 'options')): ?>
-                                <?php if($phone = get_field('phone_number', 'options')): ?>
+                            <?php 
+                            $phone_link = get_field('phone_number_link','options');
+                            $phone      = get_field('phone_number','options');
+                            if($phone && $phone_link): ?>
                                 <li><a class="phone" href="<?php echo $phone_link; ?>"><?php echo $phone; ?></a></li>
-                                <?php endif; ?>
                             <?php endif; ?>
-                            <?php if(have_rows('social_media', 'options')): ?>
-                                <?php while(have_rows('social_media', 'options')): 
-                                    the_row(); ?>
+
+                            <?php if(have_rows('social_media', 'options')):
+                                while(have_rows('social_media', 'options')): the_row(); ?>
                                 <li>
-                                    <a href="<?php the_sub_field('link'); ?>" target="_blank">
-                                        <i class="fab fa-<?php the_sub_field('icon'); ?>"></i>
-                                    </a>
+                                    <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fab fa-<?php the_sub_field('icon'); ?>"></i></a>
                                 </li>
-                                <?php endwhile; ?>
-                            <?php endif; ?>
-                        </ul>
-                    </div>
-                 </div>
+                                <?php 
+                                endwhile;
+                            endif; 
+                            ?>
+                            </ul>
+                        </div>
+                     </div>
+                </div>
             </div>
         </nav>
-    <div class="main">
-        <div class="row justify-content-between">
-            <div class="col d-flex flex-grow-1 justify-content-end">
-                <nav class="primary">
-                    <div class="primary-links">
-                        <?php if(have_rows('main_navigation','options')): ?>
+
+        <nav class="main">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col d-flex flex-grow-1 justify-content-end">
+                        <nav class="primary">
+                            <div class="primary-links">
+                                <?php if(have_rows('main_navigation','options')): ?>
                                 <ul>
                                     <?php 
                                     while(have_rows('main_navigation','options')) : 
                                         the_row(); 
-                                        $link = get_sub_field('main_menu_link'); ?>
-                                        <li>
-                                            <?php saos_output_link($link); ?>
-                                        </li>
+                                        $link = get_sub_field('main_menu_link'); 
+                                        ?>
+                                        <li><?php saos_output_link($link); ?></li>
                                     <?php endwhile; ?>
                                 </ul>
-                        <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
+                        </nav>
                     </div>
-                </nav>
+                </div>
             </div>
+        </nav>
+
         </div>
-    </div>
     </header>
 
 <main id="main">
