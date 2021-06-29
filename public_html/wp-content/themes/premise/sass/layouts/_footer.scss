@@ -17,28 +17,23 @@
                 top: 4px;
                 color: $orange;
             }
-            a{
+            a {
                 position: relative;
                 display: block;
                 color: $white;
-                font-size: 18px;
-                font-weight: 400;
-                line-height: 36px;
-            }
-            span.text {
-                display: block;
-                color: $white;
-                line-height: 25px;
-                font-size: 18px;
-                padding-left: 25px;
-            }
 
-            :hover{
-                color: $orange;
+                .text {
+                    display: block;
+                    color: $white;
+                    padding-left: 30px;
+                }
+
+                &:hover {
+                    color: $orange;
+                }
             }
         }
     }
-
     a {
         &:visited {
             color: $white;
@@ -48,7 +43,6 @@
             text-decoration: none;
         }
     }
-    
     p {
         a {
             border-bottom: 1px solid transparent;
@@ -58,7 +52,6 @@
             }
         }
     }
-
     h3 {
         display: flex;
         max-width: 210px;
@@ -91,9 +84,6 @@
         .ginput_container {
             border: 2px solid #F05A28;
             background-color: #212224;
-            :hover{
-                // color: $orange;
-            }
 
             input {
                 background-color: rgb(255, 255, 255, 0.2);
@@ -103,17 +93,16 @@
                 font-size: 18px;
                 font-weight: 400;
                 color: $white;
-                    :focus{
-                        background-color: #F05A28;
-                    }
+                transition: .3s linear all;
 
+                &:focus{
+                    background-color: #F05A28;
+                    background-color: #a8a19e;
+                }
             }
             input::placeholder {
                 color: $black;
                 opacity: 1 !important;
-            }
-            input:focus {
-                background-color: #a8a19e;
             }
         }
     }
@@ -128,9 +117,13 @@
         max-width: 210px;
         margin: 0 auto;
 
-        ul{
-            li{
-                :hover{
+        a {
+            margin-bottom: 10px;
+            .text {
+                transition: .3s linear all;
+            }
+            &:hover {
+                .text {
                     color: $orange;
                 }
             }
@@ -197,26 +190,22 @@
         margin: 0 auto;
 
         input[type="submit"] {
-            display: inline-block;
-            font-family: $body-font;
+            display: block;
             background-color: $orange;
-            padding: 9px 20px;
-            margin: 0;
-            font-size: 18px;
-            line-height: 150%;
+            padding: 10px 20px;
+            margin: 10px 0 0;
             text-transform: uppercase;
             text-align: center;
-            font-weight: normal;
             color: $white;
             cursor: pointer;
-            outline: none;
             width: 100%;
-            border: 0;
             background-size: 200% auto;
             margin-top: 10px;
+            position: relative;
+            top: 0;
 
             &:hover {
-                color: $white;
+                top: -3px;
             }
         }
     }
