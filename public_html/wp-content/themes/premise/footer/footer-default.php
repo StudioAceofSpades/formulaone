@@ -5,14 +5,14 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-lg-3 footer-block">
+            <div class="col-md-12 col-lg-3 footer-block">
                 <?php if($icon = get_field('logo','options')): ?>
                 <div class="img">
                     <img src="<?php echo $icon['url']; ?>" alt = "logo image">
                 </div>
                 <?php endif; ?>
             </div>
-            <div class="newsletter col-md-6 col-lg-3 footer-block">
+            <div class="newsletter col-md-4 col-lg-3 footer-block">
                 <?php if($header = get_field('newsletter_header','options')): ?>
                 <h3 class="title"><?php echo $header; ?></h3>
                 <?php endif; ?>
@@ -20,7 +20,7 @@
                     <?php the_field('newsletter_script','options'); ?>
                 </div> 
             </div>
-            <div class="col-md-6 col-lg-3 footer-block">
+            <div class="col-md-4 col-lg-3 footer-block">
                 <?php if($header = get_field('site_map_header','options')) : ?>
                 <h3 class="title"><?php echo $header; ?></h3>
                 <?php endif; ?>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 footer-block">
+            <div class="col-md-4 col-lg-3 contactt footer-block">
                 <?php if($header = get_field('contact_header','options')): ?>
                 <h3 class="titlee"><?php echo $header; ?></h3>
                 <?php endif; ?>

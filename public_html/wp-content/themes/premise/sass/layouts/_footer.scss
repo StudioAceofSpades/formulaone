@@ -14,7 +14,7 @@
 
             svg:not(:root).svg-inline--fa{
                 position: absolute;
-                top: 4px;
+                top: 6px;
                 color: $orange;
             }
             a {
@@ -119,6 +119,7 @@
 
         a {
             margin-bottom: 10px;
+            font-size: 14px;
             .text {
                 transition: .3s linear all;
             }
@@ -240,9 +241,40 @@
         }
     }
 }
+@include media-breakpoint-down(lg){
+    .footer{
+        .newsletter {
+            width: 100%;
+        }
+    }
+}
 @include media-breakpoint-down(md) {
     .footer {
         padding-top: 30px;
+
+        .img {
+            margin-top: 40px;
+        }
+
+        h3{
+            max-width: none;
+        }
+        .contact {
+            max-width: none;
+        }
+        .cover{
+            max-width: none;
+        }
+        .contactt {
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        .footer-block {
+
+            &::after {
+                content: none;
+            }
+        }
 
         .title {
             margin-top: 30px;
@@ -251,8 +283,35 @@
 }
 @include media-breakpoint-down(sm) {
     .footer {
+        h3, h3.title{
+            display: block;
+            text-align: center;
+        }
+        .contact {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+        }
+        .cover{
+            display: flex;
+            justify-content: center;
+            text-align: center;
+
+        }
         form {
             text-align: center;
+            label{
+                display: block;
+                text-align: left;
+            }
+        }
+
+        ul{
+            li{
+                svg:not(:root).svg-inline--fa{
+                    left: 6px;
+                }
+            }
         }
     }
 }
