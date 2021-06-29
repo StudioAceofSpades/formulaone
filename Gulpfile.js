@@ -24,9 +24,7 @@ function dev() {
         gulp
             .src(files)
             .pipe(sourcemaps.init())
-            .pipe(sass(devOptions).on('error', function(err) {
-                done(err);
-            }))
+            .pipe(sass(devOptions))
             .pipe(autoprefixer())
             .pipe(concat('style.css'))
             .pipe(sourcemaps.write(source_dir))
