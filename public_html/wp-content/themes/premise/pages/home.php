@@ -4,7 +4,7 @@ if (CFCT_DEBUG) { cfct_banner(__FILE__); }
 
 get_header(); ?>
 
-    <div id="home">
+    <div class="home">
 
         <?php include(get_stylesheet_directory() . '/parts/hero.php'); ?>
 
@@ -52,37 +52,45 @@ get_header(); ?>
                     <?php endif; ?>
                 </div>
                 
-                <?php if($header = get_field('testimonial_header')): ?>
-                <?php if($subheader = get_field('testimonial_subheader')): ?>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="testominial">
-                            <p class="header"><?php echo $header; ?></p>
-                            <p class="subheader"><?php echo $subheader; ?></p>
-                        </div>
-                        <div class="quotes">
-                        <?php if(have_rows('testimonials')): ?>
-                            <div class="testimonials">
-                                <?php while(have_rows('testimonials')) : the_row(); ?>
-                                    <?php if($quote = get_sub_field('quote')): ?>
-                                    <h3><?php echo $quote; ?></h3>
-                                    <?php endif; ?>
-                                    
-                                    <?php if($person = get_sub_field('person')): ?>
-                                    <h3><?php echo $person; ?></h3>
-                                    <?php endif; ?>
-
-                                <?php endwhile; ?>
+                <div class="testimonials">
+                    <div class="row">
+                        <?php 
+                        $header = get_field('testimonial_header');
+                        $subheader = get_field('testimonial_subheader');
+                        $n = 0;
+                        ?>
+                        <?php if($header|| $subheader): ?>
+                            <?php $n++; ?>
+                            <div class="col-md-6 d-flex flex-column align-self-center">
+                                <p class="header"><?php echo $header; ?></p>
+                                <p class="subheader"><?php echo $subheader; ?></p>
                             </div>
+                        <?php endif; ?>
+                        <?php if(have_rows('testimonials')): ?>
+                            <?php while(have_rows('testimonials')) : the_row(); ?>
+                                <div class="col-md-6 d-flex">
+                                    <div class="testimonial d-flex w100">
+                                        <div class="d-flex align-self-center flex-column w100">
+                                            <?php if($quote = get_sub_field('quote')): ?>
+                                                <h3 class="quote"><?php echo $quote; ?></h3>
+                                            <?php endif; ?>
+                                            <?php if($person = get_sub_field('person')): ?>
+                                                <h3 class="person"><?php echo $person; ?></h3>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php $n++; ?>
+                                <?php if($n % 2 == 0):?>
+                                    </div>
+                                    <div class="row">
+                                <?php endif; ?>
+                            <?php endwhile; ?>
                         <?php endif; ?>
                     </div>
                 </div>
-                <?php endif; ?>
-                <?php endif; ?>
-
             </div>
         </section>
-
     </div>   
 
 <?php get_footer(); ?>
