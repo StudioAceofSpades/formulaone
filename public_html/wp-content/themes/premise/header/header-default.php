@@ -20,7 +20,7 @@ E-Mail: jon@studioaceofspade.com
     
 </head>
 
-<body id="top-of-page">
+<body id="top-of-page" <?php body_class(); ?>>
     <header class="header cf">
         <nav class="secondary">
             <div class="container">
