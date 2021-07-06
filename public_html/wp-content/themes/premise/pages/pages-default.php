@@ -6,14 +6,21 @@ get_header(); ?>
 
 <?php include(locate_template('parts/hero.php')); ?>
 
-<div class="subpage">
-    <div class="container">
-        <?php if(have_rows('content_content')):
-            while(have_rows('content_content')):the_row();
-                include(get_stylesheet_directory() . "/parts/cms.php");
-            endwhile;
-        endif ?>
-    </div>
-</div>
+<section class="page default">
+    <?php 
+    if(have_rows('content')) :
+        $counter = 0;
+        while(have_rows('content')) : 
+            the_row(); 
+            $counter++; 
+            $layout = get_row_layout();
+            ?>
+            <div id="section-<?php echo $counter; ?>">
+                <?php include(locate_template('parts/page/'.$layout.'.php')); ?>
+            </div>
+            <?php
+        endwhile;
+    endif ?>
+</section>
 
 <?php get_footer(); ?>
