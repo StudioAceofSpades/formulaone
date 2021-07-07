@@ -15,7 +15,7 @@
                             <?php endif; ?>
                             <?php if(get_sub_field('sub_header')): ?>
                                 <?php $subheader = get_sub_field('sub_header'); ?>
-                                <h3 class="subheader"><?php echo $subheader ?></h3>
+                                <h4 class="subheader"><?php echo $subheader ?></h4>
                             <?php endif; ?>
                             <?php if(get_sub_field('description')): ?>
                                 <?php $desc = get_sub_field('description'); ?>
