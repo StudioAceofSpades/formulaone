@@ -298,6 +298,201 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_60e5dfbba17b2": {
+                    "key": "layout_60e5dfbba17b2",
+                    "name": "fancy_two_column",
+                    "label": "Fancy Two Column",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_60e5dfd6a17b3",
+                            "label": "Fancy Two Col",
+                            "name": "fancy_two_col",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "field_60e5dff7a17b4",
+                            "min": 1,
+                            "max": 1,
+                            "layout": "block",
+                            "button_label": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_60e5dff7a17b4",
+                                    "label": "Header",
+                                    "name": "header",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                },
+                                {
+                                    "key": "field_60e5e110a17b5",
+                                    "label": "Block Left",
+                                    "name": "block_left",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "tabs": "all",
+                                    "toolbar": "full",
+                                    "media_upload": 0,
+                                    "delay": 1
+                                },
+                                {
+                                    "key": "field_60e5e127a17b6",
+                                    "label": "Block Right",
+                                    "name": "block_right",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "tabs": "all",
+                                    "toolbar": "full",
+                                    "media_upload": 0,
+                                    "delay": 1
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_60e610c1a3815": {
+                    "key": "layout_60e610c1a3815",
+                    "name": "fancy_three_column",
+                    "label": "Fancy three Column",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_60e610c1a3816",
+                            "label": "Fancy Three Col",
+                            "name": "fancy_three_col",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "field_60e5dff7a17b4",
+                            "min": 1,
+                            "max": 1,
+                            "layout": "block",
+                            "button_label": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_60e610c1a3817",
+                                    "label": "Header",
+                                    "name": "header",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                },
+                                {
+                                    "key": "field_60e610c1a3818",
+                                    "label": "Block Left",
+                                    "name": "block_left",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "tabs": "all",
+                                    "toolbar": "full",
+                                    "media_upload": 0,
+                                    "delay": 1
+                                },
+                                {
+                                    "key": "field_60e611d093693",
+                                    "label": "Block Middle",
+                                    "name": "block_middle",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "tabs": "all",
+                                    "toolbar": "full",
+                                    "media_upload": 0,
+                                    "delay": 1
+                                },
+                                {
+                                    "key": "field_60e610c1a3819",
+                                    "label": "Block Right",
+                                    "name": "block_right",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "tabs": "all",
+                                    "toolbar": "full",
+                                    "media_upload": 0,
+                                    "delay": 1
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Content",
@@ -322,5 +517,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1625675469
+    "modified": 1625690598
 }

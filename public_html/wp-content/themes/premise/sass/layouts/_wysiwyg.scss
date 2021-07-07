@@ -115,13 +115,14 @@
             font-weight: normal;
             padding-bottom: 10px;
             counter-increment: li;
-        }
-        li::before {
-            content: counter(li);
-            color: $orange;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
+            
+            &::before {
+                content: counter(li);
+                color: $orange;
+                display: inline-block;
+                width: 1em;
+                margin-left: -1em;
+            }
         }
     }
 }
