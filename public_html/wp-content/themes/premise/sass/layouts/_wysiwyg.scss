@@ -46,11 +46,14 @@
 
     blockquote,
     q {
-        font-weight: 300px;
+        border-left: 30px solid $orange;
+        border-right: 30px solid $orange;
+        font-weight: 500px;
         padding: 30px;
+        font-size: 24px;
+        line-height: 28px;
         margin-top: 30px;
         margin-bottom: 30px;
-        background: $offwhite;
         max-width: 90%;
         margin-left: auto;
         margin-right: auto;
@@ -58,7 +61,6 @@
 
     blockquote {
         * {
-            font-style: italic;
             &:last-child {
                 margin-bottom: 0;
                 padding-bottom: 0;
@@ -127,9 +129,21 @@
     }
 }
 @include media-breakpoint-down(xs){
+    .wysiwyg blockquote, .wysiwyg q {
+        font-size: 16px;
+        line-height: 23px;
+        padding: 18px;
+    }
     .wysiwyg {
         .col-wrapper {
             margin: 15px;
         }
     }
+}
+@include media-breakpoint-down(sm){
+    .wysiwyg blockquote, .wysiwyg q {
+            font-size: 18px;
+            line-height: 24px;
+            padding: 18px;
+        }
 }
