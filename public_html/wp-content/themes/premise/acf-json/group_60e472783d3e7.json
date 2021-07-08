@@ -567,6 +567,100 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_60e758f4e9490": {
+                    "key": "layout_60e758f4e9490",
+                    "name": "button_group",
+                    "label": "Button Group",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_60e75953e9491",
+                            "label": "Button",
+                            "name": "button",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "",
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_60e75d1de9492",
+                                    "label": "Link",
+                                    "name": "link",
+                                    "type": "link",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array"
+                                },
+                                {
+                                    "key": "field_60e75d3ae9493",
+                                    "label": "Color",
+                                    "name": "color",
+                                    "type": "radio",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "choices": {
+                                        "white": "White",
+                                        "orange": "Orange"
+                                    },
+                                    "allow_null": 0,
+                                    "other_choice": 0,
+                                    "default_value": "",
+                                    "layout": "horizontal",
+                                    "return_format": "value",
+                                    "save_other_choice": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_60e75d78e9494",
+                            "label": "Button Alignment",
+                            "name": "button_alignment",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "center": "Center",
+                                "left": "Left"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "default_value": "center",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "save_other_choice": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Content",
@@ -591,5 +685,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1625769528
+    "modified": 1625777104
 }
