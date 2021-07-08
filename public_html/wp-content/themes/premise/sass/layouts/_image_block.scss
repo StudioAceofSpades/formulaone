@@ -1,0 +1,48 @@
+.image_block {
+    margin-bottom: 30px;
+    margin-top: 10px;
+
+    .col-wrapper {
+        max-width: 920px;
+        margin: 0 auto;
+    }
+    .img-fluid {
+        margin: 0 auto;
+    }
+    .desc {
+        font-family: $font;
+        font-size: 16px;
+        font-weight: normal;
+        color: $black;
+        text-align: left;
+        margin: 0 auto;
+    }
+    .vl {
+        border-left: 30px solid $orange;
+        border-right: 30px solid $orange;
+        background-color: $dark-gray;
+        .wysiwyg {
+            font-weight: 400;
+            color: $white;
+            padding: 30px;
+        }
+    }
+}
+@include media-breakpoint-down(lg){
+    .image_block {
+        .vl { 
+            .wysiwyg {
+                padding: 20px;
+            }
+        }
+        
+    }
+}
+@include media-breakpoint-down(sm){
+    .image_block {
+        .col-wrapper { 
+            margin: 15px;
+        }
+        
+    }
+}
