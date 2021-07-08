@@ -1,4 +1,4 @@
-.fancy-two-column {
+.fancy-three-column {
     .bg-orange {
         background-color: $orange;
         h1.header {
@@ -45,7 +45,7 @@
     }
 }
 @include media-breakpoint-down(md){
-    .fancy-two-column {
+    .fancy-three-column {
         .bg-gray {
             .secondary {
                 .header_card {
