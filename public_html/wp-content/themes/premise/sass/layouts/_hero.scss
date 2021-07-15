@@ -1,0 +1,49 @@
+#hero {
+
+    background-image: url('../img/home-header.png');
+    height: 100vh;
+    position: relative;
+
+    .top-text {
+        width: 50%;
+        margin: 50px 0 0 50px;
+        position: absolute;
+        
+    }
+
+    .zip-code-section {
+        input {
+            background-color: rgba($white, .2);  
+            outline: 2px solid $orange;
+            width: 100px;
+            padding: 10px;        
+            color: $white;  
+        }
+
+        h4 {
+            color: $white;
+            font-weight: 500;
+            font-size: 24px;
+        }
+
+        h5, h6 {
+            color: $white;
+        }
+
+        position: absolute;
+        bottom: 70px;
+        right: 70px;
+
+        .submit-btn {
+            background-color: $orange;
+            margin: 10px;
+            padding: 10px 30px;
+            color: $white;
+            cursor: pointer;
+        }
+
+    }
+
+
+
+}
