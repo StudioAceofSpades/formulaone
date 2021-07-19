@@ -1,11 +1,16 @@
 #hero {
 
-    background-image: url('../img/home-header.png');
-    height: 100vh;
     position: relative;
 
+    h1 {
+        font-weight: 600;
+        font-size: 64px;
+        line-height: 75px;
+        color: $white;
+    }
+
     .top-text {
-        width: 50%;
+        width: 40%;
         margin: 50px 0 0 50px;
         position: absolute;
         
@@ -43,6 +48,55 @@
         }
 
     }
+
+    .hero-home {
+        background-image: url('../img/home-header.png');
+        height: 100vh;
+    }
+
+    .hero-contact {
+        background-image: url('../img/subpage-header.png');
+        height: 100vh;
+        background-repeat: no-repeat;
+    }
+
+    .hero-standardsubpage {
+        
+        background-image: url('../img/subpage-header.png');
+        height: 100vh;
+        background-repeat: no-repeat;
+        
+
+        h2 {
+            font-weight: 600;
+            font-size: 48px;
+            
+        }
+
+        p {
+            color: white;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 150%;
+        }
+
+        .first-btn {
+            color: $white;
+            outline: 2px solid $orange;
+            margin: 10px;
+            padding: 10px 30px;
+            cursor: pointer;
+        }
+
+        .second-btn {
+            background-color: $orange;
+            margin: 10px;
+            padding: 10px 30px;
+            color: $white;
+            cursor: pointer;
+        }
+    }
+
 
 
 
