@@ -47,6 +47,11 @@
             cursor: pointer;
         }
 
+        .zipcodesearch {
+            display: flex;
+            align-items: center;
+        }
+
     }
 
     .hero-home {
@@ -58,6 +63,97 @@
         background-image: url('../img/subpage-header.png');
         height: 100vh;
         background-repeat: no-repeat;
+
+        .contact-zip-code-section {
+            input {
+                background-color: rgba($white, .2);  
+                outline: 2px solid $orange;
+                width: 100px;
+                padding: 10px;        
+                color: $white;  
+            }
+    
+            h4 {
+                color: $white;
+                font-weight: 500;
+                font-size: 24px;
+            }
+    
+            h5, h6 {
+                color: $white;
+            }
+    
+            .submit-btn {
+                background-color: $orange;
+                margin: 10px;
+                padding: 10px 30px;
+                color: $white;
+                cursor: pointer;
+            }
+
+            .zipcodesearch {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .contact-info {
+            
+            h1, p {
+                color: $white;
+            }
+
+            p {
+                font-weight: 500;
+                font-size: 24px;  
+            }
+
+            li {
+                list-style: none;
+                color: $white;
+            }
+
+            .fa-map-marker-alt, .fa-phone-alt, .fa-phone-alt, .fa-fax {
+                color: $orange;
+                margin-right: 10px;
+                
+            }
+        }
+
+        .newsletter {
+            float: right;
+            margin: 100px;
+
+            input {
+                background-color: rgba($white, .2);  
+                outline: 2px solid $orange;
+                width: 100px;
+                padding: 10px;        
+                color: $white;  
+                width: 300px;
+            
+            }    
+
+            h4, h5 {
+                color: white;
+            }
+
+            .signup-btn {
+                background-color: $orange;
+                margin: 10px;
+                padding: 10px 30px;
+                color: $white;
+                cursor: pointer;
+                width: 100%;
+            }
+
+            .newsletter-input {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+            }
+        }
     }
 
     .hero-standardsubpage {
