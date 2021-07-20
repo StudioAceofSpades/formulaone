@@ -90,6 +90,11 @@ E-Mail: jon@studioaceofspade.com
                                 <?php endif; ?>
                             </div>
                         </nav>
+                        <nav class="mobile">
+                            <a class="mobile-trigger" href="#">
+                                <i class="far fa-bars"></i>
+                            </a>
+                        </nav>
                     </div>
                 </div>
             </div>
