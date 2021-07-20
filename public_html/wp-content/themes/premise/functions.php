@@ -17,6 +17,8 @@ function saos_load_scripts() {
     wp_enqueue_script('plugins', get_stylesheet_directory_uri().'/js/plugins.js', false, null);
     wp_enqueue_script('scripts', get_stylesheet_directory_uri().'/js/script.js', false, null);
     wp_enqueue_script('icons', 'https://kit.fontawesome.com/993c45b2e6.js', false, null);
+	wp_enqueue_script('maps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtLKByGuUmy21VNhUjIQqAMyblIJlLad0&callback=initMap', false, null);
+
     
     wp_enqueue_style('fonts', 'https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap', array(), false, 'all');
 
@@ -220,5 +222,50 @@ function cptui_register_my_taxes_lifestyle() {
 }
 add_action( 'init', 'cptui_register_my_taxes_lifestyle' );
 
+function cptui_register_my_cpts_dealer() {
+
+	/**
+	 * Post Type: Dealer.
+	 */
+
+	$labels = [
+		"name" => __( "Dealer", "custom-post-type-ui" ),
+		"singular_name" => __( "Dealers", "custom-post-type-ui" ),
+	];
+
+	$args = [
+		"label" => __( "Dealer", "custom-post-type-ui" ),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"rewrite" => [ "slug" => "dealer", "with_front" => true ],
+		"query_var" => true,
+		"supports" => [ "title", "editor", "thumbnail" ],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type( "dealer", $args );
+}
+
+add_action( 'init', 'cptui_register_my_cpts_dealer' );
+
+function my_acf_google_map_api( $api ){
+    $api['key'] = 'AIzaSyDtLKByGuUmy21VNhUjIQqAMyblIJlLad0';
+    return $api;
+}
+add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
 ?>
