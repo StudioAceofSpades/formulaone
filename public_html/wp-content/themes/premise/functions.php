@@ -33,6 +33,7 @@ function saos_load_scripts() {
 
 // Add support for featured images
 add_theme_support( 'post-thumbnails' );
+add_image_size('trailer-small', 600, 600, false);
 
 function disable_emojis() {
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
