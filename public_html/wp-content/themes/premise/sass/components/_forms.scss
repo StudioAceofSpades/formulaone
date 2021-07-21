@@ -1,25 +1,240 @@
+.all-inputs {
+    margin-bottom: 20px;
+}
+
+.text-inputs {
+    background-color: rgba($middle-gray, .2);
+    border:  4px solid $white;
+    outline: 2px solid $orange;
+    width: calc(100% - 4px);
+    padding: 5px 10px;
+    font-size: 18px;
+    line-height: 25px;
+    color: $black;
+    margin-left: 2px;
+}
+
 form {
-    
-    input, textarea {
-        background-color: $light-gray;
-        // border-color: $white;
-        // border-style: solid;
-        // outline-color: $orange;
-        // outline-style: solid;
-        // border: 3px solid $white;
-        // outline: 2px solid $orange;
-
-    }
-
-    label, legend, fieldset {
+    label,
+    legend {
+        cursor: pointer;
         font-size: 14px;
-        margin-top: 20px;
+        margin-bottom: 5px;
+        text-transform: uppercase;
     }
 
-    .gfield_radio, .gfield_checkbox {
-        label {
-            margin-top: 5px;
+    input {
+        @extend .all-inputs;
+
+        &[type="text"],
+        &[type="email"] {
+            @extend .text-inputs;
+        }
+
+        &[type="radio"],
+        &[type="checkbox"] {
+            display: none;
+
+            &:checked {
+                + label {
+                    &::after {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            + label {
+                @extend .no-select;
+                font-size: 18px;
+                line-height: 25px;
+                color: $black;
+                text-transform: none;
+                padding-left: 30px;
+                position: relative;
+
+                &::before,
+                &::after {
+                    @extend .transition;
+                    display: block;
+                    position: absolute;
+                    content: "";
+                    border: 2px solid $orange;
+                    background-color: $white;
+                }
+
+                &::after {
+                    opacity: 0;
+                }
+            }
+        }
+
+        &[type="radio"] {
+            +label {
+                &::before,
+                &::after {
+                    border-radius: 50%;
+                }
+                
+                &::before {
+                    width: 20px;
+                    height: 20px;
+                    left: 0;
+                    top: 2px;
+                }
+
+                &::after {
+                    width: 8px;
+                    height: 8px;
+                    left: 6px;
+                    top: 8px;
+                }
+            }
+        }
+
+        &[type="checkbox"] {
+            +label {
+                &::before {
+                    width: 20px;
+                    height: 20px;
+                    left: 0;
+                    top: 2px;
+                }
+
+                &::after {
+                    width: 5px;
+                    height: 10px;
+                    left: 8px;
+                    top: 5px;
+                    border-left: none;
+                    border-top: none;
+                    transform: rotate(40deg);
+                }
+            }
+        }
+
+        &[type="submit"] {
+            display: block;
+            background-color: $orange;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            text-align: center;
+            color: $white;
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            top: 0;
+
+            &:hover {
+                top: -3px;
+            }
+        }
+    }
+    
+    fieldset {
+        @extend .all-inputs;
+
+        legend {
+            + div {
+                > div {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    margin-left: -10px;
+                    margin-right: -10px;
+
+                    > * {
+                        margin-left: 10px;
+                        margin-right: 10px;
+                    }
+                }
+            }
         }
     }
 
+    textarea {
+        @extend .all-inputs, .text-inputs;
+    }
+
+    .select {
+        @extend .all-inputs;
+        position: relative;
+        z-index: 1;
+
+        .select-hidden {
+            width: 0;
+            height: 0;
+            border: none;
+            position: absolute;
+        }
+
+        .select-styled {
+            @extend .transition, .text-inputs;
+            position: relative;
+            cursor: pointer;
+            padding: 5px 30px 5px 10px;
+
+            &::before {
+                @extend .transition;
+                display: block;
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: 8px solid $orange;
+                right: 12px;
+                top: 14px;
+                color: $orange;
+            }
+
+            &.active {
+                &::before {
+                    transform: rotate(-180deg);
+                }
+            }
+        }
+
+        .select-options {
+            display: none;
+            position: absolute;
+            top: calc(100% - 4px);
+            right: 6px;
+            left: 6px;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            cursor: pointer;
+
+            li {
+                @extend .no-select, .transition;
+                line-height: 25px;
+                padding: 5px 10px;
+                background-color: $middle-gray;
+                color: $white;
+
+                &:hover {
+                    background-color: $orange;
+                }
+
+                &.hide{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    form {
+        fieldset {
+            legend {
+                + div {
+                    > div {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
 }

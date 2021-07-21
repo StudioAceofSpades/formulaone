@@ -1,5 +1,4 @@
 #hero {
-
     position: relative;
 
     h1 {
@@ -13,16 +12,19 @@
         width: 40%;
         margin: 50px 0 0 50px;
         position: absolute;
-        
     }
 
     .zip-code-section {
+        position: absolute;
+        bottom: 70px;
+        right: 70px;
+
         input {
-            background-color: rgba($white, .2);  
+            background-color: rgba($white, .2);
             outline: 2px solid $orange;
             width: 100px;
-            padding: 10px;        
-            color: $white;  
+            padding: 10px;
+            color: $white;
         }
 
         h4 {
@@ -34,10 +36,6 @@
         h5, h6 {
             color: $white;
         }
-
-        position: absolute;
-        bottom: 70px;
-        right: 70px;
 
         .submit-btn {
             background-color: $orange;
@@ -51,18 +49,20 @@
             display: flex;
             align-items: center;
         }
+    }
 
+    .hero-wrapper {
+        background-repeat: no-repeat;
     }
 
     .hero-home {
         background-image: url('../img/home-header.png');
-        height: 100vh;
+        height: calc(100vh - 106px);
     }
 
     .hero-contact {
         background-image: url('../img/subpage-header.png');
-        height: 100vh;
-        background-repeat: no-repeat;
+        height: 490px;
 
         .contact-zip-code-section {
             input {
@@ -72,17 +72,17 @@
                 padding: 10px;        
                 color: $white;  
             }
-    
+
             h4 {
                 color: $white;
                 font-weight: 500;
                 font-size: 24px;
             }
-    
+
             h5, h6 {
                 color: $white;
             }
-    
+
             .submit-btn {
                 background-color: $orange;
                 margin: 10px;
@@ -98,14 +98,14 @@
         }
 
         .contact-info {
-            
-            h1, p {
+            h1,
+            p {
                 color: $white;
             }
 
             p {
                 font-weight: 500;
-                font-size: 24px;  
+                font-size: 24px;
             }
 
             li {
@@ -116,7 +116,6 @@
             .fa-map-marker-alt, .fa-phone-alt, .fa-phone-alt, .fa-fax {
                 color: $orange;
                 margin-right: 10px;
-                
             }
         }
 
@@ -125,16 +124,16 @@
             margin: 100px;
 
             input {
-                background-color: rgba($white, .2);  
+                background-color: rgba($white, .2);
                 outline: 2px solid $orange;
                 width: 100px;
-                padding: 10px;        
-                color: $white;  
+                padding: 10px;
+                color: $white;
                 width: 300px;
-            
-            }    
+            }
 
-            h4, h5 {
+            h4,
+            h5 {
                 color: white;
             }
 
@@ -151,17 +150,13 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-
             }
         }
     }
 
     .hero-standardsubpage {
-        
         background-image: url('../img/subpage-header.png');
-        height: 100vh;
         background-repeat: no-repeat;
-        
 
         h2 {
             font-weight: 600;
@@ -192,8 +187,4 @@
             cursor: pointer;
         }
     }
-
-
-
-
 }
