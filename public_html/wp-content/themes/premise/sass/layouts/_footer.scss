@@ -82,27 +82,22 @@
             font-family: 'Work Sans';
         }
         .ginput_container {
-            border: 2px solid #F05A28;
-            background-color: #212224;
-
             input {
-                background-color: rgb(255, 255, 255, 0.2);
-                margin: 6px;
-                inline-size: -webkit-fill-available;
-                padding: 5px;
-                font-size: 18px;
-                font-weight: 400;
+                @extend .transition;
+                background-color: rgba($white, .2);
+                border-color: $dark-gray;
                 color: $white;
-                transition: .3s linear all;
+                margin-bottom: 10px;
+                @include placeholder {
+                    color: rgba($white, .6);
+                }
 
                 &:focus{
-                    background-color: #F05A28;
-                    background-color: #a8a19e;
+                    background-color: rgba($white, .3);
+                    @include placeholder {
+                        color: rgba($white, .75);
+                    }
                 }
-            }
-            input::placeholder {
-                color: $black;
-                opacity: 1 !important;
             }
         }
     }
@@ -194,14 +189,12 @@
             display: block;
             background-color: $orange;
             padding: 10px 20px;
-            margin: 10px 0 0;
             text-transform: uppercase;
             text-align: center;
             color: $white;
             cursor: pointer;
             width: 100%;
             background-size: 200% auto;
-            margin-top: 10px;
             position: relative;
             top: 0;
 

@@ -8,8 +8,10 @@ get_header(); ?>
     <?php include(get_stylesheet_directory() . '/parts/hero.php'); ?>
 
     <div class="container">
-        <div class="form d-flex justify-content-center">
-        <?php cfct_loop(); ?>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <?php cfct_loop(); ?>
+            </div>
         </div>
     </div>
 </div>
