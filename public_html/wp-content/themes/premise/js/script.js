@@ -1,9 +1,48 @@
+var autocomplete;
+var map;
+
 (function($) {
 	$(document).ready(function() {
         headerNavigation();
         smoothScroll();
         bindPopouts();
+        initMap();
 	});	
+
+    function initMap() {
+        var mapdiv = document.getElementById("map");
+var image = "http://maps.google.com/mapfiles/ms/micons/blue.png";
+        map = new google.maps.Map(mapdiv, {
+            zoom: 12,
+            center: { lat: 41.693140, lng: -85.972748 },
+            zoomControl: false
+        });
+
+        map.data.addGeoJson(geojson, {idPropertyName:'storeid'});
+
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById("autocomplete"),
+            { 
+                types: ["geocode"],
+                fields: ['place_id', 'geometry', 'formatted_address'] 
+            }
+        );
+        autocomplete.addListener("place_changed", addUserLocation);
+    }
+
+	function addUserLocation() {
+		const place = autocomplete.getPlace();
+
+		const marker = new google.maps.Marker({
+			map: map
+		});
+
+		marker.setLabel("C");
+		marker.setPosition(place.geometry.location);
+
+		map.panTo(place.geometry.location);
+		map.setZoom(12);
+	}
 
     function headerNavigation() {
 		var $target = $('.dropdown');

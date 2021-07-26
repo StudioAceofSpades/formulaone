@@ -17,7 +17,8 @@ function saos_load_scripts() {
     wp_enqueue_script('plugins', get_stylesheet_directory_uri().'/js/plugins.js', false, null);
     wp_enqueue_script('scripts', get_stylesheet_directory_uri().'/js/script.js', false, null);
     wp_enqueue_script('icons', 'https://kit.fontawesome.com/993c45b2e6.js', false, null);
-	wp_enqueue_script('maps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtLKByGuUmy21VNhUjIQqAMyblIJlLad0&callback=initMap', false, null);
+	wp_enqueue_script('maps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtLKByGuUmy21VNhUjIQqAMyblIJlLad0&libraries=places', false, null);
+
 
     
     wp_enqueue_style('fonts', 'https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap', array(), false, 'all');
