@@ -78,15 +78,38 @@ E-Mail: jon@studioaceofspade.com
                         <nav class="primary">
                             <div class="primary-links">
                                 <?php if(have_rows('main_navigation','options')): ?>
-                                <ul>
-                                    <?php 
-                                    while(have_rows('main_navigation','options')) : 
-                                        the_row(); 
-                                        $link = get_sub_field('main_menu_link'); 
-                                        ?>
-                                        <li><?php saos_output_link($link); ?></li>
-                                    <?php endwhile; ?>
-                                </ul>
+                                    <ul>
+                                        <?php 
+                                        while(have_rows('main_navigation','options')) : 
+                                            the_row(); 
+                                            $link = get_sub_field('main_menu_link'); ?>
+                                            <?php if(get_sub_field('has_dropdown','options')): ?>
+                                            <li class="has-dropdown">
+                                            <?php saos_output_link($link); ?>
+
+                                            <?php if(have_rows('dropdown')): ?>
+                                                <div class="dropdown">
+                                                    <ul>
+                                                        <?php 
+                                                        while(have_rows('dropdown','options')) : 
+                                                            the_row();
+                                                            $link = get_sub_field('dropdown_link'); ?> 
+                                                             <li>
+                                                                <?php saos_output_link($link); ?>
+                                                            </li>                                        
+                                                        <?php endwhile; ?>
+                                                    </ul>
+                                                </div>
+                                                <?php endif; ?>
+
+                                            </li>
+                                            <?php else: ?>
+                                            <li>
+                                                <?php saos_output_link($link); ?>
+                                            </li>
+                                            <?php endif; ?>
+                                        <?php endwhile; ?>
+                                    </ul>
                                 <?php endif; ?>
                             </div>
                         </nav>
@@ -99,8 +122,7 @@ E-Mail: jon@studioaceofspade.com
                 </div>
             </div>
         </nav>
-
-        </div>
     </header>
 
 <main id="main">
+
