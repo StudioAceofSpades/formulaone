@@ -1,5 +1,7 @@
 var autocomplete;
 var map;
+var markers         = [];
+var bounds;
 
 (function($) {
 	$(document).ready(function() {
@@ -11,15 +13,20 @@ var map;
     });
 
     function initMap() {
-        var mapdiv = document.getElementById("map");
-var image = "http://maps.google.com/mapfiles/ms/micons/blue.png";
+        var mapdiv  = document.getElementById("map");
+        var center  = { lat: 41.693140, lng: -85.972748 };
+
         map = new google.maps.Map(mapdiv, {
-            zoom: 12,
-            center: { lat: 41.693140, lng: -85.972748 },
-            zoomControl: false
+            zoom        : 8,
+            center      : center,
+            zoomControl : false
         });
 
-        map.data.addGeoJson(geojson, {idPropertyName:'storeid'});
+        geojson.features.forEach(function(feature) {
+            markers.push(createDealer(feature));
+        });
+
+        distanceMatrixService = new google.maps.DistanceMatrixService();
 
         autocomplete = new google.maps.places.Autocomplete(
             document.getElementById("autocomplete"),
@@ -28,7 +35,227 @@ var image = "http://maps.google.com/mapfiles/ms/micons/blue.png";
                 fields: ['place_id', 'geometry', 'formatted_address'] 
             }
         );
-        autocomplete.addListener("place_changed", addUserLocation);
+
+        bindDealerForm();
+        bindViewControls();
+    }
+
+    function bindViewControls() {
+        var $map    = $('#map');
+        var $list   = $('.map-results');
+
+        $(window).on('resize', function() {
+            if(window.innerWidth > 991) {
+                $map.show();
+                $list.show();
+            } else {
+                console.log('made it');
+                if($('.list-view').hasClass('active')) {
+                    $map.hide();
+                    $list.show();
+                } else {
+                    $map.show();
+                    $list.hide();
+                }
+            }
+        });
+
+        $('.view-controls a').click(function(e) {
+            e.preventDefault();
+            if(! $(this).hasClass('active')) {
+                $('.view-controls').find('.active').removeClass('active');
+                $(this).addClass('active');
+                $(window).trigger('resize');
+
+                if($(this).hasClass('map-view')) {
+                    $('.find-a-dealer form input[type="submit"]').trigger('click');
+                }
+            }
+        });
+
+        $(window).trigger('resize');
+    }
+
+    function updateMap(radius) {
+
+        const place = autocomplete.getPlace();
+        const marker = new google.maps.Marker({
+            map: map
+        });
+        marker.setPosition(place.geometry.location);
+        map.panTo(place.geometry.location);
+//        map.setZoom(7);
+
+        var center = {
+            lat : place.geometry.location.lat(),
+            lng : place.geometry.location.lng(),
+        }
+        if(bounds) {
+            bounds.setMap(null);
+        }
+        bounds = new google.maps.Circle({
+            strokeColor		: "#F05a28",
+            strokeOpacity	: 0.8,
+            strokeWeight	: 2,
+            fillColor		: "#F05a28",
+            fillOpacity		: 0.35,
+            map,
+            center			: center,
+            radius          : radius.val() * 1609.34,
+        });
+
+		map.fitBounds(bounds.getBounds());
+
+        for(var i = 0; i < markers.length; i++) {
+            if(bounds.getBounds().contains(markers[i].getPosition())) {
+                markers[i].setMap(map);
+            } else {
+                markers[i].setMap(null);
+            }
+        }
+    }
+
+    function bindDealerForm() {
+        var $form = $('.find-a-dealer .map-controls form');
+        if($form.length) {
+            $form.find('input[type="submit"]').click(function(e) {
+                e.preventDefault();
+
+                var $radius         = $form.find('#radius');
+                var $autocomplete   = $form.find('#autocomplete');
+
+                if($radius.val() && $autocomplete.val()) {
+                    updateMap($radius);
+                    showResults();
+                } else {
+                    showErrors('fields');
+                }
+            });
+        }
+    }
+
+    function showResults() {
+        var $results    = $('.found-results');
+        var $arena      = $results.find('.row');
+		var $errors		= $('.error-message');
+        var dealers     = [];
+
+        $errors.hide();
+        $arena.html('');
+        $results.show();
+
+        var skip = false;
+        for(var i = 0; i < markers.length; i++) {
+            if(markers[i].map !== null) {
+                geojson.features.forEach(function(feature) {
+                    if(feature.property.title == markers[i].getTitle()) {
+                        dealers.push(feature);
+                    }
+                });
+            }
+        }
+        
+        if(dealers.length) {
+            for(var i = 0; i < dealers.length; i++) {
+                outputDealerResult(dealers[i], $arena);
+            }
+        } else {
+            showErrors('no-results');
+        }
+    }
+
+	function formatPhoneNumber(phoneNumberString) {
+		var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+		var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+		if (match) {
+			return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+		}
+		return null;
+	}
+
+	function metersToMiles(i) {
+		 return i*0.000621371192;
+	}
+
+    function outputDealerResult(dealer, arena) {
+        var phone           = formatPhoneNumber(dealer.property.phone);
+        var tel             = dealer.property.phone;
+        var address         = dealer.property.address;
+        var website         = dealer.property.website;
+        var title           = dealer.property.title;
+        var center          = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
+        var dealerCenter    = new google.maps.LatLng(dealer.property.lat, dealer.property.lng);
+        var distance        = google.maps.geometry.spherical.computeDistanceBetween(center, dealerCenter);
+		distance            = metersToMiles(distance).toFixed(1);
+
+        var output = 
+            '<div class="col-6 col-xs-12">' +
+                '<div class="dealer-result">' +
+                    '<h3>' + title + '</h3>' +
+                    '<span class="distance">' + distance + ' miles</span>' +
+                    '<div class="contact-info">' +
+                        '<span class="address">' + address + '</span>' +
+                        '<span class="phone"><a target="_blank" href="tel:' + tel + '">' + phone + '</a></span>' +
+                        '<span class="website">' + website + '</span>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        arena.append(output);
+    }
+
+    function showErrors(error) {
+        var $errors = $('.error-message');
+        var $results = $('.found-results');
+
+        $errors.hide();
+        $results.hide();
+
+        if(error == 'fields') {
+            $('.fill-fields').show();
+        } else if(error == 'no-results') {
+            $('.no-results').show();
+        }
+    }
+
+    function convertLatLong(coords) {
+        var coordinates = {
+            lat     : coords[1],
+            lng    : coords[0],
+        };
+        return coordinates;
+    }
+
+    function createDealer(dealer) {
+        var marker  = new google.maps.Marker({
+            map         : map,
+            position    : convertLatLong(dealer.geometry.coordinates),
+            title       : dealer.property.title,
+        });
+        
+        marker.addListener("click", function () {
+            showDealer(dealer, marker);
+        });
+        return marker;
+    }
+
+    function showDealer(dealer, marker) {
+
+        var contentString   =   
+            '<div class="map-content">' +
+            '<h1>' + dealer.property.title + '</h1>' + 
+            '<span>Address: ' + dealer.property.address + '</span>' +
+            '<span>Phone: ' + dealer.property.phone + '</span>' +
+            '<span>Website: ' + dealer.property.website + '</span>' +
+            '</div>';
+
+        var info    = new google.maps.InfoWindow({
+            content : contentString
+        });
+        info.open({
+            anchor  : marker,
+            map,
+            shouldFocus : true,
+        });
     }
 
 	function addUserLocation() {
@@ -38,11 +265,11 @@ var image = "http://maps.google.com/mapfiles/ms/micons/blue.png";
 			map: map
 		});
 
-		marker.setLabel("C");
+		marker.setLabel("You");
 		marker.setPosition(place.geometry.location);
 
 		map.panTo(place.geometry.location);
-		map.setZoom(12);
+		map.setZoom(10);
 	}
 
     function headerNavigation() {
