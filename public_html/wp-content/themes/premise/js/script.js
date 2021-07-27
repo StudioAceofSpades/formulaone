@@ -273,13 +273,16 @@ var bounds;
 	}
 
     function headerNavigation() {
-		var $target = $('.dropdown');
-		
-		$target.hover(function() {
-			$(this).find('.dropdown-wrapper').show();
-		}, function() {
-			$(this).find('.dropdown-wrapper').hide();
-		});
+		$('header .has-dropdown').hover(
+            function(){
+                $(this).addClass('active');
+                $(this).children('.dropdown').stop().slideDown(300);
+            },
+            function(){
+                $(this).removeClass('active');
+                $(this).children('.dropdown').stop().slideUp(300);
+            }
+        );
     }
 
     function smoothScroll() {
