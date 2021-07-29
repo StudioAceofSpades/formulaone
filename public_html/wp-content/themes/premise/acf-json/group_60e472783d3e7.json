@@ -706,6 +706,61 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_6101e07f952c0": {
+                    "key": "layout_6101e07f952c0",
+                    "name": "background_image",
+                    "label": "Background Image",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6101e0b3952c1",
+                            "label": "Images",
+                            "name": "images",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "",
+                            "min": 7,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Image",
+                            "sub_fields": [
+                                {
+                                    "key": "field_6101e21b80a23",
+                                    "label": "Image",
+                                    "name": "image",
+                                    "type": "image",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "url",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "min_width": "",
+                                    "min_height": "",
+                                    "min_size": "",
+                                    "max_width": "",
+                                    "max_height": "",
+                                    "max_size": "",
+                                    "mime_types": ""
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Content",
@@ -730,5 +785,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1627326593
+    "modified": 1627522245
 }
