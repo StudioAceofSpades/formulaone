@@ -1,62 +1,54 @@
-<!-- <?php
+<?php
 if (have_rows('images')): 
+    $imageurl = array();
     while(have_rows('images') ): the_row();
-        if(get_sub_field('image')):
-            $image = get_sub_field('image');
-            array_push($imageurl, $image['url']);
-        endif;
+        $image = get_sub_field('image');
+        $imageurl[] = $image;
     endwhile;
 endif;
- ?> -->
+?> 
 <?php if (have_rows('images')): ?>
-    <div class="row no-gutters">
-        <?php while(have_rows('images') ): the_row(); ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
             <div class="gallery-page">
                 <div class="row">
-                    <?php if($image = get_sub_field('image')): ?>
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col">
-                                    <a href="#" class="box-image" style="background-image:url(<?php echo $image['url']; ?>);"></a>
-                                    Image 1
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <a href="#" class="box-image" style="background-image:url(<?php echo $image[1]; ?>);"></a>
-                                    Image 2
-                                </div>
-                                <div class="col-sm-6">
-                                    <a href="#" class="box-image" style="background-image:url(<?php echo $image[2]; ?>);"></a>
-                                    Image 3
-                                </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col">
+                                <a href="#" class="box-image" style="background-image:url(<?php echo $imageurl[0]; ?>);"></a>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <a href="#" class="box-image" style="background-image:url(<?php echo $image[3]; ?>);"></a>
-                            middle Image
-                        </div>
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a href="#" class="box-image" style="background-image:url(<?php echo $image[4]; ?>);"></a>
-                                    Image 5
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="#" class="box-image" style="background-image:url(<?php echo $image[5]; ?>);"></a>
-                                    Image 6
-                                </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a href="#" class="box-image" style="background-image:url(<?php echo $imageurl[1]; ?>);"></a>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <a href="#" class="box-image" style="background-image:url(<?php echo $image[6]; ?>);"></a>
-                                    Image 7
-                                </div>
+                            <div class="col-sm-6">
+                                <a href="#" class="box-image" style="background-image:url(<?php echo $imageurl[2]; ?>);"></a>
                             </div>
                         </div>
-                    <?php endif; ?>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#" class="main box-image" style="background-image:url(<?php echo $imageurl[3]; ?>);"></a>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="#" class="box-image" style="background-image:url(<?php echo $imageurl[4]; ?>);"></a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#" class="box-image" style="background-image:url(<?php echo $imageurl[5]; ?>);"></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="#" class="box-image" style="background-image:url(<?php echo $imageurl[6]; ?>);"></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        <?php endwhile; ?>
+        </div>
     </div>
+</div>
 <?php endif; ?>

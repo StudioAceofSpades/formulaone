@@ -709,8 +709,8 @@
                 },
                 "layout_6101e07f952c0": {
                     "key": "layout_6101e07f952c0",
-                    "name": "background_image",
-                    "label": "Background Image",
+                    "name": "photo_gallery",
+                    "label": "Photo Gallery",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -785,5 +785,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1627522245
+    "modified": 1627574263
 }
