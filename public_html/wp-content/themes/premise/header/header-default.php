@@ -41,7 +41,30 @@ E-Mail: jon@studioaceofspade.com
                                     the_row(); 
                                     $link = get_sub_field('menu_link'); 
                                     ?>
-                                    <li><?php saos_output_link($link); ?></li>
+                                    <?php if(get_sub_field('has_dropdown','options')): ?>
+                                            <li class="has-dropdown">
+                                            <?php saos_output_link($link); ?>
+                                            <?php if(have_rows('dropdown')): ?>
+                                                <div class="dropdown">
+                                                    <ul class="dropdownitems">
+                                                        <?php 
+                                                        while(have_rows('dropdown','options')) : 
+                                                            the_row();
+                                                            $link = get_sub_field('dropdown_link'); ?> 
+                                                             <li>
+                                                                <?php saos_output_link($link); ?>
+                                                            </li>                                        
+                                                        <?php endwhile; ?>
+                                                    </ul>
+                                                </div>
+                                                <?php endif; ?>
+
+                                            </li>
+                                            <?php else: ?>
+                                            <li>
+                                                <?php saos_output_link($link); ?>
+                                            </li>
+                                     <?php endif; ?>
                                 <?php endwhile; ?>
                             </ul>
                             <?php endif; ?>
@@ -86,7 +109,6 @@ E-Mail: jon@studioaceofspade.com
                                             <?php if(get_sub_field('has_dropdown','options')): ?>
                                             <li class="has-dropdown">
                                             <?php saos_output_link($link); ?>
-
                                             <?php if(have_rows('dropdown')): ?>
                                                 <div class="dropdown">
                                                     <ul class="dropdownitems">
