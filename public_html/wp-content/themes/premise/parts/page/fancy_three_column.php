@@ -1,4 +1,4 @@
-<div class="fancy-three-column">
+<div class="fancy-cols">
     <?php if (have_rows('fancy_three_col')): ?>
         <?php while(have_rows('fancy_three_col') ): the_row(); ?>
         <div class="header bg-orange">

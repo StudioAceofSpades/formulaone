@@ -1,9 +1,9 @@
-<div class="two-column-block">
+<div class="basic-cols">
     <div class="container">
         <div class="row">
             <?php if (have_rows('two_column')): ?>
                 <?php while(have_rows('two_column') ): the_row(); ?>
-                    <div class="col-md-6<?php echo get_sub_field('center_paragraph') ? ' text-center' : '' ?>">
+                    <div class="col-md-6">
                         <div class="col-wrapper">
                             <?php if(get_sub_field('image')): ?>
                                 <?php $img = get_sub_field('image'); ?>
@@ -23,9 +23,10 @@
                             <?php endif; ?>
                             <?php if(get_sub_field('column_button')): ?>
                                 <?php $btn = get_sub_field('column_button'); ?>
-                                    <div class="buttons">
-                                        <a href="<?php echo $btn['url'];?>" class="button blue" target="<?php echo $btn['target'];?>"><?php echo $btn['title']; ?></a>
-                                    </div>
+                                <?php $alignment = get_sub_field('column_button_alignment'); ?>
+                                <div class="buttons <?php echo $alignment; ?>">
+                                    <a href="<?php echo $btn['url'];?>" class="button white" target="<?php echo $btn['target'];?>"><?php echo $btn['title']; ?></a>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>

@@ -5,13 +5,13 @@ var bounds;
 
 (function($) {
     $(document).ready(function() {
+        customSelect();
+        heroDealerForm();
         headerNavigation();
         smoothScroll();
         bindPopouts();
         initMap();
-        customSelect();
-        heroDealerForm();
-});
+    });
 
     function initMap() {
         var mapdiv  = document.getElementById("map");
@@ -78,7 +78,6 @@ var bounds;
     }
 
     function updateMap(radius) {
-
         const place = autocomplete.getPlace();
         const marker = new google.maps.Marker({
             map: map
@@ -430,7 +429,7 @@ var bounds;
 
         var fad = "find-a-dealer";
 
-        $('.'+fad).each(function() {
+        $('.'+fad+'-widget').each(function() {
 
             var form    = $(this).data('form');
 

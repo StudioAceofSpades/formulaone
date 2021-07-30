@@ -1,4 +1,4 @@
-<div class="three-column-block">
+<div class="basic-cols">
     <div class="container">
         <div class="row">
             <?php if (have_rows('three_column')): ?>
@@ -23,9 +23,10 @@
                             <?php endif; ?>
                             <?php if(get_sub_field('column_button')): ?>
                                 <?php $btn = get_sub_field('column_button'); ?>
-                                    <div class="buttons">
-                                        <a href="<?php echo $btn['url'];?>" class="button blue" target="<?php echo $btn['target'];?>"><?php echo $btn['title']; ?></a>
-                                    </div>
+                                <?php $alignment = get_sub_field('column_button_alignment'); ?>
+                                <div class="buttons <?php echo $alignment; ?>">
+                                    <a href="<?php echo $btn['url'];?>" class="button white" target="<?php echo $btn['target'];?>"><?php echo $btn['title']; ?></a>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
