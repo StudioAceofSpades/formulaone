@@ -4,13 +4,14 @@ var markers         = [];
 var bounds;
 
 (function($) {
-	$(document).ready(function() {
+    $(document).ready(function() {
         headerNavigation();
         smoothScroll();
         bindPopouts();
         initMap();
         customSelect();
-    });
+        heroDealerForm();
+});
 
     function initMap() {
         var mapdiv  = document.getElementById("map");
@@ -94,17 +95,17 @@ var bounds;
             bounds.setMap(null);
         }
         bounds = new google.maps.Circle({
-            strokeColor		: "#F05a28",
-            strokeOpacity	: 0.8,
-            strokeWeight	: 2,
-            fillColor		: "#F05a28",
-            fillOpacity		: 0.35,
+            strokeColor     : "#F05a28",
+            strokeOpacity   : 0.8,
+            strokeWeight    : 2,
+            fillColor       : "#F05a28",
+            fillOpacity     : 0.35,
             map,
-            center			: center,
+            center          : center,
             radius          : radius.val() * 1609.34,
         });
 
-		map.fitBounds(bounds.getBounds());
+        map.fitBounds(bounds.getBounds());
 
         for(var i = 0; i < markers.length; i++) {
             if(bounds.getBounds().contains(markers[i].getPosition())) {
@@ -137,7 +138,7 @@ var bounds;
     function showResults() {
         var $results    = $('.found-results');
         var $arena      = $results.find('.row');
-		var $errors		= $('.error-message');
+        var $errors     = $('.error-message');
         var dealers     = [];
 
         $errors.hide();
@@ -164,18 +165,18 @@ var bounds;
         }
     }
 
-	function formatPhoneNumber(phoneNumberString) {
-		var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-		var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-		if (match) {
-			return '(' + match[1] + ') ' + match[2] + '-' + match[3];
-		}
-		return null;
-	}
+    function formatPhoneNumber(phoneNumberString) {
+        var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+        var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+        if (match) {
+            return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+        }
+        return null;
+    }
 
-	function metersToMiles(i) {
-		 return i*0.000621371192;
-	}
+    function metersToMiles(i) {
+        return i*0.000621371192;
+    }
 
     function outputDealerResult(dealer, arena) {
         var phone           = formatPhoneNumber(dealer.property.phone);
@@ -186,7 +187,7 @@ var bounds;
         var center          = new google.maps.LatLng(map.getCenter().lat(), map.getCenter().lng());
         var dealerCenter    = new google.maps.LatLng(dealer.property.lat, dealer.property.lng);
         var distance        = google.maps.geometry.spherical.computeDistanceBetween(center, dealerCenter);
-		distance            = metersToMiles(distance).toFixed(1);
+        distance            = metersToMiles(distance).toFixed(1);
 
         var output = 
             '<div class="col-6 col-xs-12">' +
@@ -258,22 +259,22 @@ var bounds;
         });
     }
 
-	function addUserLocation() {
-		const place = autocomplete.getPlace();
+    function addUserLocation() {
+        const place = autocomplete.getPlace();
 
-		const marker = new google.maps.Marker({
-			map: map
-		});
+        const marker = new google.maps.Marker({
+            map: map
+        });
 
-		marker.setLabel("You");
-		marker.setPosition(place.geometry.location);
+        marker.setLabel("You");
+        marker.setPosition(place.geometry.location);
 
-		map.panTo(place.geometry.location);
-		map.setZoom(10);
-	}
+        map.panTo(place.geometry.location);
+        map.setZoom(10);
+    }
 
     function headerNavigation() {
-		$('header .has-dropdown').hover(
+        $('header .has-dropdown').hover(
             function(){
                 $(this).addClass('active');
                 $(this).children('.dropdown').stop().slideDown(300);
@@ -286,32 +287,33 @@ var bounds;
     }
 
     function smoothScroll() {
-		$('a[href*="#"]')
-		  	.not('[href="#"]')
-		  	.not('[href="#0"]')
-		  	.click(function(event) {
-				if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
-					&& location.hostname == this.hostname) {
-			  		var target = $(this.hash);
-			  		target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-			  		if (target.length) {
-						event.preventDefault();
-						$('html, body').animate({
-				  			scrollTop: target.offset().top
-						}, 1000, function() {
-				  			var $target = $(target);
-				  			$target.focus();
-				  			if ($target.is(":focus")) { // Checking if the target was focused
-								return false;
-				  			} else {
-								$target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
-								$target.focus(); // Set focus again
-				  			};
-						});
-			  		}
-				}
-		});
+        $('a[href*="#"]')
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function(event) {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+                    && location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        event.preventDefault();
+                        $('html, body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000, function() {
+                            var $target = $(target);
+                            $target.focus();
+                            if ($target.is(":focus")) { // Checking if the target was focused
+                                return false;
+                            } else {
+                                $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                                $target.focus(); // Set focus again
+                            };
+                        });
+                    }
+                }
+            });
     }
+
     function bindPopouts() {
         $(".popout-trigger").click(function(e) {
             e.preventDefault();
@@ -351,31 +353,31 @@ var bounds;
 
     }
 
-	function createElements(elem) {
-		if(typeof elem === "string") {
-			var node = document.createTextNode(elem);
-		} else {
-			if(typeof elem.name !== "string" || typeof elem.attr !== "object") {
-				console.error("Invalid node properties");
-				return;
-			}
+    function createElements(elem) {
+        if(typeof elem === "string") {
+            var node = document.createTextNode(elem);
+        } else {
+            if(typeof elem.name !== "string" || typeof elem.attr !== "object") {
+                console.error("Invalid node properties");
+                return;
+            }
 
-			var node = document.createElement(elem.name);
-			for(key in elem.attr) {
-				let value = elem.attr[key];
-				node.setAttribute(key, value);
-			}
+            var node = document.createElement(elem.name);
+            for(key in elem.attr) {
+                let value = elem.attr[key];
+                node.setAttribute(key, value);
+            }
 
-			if(typeof elem.children !== "undefined" && Array.isArray(elem.children)) {
-				for(let i = 0; i < elem.children.length; i++) {
-					node.appendChild(createElements(elem.children[i]));
-				}
-			} else {
-				console.warn("Children must be type array");
-			}
-		}
-		return node;
-	}
+            if(typeof elem.children !== "undefined" && Array.isArray(elem.children)) {
+                for(let i = 0; i < elem.children.length; i++) {
+                    node.appendChild(createElements(elem.children[i]));
+                }
+            } else {
+                console.warn("Children must be type array");
+            }
+        }
+        return node;
+    }
 
     function customSelect() {
         $('select').each(function(){
@@ -424,5 +426,24 @@ var bounds;
         });
     }
 
+    function heroDealerForm() {
+
+        var fad = "find-a-dealer";
+
+        $('.'+fad).each(function() {
+
+            var form    = $(this).data('form');
+
+            $("#submit-"+form).click(function(e) {
+                e.preventDefault();
+
+                var site    = $('.'+fad).data('site'),
+                    zip     = $('#zip-'+form).val();
+                    url     = site + '/'+fad+'?zip=' + zip;
+
+                window.location.href = url;
+            });
+        })
+    }
 
 })( jQuery )

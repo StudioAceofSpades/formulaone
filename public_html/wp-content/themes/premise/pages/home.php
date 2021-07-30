@@ -8,50 +8,44 @@ get_header(); ?>
 
         <?php include(get_stylesheet_directory() . '/parts/hero.php'); ?>
 
-        <section class="abo ut bg-white">
+        <section class="about bg-white">
             <div class="container">
 
                 <?php if($header = get_field('lifestyle_header')): ?>
-                <div class="row">
-                    <div class="col text-center">
-                        <p class="title"><?php echo $header; ?></p>
+                    <div class="row">
+                        <div class="col text-center">
+                            <p class="title"><?php echo $header; ?></p>
+                        </div>
                     </div>
-                </div>
                 <?php endif; ?>
 
                 <?php if(have_rows('lifestyles')): ?>
                     <div class="lifestyle">
                         <div class="row">
                             <?php while(have_rows('lifestyles')) : the_row(); ?>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <?php if($icon = get_sub_field('image')): ?>
-                                <div class="image" style="background-image: url(<?php echo $icon['url']; ?>);">
-                                    
-                                    <?php if($title = get_sub_field('title')): ?>
-                                    <h3><?php echo $title; ?></h3>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <?php if($icon = get_sub_field('image')): ?>
+                                        <div class="image" style="background-image: url(<?php echo $icon['url']; ?>);">
+                                            <?php if($title = get_sub_field('title')): ?>
+                                            <h3><?php echo $title; ?></h3>
+                                            <?php endif; ?>
+                                            <?php if($link = get_sub_field('link')): ?>
+                                            <a href="<?php echo $link['url']; ?>" class="panel-link"></a>
+                                            <?php endif; ?>
+                                        </div>
                                     <?php endif; ?>
-
-                                    <?php if($link = get_sub_field('link')): ?>
-                                    <a href="<?php echo $link['url']; ?>" class="panel-link"></a>
-                                    <?php endif; ?>
-
                                 </div>
-                                <?php endif; ?>
-
-                            </div>
                             <?php endwhile; ?>
                         </div>
-                                </div>
+                    </div>
                 <?php endif; ?>
 
-                <div class="button">
-                    <?php if($button = get_field('lifestyle_button')): ?>
-                    <div class="button text-center">
+                <?php if($button = get_field('lifestyle_button')): ?>
+                    <div class="buttons">
                         <a href="<?php echo $button['url']; ?>" class="button orange"><?php echo $button['title']; ?></a>
                     </div>
-                    <?php endif; ?>
-                </div>
-                
+                <?php endif; ?>
+
                 <div class="testimonials">
                     <div class="row">
                         <?php 
@@ -91,6 +85,6 @@ get_header(); ?>
                 </div>
             </div>
         </section>
-    </div>   
+    </div>
 
 <?php get_footer(); ?>

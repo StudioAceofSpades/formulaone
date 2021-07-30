@@ -1,51 +1,35 @@
-<div class="hero-wrapper hero-contact">
-    <div class="top-text">
-    <div class="row">
-       <div class="col-md contact-info">
-        <h1>Contact</h1>
-        <p>Get in Touch<p>
-        <ul>
-            <li>
-                <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="far fa-map-marker-alt"></i></a>
-                19224 CR 8 Bristol, IN 46507
-            </li>
-            <li>
-            <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fas fa-phone-alt"></i></a>
-                574-622-0827
-            </li>
-            <li><a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fas fa-phone-alt"></i></a>
-                888-622-0828
-            </li>
-            <li>
-            <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fas fa-fax"></i></a>
-                574-848-0960
-            </li>
-        </ul>  
-        <div class="hero-buttons">
-            <button class="first-btn">Button 1</button>
-            <button class="second-btn">Button 2</button>
-    </div>      
-       </div>
-       <div class="col-md">
-            <h2>General Inquiries</h2>
-            <div class="contact-zip-code-section">
-        <h4>Find a Dealer</h4>
-        <h5 for="dealer-finder">Zip Code</h5>
-        <div class="zipcodesearch">
-            <input type="search" id="site-search" name="q" aria-label="Search through site content">
-            <button class="submit-btn">Submit</button>
-            </div>
+<?php $bg = get_field('background_image'); ?>
+
+<div class="hero-wrapper hero-contact" style="background-image: url(<?php echo ($bg['url'])?>)">
+    <div class="container-fluid">
+        <div class="row">
+            <?php if(get_field('page_subtitle')): ?>
+                <div class="col-md-3 d-flex align-items-end">
+                    <h1><?php the_field('page_title'); ?></h1>
+                </div>
+                <div class="col-md-9 d-flex align-items-end">
+                    <h2><?php the_field('page_subtitle'); ?></h2>
+                </div>
+            <?php else: ?>
+                <div class="col">
+                    <?php the_field('page_title'); ?>
+                </div>
+            <?php endif; ?>
         </div>
-       </div>
-    </div>
-    </div>
-    <div class="newsletter">
-        <h4>Get The Newsletter</h4>
-        <h5 for="email-input">Email</h5>
-        <div class="newsletter-input">
-            <input type="email" id="email-submit" name="q" aria-label="Submit email for newsletter">
-            <br>
-            <button class="signup-btn">Sign Up</button>
+        <div class="row">
+            <div class="col-lg-3 d-none d-lg-block">
+                <?php include(locate_template('parts/contact-info.php')); ?>
+            </div>
+            <div class="col-lg-6 col-md-8 col-sm-6">
+                <?php
+                $classes = "flex-column flex-md-row";
+                include(locate_template('parts/hero/find-a-dealer.php'));
+                ?>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <h3>Newsletter</h3>
+                <?php echo do_shortcode(get_field('newsletter_script','options')); ?>
+            </div>
         </div>
     </div>
 </div>

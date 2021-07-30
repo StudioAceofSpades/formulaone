@@ -12,11 +12,12 @@
         li {
             float: none;
 
-            svg:not(:root).svg-inline--fa{
+            svg {
                 position: absolute;
-                top: 6px;
+                top: 3px;
                 color: $orange;
             }
+
             a {
                 position: relative;
                 display: block;
@@ -34,6 +35,7 @@
             }
         }
     }
+
     a {
         &:visited {
             color: $white;
@@ -43,6 +45,7 @@
             text-decoration: none;
         }
     }
+
     p {
         a {
             border-bottom: 1px solid transparent;
@@ -52,26 +55,18 @@
             }
         }
     }
+
     h3 {
-        display: flex;
-        max-width: 210px;
         margin: 0 auto;
         color: $white;
         font-weight: 300;
         margin-bottom: 20px;
-
-        &.title{
-            font-size: 22px;
-        }
+        font-size: 22px;
     }
 
     .gform_wrapper {
         display:block;
         margin: 0 auto;
-
-        h3.gform_title{
-            display: none;
-        }
 
         .gform_body {
             color: $white;
@@ -81,6 +76,7 @@
             font-weight: normal;
             font-family: 'Work Sans';
         }
+
         .ginput_container {
             input {
                 @extend .transition;
@@ -101,30 +97,14 @@
             }
         }
     }
+
     .img {
         display: flex;
         max-width: 210px;
         margin: 0 auto;
         margin-top: 25%;
     }
-    .contact {
-        display: flex;
-        max-width: 210px;
-        margin: 0 auto;
 
-        a {
-            margin-bottom: 10px;
-            font-size: 14px;
-            .text {
-                transition: .3s linear all;
-            }
-            &:hover {
-                .text {
-                    color: $orange;
-                }
-            }
-        }
-    }
     .cover {
         display: flex;
         max-width: 210px;
@@ -136,6 +116,7 @@
             line-height: 1;
             text-transform: uppercase;
         }
+
         li + li {
             margin-top: 15px;
         }
@@ -144,6 +125,7 @@
             width: 50%;
         }
     }
+
     .footer-block {
         position: relative;
 
@@ -154,33 +136,37 @@
             display: block;
             width: 1px;
             background-color: $white;
-        }
-        &::before {
             top: 0;
             bottom: 0;
+        }
+
+        &::before {
             left: 0;
         }
+
         &::after {
-            top: 0;
-            bottom: 0;
             right: 0;
         }
+
         + .footer-block {
             &::before {
                 display: none;
             }
         }
+
         &:first-child {
             &::before {
                 display: none;
             }
         }
+
         &:last-child {
             &::after {
                 display: none;
             }
         }
     }
+
     .newsletter {
         width: calc(100% - 70px);
         margin: 0 auto;
@@ -204,6 +190,24 @@
         }
     }
 
+    .contact {
+        ul {
+            margin-left: 30px;
+
+            li {
+                font-size: 18px;
+                line-height: 1.4;
+                margin-bottom: 10px;
+                position: relative;
+
+                svg {
+                    left: -30px;
+                    position: absolute;
+                }
+            }
+        }
+    }
+
     .sub-footer {
         background: $black;
         color: $white;
@@ -213,7 +217,7 @@
             text-transform: uppercase;
             color: $white;
             display: inline-block;
-            margin: 0 20px 0 0;
+            margin: 0 10px;
             font-size: 14px;
             line-height: 40px;
 
@@ -221,16 +225,14 @@
                 color: $orange;
             }
         }
-        .endstack{
-            p {
-                display: inline-block;
-                font-size: 14px;
-                line-height: 40px;
-                opacity: .75;
-                padding: 0 0 0 10px;
-                margin: 0;
-                color: $white;
-            }
+
+        p {
+            font-size: 14px;
+            line-height: 40px;
+            opacity: .75;
+            margin: 0;
+            color: $white;
+            text-align: right;
         }
     }
 }
@@ -241,29 +243,17 @@
         }
     }
 }
+
 @include media-breakpoint-down(md) {
     .footer {
         padding-top: 30px;
 
         .img {
             margin-top: 40px;
+            margin-bottom: 10px;
         }
 
-        h3{
-            max-width: none;
-        }
-        .contact {
-            max-width: none;
-        }
-        .cover{
-            max-width: none;
-        }
-        .contactt {
-            margin-top: 25px;
-            margin-bottom: 20px;
-        }
         .footer-block {
-
             &::after {
                 content: none;
             }
@@ -272,38 +262,65 @@
         .title {
             margin-top: 30px;
         }
+
+        .sub-footer {
+            text-align: center;
+
+            p {
+                text-align: center;
+            }
+        }
     }
 }
 
 @include media-breakpoint-down(sm) {
     .footer {
-        h3, h3.title{
+        h3 {
             display: block;
             text-align: center;
+            margin-bottom: 10px;
+            margin-top: 30px;
         }
-        .contact {
-            display: flex;
-            justify-content: center;
-            text-align: center;
-        }
+
         .cover{
             display: flex;
             justify-content: center;
             text-align: center;
-
         }
+
         form {
             text-align: center;
+
             label{
                 display: block;
                 text-align: left;
             }
+
+            input {
+                &[type="submit"] {
+                    margin-bottom: 0;
+                }
+            }
         }
 
-        ul{
-            li{
-                svg:not(:root).svg-inline--fa{
-                    left: 6px;
+        .contact {
+            margin-top: 20px;
+
+            ul {
+                margin-left: 0;
+
+                li {
+                    text-align: center;
+
+                    svg {
+                        position: relative;
+                        top: 0;
+                        left: -10px;
+                    }
+
+                    a {
+                        display: inline-block;
+                    }
                 }
             }
         }

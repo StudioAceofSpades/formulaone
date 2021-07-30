@@ -1,52 +1,62 @@
 .buttons {
-    margin-top: 30px;
+    margin: 0 -15px 20px;
+    text-align: center;
+    font-size: 0;
+    width: 100%;
 
-    &.block {
-        .button {
-            display: block;
-            text-align: center;
+    &.left {
+        text-align: left;
+    }
 
-            + .button {
-                margin-left: 0;
-                margin-top: 10px;
+    .button {
+        border: 2px solid $orange;
+        font-size: 18px;
+        line-height: 27px;
+        padding: 8px 30px;
+        margin: 0 15px;
+        display: inline-block;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &.orange {
+            background-color: $orange;
+            color: $white;
+
+            &:hover {
+                border-color: $white;
+                color: $white;
+            }
+        }
+
+        &.white {
+            background-color: $white;
+            color: $black;
+
+            &:hover {
+                background-color: $orange;
+                color: $white;
+            }
+        }
+
+        &.black {
+            background-color: $black;
+            color: $white;
+
+            &:hover {
+                background-color: $orange;
             }
         }
     }
 }
-.button {
-    position: relative;
-    display: inline-block;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 18px;
-    padding: 10px;
 
-    + .button {
-        margin-left: 15px;
-    }
-
-    &:hover {
-        text-decoration: none;
-    }
-
-    &.orange {
-        background: $orange;
-        color: $white;
-        border: 2px solid $orange;
-
-        &:hover {
-            background: $white;
-            color: $black;
-        }
-    }
-    &.orange-border {
-        border: 2px solid $orange;
-        background: $white;
-        color: $black;
-
-        &:hover {
-            color: $white;
-            background: $orange;
+@include media-breakpoint-down(sm) {
+    .buttons {
+        .button {
+            padding: 6px 15px;
+            font-size: 16px;
+            line-height: 24px;
         }
     }
 }
