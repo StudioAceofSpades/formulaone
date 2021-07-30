@@ -1,0 +1,38 @@
+#contact {
+    margin-bottom: 40px;
+
+    ul {
+        &.contact-info {
+            list-style-type: none;
+            margin-left: 30px;
+
+            li {
+                color: $black;
+                font-size: 18px;
+                line-height: 1.4;
+                margin-bottom: 10px;
+                position: relative;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                svg {
+                    color: $orange;
+                    left: -30px;
+                    position: absolute;
+                }
+
+                a {
+                    text-decoration: none;
+                    border-bottom: 1px solid transparent;
+
+                    &:hover {
+                        color: $black;
+                        border-bottom-color: $orange;
+                    }
+                }
+            }
+        }
+    }
+}

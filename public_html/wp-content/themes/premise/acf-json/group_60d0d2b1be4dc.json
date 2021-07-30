@@ -271,7 +271,7 @@
                     "label": "Icon",
                     "name": "icon",
                     "type": "text",
-                    "instructions": "Choose an icon from: https:\/\/fontawesome.com\/v5.15\/icons?d=gallery&p=2&s=brands",
+                    "instructions": "<a href=\"https:\/\/fontawesome.com\/v5.15\/icons?d=gallery&p=2&s=brands\" target=\"_blank\">Choose an icon from Font Awesome Brands.<\/a><br \/><br \/>Ex: <i><b>fa-facebook-square<\/b><\/i>",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -326,7 +326,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_60d9ff4c8cb25",
+            "key": "field_60da08a63c49b",
             "label": "Logo",
             "name": "",
             "type": "tab",
@@ -342,7 +342,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_60d9ff8d8cb26",
+            "key": "field_60da08af3c49c",
             "label": "Logo Image",
             "name": "logo_image",
             "type": "image",
@@ -383,5 +383,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624899478
+    "modified": 1627409709
 }

@@ -1,190 +1,398 @@
+.before-gradients {
+    position: absolute;
+    display: block;
+    content: "";
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.find-a-dealer-h3 {
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: $white;
+    line-height: 36px;
+}
+
 #hero {
     position: relative;
 
     h1 {
-        font-weight: 600;
         font-size: 64px;
         line-height: 75px;
         color: $white;
     }
 
-    .top-text {
-        width: 40%;
-        margin: 50px 0 0 50px;
-        position: absolute;
+    h2 {
+        font-size: 48px;
+        line-height: 56px;
+        font-weight: 600;
     }
 
-    .zip-code-section {
-        position: absolute;
-        bottom: 70px;
-        right: 70px;
+    h3 {
+        @extend .find-a-dealer-h3;
+    }
+
+    p {
+        width: 50%;
+        margin-bottom: 20px;
+        color: white;
+        font-weight: 300;
+        font-size: 24px;
+        line-height: 1.25;
+    }
+
+    .buttons {
+        margin: 0 -10px;
+
+        .button {
+            padding-left: 20px;
+            padding-right: 20px;
+            margin: 0 10px 20px;
+        }
+    }
+
+
+    .find-a-dealer {
+        .zip-search {
+            width: 250px;
+
+            input {
+                &[type="number"] {
+                    margin-bottom: 0;
+                }
+
+                &[type="submit"] {
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+
+    form {
+        label {
+            @extend .no-select;
+            color: $white;
+            display: block;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 10px;
+
+            &.lg {
+                @extend .find-a-dealer-h3;
+                text-transform: capitalize;
+            }
+        }
 
         input {
-            background-color: rgba($white, .2);
-            outline: 2px solid $orange;
-            width: 100px;
-            padding: 10px;
-            color: $white;
-        }
+            margin: 0;
 
-        h4 {
-            color: $white;
-            font-weight: 500;
-            font-size: 24px;
-        }
+            &[type="number"],
+            &[type="text"] {
+                @extend .transition;
+                background-color: rgba($white, .2);
+                border-color: rgba($black, .2);
+                color: $white;
+                text-align: center;
+                margin: 0 0 20px 2px;
 
-        h5, h6 {
-            color: $white;
-        }
+                @include placeholder {
+                    color: rgba($white, .8);
+                }
 
-        .submit-btn {
-            background-color: $orange;
-            margin: 10px;
-            padding: 10px 30px;
-            color: $white;
-            cursor: pointer;
-        }
+                &:focus{
+                    background-color: rgba($black, .4);
+                    border-color: transparent;
+                    @include placeholder {
+                        color: rgba($white, .9);
+                    }
+                }
+            }
 
-        .zipcodesearch {
-            display: flex;
-            align-items: center;
+            &[type="number"] {
+                /* Removing spinners */
+                /* Firefox */
+                -moz-appearance: textfield;
+                /* Chrome, Safari, Edge, Opera */
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+
+            &[type="submit"] {
+                padding: 8px;
+                border: 2px solid $orange;
+
+                &:hover {
+                    border-color: $white;
+                    top: 0;
+                }
+            }
         }
     }
 
     .hero-wrapper {
+        background-size: cover;
         background-repeat: no-repeat;
-    }
+        background-position: center;
+        padding: 60px;
+        margin-bottom: 60px;
+        position: relative;
+        z-index: 1;
 
-    .hero-home {
-        background-image: url('../img/home-header.png');
-        height: calc(100vh - 106px);
-    }
+        &.hero-home {
+            height: calc(100vh - 106px);
 
-    .hero-contact {
-        background-image: url('../img/subpage-header.png');
-        height: 490px;
-
-        .contact-zip-code-section {
-            input {
-                background-color: rgba($white, .2);  
-                outline: 2px solid $orange;
-                width: 100px;
-                padding: 10px;        
-                color: $white;  
+            &::before {
+                @extend .before-gradients;
+                background: linear-gradient(108deg, rgba($black, .5) 6%, rgba($black, 0) 47%, rgba($black, .5) 95%);
             }
 
-            h4 {
-                color: $white;
-                font-weight: 500;
-                font-size: 24px;
-            }
-
-            h5, h6 {
-                color: $white;
-            }
-
-            .submit-btn {
-                background-color: $orange;
-                margin: 10px;
-                padding: 10px 30px;
-                color: $white;
-                cursor: pointer;
-            }
-
-            .zipcodesearch {
-                display: flex;
-                align-items: center;
+            .find-a-dealer {
+                position: absolute;
+                bottom: 70px;
+                right: 70px;
             }
         }
 
-        .contact-info {
+        &.hero-default,
+        &.hero-contact {
+            height: 490px;
+
+            &::before {
+                @extend .before-gradients;
+                background: linear-gradient(93deg, $black 0%, transparent 66%);
+            }
+        }
+
+        &.hero-contact {
             h1,
-            p {
-                color: $white;
+            h2 {
+                margin-bottom: 30px;
             }
 
-            p {
-                font-weight: 500;
-                font-size: 24px;
-            }
+            ul {
+                list-style-type: none;
+                margin-left: 30px;
 
-            li {
-                list-style: none;
-                color: $white;
-            }
+                li {
+                    color: $white;
+                    font-size: 18px;
+                    line-height: 1.4;
+                    margin-bottom: 10px;
+                    position: relative;
 
-            .fa-map-marker-alt, .fa-phone-alt, .fa-phone-alt, .fa-fax {
-                color: $orange;
-                margin-right: 10px;
-            }
-        }
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
 
-        .newsletter {
-            float: right;
-            margin: 100px;
+                    svg {
+                        color: $orange;
+                        left: -30px;
+                        position: absolute;
+                    }
 
-            input {
-                background-color: rgba($white, .2);
-                outline: 2px solid $orange;
-                width: 100px;
-                padding: 10px;
-                color: $white;
-                width: 300px;
-            }
+                    a {
+                        color: $white;
 
-            h4,
-            h5 {
-                color: white;
-            }
-
-            .signup-btn {
-                background-color: $orange;
-                margin: 10px;
-                padding: 10px 30px;
-                color: $white;
-                cursor: pointer;
-                width: 100%;
-            }
-
-            .newsletter-input {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+                        &:hover {
+                            text-decoration: none;
+                            color: $orange;
+                        }
+                    }
+                }
             }
         }
     }
+}
 
-    .hero-standardsubpage {
-        background-image: url('../img/subpage-header.png');
-        background-repeat: no-repeat;
+@include media-breakpoint-down(lg) {
+    #hero {
+        h1 {
+            font-size: 50px;
+            line-height: 55px;
+        }
 
         h2 {
-            font-weight: 600;
-            font-size: 48px;
-            
+            font-size: 42px;
+            line-height: 48px;
+        }
+
+         p {
+             width: 70%;
+         }
+
+        .hero-wrapper {
+            &.hero-home {
+                height: 700px;
+            }
+
+            &.hero-default {
+                height: 400px;
+            }
+
+            &.hero-contact {
+                h1,
+                h2 {
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    #hero {
+        h1 {
+            font-size: 42px;
+            line-height: 48px;
+        }
+
+        h2 {
+            font-size: 32px;
+            line-height: 36px;
         }
 
         p {
-            color: white;
-            font-weight: 300;
+            font-size: 20px;
+            line-height: 1.4;
+            width: 100%;
+        }
+
+        .hero-wrapper {
+            padding: 30px;
+
+            &.hero-home {
+                height: 500px;
+
+                .find-a-dealer {
+                    right: 50px;
+                    bottom: 50px;
+                }
+            }
+
+            &.hero-default {
+                height: 350px;
+            }
+
+            &.hero-contact {
+                height: 350px;
+
+                .find-a-dealer {
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .find-a-dealer-h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        line-height: 1;
+    }
+
+    #hero {
+        h1 {
+            font-size: 32px;
+            line-height: 36px;
+        }
+
+        h2 {
+            font-size: 26px;
+            line-height: 30px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .hero-wrapper {
+            padding: 20px;
+
+            &.hero-home {
+                height: 350px;
+
+                .find-a-dealer {
+                    right: 30px;
+                    bottom: 20px;
+                }
+            }
+
+            &.hero-default {
+                padding-bottom: 20px;
+                height: auto;
+            }
+
+            &.hero-contact {
+                .find-a-dealer {
+                    .zip-search {
+                        width: auto;
+
+                        input {
+                            &[type="number"] {
+                                margin-bottom: 20px;
+                            }
+
+                            &[type="submit"] {
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(xs) {
+    #hero {
+        h1 {
+            font-size: 26px;
+            line-height: 30px;
+        }
+
+        h2 {
             font-size: 24px;
-            line-height: 150%;
+            line-height: 28px;
         }
 
-        .first-btn {
-            color: $white;
-            outline: 2px solid $orange;
-            margin: 10px;
-            padding: 10px 30px;
-            cursor: pointer;
-        }
+        .hero-wrapper {
+            padding: 15px;
 
-        .second-btn {
-            background-color: $orange;
-            margin: 10px;
-            padding: 10px 30px;
-            color: $white;
-            cursor: pointer;
+            &.hero-home {
+                .find-a-dealer {
+                    right: auto;
+                    left: 15px;
+                }
+            }
+
+            &.hero-contact {
+                height: auto;
+
+                h1 {
+                    margin-bottom: 5px;
+                }
+
+                h2 {
+                    margin-bottom: 20px;
+                }
+
+                form {
+                    input {
+                        &[type="submit"] {
+                            margin-bottom: 30px;
+                        }
+                    }
+                }
+            }
         }
     }
 }

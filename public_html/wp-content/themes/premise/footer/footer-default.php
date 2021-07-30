@@ -14,27 +14,27 @@
             </div>
             <div class="newsletter col-md-4 col-lg-3 footer-block">
                 <?php if($header = get_field('newsletter_header','options')): ?>
-                <h3 class="title"><?php echo $header; ?></h3>
+                    <h3><?php echo $header; ?></h3>
                 <?php endif; ?>
                 <div class="newsletter">
-                    <?php the_field('newsletter_script','options'); ?>
+                    <?php echo do_shortcode(get_field('newsletter_script','options')); ?>
                 </div> 
             </div>
             <div class="col-md-4 col-lg-3 footer-block">
                 <?php if($header = get_field('site_map_header','options')) : ?>
-                <h3 class="title"><?php echo $header; ?></h3>
+                    <h3><?php echo $header; ?></h3>
                 <?php endif; ?>
                 <div class="cover">
                     <div class="site">
                         <?php if( have_rows('site_map_links_left','options') ): ?>
                             <ul>
-                            <?php while (have_rows('site_map_links_left','options')) : the_row(); ?>
-                                <?php if($link = get_sub_field('links')): ?>
-                                    <li>
-                                        <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endwhile; ?>
+                                <?php while (have_rows('site_map_links_left','options')) : the_row(); ?>
+                                    <?php if($link = get_sub_field('links')): ?>
+                                        <li>
+                                            <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>"><?php echo $link['title']; ?></a>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endwhile; ?>
                             </ul>
                         <?php endif; ?>
                     </div>
@@ -53,28 +53,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-3 contactt footer-block">
-                <?php if($header = get_field('contact_header','options')): ?>
-                <h3 class="titlee"><?php echo $header; ?></h3>
-                <?php endif; ?>
+            <div class="col-md-4 col-lg-3 footer-block">
                 <div class="contact">
-                <?php if( have_rows('contact_info','options') ): ?>
-                    <ul>
-                        <?php while (have_rows('contact_info','options')) : the_row(); ?>
-                        <?php 
-                        $icon = get_sub_field('icon');
-                        $icon_text = get_sub_field('icon_text');
-                        
-                        if($icon && $icon_text): ?>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class="fas fa-<?php the_sub_field('icon'); ?>"></i><span class="text"><?php echo $icon_text; ?></span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    <?php endwhile; ?>
-                    </ul>
-                    <?php endif; ?>
+                    <?php include(locate_template('parts/contact-info.php')); ?>
                 </div>
             </div>
         </div>
@@ -82,7 +63,7 @@
     <div class="sub-footer">
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-lg-6">
                     <?php if($link = get_field('privacy_policy_link','options')): ?>
                         <?php saos_output_link($link); ?>
                     <?php endif; ?>
@@ -90,7 +71,7 @@
                         <?php saos_output_link($link); ?>
                     <?php endif; ?>
                 </div>
-                <div class="endstack">
+                <div class="col-lg-6">
                     <p>&copy; <?php echo date('Y'); ?> Formula Trailers. All Rights Reserved.</p>
                 </div>
             </div>

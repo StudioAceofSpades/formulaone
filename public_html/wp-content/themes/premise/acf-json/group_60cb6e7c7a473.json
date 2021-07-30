@@ -81,7 +81,7 @@
             "key": "field_60cb723484272",
             "label": "Newsletter Script",
             "name": "newsletter_script",
-            "type": "wysiwyg",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -91,10 +91,10 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_60d497546bb41",
@@ -254,9 +254,34 @@
             "collapsed": "",
             "min": 0,
             "max": 0,
-            "layout": "table",
-            "button_label": "",
+            "layout": "row",
+            "button_label": "Add Contact Info",
             "sub_fields": [
+                {
+                    "key": "field_6103fdf3509ab",
+                    "label": "Contact Type",
+                    "name": "contact_type",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "address": "Address",
+                        "phonefax": "Phone\/Fax Number",
+                        "none": "Something Else"
+                    },
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "default_value": "",
+                    "layout": "vertical",
+                    "return_format": "value",
+                    "save_other_choice": 0
+                },
                 {
                     "key": "field_60d37f4583124",
                     "label": "Icon Text",
@@ -281,7 +306,7 @@
                     "label": "Icon",
                     "name": "icon",
                     "type": "text",
-                    "instructions": "",
+                    "instructions": "<a href=\"https:\/\/fontawesome.com\/v5.15\/icons\" target=\"_blank\">Choose an icon from Font Awesome.<\/a><br \/><br \/>Be sure to include the whole class.<br \/>Ex: <i>fas fa-map-marker-alt<\/i>",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -361,5 +386,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624545230
+    "modified": 1627654609
 }

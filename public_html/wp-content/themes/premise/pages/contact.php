@@ -10,6 +10,9 @@ get_header(); ?>
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
+                <div class="d-lg-none">
+                    <?php include(locate_template('parts/contact-info.php')); ?>
+                </div>
                 <?php cfct_loop(); ?>
             </div>
         </div>
