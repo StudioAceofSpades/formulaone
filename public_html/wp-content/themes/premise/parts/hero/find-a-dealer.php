@@ -1,6 +1,6 @@
 <?php $zip_rand = rand(); ?>
 
-<div class="find-a-dealer" data-site="<?php bloginfo('url'); ?>" data-form="<?php echo $zip_rand; ?>">
+<div class="find-a-dealer-widget" data-site="<?php bloginfo('url'); ?>" data-form="<?php echo $zip_rand; ?>">
     <form class="zip-search">
         <label class="lg" for="zip-<?php echo $zip_rand; ?>">Find a Dealer</label>
         <label for="zip-<?php echo $zip_rand; ?>">Zip Code</label>

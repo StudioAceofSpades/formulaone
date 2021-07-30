@@ -9,7 +9,7 @@
     z-index: -1;
 }
 
-.find-a-dealer-h3 {
+.find-a-dealer-widget-h3 {
     font-weight: 500;
     font-size: 24px;
     margin-bottom: 20px;
@@ -33,7 +33,7 @@
     }
 
     h3 {
-        @extend .find-a-dealer-h3;
+        @extend .find-a-dealer-widget-h3;
     }
 
     p {
@@ -56,7 +56,7 @@
     }
 
 
-    .find-a-dealer {
+    .find-a-dealer-widget {
         .zip-search {
             width: 250px;
 
@@ -82,7 +82,7 @@
             margin-bottom: 10px;
 
             &.lg {
-                @extend .find-a-dealer-h3;
+                @extend .find-a-dealer-widget-h3;
                 text-transform: capitalize;
             }
         }
@@ -153,7 +153,7 @@
                 background: linear-gradient(108deg, rgba($black, .5) 6%, rgba($black, 0) 47%, rgba($black, .5) 95%);
             }
 
-            .find-a-dealer {
+            .find-a-dealer-widget {
                 position: absolute;
                 bottom: 70px;
                 right: 70px;
@@ -270,7 +270,7 @@
             &.hero-home {
                 height: 500px;
 
-                .find-a-dealer {
+                .find-a-dealer-widget {
                     right: 50px;
                     bottom: 50px;
                 }
@@ -283,7 +283,7 @@
             &.hero-contact {
                 height: 350px;
 
-                .find-a-dealer {
+                .find-a-dealer-widget {
                     width: auto;
                 }
             }
@@ -292,7 +292,7 @@
 }
 
 @include media-breakpoint-down(sm) {
-    .find-a-dealer-h3 {
+    .find-a-dealer-widget-h3 {
         font-size: 20px;
         margin-bottom: 10px;
         line-height: 1;
@@ -320,7 +320,7 @@
             &.hero-home {
                 height: 350px;
 
-                .find-a-dealer {
+                .find-a-dealer-widget {
                     right: 30px;
                     bottom: 20px;
                 }
@@ -332,7 +332,7 @@
             }
 
             &.hero-contact {
-                .find-a-dealer {
+                .find-a-dealer-widget {
                     .zip-search {
                         width: auto;
 
@@ -368,7 +368,7 @@
             padding: 15px;
 
             &.hero-home {
-                .find-a-dealer {
+                .find-a-dealer-widget {
                     right: auto;
                     left: 15px;
                 }

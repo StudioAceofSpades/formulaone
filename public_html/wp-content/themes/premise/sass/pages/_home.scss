@@ -64,85 +64,59 @@
 .home {
     font-family : $font;
 
-        p.title {
-            display: block;
-            margin: 0 auto;
-            text-align: center;
-            margin-top: 80px;
+    p.title {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 80px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        font-size: 48px;
+        line-height: 56.3px;
+        color: $orange;
+    }
+
+    .testimonials {
+        margin-bottom: 80px;
+
+        .testimonial {
+            background-color: $offwhite;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            padding: 50px;
             margin-bottom: 30px;
-            font-weight: 600;
-            font-size: 48px;
-            line-height: 56.3px;
-            color: $orange;
-        }
+            text-align: center;
 
-        .testimonials {
-            margin-bottom: 80px;
-
-            .testimonial {
-                background-color: $offwhite;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                padding: 50px;
-                margin-bottom: 30px;
-                text-align: center;
-
-                h3.quote {
-                    font-size: 24px;
-                    font-weight: 300;
-                    line-height: 36px;
-                    color: $black;
-                }
-
-                h3.person {
-                    font-size: 24px;
-                    font-weight: 500;
-                    line-height: 36px;
-                    color: $black;
-                }
-
-            }
-        }
-
-                    /*
-
-        .button {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 50px;
-
-            a {
-                color: $white;
+            h3.quote {
                 font-size: 24px;
+                font-weight: 300;
                 line-height: 36px;
-                font-weight: 700;
-                text-decoration: none;
+                color: $black;
             }
 
-            .button.orange {
-                background-color: $orange;
-                padding: 10px 30px;
+            h3.person {
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 36px;
+                color: $black;
             }
         }
-            */
+    }
 
+    .header {
+        font-size: 42px;
+        font-weight: 600;
+        line-height: 56.3px;
+        color: $orange;
+        text-align: left;
+    }
 
-        .header {
-            font-size: 42px;
-            font-weight: 600;
-            line-height: 56.3px;
-            color: $orange;
-            text-align: left;
-        }
-
-        .subheader {
-            font-size: 24px;
-            font-weight: 300;
-            line-height: 36px;
-            color: $black;
-            text-align: left;
-        }
+    .subheader {
+        font-size: 24px;
+        font-weight: 300;
+        line-height: 36px;
+        color: $black;
+        text-align: left;
+    }
 
 }
 
@@ -151,7 +125,7 @@
         .header {
             font-size: 40px;
         }
-        
+
         .testimonials {
             .testimonial {
                 padding: 30px;
