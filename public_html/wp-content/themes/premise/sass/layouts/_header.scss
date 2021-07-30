@@ -61,6 +61,88 @@
         }
 
     }
+    
+    .top-menu-links {
+
+        .has-dropdown {
+            display: flex;
+            justify-content: center;
+
+            &.active {
+                overflow-y: visible;
+
+                > a {
+                    color: $orange;
+                }
+            }
+        }
+
+        .dropdown {
+            position: absolute;
+            margin-top: 76px;                    
+            display: none;
+            z-index: 3;
+
+            > ul {
+                position: relative;
+                text-align: center;
+                width: 100%;
+                z-index: 5;
+                display: block;
+                background-color: $dark-gray;
+                padding: 1px;
+
+                > li {
+                    @extend .transition;
+                    display: block;
+                    float: none;
+                    margin: 0 0 1px 0;
+                    background-color: $middle-gray;
+
+                    &:hover {
+                        background-color: $dark-gray;
+
+                       > a {
+                            color: $orange;
+                        }
+
+                        + li {
+                            > a {                    
+                                &::before {
+                                    opacity: 0;
+                                }
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    &:first-child {
+                        > a {
+                            &::before {
+                                display: none;
+                            }
+                        }
+                    }                         
+
+                    > a {
+                        color: $white;
+                        font-weight: 400;
+                        text-transform: uppercase;
+                        font-size: 14px;
+                        line-height: 16px;
+                        display: block;
+                        padding: 15px;
+
+                    }
+                }
+            }
+        }
+    }
+
+
     .top-menu-social {
         ul {
             margin-right: -15px;
@@ -75,6 +157,7 @@
             }
         }
     }
+
     .main {
         background-color: #212224;
         color: white;
