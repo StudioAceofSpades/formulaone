@@ -89,7 +89,7 @@ E-Mail: jon@studioaceofspade.com
 
                                             <?php if(have_rows('dropdown')): ?>
                                                 <div class="dropdown">
-                                                    <ul>
+                                                    <ul class="dropdownitems">
                                                         <?php 
                                                         while(have_rows('dropdown','options')) : 
                                                             the_row();
