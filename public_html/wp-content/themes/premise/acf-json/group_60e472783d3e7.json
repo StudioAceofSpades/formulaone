@@ -67,8 +67,8 @@
                             "collapsed": "field_60e4a99275d00",
                             "min": 2,
                             "max": 2,
-                            "layout": "row",
-                            "button_label": "Add Two Column Block",
+                            "layout": "block",
+                            "button_label": "2 Column",
                             "sub_fields": [
                                 {
                                     "key": "field_60e4a96475cff",
@@ -165,30 +165,6 @@
                                         "id": ""
                                     },
                                     "return_format": "array"
-                                },
-                                {
-                                    "key": "field_610440af02f1b",
-                                    "label": "Column Button Alignment",
-                                    "name": "column_button_alignment",
-                                    "type": "radio",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": 0,
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "choices": {
-                                        "center": "Center",
-                                        "left": "Left"
-                                    },
-                                    "allow_null": 0,
-                                    "other_choice": 0,
-                                    "default_value": "",
-                                    "layout": "horizontal",
-                                    "return_format": "value",
-                                    "save_other_choice": 0
                                 }
                             ]
                         }
@@ -204,7 +180,7 @@
                     "sub_fields": [
                         {
                             "key": "field_60e5d605dfc68",
-                            "label": "Three Column",
+                            "label": "Three column",
                             "name": "three_column",
                             "type": "repeater",
                             "instructions": "",
@@ -218,8 +194,8 @@
                             "collapsed": "field_60e4a99275d00",
                             "min": 3,
                             "max": 3,
-                            "layout": "row",
-                            "button_label": "Add Three Column Block",
+                            "layout": "block",
+                            "button_label": "",
                             "sub_fields": [
                                 {
                                     "key": "field_60e5d605dfc69",
@@ -316,30 +292,6 @@
                                         "id": ""
                                     },
                                     "return_format": "array"
-                                },
-                                {
-                                    "key": "field_6104412f481cf",
-                                    "label": "Column Button Alignment",
-                                    "name": "column_button_alignment",
-                                    "type": "radio",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": 0,
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "choices": {
-                                        "center": "Center",
-                                        "left": "Left"
-                                    },
-                                    "allow_null": 0,
-                                    "other_choice": 0,
-                                    "default_value": "",
-                                    "layout": "horizontal",
-                                    "return_format": "value",
-                                    "save_other_choice": 0
                                 }
                             ]
                         }
@@ -355,7 +307,7 @@
                     "sub_fields": [
                         {
                             "key": "field_60e5dfd6a17b3",
-                            "label": "Fancy Two Column",
+                            "label": "Fancy Two Col",
                             "name": "fancy_two_col",
                             "type": "repeater",
                             "instructions": "",
@@ -368,9 +320,9 @@
                             },
                             "collapsed": "field_60e5dff7a17b4",
                             "min": 1,
-                            "max": 0,
+                            "max": 1,
                             "layout": "block",
-                            "button_label": "Add Fancy Two Column Block",
+                            "button_label": "",
                             "sub_fields": [
                                 {
                                     "key": "field_60e5dff7a17b4",
@@ -438,12 +390,12 @@
                 "layout_60e610c1a3815": {
                     "key": "layout_60e610c1a3815",
                     "name": "fancy_three_column",
-                    "label": "Fancy Three Column",
+                    "label": "Fancy three Column",
                     "display": "block",
                     "sub_fields": [
                         {
                             "key": "field_60e610c1a3816",
-                            "label": "Fancy Three Column",
+                            "label": "Fancy Three Col",
                             "name": "fancy_three_col",
                             "type": "repeater",
                             "instructions": "",
@@ -456,9 +408,9 @@
                             },
                             "collapsed": "field_60e5dff7a17b4",
                             "min": 1,
-                            "max": 0,
+                            "max": 1,
                             "layout": "block",
-                            "button_label": "Add Fancy Three Column Block",
+                            "button_label": "",
                             "sub_fields": [
                                 {
                                     "key": "field_60e610c1a3817",
@@ -638,8 +590,8 @@
                             "collapsed": "",
                             "min": 0,
                             "max": 0,
-                            "layout": "row",
-                            "button_label": "Add Button",
+                            "layout": "table",
+                            "button_label": "",
                             "sub_fields": [
                                 {
                                     "key": "field_60e75d1de9492",
@@ -710,59 +662,14 @@
                     "min": "",
                     "max": ""
                 },
-                "layout_61081ce2faed9": {
-                    "key": "layout_61081ce2faed9",
-                    "name": "video_block",
-                    "label": "Video Block",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_61081ce9faeda",
-                            "label": "Video Title",
-                            "name": "video_title",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_61081cf7faedb",
-                            "label": "Video",
-                            "name": "video",
-                            "type": "oembed",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "width": "",
-                            "height": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_61081d0cfaedc": {
-                    "key": "layout_61081d0cfaedc",
+                "layout_6108156ae28fb": {
+                    "key": "layout_6108156ae28fb",
                     "name": "photo_gallery",
-                    "label": "Photo Gallery",
+                    "label": "Photo gallery",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_61081d17faedd",
+                            "key": "field_6108157ce28fc",
                             "label": "Images",
                             "name": "images",
                             "type": "repeater",
@@ -778,10 +685,10 @@
                             "min": 7,
                             "max": 0,
                             "layout": "table",
-                            "button_label": "Add Image",
+                            "button_label": "",
                             "sub_fields": [
                                 {
-                                    "key": "field_61081d43faede",
+                                    "key": "field_6108158ee28fd",
                                     "label": "Image",
                                     "name": "image",
                                     "type": "image",
@@ -833,5 +740,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1627921758
+    "modified": 1627925206
 }
