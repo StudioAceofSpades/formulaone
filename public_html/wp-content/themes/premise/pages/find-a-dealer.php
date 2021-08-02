@@ -37,7 +37,7 @@ get_header(); ?>
                         </div>
                     </form>
                 </div>
-                <div class="map-results">
+                <div class="map-results desktop-results">
                     <h2>Dealer Results <span class="result-count"></span></h2>
                     <div class="found-results">
                         <div class="row">
@@ -63,7 +63,7 @@ get_header(); ?>
         </div>
         <div class="col-lg-6 map-wrapper">
             <div id="map"></div>
-            <div class="map-results">
+            <div class="map-results mobile-results">
                 <h2>Dealer Results <span class="result-count"></span></h2>
                 <div class="found-results">
                     <div class="row">

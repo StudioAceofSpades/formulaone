@@ -10,7 +10,10 @@ var bounds;
         headerNavigation();
         smoothScroll();
         bindPopouts();
-        initMap();
+
+        if($('#map').length) {
+            initMap();
+        }
     });
 
     function initMap() {
@@ -42,21 +45,22 @@ var bounds;
     }
 
     function bindViewControls() {
-        var $map    = $('#map');
-        var $list   = $('.map-results');
+        var $map            = $('#map');
+        var $desktopList    = $('.desktop-results');
+        var $mobileList     = $('.mobile-results');
 
         $(window).on('resize', function() {
             if(window.innerWidth > 991) {
                 $map.show();
-                $list.show();
+                $desktopList.show();
+                $mobileList.hide();
             } else {
-                console.log('made it');
                 if($('.list-view').hasClass('active')) {
                     $map.hide();
-                    $list.show();
+                    $mobileList.show();
                 } else {
                     $map.show();
-                    $list.hide();
+                    $mobileList.hide();
                 }
             }
         });
