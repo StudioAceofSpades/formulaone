@@ -287,6 +287,32 @@ var bounds;
                 $(this).children('.dropdown').stop().slideUp(300);
             }
         );
+
+        var $mobileTrigger = $('.mobile-trigger');
+        var $mobileSubmenuTrigger = $('.submenu-toggle');
+
+        $mobileSubmenuTrigger.click(function(e) {
+            e.preventDefault();
+
+            $(this)
+                .toggleClass('active')
+                .parents('.has-submenu')
+                .find('ul')
+                .stop()
+                .slideToggle();
+        });
+
+        $mobileTrigger.click(function(e) {
+            e.preventDefault();
+
+            $(this)
+                .toggleClass('active')
+                .siblings('.mobile-navigation')
+                .stop()
+                .slideToggle();
+        });
+
+
     }
 
     function smoothScroll() {
