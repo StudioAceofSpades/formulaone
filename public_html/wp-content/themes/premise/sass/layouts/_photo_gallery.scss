@@ -1,5 +1,15 @@
 .gallery-page {
     width: 100%;
+    background-color: $dark-gray;
+    padding: 40px 0 10px;
+    margin-bottom: 60px;
+
+    h1 {
+        text-align: center;
+        color: $white;
+        margin-bottom: 20px;
+    }
+
     .box-image {
         padding-top: 100%;
         height: 0;
@@ -8,10 +18,43 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
+        position: relative;
+        background-color: #000;
+        border: 2px solid transparent;
+
         &.main {
             height: calc(100% - 30px);
             padding: 0;
+
+            svg {
+                font-size: 20px;
+                right: 10px;
+                top: 10px;
+            }
+        }
+
+        &:hover {
+            border-color: $orange;
+
+            svg {
+                opacity: 1;
+            }
+        }
+
+        svg {
+            @extend .transition;
+            color: $orange;
+            position: absolute;
+            font-size: 16px;
+            right: 8px;
+            top: 8px;
+            opacity: 0;
         }
     }
+}
 
+@include media-breakpoint-down(lg) {
+    .gallery-page {
+        //background-color: red;
+    }
 }
