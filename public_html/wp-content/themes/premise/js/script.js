@@ -10,11 +10,18 @@ var bounds;
         headerNavigation();
         smoothScroll();
         bindPopouts();
+        photoGallery();
 
         if($('#map').length) {
             initMap();
         }
     });
+
+    function photoGallery() {
+        $('.slick').slick(
+            
+        );
+    }
 
     function initMap() {
         var mapdiv  = document.getElementById("map");
