@@ -269,6 +269,120 @@
             }
         }
     }
+}
+    @include media-breakpoint-down(md) {
+        .secondary, .primary {
+            display: none;
+        }
+        .mobile-nav {
+            display: block;
+            position: relative;
+        }
+            .secondary-nav {
+                li {
+                    margin-left: 2px;
+                }
+            }
+            .main {
+    
+                .mobile-trigger {
+                    font-size: 24px;
+                    line-height: 67px;
+                    color: $orange !important;
+    
+                    &:hover,
+                    &.active {
+                        color: $white;
+                    }   
+                 }
+
+                .mobile-navigation {
+                    display: none;
+                    position: absolute;
+                    top: 67px;
+                    right: -15px;
+                    width: 280px;
+                    background: $dark-gray;
+                    text-align: right;
+                    border-top: 1px solid $dark-gray;
+    
+                    a {
+                        font-size: 13px;
+                        line-height: 15px;
+                        text-transform: uppercase;
+                        font-weight: 400;
+                        padding: 2px;
+                        border-bottom: 1px solid $middle-gray;
+    
+                        &:hover {
+                            background: $orange;
+                        }
+    
+                        &.submenu-toggle {
+                            position: absolute;
+                            left: 100px;
+                            right: 0;
+                            bottom: 0;
+                            top: 0;
+                            background: $dark-gray;
+    
+                            &:hover,
+                            .active {
+                                background: $dark-gray;
+                            }
+    
+                            &.active {
+                                .fa-plus {
+                                    display: none;
+                                }
+                                .fa-minus {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+                    .submenu-title {
+                        position: relative;
+                        padding-left: 7px;
+                        border-bottom: 1px solid $dark-gray;
+    
+                        > a {
+                            border-bottom: 0;
+                        }
+    
+                        svg {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            margin-left: -4px;
+                            margin-top: -7px;
+                        }
+                        .fa-minus {
+                            display: none;
+                        }
+                    }
+                    li {
+                        display: block;
+                    }
+                    .has-dropdown {
+                        ul {
+                            display: none;
+                            background: rgba(0,0,0,.1);
+                        }
+                    }
+
+                    ul {
+                        display: flex;
+                        flex-flow: column;
+    
+                }
+
+                   
+            }
+        }
+
+    }
+    
 
     /* =============================================================================
     Navigation
@@ -306,4 +420,4 @@
             }
         }
     }
-}
+
