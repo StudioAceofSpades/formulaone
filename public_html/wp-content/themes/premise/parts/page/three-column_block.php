@@ -11,11 +11,11 @@
                             <?php endif; ?>
                             <?php if(get_sub_field('title')): ?>
                                 <?php $title = get_sub_field('title'); ?>
-                                <h3 class="title"><?php echo $title ?></h3>
+                                <h3><?php echo $title ?></h3>
                             <?php endif; ?>
                             <?php if(get_sub_field('sub_header')): ?>
                                 <?php $subheader = get_sub_field('sub_header'); ?>
-                                <h4 class="subheader"><?php echo $subheader ?></h4>
+                                <h4><?php echo $subheader ?></h4>
                             <?php endif; ?>
                             <?php if(get_sub_field('description')): ?>
                                 <?php $desc = get_sub_field('description'); ?>

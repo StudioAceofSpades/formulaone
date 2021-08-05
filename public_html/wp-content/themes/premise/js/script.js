@@ -10,18 +10,37 @@ var bounds;
         headerNavigation();
         smoothScroll();
         bindPopouts();
-        photoGallery();
+        photoGalleryPopups();
+        photoGalleryDesktop();
+        photoGalleryMobile();
 
         if($('#map').length) {
             initMap();
         }
     });
 
-    function photoGallery() {
-        $('.slick').slick(
-            
-        );
+    function photoGalleryPopups() {
+        $('.popup').slickLightbox();
+        //console.log('SLICK LIGHTBOX IS RUNNING');
     }
+
+    function photoGalleryDesktop() {
+        $('.photo-gallery-desktop').slick({
+            adaptiveHeight: true,
+            prevArrow: $('.slick-arrow-desktop.prev'),
+            nextArrow: $('.slick-arrow-desktop.next'),
+            dots: true
+        });
+    }
+
+    function photoGalleryMobile() {
+        $('.photo-gallery-mobile').slick({
+            adaptiveHeight: true,
+            prevArrow: $('.slick-arrow-mobile.prev'),
+            nextArrow: $('.slick-arrow-mobile.next'),
+        });
+    }
+
 
     function initMap() {
         var mapdiv  = document.getElementById("map");

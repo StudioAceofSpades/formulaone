@@ -7,7 +7,7 @@
                     <div class="col text-center">
                         <?php if(get_sub_field('header')): ?>
                             <?php $header = get_sub_field('header'); ?>
-                            <h1 class="header"><?php echo $header ?></h1>
+                            <h1><?php echo $header ?></h1>
                         <?php endif; ?>
                     </div>
                 </div>
