@@ -6,9 +6,7 @@ get_header(); ?>
 
     <div class="lifestyle">
 
-        <?php include(get_stylesheet_directory() . '/parts/hero.php'); ?>
-
-        <section class="abo ut bg-white">
+        <section class="about bg-white">
             <div class="container">
 
                 <?php if($header = get_field('lifestyle_header')): ?>

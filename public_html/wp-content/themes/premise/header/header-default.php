@@ -26,7 +26,7 @@ E-Mail: jon@studioaceofspade.com
             <div class="container">
                 <div class="row">
                     <a href="<?php bloginfo('url'); ?>" class="brand">
-                        <?php if($image = get_field('logo_image','options')): ?>
+                        <?php if($image = get_field('logo','options')): ?>
                             <div class="formulaicon">
                                 <img src="<?php echo $image['url']; ?>" alt="Formula Trailers">
                             </div>

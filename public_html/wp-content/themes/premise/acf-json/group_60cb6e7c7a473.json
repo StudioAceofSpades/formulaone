@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_60d4970d6bb3f",
-            "label": "LOGO",
+            "label": "Logo",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -386,5 +386,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1627654609
+    "modified": 1628535536
 }
