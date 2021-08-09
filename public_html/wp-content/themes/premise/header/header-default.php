@@ -42,28 +42,28 @@ E-Mail: jon@studioaceofspade.com
                                     $link = get_sub_field('menu_link'); 
                                     ?>
                                     <?php if(get_sub_field('has_dropdown','options')): ?>
-                                            <li class="has-dropdown">
-                                            <?php saos_output_link($link); ?>
-                                            <?php if(have_rows('dropdown')): ?>
-                                                <div class="dropdown">
-                                                    <ul class="dropdownitems">
-                                                        <?php 
-                                                        while(have_rows('dropdown','options')) : 
-                                                            the_row();
-                                                            $link = get_sub_field('dropdown_link'); ?> 
-                                                             <li>
-                                                                <?php saos_output_link($link); ?>
-                                                            </li>                                        
-                                                        <?php endwhile; ?>
-                                                    </ul>
-                                                </div>
-                                                <?php endif; ?>
+                                        <li class="has-dropdown">
+                                        <?php saos_output_link($link); ?>
+                                        <?php if(have_rows('dropdown')): ?>
+                                            <div class="dropdown">
+                                                <ul class="dropdownitems">
+                                                    <?php 
+                                                    while(have_rows('dropdown','options')) : 
+                                                        the_row();
+                                                        $link = get_sub_field('dropdown_link'); ?> 
+                                                         <li>
+                                                            <?php saos_output_link($link); ?>
+                                                        </li>                                        
+                                                    <?php endwhile; ?>
+                                                </ul>
+                                            </div>
+                                            <?php endif; ?>
 
-                                            </li>
-                                            <?php else: ?>
-                                            <li>
-                                                <?php saos_output_link($link); ?>
-                                            </li>
+                                        </li>
+                                        <?php else: ?>
+                                        <li>
+                                            <?php saos_output_link($link); ?>
+                                        </li>
                                      <?php endif; ?>
                                 <?php endwhile; ?>
                             </ul>
@@ -139,92 +139,85 @@ E-Mail: jon@studioaceofspade.com
     
     <a class="mobile-trigger" href="#"><i class="far fa-bars"></i></a>
 
-    <?php if(have_rows('main_navigation','options')): ?>
     <nav class="mobile-navigation">
+        
+        <?php if(have_rows('main_navigation','options')): ?>
         <ul>
-        <?php 
-           while(have_rows('main_navigation','options')) : 
-           the_row(); 
-           $link = get_sub_field('main_menu_link'); ?>
-           <?php if(get_sub_field('has_dropdown','options')): ?>
-           <li class="has-dropdown">
+            <?php 
+            while(have_rows('main_navigation','options')) : 
+                the_row(); 
+                $link = get_sub_field('main_menu_link');
+               
+                if(get_sub_field('has_dropdown','options')): 
+                ?>
+                <li class="has-dropdown">
                     <div class="submenu-title">
+                            
                         <a href="#" class="submenu-toggle">
                             <i class="far fa-plus"></i>
                             <i class="far fa-minus"></i>
                         </a>
+
                         <?php saos_output_link($link); ?>
-                                            <?php if(have_rows('dropdown')): ?>
-                                                <div class="dropdown">
-                                                    <ul class="dropdownitems">
-                                                        <?php 
-                                                        while(have_rows('dropdown','options')) : 
-                                                            the_row();
-                                                            $link = get_sub_field('dropdown_link'); ?> 
-                                                             <li>
-                                                                <?php saos_output_link($link); ?>
-                                                            </li>                                        
-                                    <?php endwhile; ?>
-                                </ul>
-                            </div>
-                        <?php endif; ?>  
+
+                        <?php if(have_rows('dropdown')): ?>
+                        <div class="dropdown">
+                            <ul class="dropdownitems">
+                            <?php while(have_rows('dropdown','options')) : the_row(); ?>
+                                <li><?php saos_output_link(get_sub_field('dropdown_link')); ?></li>
+                            <?php endwhile; ?>
+                            </ul>
+                        </div>
+                        <?php endif; ?>
+
                     </div>
                 </li>
                 <?php else: ?>
-                                            <li>
-                                                <?php saos_output_link($link); ?>
-                                            </li>
-            <?php endif; ?>
-        <?php endwhile; ?>
+                    <li><?php saos_output_link($link); ?></li>
+                <?php endif; ?>
+            <?php endwhile; ?>
         </ul>
+        <?php endif; ?>
 
         <?php if(have_rows('top_navigation','options')): ?>
-                            <ul class="secondnav">
-                                <?php 
-                                while(have_rows('top_navigation','options')) : 
-                                    the_row(); 
-                                    $link = get_sub_field('menu_link'); 
-                                    ?>
-                                    <?php if(get_sub_field('has_dropdown','options')): ?>
-                                            <li class="has-dropdown">
-                                            <div class="submenu-title">
-                        <a href="#" class="submenu-toggle">
-                            <i class="far fa-plus"></i>
-                            <i class="far fa-minus"></i>
-                        </a>
-                                            <?php saos_output_link($link); ?>
-                                            <?php if(have_rows('dropdown')): ?>
-                                                <div class="dropdown">
-                                                    <ul class="dropdownitems">
-                                                        <?php 
-                                                        while(have_rows('dropdown','options')) : 
-                                                            the_row();
-                                                            $link = get_sub_field('dropdown_link'); ?> 
-                                                             <li>
-                                                                <?php saos_output_link($link); ?>
-                                                            </li>                                        
-                                                        <?php endwhile; ?>
-                                                    </ul>
-                                                </div>
-                                                <?php endif; ?>
-                                                
-                                                </div>
+        <ul class="secondnav">
+            <?php 
+            while(have_rows('top_navigation','options')) : 
+                the_row(); 
+                $link = get_sub_field('menu_link'); 
+                
+                if(get_sub_field('has_dropdown','options')): ?>
+                    <li class="has-dropdown">
+                        <div class="submenu-title">
+                            
+                            <a href="#" class="submenu-toggle">
+                                <i class="far fa-plus"></i>
+                                <i class="far fa-minus"></i>
+                            </a>
 
-                                            </li>
-                                            <?php else: ?>
-                                            <li>
-                                                <?php saos_output_link($link); ?>
-                                            </li>
-                                     <?php endif; ?>
+                            <?php saos_output_link($link); ?>
+                            
+                            <?php if(have_rows('dropdown')): ?>
+                            <div class="dropdown">
+
+                                <ul class="dropdownitems">
+                                <?php while(have_rows('dropdown','options')) : the_row(); ?> 
+                                    <li><?php saos_output_link(get_sub_field('dropdown_link')); ?></li>
                                 <?php endwhile; ?>
-                            </ul>
+                                </ul>
+
+                            </div>
                             <?php endif; ?>
+                            
+                        </div>
+                    </li>
+                <?php else: ?>
+                    <li><?php saos_output_link($link); ?></li>
+                <?php endif; ?>
+            <?php endwhile; ?>
+        </ul>
+        <?php endif; ?>
     </nav>
-    <?php endif; ?>
-    
 </div>
-
-    </header>
-
+</header>
 <main id="main">
-

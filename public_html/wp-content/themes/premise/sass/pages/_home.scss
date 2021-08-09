@@ -77,6 +77,20 @@
     .testimonials {
         margin-bottom: 80px;
 
+        .header {
+            font-size: 42px;
+            font-weight: 600;
+            line-height: 56.3px;
+            color: $orange;
+            text-align: left;
+        }
+        .subheader {
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 36px;
+            color: $black;
+            text-align: left;
+        }
         .testimonial {
             background-color: $offwhite;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -90,7 +104,6 @@
                 line-height: 36px;
                 color: $black;
             }
-
             h3.person {
                 font-size: 24px;
                 font-weight: 500;
@@ -99,86 +112,60 @@
             }
         }
     }
-
-    .header {
-        font-size: 42px;
-        font-weight: 600;
-        line-height: 56.3px;
-        color: $orange;
-        text-align: left;
-    }
-
-    .subheader {
-        font-size: 24px;
-        font-weight: 300;
-        line-height: 36px;
-        color: $black;
-        text-align: left;
-    }
-
 }
-
 @include media-breakpoint-down(lg) {
     .home {
-        .header {
-            font-size: 40px;
+        p.title {
+            margin-top: 30px;
         }
-
         .testimonials {
             .testimonial {
                 padding: 30px;
             }
-        }
-
-        .button {
-            margin-bottom: 50px;
-        }
-        p.title {
-            margin-top: 30px;
+            .button {
+                margin-bottom: 50px;
+            }
+            .header {
+                font-size: 40px;
+            }
         }
     }
 }
-
 @include media-breakpoint-down(md) {
     .home {
-        .button{
-            margin-bottom: 35px;
-        }
-
-        .header {
-            text-align: center;
-        }
-
-        .subheader {
-            text-align: center;
-            margin-bottom: 35px;
+        .testimonials {
+            .button{
+                margin-bottom: 35px;
+            }
+            .header {
+                text-align: center;
+            }
+            .subheader {
+                text-align: center;
+                margin-bottom: 35px;
+            }
         }
     }
 }
-
 @include media-breakpoint-down(sm) {
     .home {
         p.title {
             font-size: 40px;
             margin-top: 0;
         }
-
-        .header {
-            font-size: 32px;
-            line-height: 37px;
-        }
-
-        .subheader {
-            font-size: 21px;
-            line-height: 29px;
-        }
-
         .testimonials {
+            .header {
+                font-size: 32px;
+                line-height: 37px;
+            }
+            .subheader {
+                font-size: 21px;
+                line-height: 29px;
+            }
             .testimonial {
                 h3.quote {
                     font-size: 18px;
                 }
-
                 h3.person {
                     font-size: 18px;
                 }
