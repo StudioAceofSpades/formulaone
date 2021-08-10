@@ -22,7 +22,7 @@ E-Mail: jon@studioaceofspade.com
 
 <body id="top-of-page" <?php body_class(); ?>>
     <header class="header cf">
-        <nav class="secondary">
+        <nav class="secondary dropdown-container">
             <div class="container">
                 <div class="row">
                     <a href="<?php bloginfo('url'); ?>" class="brand">
@@ -98,7 +98,7 @@ E-Mail: jon@studioaceofspade.com
             <div class="container">
                 <div class="row justify-content-between">
                     <div class="col d-flex flex-grow-1 justify-content-end">
-                        <nav class="primary">
+                        <nav class="primary dropdown-container">
                             <div class="primary-links">
                                 <?php if(have_rows('main_navigation','options')): ?>
                                     <ul>

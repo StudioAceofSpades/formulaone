@@ -345,7 +345,7 @@ var bounds;
     }
 
     function headerNavigation() {
-        $('.header .primary .has-dropdown').hover(
+        $('.dropdown-container .has-dropdown').hover(
             function(){
                 $(this).addClass('active');
                 $(this).children('.dropdown').stop().slideDown(300);

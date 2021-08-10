@@ -81,9 +81,9 @@
         }
         .dropdown {
             position: absolute;
-            margin-top: 76px;                    
             display: none;
             z-index: 3;
+            top: 47px;
 
             > ul {
                 position: relative;
@@ -187,8 +187,8 @@
 
                  +.dropdown {
                     position: absolute;
+                    top: 47px;
                     display: none;
-                    margin-top: 76px;                    
                     z-index: 3;
 
                     > ul {
