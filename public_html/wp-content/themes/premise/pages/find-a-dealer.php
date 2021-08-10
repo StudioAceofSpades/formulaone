@@ -119,6 +119,8 @@ var geojson = {
             $address .= '<br>';
             $address .= get_field('city').', '.get_field('state') . ' ' .get_field('zip_code');
 
+            $address = str_replace("\u0022","\\\\\"",json_encode($address,JSON_HEX_QUOT)); 
+
             if($lat && $long):
 			?>
 			{

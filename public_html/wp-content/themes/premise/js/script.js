@@ -15,6 +15,7 @@ var bounds;
         photoGalleryMobile();
 
         if($('#map').length) {
+
             initMap();
         }
     });
@@ -41,10 +42,9 @@ var bounds;
         });
     }
 
+    function generateMap(center) {
 
-    function initMap() {
         var mapdiv  = document.getElementById("map");
-        var center  = { lat: 41.693140, lng: -85.972748 };
 
         map = new google.maps.Map(mapdiv, {
             zoom        : 8,
@@ -65,6 +65,44 @@ var bounds;
                 fields: ['place_id', 'geometry', 'formatted_address'] 
             }
         );
+    }
+
+	function findGetParameter(parameterName) {
+		var result = null,
+			tmp = [];
+		location.search
+			.substr(1)
+			.split("&")
+			.forEach(function (item) {
+			  tmp = item.split("=");
+			  if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+			});
+		return result;
+	}
+
+    function initMap() {
+
+        var address = findGetParameter('zip');
+
+        if(address) {
+            geocoder = new google.maps.Geocoder();
+            geocoder.geocode(
+                { 'address' : address }, 
+                function(results, status) {
+                    console.log('running');
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        lat = results[0].geometry.location.lat();
+                        lng = results[0].geometry.location.lng();
+
+                        center = {'lat' : lat, 'lng': lng};
+                        generateMap(center);
+                    }
+                }
+            );
+        } else {
+            var center  = { lat: 41.693140, lng: -85.972748 };
+            generateMap(center);
+        }
 
         bindDealerForm();
         bindViewControls();
@@ -114,7 +152,6 @@ var bounds;
         });
         marker.setPosition(place.geometry.location);
         map.panTo(place.geometry.location);
-//        map.setZoom(7);
 
         var center = {
             lat : place.geometry.location.lat(),
@@ -218,6 +255,8 @@ var bounds;
         var distance        = google.maps.geometry.spherical.computeDistanceBetween(center, dealerCenter);
         distance            = metersToMiles(distance).toFixed(1);
 
+        address = address.substring(1, address.length-1);
+
         var output = 
             '<div class="col-6 col-xs-12">' +
                 '<div class="dealer-result">' +
@@ -270,10 +309,13 @@ var bounds;
 
     function showDealer(dealer, marker) {
 
+        var address = dealer.property.address;
+        address = address.substring(1, address.length-1);
+
         var contentString   =   
             '<div class="map-content">' +
             '<h1>' + dealer.property.title + '</h1>' + 
-            '<span>Address: ' + dealer.property.address + '</span>' +
+            '<span>Address: ' + address + '</span>' +
             '<span>Phone: ' + dealer.property.phone + '</span>' +
             '<span>Website: ' + dealer.property.website + '</span>' +
             '</div>';
