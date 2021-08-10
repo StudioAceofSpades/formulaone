@@ -286,6 +286,9 @@
             display: none;
         }
         .secondary {
+            .container {
+                max-width: 100%;
+            }
             .top-menu-links,
             .top-menu-social {
                 display: none;
@@ -294,9 +297,6 @@
         .mobile-nav {
             display: block;
             position: relative;
-        }
-        .mobile-navigation {
-            display: block;
         }
         .main {
             .container {
@@ -308,6 +308,7 @@
 
             img {
                 width: 120px;
+                position: absolute;
                 left: 15px;
                 top: 14px;
             }
@@ -367,60 +368,66 @@
                 li {
                     display: block;
                 }
-                a {
-
-                    &.submenu-toggle {
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        top: 0;
-                        background: $dark-gray;
-                        color: $orange;
-
-                        .fa-plus {
-                            color: $orange;
-                        }
-                        &:hover,
-                        .active {
-                            color: $white;
-                        }
-                        &.active {
-                            .fa-plus {
-                                display: none;
-                            }
-                            .fa-minus {
-                                display: block;
-                                color: $white;
-                            }
-                        }
-                    }
-                }
-                .submenu-title {
-                    position: relative;
-                    padding-left: 7px;
-
-                    > a {
-                        border-bottom: 0;
-                    }
-
-                    svg {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        width: 10px;
-                        margin-left: 10px;
-                        margin-top: -8px;
-                    }
-                    
-                    .fa-minus {
-                        display: none;
-                    }
-                }
                 .has-dropdown {
-                    margin-right: 30px;
+                    position: relative;
 
                     ul {
                         display: none;
+                    }
+                    span {
+                        position: absolute;
+                        display: block;
+                        z-index: 2;
+                        right: 0;
+                        top: 0;
+                        width: 38px;
+                        text-align: center;
+                        line-height: 38px;
+                        color: $orange;
+                        font-size: 12px;
+                        cursor: pointer;
+                        transition: .3s all linear;
+
+                        svg {
+                            transition: .3s all linear;
+                        }
+
+                        &:hover,
+                        &:focus {
+                            background: $orange;
+                            color: $white;
+                        }
+                        &.active {
+                            background: $orange;
+                            color: $white;
+
+                            svg {
+                                transform: rotate(-135deg);
+                            }
+                        }
+                    }
+                    a {
+                        position: relative;
+                        z-index: 1;
+                        padding-right: 43px;
+                    }
+                    .dropdown {
+                        background: $mid-gray;
+
+                        a {
+                            padding-right: 15px;
+                            font-size: 14px;
+                            background: transparent;
+
+                            &:hover {
+                                color: $orange;
+                            }
+                        }
+                        li {
+                            &:hover {
+                                background: transparent;
+                            }
+                        }
                     }
                 }
                 .secondnav {
@@ -431,16 +438,31 @@
                             text-transform: uppercase;
                             font-weight: 400;
                             font-size: 14px;
+
+                            &:last-child {
+                                background: transparent;
+
+                                &:hover {
+                                    color: $orange;
+                                }
+                            }
                         }
                         &:last-child {                   
                             background-color: none;
+
+                            &:hover {
+                                background: transparent;
+                            }
                         }
                     }
-                    .submenu-toggle {
-                        background-color: $middle-gray;
-                    }
-                    a {
-                        background-color: $middle-gray;
+                    .has-dropdown {
+                        .dropdown {
+                            background: rgba(255,255,255,.05);
+                        }
+                        span {
+                            width: 38px;
+                            line-height: 34px;
+                        }
                     }
                 }
             }

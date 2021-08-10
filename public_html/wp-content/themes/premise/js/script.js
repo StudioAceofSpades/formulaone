@@ -303,7 +303,7 @@ var bounds;
     }
 
     function headerNavigation() {
-        $('header .has-dropdown').hover(
+        $('.header .primary .has-dropdown').hover(
             function(){
                 $(this).addClass('active');
                 $(this).children('.dropdown').stop().slideDown(300);
@@ -314,8 +314,8 @@ var bounds;
             }
         );
 
-        var $mobileTrigger = $('.mobile-trigger');
-        var $mobileSubmenuTrigger = $('.submenu-toggle');
+        var $mobileTrigger          = $('.mobile-trigger');
+        var $mobileSubmenuTrigger   = $('.submenu-toggle');
 
         $mobileSubmenuTrigger.click(function(e) {
             e.preventDefault();
@@ -337,8 +337,6 @@ var bounds;
                 .stop()
                 .slideToggle();
         });
-
-
     }
 
     function smoothScroll() {

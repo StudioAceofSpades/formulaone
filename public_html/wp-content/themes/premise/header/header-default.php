@@ -147,30 +147,24 @@ E-Mail: jon@studioaceofspade.com
             while(have_rows('main_navigation','options')) : 
                 the_row(); 
                 $link = get_sub_field('main_menu_link');
-               
-                if(get_sub_field('has_dropdown','options')): 
+                if(get_sub_field('has_dropdown')): 
                 ?>
                 <li class="has-dropdown">
-                    <div class="submenu-title">
-                            
-                        <a href="#" class="submenu-toggle">
-                            <i class="far fa-plus"></i>
-                            <i class="far fa-minus"></i>
-                        </a>
+                    <?php saos_output_link($link); ?>
 
-                        <?php saos_output_link($link); ?>
+                    <span class="submenu-toggle">
+                        <i class="far fa-plus"></i>
+                    </span>
 
-                        <?php if(have_rows('dropdown')): ?>
-                        <div class="dropdown">
-                            <ul class="dropdownitems">
-                            <?php while(have_rows('dropdown','options')) : the_row(); ?>
-                                <li><?php saos_output_link(get_sub_field('dropdown_link')); ?></li>
-                            <?php endwhile; ?>
-                            </ul>
-                        </div>
-                        <?php endif; ?>
-
+                    <?php if(have_rows('dropdown')): ?>
+                    <div class="dropdown">
+                        <ul class="dropdownitems">
+                        <?php while(have_rows('dropdown','options')) : the_row(); ?>
+                            <li><?php saos_output_link(get_sub_field('dropdown_link')); ?></li>
+                        <?php endwhile; ?>
+                        </ul>
                     </div>
+                    <?php endif; ?>
                 </li>
                 <?php else: ?>
                     <li><?php saos_output_link($link); ?></li>
@@ -186,30 +180,23 @@ E-Mail: jon@studioaceofspade.com
                 the_row(); 
                 $link = get_sub_field('menu_link'); 
                 
-                if(get_sub_field('has_dropdown','options')): ?>
+                if(get_sub_field('has_dropdown')): ?>
                     <li class="has-dropdown">
-                        <div class="submenu-title">
-                            
-                            <a href="#" class="submenu-toggle">
-                                <i class="far fa-plus"></i>
-                                <i class="far fa-minus"></i>
-                            </a>
+                        <?php saos_output_link($link); ?>
 
-                            <?php saos_output_link($link); ?>
-                            
-                            <?php if(have_rows('dropdown')): ?>
-                            <div class="dropdown">
-
-                                <ul class="dropdownitems">
-                                <?php while(have_rows('dropdown','options')) : the_row(); ?> 
-                                    <li><?php saos_output_link(get_sub_field('dropdown_link')); ?></li>
-                                <?php endwhile; ?>
-                                </ul>
-
-                            </div>
-                            <?php endif; ?>
-                            
+                        <span class="submenu-toggle">
+                            <i class="far fa-plus"></i>
+                        </span>
+                        
+                        <?php if(have_rows('dropdown')): ?>
+                        <div class="dropdown">
+                            <ul class="dropdownitems">
+                            <?php while(have_rows('dropdown','options')) : the_row(); ?> 
+                                <li><?php saos_output_link(get_sub_field('dropdown_link')); ?></li>
+                            <?php endwhile; ?>
+                            </ul>
                         </div>
+                        <?php endif; ?>
                     </li>
                 <?php else: ?>
                     <li><?php saos_output_link($link); ?></li>
