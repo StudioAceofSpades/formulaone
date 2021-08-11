@@ -117,7 +117,7 @@ class FieldFlexibleContent extends Field {
     /**
      * @return int
      */
-    public function getCountValues() {
+    public function getCountValues($parentIndex = false) {
         $values = $this->getOption('values');
         $countRows = 0;
         foreach ($values as $layout_number => $layout) {
@@ -125,7 +125,7 @@ class FieldFlexibleContent extends Field {
                 /** @var Field $sub_field */
                 foreach ($layout['fields'] as $sub_field_key => $sub_field) {
                     $sub_field->importData = $this->getImportData();
-                    $count = $sub_field->getCountValues();
+                    $count = $sub_field->getCountValues($parentIndex);
                     if ($count > $countRows){
                         $countRows = $count;
                     }

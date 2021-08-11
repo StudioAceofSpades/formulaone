@@ -356,6 +356,7 @@
     color: #555 !important;
     background: none !important;
     border: 1px solid #ccc;
+    padding: 0 0 0 12px;
 }
 
 .wpallimport-plugin .chosen-container-single .chosen-single div {

@@ -465,7 +465,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                                                         do_action('pmxi_delete_post', $ids, $this);
 														// delete_user action
 														foreach( $ids as $id) {
-															do_action( 'delete_user', $id, $reassign = null );
+															do_action( 'delete_user', $id, $reassign = null, new WP_User($id) );
 														}
                                                         $sql = "delete a,b
                                                         FROM ".$this->wpdb->users." a
@@ -473,7 +473,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                                                         WHERE a.ID IN (" . implode(',', $ids) . ");";
 														// deleted_user action
 														foreach( $ids as $id) {
-															do_action( 'deleted_user', $id, $reassign = null );
+															do_action( 'deleted_user', $id, $reassign = null, new WP_User($id) );
 														}
                                                         $this->wpdb->query( $sql );
 														break;
@@ -994,7 +994,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 					$tx_name = $ctx->name;
 					$mapping_rules = ( ! empty($this->options['tax_mapping'][$tx_name])) ? json_decode($this->options['tax_mapping'][$tx_name], true) : false;
 					$taxonomies[$tx_name] = array();
-					if ( ! empty($this->options['tax_logic'][$tx_name]) ){
+					if ( ! empty($this->options['tax_logic'][$tx_name]) and ! empty($this->options['tax_assing'][$tx_name]) ){
 						switch ($this->options['tax_logic'][$tx_name]){
 							case 'single':
 								if ( isset($this->options['tax_single_xpath'][$tx_name]) && $this->options['tax_single_xpath'][$tx_name] !== "" ){
@@ -2487,7 +2487,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                                     $logger and call_user_func($logger, sprintf(__('Preserve status of already existing article for `%s`', 'wp_all_import_plugin'), $this->getRecordTitle($articleData)));
                                 }
                                 if ( ! $this->options['is_update_content']){
-                                    $articleData['post_content'] = $post_to_update->post_content;
+                                    unset($articleData['post_content']);
                                     $logger and call_user_func($logger, sprintf(__('Preserve content of already existing article for `%s`', 'wp_all_import_plugin'), $this->getRecordTitle($articleData)));
                                 }
                                 if ( ! $this->options['is_update_title']){
@@ -3497,10 +3497,24 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                                 $attid = false;
 
                                 if ($this->options['search_existing_images']) {
-                                    // trying to find existing image in images table
-                                    $logger and call_user_func($logger, sprintf(__('- Searching for existing image `%s` by URL...', 'wp_all_import_plugin'), rawurldecode($image)));
-                                    $imageList = new PMXI_Image_List();
-                                    $attch = $imageList->getExistingImageByUrl($image);
+	                                $imageList = new PMXI_Image_List();
+	                                switch ($this->options['search_existing_images_logic']) {
+		                                case 'by_url':
+			                                // trying to find existing image in images table
+			                                $logger and call_user_func($logger, sprintf(__('- Searching for existing image `%s` by URL...', 'wp_all_import_plugin'), rawurldecode($image)));
+			                                $attch = $imageList->getExistingImageByUrl($image);
+		                                	break;
+		                                default:
+			                                // trying to find existing image in images table
+			                                $logger and call_user_func($logger, sprintf(__('- Searching for existing image `%s` by filename...', 'wp_all_import_plugin'), basename($image)));
+			                                $attch = $imageList->getExistingImageByFilename(basename($image));
+			                                // Search for existing images for new imports only using old logic.
+			                                if (empty($attch)) {
+				                                $logger and call_user_func($logger, sprintf(__('- Search for existing image `%s` by `_wp_attached_file` ...', 'wp_all_import_plugin'), basename($image)));
+				                                $attch = wp_all_import_get_image_from_gallery(basename($image), $targetDir, 'images', $logger);
+			                                }
+		                                	break;
+	                                }
                                 }
 
                                 // exisitng image founded
@@ -4904,7 +4918,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                                     do_action('pmxi_delete_post', $ids, $this);
 									// delete_user action
 									foreach( $ids as $id) {
-                                        do_action( 'delete_user', $id, $reassign = null );
+                                        do_action( 'delete_user', $id, $reassign = null, new WP_User($id) );
                                     }
                                     $sql = "delete a,b
                                       FROM ".$this->wpdb->users." a
@@ -4912,7 +4926,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                                       WHERE a.ID IN (" . implode(',', $ids) . ");";
 									// deleted_user action
 									foreach( $ids as $id) {
-                                        do_action( 'deleted_user', $id, $reassign = null );
+                                        do_action( 'deleted_user', $id, $reassign = null, new WP_User($id) );
                                     }
                                     $this->wpdb->query( $sql );
                                     break;
@@ -5164,7 +5178,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                 do_action('pmxi_delete_post', $ids, $this);
                 // delete_user action
                 foreach( $ids as $id) {
-                    do_action( 'delete_user', $id, $reassign = null );
+                    do_action( 'delete_user', $id, $reassign = null, new WP_User($id) );
                 }
                 $sql = "delete a,b
                 FROM ".$this->wpdb->users." a
@@ -5172,7 +5186,7 @@ class PMXI_Import_Record extends PMXI_Model_Record {
                 WHERE a.ID IN (".implode(',', $ids).");";
                 // deleted_user action
                 foreach( $ids as $id) {
-                    do_action( 'deleted_user', $id, $reassign = null );
+                    do_action( 'deleted_user', $id, $reassign = null, new WP_User($id) );
                 }
                 $this->wpdb->query($sql);
                 break;

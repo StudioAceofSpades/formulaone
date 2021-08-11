@@ -147,12 +147,26 @@ body.wpallimport-plugin {
 
 /*@+ header */
 .wpallimport-plugin .wpallimport-logo{
-	background: url('../img/ui_4.0/logo.png');
-	width: 60px;
-	height: 51px;
-	float: left;
-	margin-right: 10px;
+  background: url(../img/logo.svg) no-repeat;
+  background-size: 55px 55px;
+  width: 55px;
+  height: 55px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  float: left;
+  margin-right: 8px;
 }
+
+.wpallimport-plugin .wpallimport-title > h2:before,
+.wpallimport-plugin .wpallimport-title > h3:before {
+	content: '';
+  background: url(../img/wpallimport.svg) no-repeat;
+  background-size: 134px 14px;
+  width: 134px;
+  height: 25px;
+  display: block;
+}
+
 .wpallimport-plugin .wpallimport-title p{
 	font-size: 18px !important;
 	line-height: 16px;
@@ -169,8 +183,9 @@ body.wpallimport-plugin {
 	padding-right: 0;
 	margin-left: 2px;
 }
+.wpallimport-plugin .wpallimport-title h2,
 .wpallimport-plugin .wpallimport-title h3{
-	margin: 5px 0;
+	margin: 8px 0 !important;
 }
 
 .wpallimport-plugin .wpallimport-title{
@@ -474,7 +489,7 @@ body.wpallimport-plugin {
 	border: 1px solid #ddd;
 	font-size: 12px;
 	width: auto;
-	padding: 4px 25px 4px 6px;
+	padding: 4px 25px 4px 12px;
 	color: #000;
 }
 .wpallimport-plugin .wpallimport-template input[type="text"],
@@ -882,7 +897,7 @@ body.wpallimport-plugin {
 	font-size: 12px;
 }
 .wpallimport-plugin .wpallimport-created-by span{
-	background: url('../img/soflyy-logo.png') no-repeat;
+	background: url('../img/soflyy-logo.svg') no-repeat;
 	display: block;
 	float: right;
 	width: 72px;
@@ -1008,7 +1023,7 @@ body.wpallimport-plugin {
 .wpallimport-plugin .wpallimport-step-4,
 .wpallimport-plugin .wpallimport-step-5,
 .wpallimport-plugin .wpallimport-step-6{
-	margin: 20px 0 0 0px;
+	margin: 10px 0 0 0px;
 }
 
 
@@ -1509,7 +1524,7 @@ body.wpallimport-plugin {
 	font-weight: normal;
 	font-size: 18px;	
 	padding: 0;
-	padding: 0 10px;
+	padding: 0 12px;
 	line-height: 24px;
 }
 .wpallimport-plugin .change_file #file_selector .dd-select,
@@ -2269,17 +2284,6 @@ body.wpallimport-plugin {
 	/*width: 700px;*/
 }
 
-.wpallimport-plugin form.wpallimport-template .load-template {
-	display: block;
-	font-size: 12px;
-}
-
-.wpallimport-plugin form.wpallimport-template .load-template select {
-	width: auto;
-	height: 40px;
-	padding: 4px 25px 4px 6px;
-}
-
 .wpallimport-plugin #poststuff{
 	min-width: 200px;
 }
@@ -2781,6 +2785,21 @@ body.wpallimport-plugin {
 .wpallimport-plugin .comments-import-fields .input .input {
 	margin-bottom: 0px;
 }
+.wpallimport-plugin .load-template-container {
+    display: flex;
+    align-items: center;
+}
+.wpallimport-plugin form.wpallimport-template .load-template select {
+    width: auto;
+    padding: 4px 25px 4px 12px;
+
+    /*
+     * Overwrite previous !important rule required for the rest of the pulldowns
+     */
+    font-size: 12px !important;
+    height: 34px;
+    background-size: 14px 14px;
+}
 	/*--------------------------------------------------------------------------
     *
     *	Step 4 - Import Options
@@ -2893,12 +2912,21 @@ body.wpallimport-plugin {
 	padding-top: 10px;
 }
 	.wpallimport-plugin .wpallimport-step-5 .wpallimport-section .wpallimport-collapsed-content p{
-		color: #777;
-		background: url('../img/ui_4.0/logo_small.png') no-repeat;
-		padding-left: 35px;
-		min-height: 26px;
-		line-height: 28px;
+	  margin:  1.4em 0;
 	}
+
+.wpallimport-plugin .wpallimport-step-5 .wpallimport-section .wpallimport-collapsed-content p:before {
+	content: '';
+	width: 24px;
+	background: url(../img/s-check.png) no-repeat;
+  background-size: auto;
+	background-size: auto;
+	background-size: 24px;
+	height: 24px;
+	margin-right: 10px;
+	vertical-align: -42%;
+	display: inline-block;
+}
 
 .wpallimport-plugin form.confirm{	
 	margin-bottom: 20px;
@@ -3503,7 +3531,7 @@ body.wpallimport-plugin {
 }
 .wpallimport-plugin form.settings .wpallimport-header{
 	overflow: hidden;
-	height: 60px;
+	height: 70px;
 	padding-top: 10px;
 }
 

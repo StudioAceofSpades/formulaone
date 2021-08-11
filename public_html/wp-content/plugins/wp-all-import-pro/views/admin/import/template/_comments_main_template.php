@@ -173,6 +173,12 @@ switch ($post_type){
                                                 <input name="comment_parent" type="text" class="widefat rad4" style="width:100%;margin-bottom:5px;" value="<?php echo esc_attr($post['comment_parent']) ?>"/>
                                             </div>
                                             <?php endif; ?>
+	                                        <?php if ($post_type == 'woo_reviews'): ?>
+                                                <div class="input">
+                                                    <h4 style="margin-bottom:5px; margin-top: 0;"><?php _e('<b>Parent Review</b>', PMXI_Plugin::LANGUAGE_DOMAIN);?><a href="#help" class="wpallimport-help" title="<?php _e('Reviews can be matched to their parent review by review ID or the date and time (GMT) of the parent review. To match by review date it must be an exact match down to the second.', PMXI_Plugin::LANGUAGE_DOMAIN); ?>" style="top:-1px;">?</a></h4>
+                                                    <input name="comment_parent" type="text" class="widefat rad4" style="width:100%;margin-bottom:5px;" value="<?php echo esc_attr($post['comment_parent']) ?>"/>
+                                                </div>
+	                                        <?php endif; ?>
                                         </td>
                                     </tr>
                                 </table>

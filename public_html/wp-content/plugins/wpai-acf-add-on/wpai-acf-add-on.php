@@ -3,7 +3,7 @@
 Plugin Name: WP All Import - ACF Add-On
 Plugin URI: http://www.wpallimport.com/
 Description: Import to Advanced Custom Fields. Requires WP All Import & Advanced Custom Fields.
-Version: 3.3.1
+Version: 3.3.4
 Author: Soflyy
 */
 /**
@@ -24,7 +24,7 @@ define('PMAI_ROOT_URL', rtrim(plugin_dir_url(__FILE__), '/'));
  */
 define('PMAI_PREFIX', 'pmai_');
 
-define('PMAI_VERSION', '3.3.1');
+define('PMAI_VERSION', '3.3.4');
 
 if ( class_exists('PMAI_Plugin') and PMAI_EDITION == "free"){
 
@@ -310,7 +310,7 @@ else {
 				$controllerName = preg_replace_callback('%(^' . preg_quote(self::PREFIX, '%') . '|_).%', array($this, "replace_callback"),str_replace('-', '_', $page));
 				if (method_exists($controllerName, $actionName)) {
 					
-					if ( ! get_current_user_id() or ! current_user_can('manage_options')) {
+					if ( ! get_current_user_id() or ! current_user_can(PMXI_Plugin::$capabilities)) {
 					    // This nonce is not valid.
 					    die( 'Security check' ); 
 
@@ -408,26 +408,21 @@ else {
         public static function init_available_acf_fields() {
 			global $acf;
 			if ($acf and version_compare($acf->settings['version'], '5.0.0') >= 0) {
-				$acfs = get_posts(array('posts_per_page' => -1, 'post_type' => 'acf-field'));
 				self::$all_acf_fields = array();
-				if (!empty($acfs)) {
-					foreach ($acfs as $key => $acf_entry) {
-						self::$all_acf_fields[] = $acf_entry->post_excerpt;
-					}
-				}
-				if (function_exists('acf_local')) {
-                    $fields = acf_local()->fields;
+			    $groups = acf_get_field_groups();
+			    if ( ! empty($groups) ) {
+			        foreach ($groups as $group) {
+				        $fields = acf_get_fields($group);
+				        if (!empty($fields)) {
+					        foreach ($fields as $key => $field) {
+					            if ( ! empty($field['name']) ) {
+						            self::$all_acf_fields[] = $field['name'];
+                                }
+					        }
+				        }
+                    }
                 }
-                if (empty($fields) && function_exists('acf_get_local_fields')) {
-                    $fields = acf_get_local_fields();
-                }
-				if ( ! empty($fields) ) {
-					foreach ($fields as $key => $field) {
-						self::$all_acf_fields[] = $field['name'];
-					}
-				}
-			}
-			else {
+			} else {
 				$acfs = get_posts(array('posts_per_page' => -1, 'post_type' => 'acf'));
 				self::$all_acf_fields = array();
 				if (!empty($acfs)) {

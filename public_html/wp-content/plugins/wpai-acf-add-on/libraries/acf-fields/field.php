@@ -81,41 +81,12 @@ abstract class Field implements FieldInterface {
         $subFieldsData = $this->isLocalFieldStorage() ? $this->getLocalSubFieldsData() : $this->getDBSubFieldsData();
 
         if ($subFieldsData){
-
             foreach ($subFieldsData as $subFieldData) {
                 $field = $this->initDataAndCreateField($subFieldData);
                 $this->subFields[] = $field;
             }
         }
 
-        // Init sub fields for Flexible Content
-        if (ACFService::isACFNewerThan('5.0.0') && $this->getType() == 'flexible_content') {
-            // get flexible field
-            $flexibleField = $this->getData('field');
-            // vars
-            $flex_fields = acf_get_fields($flexibleField);
-            // loop through layouts, sub fields and swap out the field key with the real field
-            foreach (array_keys($flexibleField['layouts']) as $fi) {
-                // extract layout
-                $layout = acf_extract_var($flexibleField['layouts'], $fi);
-                // append sub fields
-                if (!empty($flex_fields)) {
-                    foreach (array_keys($flex_fields) as $fk) {
-                        // check if 'parent_layout' is empty
-                        if (empty($flex_fields[$fk]['parent_layout'])) {
-                            // parent_layout did not save for this field, default it to first layout
-                            $flex_fields[$fk]['parent_layout'] = $layout['key'];
-                        }
-                        // append sub field to layout,
-                        if ($flex_fields[$fk]['parent_layout'] == $layout['key']) {
-                            $layout['sub_fields'][] = acf_extract_var($flex_fields, $fk);
-                        }
-                    }
-                }
-                // append back to layouts
-                $this->data['field']['layouts'][$fi] = $layout;
-            }
-        }
     }
 
     /**
@@ -133,7 +104,13 @@ abstract class Field implements FieldInterface {
         foreach ($reset as $key){
             if (empty($field[$key])) $field[$key] = false;
         }
-        $data['current_field'] = empty($post['fields'][$field['key']]) ? false : $post['fields'][$field['key']];
+
+	    if ( array_key_exists( 'key', $field ) ) {
+		    $data['current_field'] = empty($post['fields'][$field['key']]) ? false : $post['fields'][$field['key']];
+	    } else {
+		    $data['current_field'] = false;
+	    }
+
         $options = array('is_multiple_field_value', 'multiple_value');
         foreach ($options as $option){
             $data['current_' . $option] = isset($field['key']) && isset($post[$option][$field['key']]) ? $post[$option][$field['key']] : false;
@@ -452,8 +429,8 @@ abstract class Field implements FieldInterface {
     public function getFieldName(){
         $fieldName = ( isset($this->data['field']['name']) ? $this->data['field']['name'] : '' );
         if (empty($fieldName)) {
-            if (function_exists('_acf_get_field_by_id')) {
-                $field = _acf_get_field_by_id($this->data['field']['ID']);
+            if (function_exists('acf_get_field')) {
+                $field = acf_get_field($this->data['field']['ID']);
             } else {
                 $label = sanitize_title( $this->data['field']['label'] );
 	            $fieldName = str_replace('-', '_', $label);
@@ -576,12 +553,11 @@ abstract class Field implements FieldInterface {
                 $fieldID = $fieldData['ID'];
             }
         }
-        return get_posts(array(
-            'posts_per_page' => -1,
-            'post_type'      => 'acf-field',
-            'post_parent'    => $fieldID,
-            'post_status'    => 'publish'
-        ));
+        $field = acf_get_field($fieldID);
+        if ( ! empty($field['sub_fields']) ) {
+        	return $field['sub_fields'];
+        }
+	    return [];
     }
 
     /**
@@ -682,22 +658,7 @@ abstract class Field implements FieldInterface {
      * @return array|bool|mixed
      */
     protected function getDBFieldDataByKey($fieldKey){
-        $fieldData = false;
-        $args = array(
-            'name' => $fieldKey,
-            'post_type' => 'acf-field',
-            'post_status' => 'publish',
-            'posts_per_page' => 1
-        );
-        $my_posts = get_posts($args);
-        if ($my_posts) {
-            $sub_field = $my_posts[0];
-            $fieldData = (!empty($sub_field->post_content)) ? unserialize($sub_field->post_content) : array();
-            $fieldData['ID'] = $sub_field->ID;
-            $fieldData['label'] = $sub_field->post_title;
-            $fieldData['key'] = $sub_field->post_name;
-        }
-        return $fieldData;
+	    return acf_get_field($fieldKey);
     }
 
     /**
@@ -730,8 +691,11 @@ abstract class Field implements FieldInterface {
     /**
      * @return int
      */
-    public function getCountValues(){
+    public function getCountValues($parentIndex = FALSE){
         $parents = $this->getParents();
+        if ($parentIndex !== FALSE && isset($parents[$parentIndex])) {
+        	$parents = [$parents[$parentIndex]];
+        }
         $value = $this->getOriginalFieldValueAsString();
         if (!empty($parents) && !$this->isEmptyValue($value) && !is_array($value)){
             $parentIndex = false;

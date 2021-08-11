@@ -61,11 +61,11 @@ function pmai_is_acf_update_allowed($cur_meta_key, $options ){
 
 			if ( ! empty($mapped_acf)){			
 				foreach ($mapped_acf as $acf_group_id => $is_mapped) {				
-					if ( ! $is_mapped ) continue;				
-					$acf_fields = get_posts(array('posts_per_page' => -1, 'post_type' => 'acf-field', 'post_parent' => $acf_group_id, 'post_status' => 'publish'));
+					if ( ! $is_mapped ) continue;
+					$acf_fields = acf_get_fields($acf_group_id);
 					if ( ! empty($acf_fields) ){
 						foreach ($acf_fields as $field) {
-							if ( $cur_meta_key == $field->post_excerpt or $cur_meta_key == "_" . $field->post_excerpt or strpos($cur_meta_key, $field->post_excerpt . '_') === 0 or strpos($cur_meta_key, '_' . $field->post_excerpt . '_') === 0){
+							if ( $cur_meta_key == $field['name'] or $cur_meta_key == "_" . $field['name'] or strpos($cur_meta_key, $field['name'] . '_') === 0 or strpos($cur_meta_key, '_' . $field['name'] . '_') === 0){
 								return apply_filters('pmai_is_acf_update_allowed', true, $cur_meta_key, $options);
 								break;
 							}
