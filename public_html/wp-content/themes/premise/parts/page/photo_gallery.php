@@ -48,7 +48,8 @@ $fancy_slide .= '<div class="popup">'; // Start slick div.
 
 // EVERYTHING USING THE HEREDOC SYNTAX BELOW
 // MUST NOT HAVE ANY TABS OR SPACES
-// ON THE CLOSING STATEMENT LINE.
+// ON THE CLOSING STATEMENT LINE
+// OTHER WISE SHIT WONT WORK.
 
 // Start large desktop slide population.
 $fancy_slide .= <<<END

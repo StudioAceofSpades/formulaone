@@ -50,6 +50,10 @@
     .slick {
         .slick-slide {
             padding: 0 70px;
+
+            &.no-arrows {
+                padding: 0 30px;
+            }
         }
     }
 
@@ -152,12 +156,6 @@
             top: 8px;
             opacity: 0;
         }
-    }
-}
-
-@include media-breakpoint-down(lg) {
-    .gallery-page {
-        //background-color: red;
     }
 }
 

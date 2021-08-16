@@ -13,32 +13,69 @@ var bounds;
         photoGalleryPopups();
         photoGalleryDesktop();
         photoGalleryMobile();
+        singleTrailerSpecTable();
+        singleTrailerScrollSpy();
 
         if($('#map').length) {
             initMap();
         }
     });
 
+    function singleTrailerScrollSpy() {
+        scrollSpy('#jumplist', {
+            sectionClass: '.scroll-to',
+            menuActiveTarget: '.jumplist-link',
+            offset: 100,
+        });
+    }
+
+    function singleTrailerSpecTable() {
+        var trailerSelect =$('#trailer-size');
+        var selectedSize = trailerSelect.find(':selected').val();
+        $('#' + selectedSize).show();
+
+        trailerSelect.change(function() {
+            var selectedSize = trailerSelect.find(':selected').val();
+            $('.trailer-spec-table').hide();
+            $('#' + selectedSize).show();
+        })
+    }
+
     function photoGalleryPopups() {
         $('.popup').slickLightbox();
-        //console.log('SLICK LIGHTBOX IS RUNNING');
     }
 
     function photoGalleryDesktop() {
+        var slideCount = $('.photo-gallery-desktop').children().length;
+        console.log(slideCount);
+        if (slideCount <= 1) {
+            $('.slick-arrow-desktop').attr('style','display:none !important');
+        }
         $('.photo-gallery-desktop').slick({
             adaptiveHeight: true,
             prevArrow: $('.slick-arrow-desktop.prev'),
             nextArrow: $('.slick-arrow-desktop.next'),
             dots: true
         });
+        if (slideCount <= 1) {
+            $('.photo-gallery-desktop .slick-slide').addClass('no-arrows');
+        }
     }
 
     function photoGalleryMobile() {
+        var slideCount = $('.photo-gallery-mobile').children().length;
+        console.log(slideCount);
+        if (slideCount <= 1) {
+            $('.slick-arrow-mobile').attr('style','display:none !important');
+        }
         $('.photo-gallery-mobile').slick({
             adaptiveHeight: true,
             prevArrow: $('.slick-arrow-mobile.prev'),
             nextArrow: $('.slick-arrow-mobile.next'),
         });
+        if (slideCount <= 1) {
+            $('.photo-gallery-mobile .slick-slide').addClass('no-arrows');
+        }
     }
 
 
