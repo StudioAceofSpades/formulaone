@@ -161,7 +161,8 @@
         }
 
         &.hero-default,
-        &.hero-contact {
+        &.hero-contact,
+        &.hero-trailer {
             height: 490px;
 
             &::before {
@@ -208,6 +209,28 @@
                 }
             }
         }
+
+        &.hero-trailer {
+            .title-wrapper {
+                position: absolute;
+                bottom: 60px;
+                left: 60px;
+
+                h1 {
+                    text-transform: uppercase;
+                }
+
+                h2 {
+                    margin-bottom: 0;
+                }
+            }
+
+            .find-a-dealer-widget {
+                position: absolute;
+                top: 40px;
+                right: 70px;
+            }
+        }
     }
 }
 
@@ -232,7 +255,8 @@
                 height: 700px;
             }
 
-            &.hero-default {
+            &.hero-default,
+            &.hero-trailer {
                 height: 400px;
             }
 
@@ -276,8 +300,24 @@
                 }
             }
 
-            &.hero-default {
+            &.hero-default,
+            &.hero-trailer {
                 height: 350px;
+            }
+
+            &.hero-trailer {
+                .title-wrapper {
+                    position: relative;
+                    top: auto;
+                    left: auto;
+                    bottom: auto;
+                    width: calc(100% - 270px);
+                }
+
+                .find-a-dealer-widget {
+                    top: 20px;
+                    right: 20px;
+                }
             }
 
             &.hero-contact {
@@ -319,11 +359,10 @@
             margin-bottom: 30px;
 
             &.hero-home {
-                height: 350px;
-
                 .find-a-dealer-widget {
                     right: 30px;
                     bottom: 20px;
+                    top: auto;
                 }
             }
 
@@ -372,6 +411,25 @@
                 .find-a-dealer-widget {
                     right: auto;
                     left: 15px;
+                }
+            }
+
+            &.hero-trailer {
+                height: auto;
+
+                .find-a-dealer-widget {
+                    position: relative;
+                    right: auto;
+                    bottom: auto;
+                    top: auto;
+                }
+
+                .title-wrapper {
+                    margin-bottom: 30px;
+
+                    h1 {
+                        margin-bottom: 5px;
+                    }
                 }
             }
 
