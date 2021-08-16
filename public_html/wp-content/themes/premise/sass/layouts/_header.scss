@@ -142,6 +142,10 @@
         }
     }
 
+    .mobile-navigation {
+        display: none;
+    }
+
 
     .top-menu-social {
         ul {
@@ -284,6 +288,24 @@
                 }
             }
             .main {
+
+            
+                ul {
+                    li {
+                        &:last-child {
+                            width: 100%;
+                            margin: 0;
+                            align-items: flex-end;
+                            padding-left: 190px;
+                        }
+
+                        a {
+                            &:last-child {
+                                padding-right: 9px;
+                            }
+                        }
+                    }
+                }
     
                 .mobile-trigger {
                     font-size: 24px;
@@ -301,18 +323,22 @@
                     position: absolute;
                     top: 67px;
                     right: -15px;
-                    width: 280px;
+                    width: 300px;
                     background: $dark-gray;
-                    text-align: right;
                     border-top: 1px solid $dark-gray;
+
+                    ul {
+                        align-items: flex-end;
+                    }
+    
     
                     a {
-                        font-size: 13px;
-                        line-height: 15px;
-                        text-transform: uppercase;
-                        font-weight: 400;
+                        font-size: 18px;
+                        line-height: 40px;
+                        text-transform: none;
+                        font-weight: 600;
                         padding: 2px;
-                        border-bottom: 1px solid $middle-gray;
+                        border-bottom: none;
     
                         &:hover {
                             background: $orange;
@@ -320,15 +346,19 @@
     
                         &.submenu-toggle {
                             position: absolute;
-                            left: 100px;
                             right: 0;
                             bottom: 0;
                             top: 0;
                             background: $dark-gray;
+                            color: $orange;
+
+                            .fa-plus {
+                                color: $orange;
+                            }
     
                             &:hover,
                             .active {
-                                background: $dark-gray;
+                                color: $white;
                             }
     
                             &.active {
@@ -337,6 +367,7 @@
                                 }
                                 .fa-minus {
                                     display: block;
+                                    color: $white;
                                 }
                             }
                         }
@@ -344,7 +375,6 @@
                     .submenu-title {
                         position: relative;
                         padding-left: 7px;
-                        border-bottom: 1px solid $dark-gray;
     
                         > a {
                             border-bottom: 0;
@@ -354,9 +384,11 @@
                             position: absolute;
                             top: 50%;
                             left: 50%;
-                            margin-left: -4px;
-                            margin-top: -7px;
+                            width: 10px;
+                            margin-left: 10px;
+                            margin-top: -8px;
                         }
+                        
                         .fa-minus {
                             display: none;
                         }
@@ -365,9 +397,9 @@
                         display: block;
                     }
                     .has-dropdown {
+                        margin-right: 30px;
                         ul {
                             display: none;
-                            background: rgba(0,0,0,.1);
                         }
                     }
 
@@ -377,10 +409,40 @@
     
                 }
 
+                .secondnav {
+                    background-color: $middle-gray;
+
+                
+                        li {
+
+                            a {
+                                text-transform: uppercase;
+                                font-weight: 400;
+                                font-size: 14px;
+                            }
+
+                            &:last-child {                   
+                                background-color: none;
+             
+                            }
+    
+                        }
+
+                    .submenu-toggle {
+                        background-color: $middle-gray;
+
+                    }
+
+                    a {
+                        background-color: $middle-gray;
+                    }
+                
+
                    
             }
         }
 
+    }
     }
     
 
@@ -420,4 +482,3 @@
             }
         }
     }
-

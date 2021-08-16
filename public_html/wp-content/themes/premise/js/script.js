@@ -359,7 +359,7 @@ var bounds;
 
             $(this)
                 .toggleClass('active')
-                .parents('.has-submenu')
+                .parents('.has-dropdown')
                 .find('ul')
                 .stop()
                 .slideToggle();
