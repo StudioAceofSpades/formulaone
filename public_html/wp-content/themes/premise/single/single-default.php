@@ -52,7 +52,7 @@ get_header(); ?>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2">
-                        <h2>Specifications</h2>
+                        <h2 class="text-center">Specifications</h2>
                         <?php
                         if (get_field('spec_intro')) {
                             the_field('spec_intro');
@@ -662,7 +662,8 @@ END;
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <?php $vid = get_field('video');  ?>
+                        <h2>Video</h2>
+                        <?php $vid = get_field('video'); ?>
                         <div class="video-container">
                             <?php echo $vid; ?>
                         </div>
@@ -671,6 +672,17 @@ END;
             </div>
         </div>
     <?php endif; ?>
+
+    <div id="request-a-quote" class="scroll-to">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <h2 class="text-center">Request A Quote</h2>
+                    <?php echo do_shortcode('[gravityform id="4" title="false" description="false"]'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="jumplist d-none d-lg-block">
         <ul id="jumplist">
@@ -695,7 +707,7 @@ END;
                 echo '<li><a href="#video" class="jumplist-link"><span></span><i>Video</i></a></li>';
             }
             ?>
-            <li class="jumplist-link"><a href="#"><span></span><i>Request&nbsp;A&nbsp;Quote</i></a></li>
+            <li class="jumplist-link"><a href="#request-a-quote"><span></span><i>Request&nbsp;A&nbsp;Quote</i></a></li>
         </ul>
     </div>
 

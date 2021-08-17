@@ -231,6 +231,10 @@ form {
             }
         }
     }
+
+    .gfield_visibility_hidden {
+        display: none;
+    }
 }
 
 @include media-breakpoint-down(sm) {
