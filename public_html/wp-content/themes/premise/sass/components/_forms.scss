@@ -23,6 +23,12 @@ form {
         text-transform: uppercase;
     }
 
+    label {
+        .gfield_required {
+            margin-left: 5px;
+        }
+    }
+
     input {
         @extend .all-inputs;
 
