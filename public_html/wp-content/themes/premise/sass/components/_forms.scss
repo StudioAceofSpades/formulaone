@@ -28,7 +28,8 @@ form {
 
         &[type="text"],
         &[type="email"],
-        &[type="number"] {
+        &[type="number"],
+        &[type="tel"] {
             @extend .text-inputs;
         }
 
