@@ -3,6 +3,22 @@
     "title": "Configuration",
     "fields": [
         {
+            "key": "field_611c050d87a4c",
+            "label": "Base Settings",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
             "key": "field_611bfc08b4809",
             "label": "Base Image",
             "name": "base_image",
@@ -27,6 +43,60 @@
             "mime_types": ""
         },
         {
+            "key": "field_611bfb745639d",
+            "label": "Base Trailer Specs",
+            "name": "base_trailer_specs",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_611c052587a4d",
+            "label": "Sizing Specs",
+            "name": "sizing_specs",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_611c053c87a4e",
+            "label": "Options",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
             "key": "field_611bfa605638a",
             "label": "Trailer Sizes",
             "name": "trailer_size",
@@ -39,11 +109,11 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
+            "collapsed": "field_611bfa6d5638b",
             "min": 0,
             "max": 0,
-            "layout": "table",
-            "button_label": "",
+            "layout": "block",
+            "button_label": "Add Size",
             "sub_fields": [
                 {
                     "key": "field_611bfa6d5638b",
@@ -151,6 +221,49 @@
                     "max_height": "",
                     "max_size": "",
                     "mime_types": ""
+                },
+                {
+                    "key": "field_611c06f8c89de",
+                    "label": "Text Color",
+                    "name": "text_color",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "light": "Light",
+                        "dark": "Dark"
+                    },
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "default_value": "light",
+                    "layout": "horizontal",
+                    "return_format": "value",
+                    "save_other_choice": 0
+                },
+                {
+                    "key": "field_611c08641031b",
+                    "label": "Premium Color",
+                    "name": "premium_color",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
                 }
             ]
         },
@@ -167,7 +280,7 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "field_611bfaa45638d",
+            "collapsed": "field_611bfaff56391",
             "min": 0,
             "max": 0,
             "layout": "block",
@@ -239,12 +352,55 @@
                     "max_height": "",
                     "max_size": "",
                     "mime_types": ""
+                },
+                {
+                    "key": "field_611c0716c89df",
+                    "label": "Text Color",
+                    "name": "text_color",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "light": "Light",
+                        "dark": "Dark"
+                    },
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "default_value": "light",
+                    "layout": "horizontal",
+                    "return_format": "value",
+                    "save_other_choice": 0
+                },
+                {
+                    "key": "field_611c087e1031c",
+                    "label": "Premium Color",
+                    "name": "premium_color",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
                 }
             ]
         },
         {
             "key": "field_611bfb0d56394",
-            "label": "Diagonal Split",
+            "label": "Diagonal Stripe",
             "name": "diagonal_split",
             "type": "repeater",
             "instructions": "",
@@ -255,7 +411,7 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "field_611bfaa45638d",
+            "collapsed": "field_611bfb0d56395",
             "min": 0,
             "max": 0,
             "layout": "block",
@@ -327,6 +483,49 @@
                     "max_height": "",
                     "max_size": "",
                     "mime_types": ""
+                },
+                {
+                    "key": "field_611c089c1031d",
+                    "label": "Text Color",
+                    "name": "text_color",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "light": "Light",
+                        "dark": "Dark"
+                    },
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "default_value": "light",
+                    "layout": "horizontal",
+                    "return_format": "value",
+                    "save_other_choice": 0
+                },
+                {
+                    "key": "field_611c08ad1031e",
+                    "label": "Premium Color",
+                    "name": "premium_color",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
                 }
             ]
         },
@@ -428,25 +627,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "key": "field_611bfb745639d",
-            "label": "Base Trailer Specs",
-            "name": "base_trailer_specs",
-            "type": "file",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "library": "all",
-            "min_size": "",
-            "max_size": "",
-            "mime_types": ""
         }
     ],
     "location": [
@@ -478,5 +658,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1629223958
+    "modified": 1629227456
 }
