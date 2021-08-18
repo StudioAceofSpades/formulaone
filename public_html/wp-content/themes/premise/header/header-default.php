@@ -53,7 +53,7 @@ E-Mail: jon@studioaceofspade.com
                                                         $link = get_sub_field('dropdown_link'); ?> 
                                                          <li>
                                                             <?php saos_output_link($link); ?>
-                                                        </li>                                        
+                                                        </li>
                                                     <?php endwhile; ?>
                                                 </ul>
                                             </div>
@@ -72,16 +72,17 @@ E-Mail: jon@studioaceofspade.com
                         <div class="top-menu-social">
                             <ul>
                                 <?php 
-                                $phone_link = get_field('phone_number_link','options');
-                                $phone      = get_field('phone_number','options');
-                                if($phone && $phone_link): ?>
-                                    <li><a class="phone" href="<?php echo $phone_link; ?>"><?php echo $phone; ?></a></li>
+                                $phone = get_field('phone_number','options');
+                                $phone_num = str_replace(array(' ','(',')','-','.','+'),'', $phone);
+
+                                if($phone): ?>
+                                    <li><a class="phone" href="tel:<?php echo $phone_num; ?>"><?php echo $phone; ?></a></li>
                                 <?php endif; ?>
 
                                 <?php if(have_rows('social_media', 'options')):
                                     while(have_rows('social_media', 'options')): the_row(); ?>
                                         <li>
-                                            <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fab fa-<?php the_sub_field('icon'); ?>"></i></a>
+                                            <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fab <?php the_sub_field('icon'); ?>"></i></a>
                                         </li>
                                     <?php
                                     endwhile;
