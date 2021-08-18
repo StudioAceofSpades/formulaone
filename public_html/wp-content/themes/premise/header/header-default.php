@@ -82,7 +82,7 @@ E-Mail: jon@studioaceofspade.com
                                 <?php if(have_rows('social_media', 'options')):
                                     while(have_rows('social_media', 'options')): the_row(); ?>
                                         <li>
-                                            <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fab fa-<?php the_sub_field('icon'); ?>"></i></a>
+                                            <a href="<?php the_sub_field('link'); ?>" target="_blank"><i class="fab <?php the_sub_field('icon'); ?>"></i></a>
                                         </li>
                                     <?php
                                     endwhile;
