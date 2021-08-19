@@ -3,30 +3,6 @@
     "title": "Home Hero",
     "fields": [
         {
-            "key": "field_60fb1840a1715",
-            "label": "Background Image",
-            "name": "background_image",
-            "type": "image",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": 1920,
-            "min_height": 800,
-            "min_size": "",
-            "max_width": 1920,
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
             "key": "field_60fb1469ef974",
             "label": "Tagline",
             "name": "tagline",
@@ -65,5 +41,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1627316097
+    "modified": 1629399415
 }

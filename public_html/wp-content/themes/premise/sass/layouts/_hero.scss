@@ -146,7 +146,7 @@
         z-index: 1;
 
         &.hero-home {
-            height: calc(100vh - 106px);
+            height: calc(100vh - 94px);
 
             &::before {
                 @extend .before-gradients;
@@ -168,6 +168,19 @@
             &::before {
                 @extend .before-gradients;
                 background: linear-gradient(93deg, $black 0%, transparent 66%);
+            }
+        }
+
+        &.hero-default,
+        &.hero-home {
+            video {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: -2;
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
             }
         }
 
@@ -359,6 +372,8 @@
             margin-bottom: 30px;
 
             &.hero-home {
+                height: 300px;
+
                 .find-a-dealer-widget {
                     right: 30px;
                     bottom: 20px;
