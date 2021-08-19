@@ -308,4 +308,18 @@ function my_acf_google_map_api( $api ){
 }
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
+function create_bg() {
+    $bg_type = get_field('background_image_or_video', $term);
+    $background = array();
+    if ($bg_type == 'video') {
+        $video_group = get_field('background_video', $term);
+        $background['mp4'] = $video_group['mp4'];
+        $background['webm'] = $video_group['webm'];
+        $background['cover'] = $video_group['cover_image'];
+    } else {
+        $background['image'] = get_field('background_image', $term);
+    }
+    return $background;
+}
+
 ?>

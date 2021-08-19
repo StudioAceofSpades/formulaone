@@ -27,7 +27,7 @@ get_header(); ?>
                     endif;
                     ?>
                     <div class="buttons left">
-                        <a href="#" class="button orange">Build Yours</a>
+                        <a href="<?php bloginfo('url'); ?>/build-yours" class="button orange">Build Yours</a>
                     </div>
                 </div>
                 <div class="col-xl col-lg-5 d-none d-lg-block">
@@ -230,7 +230,7 @@ get_header(); ?>
                 <div class="row">
                     <div class="col-md-6 offset-md-3 col-sm-12">
                         <div class="buttons">
-                            <a href="#" class="button orange">Build Your Perfect Formula</a>
+                            <a href="<?php bloginfo('url'); ?>/build-yours" class="button orange">Build Your Perfect Formula</a>
                         </div>
                     </div>
                 </div>

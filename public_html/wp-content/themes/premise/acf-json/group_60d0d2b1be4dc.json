@@ -35,7 +35,7 @@
             "min": 0,
             "max": 0,
             "layout": "block",
-            "button_label": "",
+            "button_label": "Add Top Navigation Link",
             "sub_fields": [
                 {
                     "key": "field_60d0d344fa161",
@@ -88,7 +88,7 @@
                     "min": 0,
                     "max": 0,
                     "layout": "block",
-                    "button_label": "Add Small Navigation Dropdown Link",
+                    "button_label": "Add Top Navigation Dropdown Link",
                     "sub_fields": [
                         {
                             "key": "field_60d0d435fa164",
@@ -142,7 +142,7 @@
             "min": 0,
             "max": 0,
             "layout": "block",
-            "button_label": "",
+            "button_label": "Add Main Navigation link",
             "sub_fields": [
                 {
                     "key": "field_60d0d4f1d2dd6",
@@ -195,7 +195,7 @@
                     "min": 0,
                     "max": 0,
                     "layout": "block",
-                    "button_label": "",
+                    "button_label": "Add Main Navigation Dropdown Link",
                     "sub_fields": [
                         {
                             "key": "field_60d0d842d2dd9",
@@ -368,5 +368,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1629307115
+    "modified": 1629313992
 }

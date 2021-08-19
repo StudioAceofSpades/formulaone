@@ -3,15 +3,18 @@ global $post;
 $slug = $post->post_name;
 ?>
 <div class="trailer-excerpt col-md-6 col-lg-3">
-    <?php if($image = get_field('image')): ?>
-    <div class="image">
-        <img src="<?php echo $image['sizes']['trailer-small']; ?>" alt="<?php echo $image['alt']; ?>">
-    </div>
+    <?php if($image = get_field('trailer_image')): ?>
+        <div class="image">
+            <img src="<?php echo $image['sizes']['trailer-small']; ?>" alt="<?php echo $image['alt']; ?>">
+        </div>
     <?php endif; ?>
 
-    <h3><?php the_title(); ?></h3>
-    <?php if($subtitle = get_field('subtitle')): ?>
-    <h4><?php echo $subtitle; ?></h4>
+    <?php if($title = get_field('page_title')): ?>
+        <h3><?php echo $title; ?></h3>
+    <?php endif; ?>
+
+    <?php if($subtitle = get_field('page_subtitle')): ?>
+        <h4><?php echo $subtitle; ?></h4>
     <?php endif; ?>
 
     <div class="buttons block">

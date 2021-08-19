@@ -1,7 +1,7 @@
 <?php
 
 /*
-Template Name: ALL Lifestyle Template
+Template Name: All Lifestyles Template
 */
 
 if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) { die(); }
