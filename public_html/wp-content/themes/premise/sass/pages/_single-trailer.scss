@@ -186,6 +186,23 @@
 
     #request-a-quote {
         margin-bottom: 40px;
+
+        .gform_confirmation_message {
+            text-align: center;
+        }
+
+        .gform_submission_error {
+            font-size: 18px;
+            color: $dark-gray;
+            line-height: 27px;
+        }
+
+        .validation_message {
+            margin-top: -15px;
+            font-size: 16px;
+            color: $orange;
+            margin-bottom: 20px;
+        }
     }
 
     .jumplist {
