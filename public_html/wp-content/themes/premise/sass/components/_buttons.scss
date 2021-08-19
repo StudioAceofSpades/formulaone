@@ -16,8 +16,24 @@
         margin: 0 15px;
         display: inline-block;
 
+        &.white-text {
+            color: $white;
+        }
+
         &:hover {
             text-decoration: none;
+            background-color: $orange;
+            color: $white;
+
+            svg {
+                color: $white;
+            }
+        }
+
+        svg {
+            color: $orange;
+            margin-left: 10px;
+            transition: .3s all linear;
         }
 
         &.orange {
