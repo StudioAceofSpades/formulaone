@@ -8,37 +8,43 @@
     });
 
     function initModalControls() {
-        $('.modal-controls .button').click(function(e) {
+        $('[data-trigger]').click(function(e) {
             e.preventDefault();
             
-            $('.modal').show();
-            var checkbox = $('.modal input[type="checkbox"]');
+            var action = $(this).data('trigger');
+            if(action == 'share' || action == 'quote') {
+            
+                $('.modal').show();
+                var checkbox = $('.modal input[type="checkbox"]');
 
-            if($(this).data('trigger') == 'share') {
-                $('.modal .simple').show();
-                $('.modal .advanced').hide();
-                if(checkbox.is(':checked')) {
-                    checkbox.trigger('click');
+                if(action == 'share') {
+                    $('.modal .simple').show();
+                    $('.modal .advanced').hide();
+
+                    if(checkbox.is(':checked')) {
+                        checkbox.trigger('click');
+                    }
+                } else if(action == 'quote') {
+                    $('.modal .simple').hide();
+                    $('.modal .advanced').show();
+
+                    if(!checkbox.is(':checked')) {
+                        checkbox.trigger('click');
+                    }
                 }
-            } else {
-                $('.modal .simple').hide();
-                $('.modal .advanced').show();
-                if(!checkbox.is(':checked')) {
-                    checkbox.trigger('click');
-                }
+
+                var $summary = $('.gfield_visibility_hidden textarea');
+                $summary.val('');
+                var html = '';
+                $('.summary-item').each(function() {
+                    var name    = $(this).find('h3').html();
+                    var value   = $(this).find('p').html();
+                    
+                    html += name + ': ';
+                    html += value + '\n';
+                });
+                $summary.val(html);
             }
-
-            var $summary = $('.gfield_visibility_hidden textarea');
-            $summary.val('');
-            var html = '';
-            $('.summary-item').each(function() {
-                var name    = $(this).find('h3').html();
-                var value   = $(this).find('p').html();
-                
-                html += name + ': ';
-                html += value + '\n';
-            });
-            $summary.val(html);
 
         });
         $('.modal').click(function(e) {
@@ -109,6 +115,14 @@
             $('[data-summary="' + name + '"]').html(value);
         });
         $('[data-name]').trigger('change');
+        $('.close-summary').click(function(e) {
+            e.preventDefault();
+            $('.summary-container').removeClass('open');
+        });
+        $('[data-trigger="summary"]').click(function(e) {
+            e.preventDefault();
+            $('.summary-container').addClass('open');
+        });
     }
 
     function initPackages() {

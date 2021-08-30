@@ -41,7 +41,7 @@ get_header(); ?>
         </div>
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-lg-6 tools-container">
                 
                 <div class="tools">
                     
@@ -57,6 +57,15 @@ get_header(); ?>
                         </a>
                     </div>
                     <?php endif; ?>
+
+                    <div class="trailer-image mobile">
+                        <?php if($trailer): ?>
+                        <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
+                        <?php endif; ?>
+                        <div class="front"></div>
+                        <div class="back"></div>
+                        <div class="stripe"></div>
+                    </div>
         
                     <form class="form">
                         <?php if($size): ?>
@@ -199,7 +208,7 @@ get_header(); ?>
                 </div>
 
             </div>
-            <div class="col-sm-6">
+            <div class="col-lg-6 summary-container">
 
                 <div class="summary">
 
@@ -211,7 +220,7 @@ get_header(); ?>
                         <div class="back"></div>
                         <div class="stripe"></div>
                     </div>
-                    <h2>Your Trailer Summary</h2>
+                    <h2>Your Trailer Summary <span class="close-summary"><i class="far fa-edit"></i></span></h2>
                     <div class="summary-item">
                         <div class="row">
                             <div class="col-xl-6 col-lg-4">
@@ -272,7 +281,7 @@ get_header(); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row button-container">
                         <div class="col-xl-6 offset-xl-6 col-lg-8 offset-lg-4">
                             <div class="buttons modal-controls">
                                 <a data-trigger="share" class="button white-text" href="#">Save &amp; Share</a>
@@ -283,6 +292,12 @@ get_header(); ?>
                 </div>
 
             </div>
+        </div>
+    </div>
+    <div class="mobile-buttons">
+        <div class="buttons">
+            <a href="#" data-trigger="summary" class="button white-text">View Summary</a>
+            <a href="#" data-trigger="quote" class="button orange">Get a Quote</a>
         </div>
     </div>
 </section>
@@ -298,5 +313,6 @@ get_header(); ?>
         </div>
     </div>
 </div>
+
 
 <?php get_footer(); ?>
