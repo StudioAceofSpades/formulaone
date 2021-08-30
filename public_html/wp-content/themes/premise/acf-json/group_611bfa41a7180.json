@@ -187,9 +187,9 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "",
+                    "return_format": "url",
                     "preview_size": "thumbnail",
-                    "library": "",
+                    "library": "all",
                     "min_width": "",
                     "min_height": "",
                     "min_size": "",
@@ -589,7 +589,7 @@
                         {
                             "key": "field_611bfb3f5639b",
                             "label": "Item Name",
-                            "name": "item_description",
+                            "name": "item_name",
                             "type": "text",
                             "instructions": "",
                             "required": 0,
@@ -658,5 +658,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1629227456
+    "modified": 1629819576
 }

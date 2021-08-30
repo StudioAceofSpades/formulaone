@@ -37,6 +37,9 @@ E-Mail: jon@studioaceofspade.com
     <meta name="msapplication-wide310x150logo" content="<?php bloginfo('template_directory'); ?>/img/favicon/mstile-310x150.png" />
     <meta name="msapplication-square310x310logo" content="<?php bloginfo('template_directory'); ?>/img/favicon/mstile-310x310.png" />
 
+    <?php 
+		gravity_form_enqueue_scripts( 5, true );
+	?>
 
     <?php wp_head(); ?>
     
