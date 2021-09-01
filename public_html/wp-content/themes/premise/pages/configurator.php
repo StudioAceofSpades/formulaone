@@ -29,11 +29,167 @@ if($trailer_slug) {
 get_header(); ?>
 
 <section class="configurator <?php if($trailer) { ?>preload<?php } ?>">
+
+    <div class="trailer-select">
+        <div class="lifestyle-select">
+            <div class="row no-gutters justify-content-center">
+                <div class="col-sm-6">
+                    <div class="lifestyle-button" style="background-image: url(<?php the_field('cargo_background_image'); ?>);" data-panel="cargo">
+                        <h3>Cargo</h3>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="lifestyle-button" style="background-image: url(<?php the_field('racing_background_image'); ?>);" data-panel="racing">
+                        <h3>Racing</h3>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="lifestyle-button" style="background-image: url(<?php the_field('commercial_background_image'); ?>);" data-panel="commercial">
+                        <h3>Commercial</h3>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="lifestyle-button" style="background-image: url(<?php the_field('recreational_background_image'); ?>);" data-panel="recreational">
+                        <h3>Recreational</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-cargo">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <?php
+                    $cargo = get_field('cargo');
+                    if( $cargo ):
+                        $i = 0;
+                        foreach( $cargo as $post ):
+                            $i++;
+                            setup_postdata($post);
+                            ?>
+                            <div class="col-sm-4 col-6 d-flex">
+                                <?php
+                                $trailer_image = get_field('trailer_image');
+                                $slug = $post->post_name;
+                                ?>
+                                <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
+                                    <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
+                                    <?php the_field('page_title'); ?>
+                                </a>
+                            </div>
+                            <?php
+                        endforeach;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </div>
+            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+        <div class="panel panel-racing">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <?php
+                    $racing = get_field('racing');
+                    if( $racing ):
+                        $i = 0;
+                        foreach( $racing as $post ):
+                            $i++;
+                            setup_postdata($post);
+                            ?>
+                            <div class="col-sm-4 col-6 d-flex">
+                                <?php
+                                $trailer_image = get_field('trailer_image');
+                                $slug = $post->post_name;
+                                ?>
+                                <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
+                                    <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
+                                    <?php the_field('page_title'); ?>
+                                </a>
+                            </div>
+                            <?php
+                        endforeach;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </div>
+            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+        <div class="panel panel-commercial">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <?php
+                    $commercial = get_field('commercial');
+                    if( $commercial ):
+                        $i = 0;
+                        foreach( $commercial as $post ):
+                            $i++;
+                            setup_postdata($post);
+                            ?>
+                            <div class="col-sm-4 col-6 d-flex">
+                                <?php
+                                $trailer_image = get_field('trailer_image');
+                                $slug = $post->post_name;
+                                ?>
+                                <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
+                                    <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
+                                    <?php the_field('page_title'); ?>
+                                </a>
+                            </div>
+                            <?php
+                        endforeach;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </div>
+            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+        <div class="panel panel-recreational">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <?php
+                    $recreational = get_field('recreational');
+                    if( $recreational ):
+                        $i = 0;
+                        foreach( $recreational as $post ):
+                            $i++;
+                            setup_postdata($post);
+                            ?>
+                            <div class="col-sm-4 col-6 d-flex">
+                                <?php
+                                $trailer_image = get_field('trailer_image');
+                                $slug = $post->post_name;
+                                ?>
+                                <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
+                                    <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
+                                    <?php the_field('page_title'); ?>
+                                </a>
+                            </div>
+                            <?php
+                        endforeach;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+            </div>
+            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        
         <div class="trailer-image large-screen">
             <?php if($trailer): ?>
-            <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
+                <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
             <?php endif; ?>
             <div class="front"></div>
             <div class="back"></div>
@@ -42,166 +198,164 @@ get_header(); ?>
 
         <div class="row">
             <div class="col-lg-6 tools-container">
-                
                 <div class="tools">
-                    
                     <?php if($trailer): ?>
-                    <h1><?php echo $title; ?></h1>
+                        <h1><?php echo $title; ?></h1>
                     <?php endif; ?>
-                    
+
                     <?php if($text = get_field('switch_button_text')): ?>
-                    <div class="buttons left switch-trailer">
-                        <a class="button" href="#">
-                            <span><?php echo $text; ?></span>
-                            <i class="far fa-angle-right"></i>
-                        </a>
-                    </div>
+                        <div class="buttons left switch-trailer">
+                            <a class="button" id="switch-model" href="#">
+                                <span><?php echo $text; ?></span>
+                                <i class="far fa-angle-right"></i>
+                            </a>
+                        </div>
                     <?php endif; ?>
 
                     <div class="trailer-image mobile">
                         <?php if($trailer): ?>
-                        <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
+                            <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
                         <?php endif; ?>
                         <div class="front"></div>
                         <div class="back"></div>
                         <div class="stripe"></div>
                     </div>
-        
+
                     <form class="form">
                         <?php if($size): ?>
-                        <div class="option">
-                            <hgroup>
-                                <h2>Trailer Size</h2>
+                            <div class="option">
+                                <hgroup>
+                                    <h2>Trailer Size</h2>
 
-                                <?php if($specs): ?>
-                                <div class="buttons">
-                                    <a class="button" href="<?php echo $specs['url']; ?>" target="_blank">
-                                        <span>Trailer Size Specs</span>
-                                    </a>
-                                </div>
-                                <?php endif; ?>
-                            </hgroup>
-                            <select data-name="size">
-                                <?php foreach($size as $s): ?>
-                                <option value="<?php echo $s['size']; ?>"><?php echo $s['size']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                                    <?php if($specs): ?>
+                                        <div class="buttons">
+                                            <a class="button" href="<?php echo $specs['url']; ?>" target="_blank">
+                                                <span>Trailer Size Specs</span>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+                                </hgroup>
+                                <select data-name="size">
+                                    <?php foreach($size as $s): ?>
+                                        <option value="<?php echo $s['size']; ?>"><?php echo $s['size']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         <?php endif; ?>
 
                         <?php if($front): ?>
-                        <div class="option">
-                            <hgroup>
-                                <h2>Front Color</h2>
-                            </hgroup>
-                            <select data-name="front" class="color" data-update="front">
-                                <?php 
-                                foreach($front as $f): 
-                                    var_dump($f); 
-                                    $image  = wp_get_attachment_url($f['color_overlay']);
-                                    $swatch = $f['color_swatch'];
-                                ?>
-                                <option 
-                                    value="<?php echo $f['color_name']; ?>"
-                                    data-background="<?php echo $swatch; ?>"
-                                    data-text-color="<?php echo $f['text_color']; ?>"
-                                    data-premium="<?php echo $f['premium_color']; ?>"
-                                    data-image="<?php echo $image; ?>">
-                                    <?php echo $f['color_name']; ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                            <div class="option">
+                                <hgroup>
+                                    <h2>Front Color</h2>
+                                </hgroup>
+                                <select data-name="front" class="color" data-update="front">
+                                    <?php
+                                    foreach($front as $f): 
+                                        var_dump($f); 
+                                        $image  = wp_get_attachment_url($f['color_overlay']);
+                                        $swatch = $f['color_swatch'];
+                                        ?>
+                                        <option 
+                                            value="<?php echo $f['color_name']; ?>"
+                                            data-background="<?php echo $swatch; ?>"
+                                            data-text-color="<?php echo $f['text_color']; ?>"
+                                            data-premium="<?php echo $f['premium_color']; ?>"
+                                            data-image="<?php echo $image; ?>">
+                                            <?php echo $f['color_name']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         <?php endif; ?>
 
                         <?php if($back): ?>
-                        <div class="option">
-                            <hgroup>
-                                <h2>Rear Color</h2>
-                            </hgroup>
-                            <select data-name="rear" class="color" data-update="back">
-                                <?php 
-                                foreach($back as $f): 
-                                    $image  = wp_get_attachment_url($f['color_overlay']);
-                                    $swatch = wp_get_attachment_url($f['color_swatch']);
-                                ?>
-                                <option 
-                                    value="<?php echo $f['color_name']; ?>"
-                                    data-background="<?php echo $swatch; ?>"
-                                    data-text-color="<?php echo $f['text_color']; ?>"
-                                    data-premium="<?php echo $f['premium_color']; ?>"
-                                    data-image="<?php echo $image; ?>">
-                                    <?php echo $f['color_name']; ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                            <div class="option">
+                                <hgroup>
+                                    <h2>Rear Color</h2>
+                                </hgroup>
+                                <select data-name="rear" class="color" data-update="back">
+                                    <?php
+                                    foreach($back as $f): 
+                                        $image  = wp_get_attachment_url($f['color_overlay']);
+                                        $swatch = wp_get_attachment_url($f['color_swatch']);
+                                        ?>
+                                        <option 
+                                            value="<?php echo $f['color_name']; ?>"
+                                            data-background="<?php echo $swatch; ?>"
+                                            data-text-color="<?php echo $f['text_color']; ?>"
+                                            data-premium="<?php echo $f['premium_color']; ?>"
+                                            data-image="<?php echo $image; ?>">
+                                            <?php echo $f['color_name']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         <?php endif; ?>
 
                         <?php if($stripe): ?>
-                        <div class="option">
-                            <hgroup>
-                                <h2>Diagonal Stripe</h2>
-                            </hgroup>
-                            <select data-name="stripe" class="color" data-update="stripe">
-                                <option value="None">None</option>
-                                <?php 
-                                foreach($stripe as $f): 
-                                    $image  = wp_get_attachment_url($f['color_overlay']['ID']);
-                                    $swatch = wp_get_attachment_url($f['color_swatch']['ID']);
-                                ?>
-                                <option 
-                                    value="<?php echo $f['color_name']; ?>"
-                                    data-background="<?php echo $swatch; ?>"
-                                    data-text-color="<?php echo $f['text_color']; ?>"
-                                    data-premium="<?php echo $f['premium_color']; ?>"
-                                    data-image="<?php echo $image; ?>">
-                                    <?php echo $f['color_name']; ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                            <div class="option">
+                                <hgroup>
+                                    <h2>Diagonal Stripe</h2>
+                                </hgroup>
+                                <select data-name="stripe" class="color" data-update="stripe">
+                                    <option value="None">None</option>
+                                    <?php 
+                                    foreach($stripe as $f): 
+                                        $image  = wp_get_attachment_url($f['color_overlay']['ID']);
+                                        $swatch = wp_get_attachment_url($f['color_swatch']['ID']);
+                                        ?>
+                                        <option 
+                                            value="<?php echo $f['color_name']; ?>"
+                                            data-background="<?php echo $swatch; ?>"
+                                            data-text-color="<?php echo $f['text_color']; ?>"
+                                            data-premium="<?php echo $f['premium_color']; ?>"
+                                            data-image="<?php echo $image; ?>">
+                                            <?php echo $f['color_name']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         <?php endif; ?>
 
                         <?php if($packages): ?>
-                        <div class="option">
-                            <hgroup>
-                                <h2>Packages</h2>
-                                <?php if($specs): ?>
-                                <div class="buttons">
-                                    <a href="<?php echo $specs['url']; ?>" class="button" target="_blank">Base Trailer Options</a>
-                                </div>
-                                <?php endif; ?>
-                            </hgroup>
-                            <?php foreach($packages as $p): ?>
-                            <div class="package" data-name="<?php echo $p['package_name']; ?>">
-                                <div class="control">
-                                    <i class="far fa-plus"></i>
-                                    <i class="far fa-minus"></i>
-                                </div>
-                                <div class="contents">
-                                    <h3><?php echo $p['package_name']; ?></h3>
-                                    <?php if($p['package_items']): ?>
-                                    <ul>
-                                        <?php foreach($p['package_items'] as $i): ?>
-                                            <?php if($i['item_description']): ?>
-                                            <li class="tooltip">
-                                                <span><?php echo $i['item_name']; ?></span>
-                                                <i class="far fa-info-circle"></i>
-                                                <div class="tip">
-                                                    <span><?php echo $i['item_description']; ?></span>
-                                                </div>
-                                            </li>
-                                            <?php else: ?>
-                                            <li><?php echo $i['item_name']; ?></li>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    </ul>
+                            <div class="option">
+                                <hgroup>
+                                    <h2>Packages</h2>
+                                    <?php if($specs): ?>
+                                        <div class="buttons">
+                                            <a href="<?php echo $specs['url']; ?>" class="button" target="_blank">Base Trailer Options</a>
+                                        </div>
                                     <?php endif; ?>
-                                </div>
+                                </hgroup>
+                                <?php foreach($packages as $p): ?>
+                                    <div class="package" data-name="<?php echo $p['package_name']; ?>">
+                                        <div class="control">
+                                            <i class="far fa-plus"></i>
+                                            <i class="far fa-minus"></i>
+                                        </div>
+                                        <div class="contents">
+                                            <h3><?php echo $p['package_name']; ?></h3>
+                                            <?php if($p['package_items']): ?>
+                                                <ul>
+                                                    <?php foreach($p['package_items'] as $i): ?>
+                                                        <?php if($i['item_description']): ?>
+                                                            <li class="tooltip">
+                                                                <span><?php echo $i['item_name']; ?></span>
+                                                                <i class="far fa-info-circle"></i>
+                                                                <div class="tip">
+                                                                    <span><?php echo $i['item_description']; ?></span>
+                                                                </div>
+                                                            </li>
+                                                        <?php else: ?>
+                                                            <li><?php echo $i['item_name']; ?></li>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                            <?php endforeach; ?>
-                        </div>
                         <?php endif; ?>
 
                     </form>
@@ -214,7 +368,7 @@ get_header(); ?>
 
                     <div class="trailer-image small-screen">
                         <?php if($trailer): ?>
-                        <img class="base" src="<?php echo $second_image['url']; ?>" alt="<?php echo $second_image['alt']; ?>">
+                            <img class="base" src="<?php echo $second_image['url']; ?>" alt="<?php echo $second_image['alt']; ?>">
                         <?php endif; ?>
                         <div class="front"></div>
                         <div class="back"></div>

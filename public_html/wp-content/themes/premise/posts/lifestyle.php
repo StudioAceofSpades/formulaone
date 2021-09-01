@@ -17,26 +17,26 @@ $trailers   = get_posts(array(
 ?>
 
 <div id="lifestyle" class="single-lifestyle">
-    
+
     <?php include(get_stylesheet_directory() . "/parts/hero.php"); ?>
-    
+
     <?php if($trailers): ?>
-    <div class="container">
-        <div class="row justify-content-center">
-        <?php 
-        $counter = 0;
-        foreach($trailers as $post) : 
-            $counter++;
-            setup_postdata($post); 
-            include(get_stylesheet_directory() . "/excerpt/type-trailer.php");
-            if($counter % 4 == 0) {
-                echo '</div><div class="row justify-content-center">';
-            }
-        endforeach; 
-        wp_reset_postdata(); 
-        ?>
+        <div class="container">
+            <div class="row justify-content-center">
+                <?php 
+                $counter = 0;
+                foreach($trailers as $post):
+                    $counter++;
+                    setup_postdata($post);
+                    include(get_stylesheet_directory() . "/excerpt/type-trailer.php");
+                    if($counter % 4 == 0) {
+                        echo '</div><div class="row justify-content-center">';
+                    }
+                endforeach;
+                wp_reset_postdata();
+                ?>
+            </div>
         </div>
-    </div>
     <?php endif; ?>
 
 </div>

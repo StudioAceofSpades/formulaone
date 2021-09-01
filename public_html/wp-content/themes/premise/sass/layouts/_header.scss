@@ -2,61 +2,72 @@
    Header
    ========================================================================== */
 .header {
-	position: relative;
-	z-index: 100;
+    position: relative;
+    z-index: 100;
 
     li {
         float: left;
-    }
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 10px 20px;
-        text-decoration: none;
-        &:hover {
+
+        a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
             text-decoration: none;
-            color: $orange;
+
+            &:hover {
+                text-decoration: none;
+                color: $orange;
+            }
         }
     }
+
     ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
         overflow: hidden;
     }
+
     .mobile-nav,
     .mobile-navigation {
         display: none;
     }
+
     .secondary {
         background-color: black;
         font-size: 14px;
         position: relative;
         z-index: 100;
     }
+
     .brand {
         width: 200px;
         float: left;
     }
+
     .formulaicon {
         position: absolute;
         margin: 20px 0 0 40px;
     }
+
     .button {
         background-color: $orange;
         line-height: 12px;
         height: 40px;
         margin: 5px 50px 0 0;
     }
+
     .phone {
         color: $orange;
     }
+
     .phone:hover {
         color: white;
     }
-    .fa-linkedin, 
-    .fa-facebook, 
+
+    .fa-linkedin,
+    .fa-facebook,
     .fa-youtube {
         color: $orange;
         transition: all .3s linear;
@@ -64,8 +75,8 @@
         &:hover {
             color: $white;
         }
-
     }
+
     .top-menu-links {
         .has-dropdown {
             display: flex;
@@ -79,6 +90,7 @@
                 }
             }
         }
+
         .dropdown {
             position: absolute;
             display: none;
@@ -109,7 +121,7 @@
                         }
 
                         + li {
-                            > a {                    
+                            > a {
                                 &::before {
                                     opacity: 0;
                                 }
@@ -127,7 +139,7 @@
                                 display: none;
                             }
                         }
-                    }                         
+                    }
 
                     > a {
                         color: $white;
@@ -137,12 +149,12 @@
                         line-height: 16px;
                         display: block;
                         padding: 15px;
-
                     }
                 }
             }
         }
     }
+
     .top-menu-social {
         ul {
             margin-right: -15px;
@@ -151,12 +163,14 @@
                 .phone {
                     font-size: 14px;
                 }
+
                 a {
                     font-size: 20px;
                 }
             }
         }
     }
+
     .main {
         background-color: #212224;
         color: white;
@@ -171,88 +185,87 @@
 
             li {
                 margin: 0 10px;
-                
+
                 &:last-child {
                     background-color: $orange;
                     line-height: 13px;
                 }
+
                 &:last-child:hover {
                     background-color: white;
                     transition: all 0.3s ease;
                 }
 
-                a { 
+                a {
                     display: block;
                     position: relative;
 
-                 +.dropdown {
-                    position: absolute;
-                    top: 47px;
-                    display: none;
-                    z-index: 3;
+                    +.dropdown {
+                        position: absolute;
+                        top: 47px;
+                        display: none;
+                        z-index: 3;
 
-                    > ul {
-                        position: relative;
-                        text-align: center;
-                        width: 100%;
-                        z-index: 5;
-                        display: block;
-                        background-color: $dark-gray;
-                        padding: 1px;
-
-                        > li {
-                            @extend .transition;
+                        > ul {
+                            position: relative;
+                            text-align: center;
+                            width: 100%;
+                            z-index: 5;
                             display: block;
-                            float: none;
-                            margin: 0 0 1px 0;
-                            background-color: $middle-gray;
+                            background-color: $dark-gray;
+                            padding: 1px;
 
-                            &:hover {
-                                background-color: $dark-gray;
+                            > li {
+                                @extend .transition;
+                                display: block;
+                                float: none;
+                                margin: 0 0 1px 0;
+                                background-color: $middle-gray;
 
-                               > a {
-                                    color: $orange;
-                                }
+                                &:hover {
+                                    background-color: $dark-gray;
 
-                                + li {
-                                    > a {                    
-                                        &::before {
-                                            opacity: 0;
+                                    > a {
+                                        color: $orange;
+                                    }
+
+                                    + li {
+                                        > a {
+                                            &::before {
+                                                opacity: 0;
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            &:last-child {
-                                margin-bottom: 0;
-                            }
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
 
-                            &:first-child {
-                                > a {
-                                    &::before {
-                                        display: none;
+                                &:first-child {
+                                    > a {
+                                        &::before {
+                                            display: none;
+                                        }
                                     }
                                 }
-                            }                         
 
-                            > a {
-                                color: $white;
-                                font-weight: 400;
-                                text-transform: uppercase;
-                                font-size: 14px;
-                                line-height: 16px;
-                                display: block;
-                                padding: 15px;
-
+                                > a {
+                                    color: $white;
+                                    font-weight: 400;
+                                    text-transform: uppercase;
+                                    font-size: 14px;
+                                    line-height: 16px;
+                                    display: block;
+                                    padding: 15px;
+                                }
                             }
                         }
                     }
                 }
-
-                }
-                
             }
         }
+
         .has-dropdown {
             display: flex;
             justify-content: center;
@@ -265,14 +278,15 @@
                 }
             }
         }
-
     }
 }
+
 @include media-breakpoint-down(lg) {
     .header {
         .main ul li {
             margin: 0 5px;
         }
+
         li {
             a {
                 padding: 10px;
@@ -280,29 +294,35 @@
         }
     }
 }
+
 @include media-breakpoint-down(md) {
     .header {
         .primary {
             display: none;
         }
+
         .secondary {
             .container {
                 max-width: 100%;
             }
+
             .top-menu-links,
             .top-menu-social {
                 display: none;
             }
         }
+
         .mobile-nav {
             display: block;
             position: relative;
         }
+
         .main {
             .container {
                 max-width: 100%;
             }
         }
+
         .formulaicon {
             margin: 0;
 
@@ -313,6 +333,7 @@
                 top: 14px;
             }
         }
+
         .main {
             ul {
                 display: block;
@@ -324,6 +345,7 @@
                     &:hover {
                         background: transparent;
                     }
+
                     a {
                         display: block;
                         text-align: right;
@@ -337,6 +359,7 @@
                             color: $orange;
                         }
                     }
+
                     &:last-child {
                         background: transparent;
 
@@ -347,6 +370,7 @@
                     }
                 }
             }
+
             .mobile-trigger {
                 font-size: 24px;
                 line-height: 67px;
@@ -355,8 +379,9 @@
                 &:hover,
                 &.active {
                     color: $white;
-                }   
+                }
             }
+
             .mobile-navigation {
                 position: absolute;
                 top: 67px;
@@ -368,12 +393,14 @@
                 li {
                     display: block;
                 }
+
                 .has-dropdown {
                     position: relative;
 
                     ul {
                         display: none;
                     }
+
                     span {
                         position: absolute;
                         display: block;
@@ -397,6 +424,7 @@
                             background: $orange;
                             color: $white;
                         }
+
                         &.active {
                             background: $orange;
                             color: $white;
@@ -406,11 +434,13 @@
                             }
                         }
                     }
+
                     a {
                         position: relative;
                         z-index: 1;
                         padding-right: 43px;
                     }
+
                     .dropdown {
                         background: $mid-gray;
 
@@ -423,6 +453,7 @@
                                 color: $orange;
                             }
                         }
+
                         li {
                             &:hover {
                                 background: transparent;
@@ -430,6 +461,7 @@
                         }
                     }
                 }
+
                 .secondnav {
                     background-color: $middle-gray;
 
@@ -447,7 +479,8 @@
                                 }
                             }
                         }
-                        &:last-child {                   
+
+                        &:last-child {
                             background-color: none;
 
                             &:hover {
@@ -455,10 +488,12 @@
                             }
                         }
                     }
+
                     .has-dropdown {
                         .dropdown {
                             background: rgba(255,255,255,.05);
                         }
+
                         span {
                             width: 38px;
                             line-height: 34px;

@@ -97,20 +97,20 @@ get_header(); ?>
 
 <script>
 var geojson = {
-	"type"		: 'FeatureCollection',
-	"features"	: [
-		<?php
-		global $post;
+    "type"      : 'FeatureCollection',
+    "features"  : [
+        <?php
+            global $post;
 
-		$args = array(
-			'posts_per_page'	=> -1,
-			'post_type'         => 'dealer',
-		);
-		$dealers = get_posts($args);
-		foreach($dealers as $post) : 
-			setup_postdata($post); 
-			$lat        = get_field('latitude');
-			$long       = get_field('longitude');
+        $args = array(
+            'posts_per_page'	=> -1,
+            'post_type'         => 'dealer',
+        );
+        $dealers = get_posts($args);
+        foreach($dealers as $post) : 
+            setup_postdata($post); 
+            $lat        = get_field('latitude');
+            $long       = get_field('longitude');
             $address    = htmlspecialchars(get_field('address'));
 
             if($address2 = htmlspecialchars(get_field('address_2'))) {
@@ -122,29 +122,29 @@ var geojson = {
             $address = str_replace("\u0022","\\\\\"",json_encode($address,JSON_HEX_QUOT)); 
 
             if($lat && $long):
-			?>
-			{
-				'type'      : 'Feature',
-				'geometry'  : {
-					'coordinates'   : [<?php echo $long; ?>,<?php echo $lat; ?>],
-					'type'          : 'Point',
-				},
-				'property'  : {
-					'title'         : '<?php the_title(); ?>',
+            ?>
+            {
+                'type'      : 'Feature',
+                'geometry'  : {
+                    'coordinates'   : [<?php echo $long; ?>,<?php echo $lat; ?>],
+                    'type'          : 'Point',
+                },
+                'property'  : {
+                    'title'         : '<?php the_title(); ?>',
                     'address'       : '<?php echo $address; ?>',
                     'phone'         : '<?php the_field('phone'); ?>',
                     'website'       : '<?php the_field('website'); ?>',
-					'marker-color'  : '#000000',
-					'marker-size'   : 'large',
-					'storeid'       : <?php echo $post->ID; ?>,
+                    'marker-color'  : '#000000',
+                    'marker-size'   : 'large',
+                    'storeid'       : <?php echo $post->ID; ?>,
                     'lat'           : <?php the_field('latitude'); ?>,
                     'lng'           : <?php the_field('longitude'); ?>,
-				}
-			},
-		<?php 
+                }
+            },
+            <?php
             endif;
         endforeach; wp_reset_postdata(); ?>
-	],
+    ],
 };
 
 </script>

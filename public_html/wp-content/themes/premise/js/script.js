@@ -15,12 +15,38 @@ var bounds;
         photoGalleryMobile();
         singleTrailerSpecTable();
         singleTrailerScrollSpy();
+        configuratorTrailerSelect();
 
         if($('#map').length) {
-
             initMap();
         }
     });
+
+    function configuratorTrailerSelect() {
+        $('#switch-model').click(function(e) {
+            e.preventDefault();
+
+            $('.trailer-select'). addClass('open');
+            $('body').addClass('no-scroll');
+            $('.lifestyle-button').first().addClass('selected');
+            $('.panel').first().show();
+        });
+
+        $('#close-trailer-select').click(function(e) {
+            e.preventDefault();
+
+            $('.trailer-select'). removeClass('open');
+            $('body').removeClass('no-scroll');
+        });
+
+        $('.lifestyle-button').click(function(e) {
+            var panelToShow = $(this).data('panel');
+            $('.lifestyle-button').removeClass('selected');
+            $(this).addClass('selected');
+            $('.panel').hide();
+            $('.panel-'+panelToShow).show();
+        });
+    }
 
     function singleTrailerScrollSpy() {
         scrollSpy('#jumplist', {

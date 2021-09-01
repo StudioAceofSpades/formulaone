@@ -19,6 +19,6 @@ $slug = $post->post_name;
 
     <div class="buttons block">
         <a href="<?php the_permalink(); ?>" class="button orange-border">Learn More</a>
-        <a href="<?php bloginfo('url'); ?>/build-yours?trailer=<?php echo $slug; ?>" class="button orange">Build Yours</a>
+        <a href="<?php bloginfo('url'); ?>/build-yours?model=<?php echo $slug; ?>" class="button orange">Build Yours</a>
     </div>
 </div>
