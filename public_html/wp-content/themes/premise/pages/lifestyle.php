@@ -4,6 +4,8 @@ if (CFCT_DEBUG) { cfct_banner(__FILE__); }
 
 get_header(); ?>
 
+<?php include(locate_template('parts/hero.php')); ?>
+
     <div class="lifestyle">
 
         <section class="about bg-white">
