@@ -160,6 +160,13 @@
                 "operator": "==",
                 "value": "default"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "trailer"
+            }
         ]
     ],
     "menu_order": 0,
@@ -181,5 +188,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1631213011
+    "modified": 1631214635
 }

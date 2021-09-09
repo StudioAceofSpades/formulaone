@@ -3,30 +3,6 @@
     "title": "Single Trailer Hero",
     "fields": [
         {
-            "key": "field_610d37ed75ad3",
-            "label": "Background Image",
-            "name": "background_image",
-            "type": "image",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": 1920,
-            "min_height": 490,
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
             "key": "field_610d37ed75b17",
             "label": "Page Title",
             "name": "page_title",
@@ -82,5 +58,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1628272768
+    "modified": 1631214674
 }
