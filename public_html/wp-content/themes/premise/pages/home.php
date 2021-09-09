@@ -64,6 +64,25 @@ get_header(); ?>
                     </div>
                 <?php endif; ?>
 
+                <div class="build">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <img src="<?php bloginfo('template_directory'); ?>/img/config-section-trailer.png" class="img-fluid">
+                        </div>
+                        <div class="col-lg-6 d-flex flex-column justify-content-center">
+                            <?php if(get_field('build_header')): ?>
+                                <p class="title"><?php the_field('build_header'); ?></p>
+                            <?php endif; ?>
+                            <?php if(get_field('build_subheader')): ?>
+                                <p><?php the_field('build_subheader'); ?></p>
+                            <?php endif; ?>
+                            <div class="buttons">
+                                <a href="<?php bloginfo('url'); ?>/build-yours" class="button orange">Build your Trailer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="testimonials">
                     <div class="row">
                         <?php 
