@@ -134,13 +134,6 @@
                 "operator": "==",
                 "value": "lifestyle"
             }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "single-lifestyle.php"
-            }
         ]
     ],
     "menu_order": 1,
@@ -162,5 +155,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1631133812
+    "modified": 1631213063
 }
