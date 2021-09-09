@@ -132,6 +132,60 @@
             "return_format": "array"
         },
         {
+            "key": "field_613a0a64e1de5",
+            "label": "Build",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_613a0a78e1de6",
+            "label": "Header",
+            "name": "build_header",
+            "type": "text",
+            "instructions": "Use &lt;br&gt; to create a line break.<br><br>Example:<br><i>Build your&lt;br&gt;perfect Formula<\/i><br>Will display as:<br>Build your<br>perfect Formula",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_613a0a8de1de7",
+            "label": "Subheader",
+            "name": "build_subheader",
+            "type": "text",
+            "instructions": "Use &lt;br&gt; to create a line break.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_60dc93bbb3680",
             "label": "Testimonials",
             "name": "",
@@ -273,5 +327,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1625077899
+    "modified": 1631193952
 }
