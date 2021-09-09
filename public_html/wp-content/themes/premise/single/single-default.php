@@ -662,7 +662,7 @@ END;
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <h2>Video</h2>
+                        <h1 class="text-center">Video</h1>
                         <?php $vid = get_field('video'); ?>
                         <div class="video-container">
                             <?php echo $vid; ?>
@@ -677,7 +677,7 @@ END;
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <h2 class="text-center">Request A Quote</h2>
+                    <h1 class="text-center">Request A Quote</h1>
                     <?php echo do_shortcode('[gravityform id="4" title="false" description="false"]'); ?>
                 </div>
             </div>
