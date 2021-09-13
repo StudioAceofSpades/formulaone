@@ -309,7 +309,7 @@ function my_acf_google_map_api( $api ){
 }
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
-function create_bg() {
+function create_bg($term = '') {
     $bg_type = get_field('background_image_or_video', $term);
     $background = array();
     if ($bg_type == 'video') {

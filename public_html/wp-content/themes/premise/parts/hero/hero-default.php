@@ -5,7 +5,7 @@ if(is_tax()) {
     $term = false;
 }
 
-$background = create_bg();
+$background = create_bg($term);
 if(isset($background['image'])) {
     $bg_image_output = 'style="background-image: url(';
     $bg_image_output .= $background['image'];
@@ -38,7 +38,7 @@ if(isset($background['image'])) {
         echo('<div class="buttons left">');
         while(have_rows('buttons', $term)):
             the_row();
-            
+
             $link   = get_sub_field('link'); 
             $color  = get_sub_field('button_color');
 
