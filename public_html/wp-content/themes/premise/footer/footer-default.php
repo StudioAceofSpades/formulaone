@@ -4,6 +4,12 @@
 
 <footer class="footer">
     <div class="container">
+        <div class="d-none d-md-block">
+            <?php echo do_shortcode('[instagram-feed showheader=false showbutton=false showfollow=false num=4 cols=4]'); ?>
+        </div>
+        <div class="d-block d-md-none">
+            <?php echo do_shortcode('[instagram-feed showheader=false showbutton=false showfollow=false num=2 cols=2]'); ?>
+        </div>
         <div class="row">
             <div class="col-md-12 col-lg-3 footer-block">
                 <?php if($icon = get_field('logo','options')): ?>
