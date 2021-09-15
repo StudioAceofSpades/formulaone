@@ -84,7 +84,7 @@ get_header(); ?>
                     ?>
                 </div>
             </div>
-            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+            <div class="close-trailer-select d-flex align-items-center justify-content-center">
                 <i class="fas fa-chevron-left"></i>
             </div>
         </div>
@@ -116,7 +116,7 @@ get_header(); ?>
                     ?>
                 </div>
             </div>
-            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+            <div class="close-trailer-select d-flex align-items-center justify-content-center">
                 <i class="fas fa-chevron-left"></i>
             </div>
         </div>
@@ -148,7 +148,7 @@ get_header(); ?>
                     ?>
                 </div>
             </div>
-            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+            <div class="close-trailer-select d-flex align-items-center justify-content-center">
                 <i class="fas fa-chevron-left"></i>
             </div>
         </div>
@@ -180,7 +180,7 @@ get_header(); ?>
                     ?>
                 </div>
             </div>
-            <div id="close-trailer-select" class="d-flex align-items-center justify-content-center">
+            <div class="close-trailer-select d-flex align-items-center justify-content-center">
                 <i class="fas fa-chevron-left"></i>
             </div>
         </div>

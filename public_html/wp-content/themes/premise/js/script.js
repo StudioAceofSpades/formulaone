@@ -32,11 +32,13 @@ var bounds;
             $('.panel').first().show();
         });
 
-        $('#close-trailer-select').click(function(e) {
+        $('.close-trailer-select').click(function(e) {
             e.preventDefault();
 
-            $('.trailer-select'). removeClass('open');
+            $('.trailer-select').removeClass('open');
             $('body').removeClass('no-scroll');
+            $('.lifestyle-button').removeClass('selected');
+            $('.panel').hide();
         });
 
         $('.lifestyle-button').click(function(e) {
