@@ -4,11 +4,21 @@
 
 <footer class="footer">
     <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">The latest from Instagram</h1>
+            </div>
+        </div>
         <div class="d-none d-md-block">
             <?php echo do_shortcode('[instagram-feed showheader=false showbutton=false showfollow=false num=4 cols=4]'); ?>
         </div>
         <div class="d-block d-md-none">
             <?php echo do_shortcode('[instagram-feed showheader=false showbutton=false showfollow=false num=2 cols=2]'); ?>
+        </div>
+        <div class="row">
+            <div class="buttons">
+                <a href="#" target="_blank" class="button orange">Check us out</a>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-3 footer-block">

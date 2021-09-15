@@ -56,6 +56,10 @@
         }
     }
 
+    h1 {
+        margin-bottom: 30px;
+    }
+
     h3 {
         text-align: center;
         margin: 0 auto;
@@ -65,8 +69,12 @@
         font-size: 22px;
     }
 
-    #sb_instagram {
+    .buttons {
         margin-bottom: 60px;
+    }
+
+    #sb_instagram {
+        margin-bottom: 30px;
         width: calc(100% + 30px) !important;
         margin-left: -15px;
         margin-right: -15px;
@@ -266,7 +274,15 @@
         padding-top: 30px;
 
         #sb_instagram {
-            margin-bottom: 0;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            margin-bottom: 10px;
         }
 
         .img {
