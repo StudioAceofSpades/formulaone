@@ -163,9 +163,9 @@
         ],
         [
             {
-                "param": "taxonomy",
+                "param": "post_type",
                 "operator": "==",
-                "value": "lifestyle"
+                "value": "trailer"
             }
         ]
     ],
@@ -175,18 +175,9 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": [
-        "the_content",
-        "excerpt",
-        "discussion",
-        "comments",
-        "author",
-        "format",
-        "featured_image",
-        "categories",
-        "tags",
-        "send-trackbacks"
+        "the_content"
     ],
     "active": true,
     "description": "",
-    "modified": 1631561138
+    "modified": 1631732239
 }
