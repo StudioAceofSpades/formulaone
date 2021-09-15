@@ -5,400 +5,264 @@
     position: relative;
     z-index: 100;
 
-    li {
-        float: left;
-
-        a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 10px 20px;
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: none;
-                color: $orange;
-            }
-        }
-    }
-
     ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
-        overflow: hidden;
-    }
+        font-size: 0;
 
-    .mobile-nav,
-    .mobile-navigation {
-        display: none;
-    }
 
-    .secondary {
-        background-color: black;
-        font-size: 14px;
-        position: relative;
-        z-index: 100;
-    }
+        li {
+            float: left;
 
-    .brand {
-        width: 200px;
-        float: left;
-    }
-
-    .formulaicon {
-        position: absolute;
-        margin: 20px 0 0 40px;
-    }
-
-    .button {
-        background-color: $orange;
-        line-height: 12px;
-        height: 40px;
-        margin: 5px 50px 0 0;
-    }
-
-    .phone {
-        color: $orange;
-    }
-
-    .phone:hover {
-        color: white;
-    }
-
-    .fa-linkedin,
-    .fa-facebook,
-    .fa-youtube {
-        color: $orange;
-        transition: all .3s linear;
-
-        &:hover {
-            color: $white;
-        }
-    }
-
-    .top-menu-links {
-        .has-dropdown {
-            display: flex;
-            justify-content: center;
-
-            &.active {
-                overflow-y: visible;
-
-                > a {
-                    color: $orange;
-                }
-            }
-        }
-
-        .dropdown {
-            position: absolute;
-            display: none;
-            z-index: 3;
-            top: 47px;
-
-            > ul {
+            &.has-dropdown-desktop {
                 position: relative;
-                text-align: center;
-                width: 100%;
-                z-index: 5;
-                display: block;
-                background-color: $dark-gray;
-                padding: 1px;
 
-                > li {
-                    @extend .transition;
-                    display: block;
-                    float: none;
-                    margin: 0 0 1px 0;
-                    background-color: $middle-gray;
-
-                    &:hover {
-                        background-color: $dark-gray;
-
-                       > a {
-                            color: $orange;
-                        }
-
-                        + li {
-                            > a {
-                                &::before {
-                                    opacity: 0;
-                                }
-                            }
-                        }
-                    }
-
-                    &:last-child {
-                        margin-bottom: 0;
-                    }
-
-                    &:first-child {
-                        > a {
-                            &::before {
-                                display: none;
-                            }
-                        }
-                    }
-
+                &.active {
                     > a {
-                        color: $white;
-                        font-weight: 400;
-                        text-transform: uppercase;
-                        font-size: 14px;
-                        line-height: 16px;
-                        display: block;
-                        padding: 15px;
+                        color: $orange;
                     }
                 }
-            }
-        }
-    }
 
-    .top-menu-social {
-        ul {
-            margin-right: -15px;
+                .dropdown {
+                    position: absolute;
+                    display: none;
+                    z-index: 3;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border: 1px solid $dark-gray;
+                    background-color: $mid-gray;
 
-            li {
-                .phone {
-                    font-size: 14px;
-                }
-
-                a {
-                    font-size: 20px;
-                }
-            }
-        }
-    }
-
-    .main {
-        background-color: #212224;
-        color: white;
-        font-size: 18px;
-        font-family: $font;
-        font-weight: 600;
-
-        ul {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            li {
-                margin: 0 10px;
-
-                &:last-child {
-                    background-color: $orange;
-                    line-height: 13px;
-                }
-
-                &:last-child:hover {
-                    background-color: white;
-                    transition: all 0.3s ease;
-                }
-
-                a {
-                    display: block;
-                    position: relative;
-
-                    +.dropdown {
-                        position: absolute;
-                        top: 47px;
-                        display: none;
-                        z-index: 3;
-
-                        > ul {
-                            position: relative;
-                            text-align: center;
+                    ul {
+                        li {
                             width: 100%;
-                            z-index: 5;
-                            display: block;
-                            background-color: $dark-gray;
-                            padding: 1px;
+                            text-align: center;
+                            border-bottom: 1px solid $dark-gray;
 
-                            > li {
-                                @extend .transition;
-                                display: block;
-                                float: none;
-                                margin: 0 0 1px 0;
-                                background-color: $middle-gray;
+                            &:last-child {
+                                border-bottom: none;
+                            }
+
+                            a {
+                                text-transform: uppercase;
+                                white-space: nowrap;
 
                                 &:hover {
                                     background-color: $dark-gray;
-
-                                    > a {
-                                        color: $orange;
-                                    }
-
-                                    + li {
-                                        > a {
-                                            &::before {
-                                                opacity: 0;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                &:last-child {
-                                    margin-bottom: 0;
-                                }
-
-                                &:first-child {
-                                    > a {
-                                        &::before {
-                                            display: none;
-                                        }
-                                    }
-                                }
-
-                                > a {
-                                    color: $white;
-                                    font-weight: 400;
-                                    text-transform: uppercase;
-                                    font-size: 14px;
-                                    line-height: 16px;
-                                    display: block;
-                                    padding: 15px;
                                 }
                             }
                         }
                     }
                 }
             }
-        }
 
-        .has-dropdown {
-            display: flex;
-            justify-content: center;
+            a {
+                display: block;
+                color: white;
+                text-decoration: none;
+                font-size: 14px;
+                line-height: 20px;
+                padding: 10px 15px;
 
-            &.active {
-                overflow-y: visible;
+                &:visited {
+                    color: $white;
+                }
 
-                > a {
+                &:hover {
+                    text-decoration: none;
                     color: $orange;
                 }
+
             }
         }
     }
-}
 
-@include media-breakpoint-down(lg) {
-    .header {
-        .main ul li {
-            margin: 0 5px;
-        }
 
-        li {
-            a {
-                padding: 10px;
-            }
-        }
-    }
-}
+    .secondary {
+        background-color:$black;
 
-@include media-breakpoint-down(md) {
-    .header {
-        .primary {
-            display: none;
-        }
-
-        .secondary {
-            .container {
-                max-width: 100%;
-            }
-
-            .top-menu-links,
-            .top-menu-social {
-                display: none;
-            }
-        }
-
-        .mobile-nav {
-            display: block;
-            position: relative;
-        }
-
-        .main {
-            .container {
-                max-width: 100%;
-            }
-        }
-
-        .formulaicon {
-            margin: 0;
-
-            img {
-                width: 120px;
-                position: absolute;
-                left: 15px;
-                top: 14px;
-            }
-        }
-
-        .main {
-            ul {
-                display: block;
-
-                li {
-                    margin: 0;
-                    width: 100%;
-
-                    &:hover {
-                        background: transparent;
-                    }
-
+        ul {
+            li {
+                &.phone,
+                &.social {
                     a {
-                        display: block;
-                        text-align: right;
-                        width: 100%;
-                        font-size: 18px;
-                        line-height: 1;
-                        padding: 10px 15px;
+                        color: $orange;
 
                         &:hover {
-                            background: transparent;
-                            color: $orange;
-                        }
-                    }
-
-                    &:last-child {
-                        background: transparent;
-
-                        a {
-                            background: $orange;
                             color: $white;
                         }
                     }
                 }
-            }
 
-            .mobile-trigger {
-                font-size: 24px;
-                line-height: 67px;
-                color: $orange !important;
+                &.social {
+                    a {
+                        font-size: 20px;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                    }
+                }
 
-                &:hover,
-                &.active {
-                    color: $white;
+                &.has-dropdown-desktop {
+                    &:hover,
+                    &.active {
+                        a {
+                            border-left-color: $mid-gray;
+                            border-right-color: $mid-gray;
+                        }
+                    }
+
+                    > a {
+                        padding-left: 14px;
+                        padding-right: 14px;
+                        border-left: 1px solid transparent;
+                        border-right: 1px solid transparent;
+                    }
                 }
             }
+        }
+    }
 
-            .mobile-navigation {
-                position: absolute;
-                top: 67px;
-                right: -15px;
-                width: 300px;
-                background: $dark-gray;
-                border-top: 1px solid $dark-gray;
+    .primary {
+        background-color: $dark-gray;
 
-                li {
+        .brand {
+            position: absolute;
+            left: 15px;
+            top: -20px;
+        }
+
+        ul {
+            li {
+                &.has-dropdown-desktop {
+                    .dropdown {
+                        ul {
+                            li {
+                                a {
+                                    font-weight: 400;
+                                    font-size: 14px;
+                                }
+
+                                &:last-child {
+                                    a {
+                                        margin: 0;
+                                        padding-top: 12px;
+                                        padding-bottom: 12px;
+                                        background-color: $mid-gray;
+
+                                        &:hover {
+                                            background-color: $dark-gray;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &:last-child {
+                    a {
+                        margin-top: 7px;
+                        margin-bottom: 7px;
+                        padding-top: 7px;
+                        padding-bottom: 7px;
+                        background-color: $orange;
+
+                        &:hover {
+                            background-color: $white;
+                            color: $orange;
+                        }
+                    }
+                }
+
+                a {
+                    font-size: 18px;
+                    font-weight: 600;
+                    padding: 14px 18px;
+                }
+            }
+        }
+    }
+
+    .mobile-menu {
+        background-color: $dark-gray;
+
+        .brand {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 130px;
+        }
+
+        .mobile-trigger {
+            font-size: 24px;
+            padding: 21px;
+            line-height: 1;
+            color: $orange;
+
+            &:hover,
+            &.active {
+                color: $white;
+            }
+        }
+
+        .mobile-navigation {
+            position: absolute;
+            top: 67px;
+            right: 0;
+            width: 300px;
+            background: $dark-gray;
+            display: none;
+
+            li {
+                display: block;
+                float: none;
+
+                &.main {
+                    background-color: $dark-gray;
+
+                    &:last-child {
+                        background-color: $orange;
+
+                        a {
+                            &:hover {
+                                color: $white;
+                            }
+                        }
+                    }
+
+                    a {
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+                }
+
+                &.secondary {
+                    background-color: $mid-gray;
+
+                    &.has-dropdown-mobile {
+                        span {
+                            width: 38px;
+                            line-height: 34px;
+                        }
+
+                        .dropdown {
+                            background-color: $light-gray;
+                        }
+                    }
+                }
+
+                a {
                     display: block;
+                    text-align: right;
+                    width: 100%;
+                    line-height: 1;
+                    padding: 10px 15px;
                 }
 
-                .has-dropdown {
+                &.has-dropdown-mobile {
                     position: relative;
 
-                    ul {
-                        display: none;
+                    > a {
+                        padding-right: 43px;
                     }
 
                     span {
@@ -435,19 +299,13 @@
                         }
                     }
 
-                    a {
-                        position: relative;
-                        z-index: 1;
-                        padding-right: 43px;
-                    }
-
                     .dropdown {
                         background: $mid-gray;
+                        display: none;
 
                         a {
                             padding-right: 15px;
                             font-size: 14px;
-                            background: transparent;
 
                             &:hover {
                                 color: $orange;
@@ -458,45 +316,6 @@
                             &:hover {
                                 background: transparent;
                             }
-                        }
-                    }
-                }
-
-                .secondnav {
-                    background-color: $middle-gray;
-
-                    li {
-                        a {
-                            text-transform: uppercase;
-                            font-weight: 400;
-                            font-size: 14px;
-
-                            &:last-child {
-                                background: transparent;
-
-                                &:hover {
-                                    color: $orange;
-                                }
-                            }
-                        }
-
-                        &:last-child {
-                            background-color: none;
-
-                            &:hover {
-                                background: transparent;
-                            }
-                        }
-                    }
-
-                    .has-dropdown {
-                        .dropdown {
-                            background: rgba(255,255,255,.05);
-                        }
-
-                        span {
-                            width: 38px;
-                            line-height: 34px;
                         }
                     }
                 }
