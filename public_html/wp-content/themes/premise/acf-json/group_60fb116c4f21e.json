@@ -127,13 +127,6 @@
                 "operator": "==",
                 "value": "default"
             }
-        ],
-        [
-            {
-                "param": "taxonomy",
-                "operator": "==",
-                "value": "lifestyle"
-            }
         ]
     ],
     "menu_order": 1,
@@ -155,5 +148,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1631213063
+    "modified": 1632322212
 }

@@ -167,6 +167,13 @@
                 "operator": "==",
                 "value": "trailer"
             }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "lifestyle"
+            }
         ]
     ],
     "menu_order": 0,
@@ -179,5 +186,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1631732239
+    "modified": 1632322366
 }
