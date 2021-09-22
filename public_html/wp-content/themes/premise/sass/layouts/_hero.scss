@@ -244,6 +244,47 @@
                 right: 70px;
             }
         }
+        &.hero-post {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+
+            & > * {
+                width: 100%;
+            }
+
+            h2 {
+                margin-top: 20px;
+                a {
+                    color: $orange;
+
+                    &:hover {
+                        color: $offwhite;
+                        text-decoration: none;
+                    }
+                }
+            }
+            .meta {
+                margin: 10px 0 0;
+                span {
+                    color: $white;
+                    font-weight: 300;
+                    font-size: 24px;
+                    line-height: 1;
+
+                    &.divider {
+                        display: inline-block;
+                        margin: 0 20px;
+                        height: 10px;
+                        width: 10px;
+                        border: 3px solid $orange;
+                        border-radius: 50%;
+                        position: relative;
+                        top: -1px;
+                    }
+                }
+            }
+        }
     }
 }
 

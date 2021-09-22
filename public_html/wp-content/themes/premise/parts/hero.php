@@ -8,6 +8,8 @@
         include(locate_template('parts/hero/hero-default.php'));
     elseif(get_post_type() == 'trailer'):
         include(locate_template('parts/hero/hero-trailer.php'));
+    elseif(get_post_type() == 'post'):
+        include(locate_template('parts/hero/hero-post.php'));
     else:
         include(locate_template('parts/hero/hero-default.php'));
     endif;
