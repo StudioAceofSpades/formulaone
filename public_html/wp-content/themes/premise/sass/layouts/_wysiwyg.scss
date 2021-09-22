@@ -2,11 +2,9 @@
     font-family: $font;
     margin-bottom: 40px;
     text-align: left;
-
-    .col-wrapper {
-        max-width: 920px;
-        margin: 0 auto;
-    }
+    overflow-x: hidden;
+    max-width: 920px;
+    margin: 0 auto;
 
     strong {
         font-weight: 500;

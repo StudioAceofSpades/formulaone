@@ -180,6 +180,7 @@ form {
             position: relative;
             cursor: pointer;
             padding: 5px 30px 5px 10px;
+            min-height: 43px;
 
             &::before {
                 @extend .transition;
@@ -213,6 +214,7 @@ form {
             padding: 0;
             list-style-type: none;
             cursor: pointer;
+            overflow: hidden;
 
             li {
                 @extend .no-select, .transition;
@@ -232,8 +234,93 @@ form {
         }
     }
 
+    input + label,
+    .address_country .select + label {
+        display: block;
+        opacity: .6;
+        line-height: 1;
+        margin: -10px 0 0;
+    }
+    .gsection {
+        .gsection_title {
+            margin-top: 20px;
+        }
+        .gsection_description {
+            font-size: 16px;
+            line-height: 21px;
+            margin: 0 0 15px;
+            padding: 0 0 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    }
+    .ginput_full,
+    .ginput_left,
+    .ginput_right {
+        display: block;
+        margin-bottom: 20px;
+    }
+    .gform_fields {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        > .gfield {
+            width: 100%;
+
+            &.gfield--width-full {
+                width: 100%;
+            }
+            &.gfield--width-half {
+                width: 49%;
+            }
+        }
+
+    }
+    .ginput_container_date {
+        width: 32%;
+        display: inline-block;
+        margin-left: 0;
+        margin-right: 0;
+
+        .select {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 0;
+        }
+    }
+    fieldset.gfield > div {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .ginput_full {
+        width: 100%;
+    }
+    .ginput_left,
+    .ginput_right {
+        width: 49%;
+        display: inline-block;
+    }
+
     .gfield_visibility_hidden {
         display: none;
+    }
+    .gf_name_has_3,
+    .gf_name_has_2 {
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            display: block;
+            width: 32%;
+        }
+    }
+    .gf_name_has_2 {
+        span {
+            width: 49%;
+        }
     }
 }
 
@@ -246,6 +333,54 @@ form {
                         display: block;
                     }
                 }
+            }
+        }
+
+        input + label {
+            margin-bottom: 10px;
+        }
+
+        .gform_fields {
+            display: block;
+
+            > .gfield {
+                width: 100%;
+
+                &.gfield--width-full {
+                    width: 100%;
+                }
+                &.gfield--width-half {
+                    width: 100%;
+                }
+            }
+
+        }
+        .gf_name_has_3,
+        .gf_name_has_2 {
+            display: block;
+
+            span {
+                width: 100%;
+            }
+        }
+        .ginput_full,
+        .ginput_left,
+        .ginput_right {
+            margin-left: 0;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .ginput_container_date {
+            width: 32%;
+            display: inline-block;
+            margin-left: 0;
+            margin-right: 0;
+
+            .select {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                margin-bottom: 0;
             }
         }
     }

@@ -543,11 +543,15 @@ var bounds;
     }
 
     function customSelect() {
+        var index = 1000;
         $('select').each(function(){
+
             var $this = $(this), numberOfOptions = $(this).children('option').length;
             $this.addClass('select-hidden'); 
-            $this.wrap('<div class="select"></div>');
+            $this.wrap('<div class="select" style="z-index:' + index + ';"></div>');
             $this.after('<div class="select-styled" tabindex="0"></div>');
+
+            index -= 1;
 
             var $styledSelect = $this.next('div.select-styled');
             $styledSelect.text($this.children('option').eq(0).text());
