@@ -8,7 +8,7 @@ if(is_tax()) {
 $background = create_bg($term);
 if(isset($background['image'])) {
     $bg_image_output = 'style="background-image: url(';
-    $bg_image_output .= $background['image'];
+    $bg_image_output .= $background['image']['sizes']['hero'];
     $bg_image_output .=');"';
 } else {
     $video_output = '<video playsinline autoplay muted loop poster="' . $background['cover'] . '">';
