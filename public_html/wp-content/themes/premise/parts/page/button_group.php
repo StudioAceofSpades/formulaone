@@ -13,7 +13,7 @@ endif;
                     $link = get_sub_field('link'); 
                     $color = get_sub_field('color');
                     ?>
-                    <a href="<?php echo $link['url']; ?>" class="button <?php echo $color; ?>"<?php echo $link['target']; ?>><?php echo $link['title']; ?></a>
+                    <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>" class="button <?php echo $color; ?>"<?php echo $link['target']; ?>><?php echo $link['title']; ?></a>
                     <?php
                 endwhile;
                 ?>
