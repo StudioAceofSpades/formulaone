@@ -568,16 +568,17 @@ END;
 
                     // Col logic
                 if (in_array($simple_slide_image_count, [3,5,6], true)) {
-                        $col_class = "col-md-4";
+                        $col_class = "col-md-3";
                     } elseif ($simple_slide_image_count == 4) {
-                        $col_class = "col-md-6";
+                        $col_class = "col-md-3";
                     } else {
                         $col_class = "col-md-3";
                     }
 
                     // Row logic
+                    /*
                     if (
-                        (in_array($simple_slide_image_count, [3,5,6], true)) && 
+                        (in_array($simple_slide_image_count, [3,4,5,6], true)) && 
                         ($current_simple_slide_image_count == 3)
                     ) {
                         $simple_slide .= $row_breaker;
@@ -587,6 +588,7 @@ END;
                     ) {
                         $simple_slide .= $row_breaker;
                     } else {}
+                    */
 
                     // Create col and image/link
                     $simple_slide .= '<div class="' . $col_class . '">';
