@@ -2,7 +2,7 @@
 global $post;
 $slug = $post->post_name;
 ?>
-<div class="trailer-excerpt col-md-6 col-lg-3">
+<div class="trailer-excerpt col-md-6 col-lg-3 d-flex flex-column">
     <?php if($image = get_field('trailer_image')): ?>
         <div class="image">
             <img src="<?php echo $image['sizes']['trailer-small']; ?>" alt="<?php echo $image['alt']; ?>">

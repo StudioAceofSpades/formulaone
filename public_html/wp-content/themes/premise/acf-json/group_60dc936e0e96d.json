@@ -117,21 +117,6 @@
             ]
         },
         {
-            "key": "field_60dc941ab3686",
-            "label": "Button",
-            "name": "lifestyle_button",
-            "type": "link",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array"
-        },
-        {
             "key": "field_613a0a64e1de5",
             "label": "Build",
             "name": "",
@@ -327,5 +312,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1631214231
+    "modified": 1632849659
 }

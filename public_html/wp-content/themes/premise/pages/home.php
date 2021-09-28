@@ -33,12 +33,6 @@ get_header(); ?>
                     </div>
                 <?php endif; ?>
 
-                <?php if($button = get_field('lifestyle_button')): ?>
-                    <div class="buttons">
-                        <a href="<?php echo $button['url']; ?>" class="button orange"><?php echo $button['title']; ?></a>
-                    </div>
-                <?php endif; ?>
-
                 <div class="build">
                     <div class="row">
                         <div class="col-lg-6">
