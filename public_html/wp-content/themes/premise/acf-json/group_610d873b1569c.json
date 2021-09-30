@@ -530,9 +530,9 @@
         },
         {
             "key": "field_610d97a502b9e",
-            "label": "Video",
-            "name": "video",
-            "type": "oembed",
+            "label": "Videos",
+            "name": "videos",
+            "type": "repeater",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -541,8 +541,29 @@
                 "class": "",
                 "id": ""
             },
-            "width": "",
-            "height": ""
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_6155da3a09efe",
+                    "label": "Video",
+                    "name": "video",
+                    "type": "oembed",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "width": "",
+                    "height": ""
+                }
+            ]
         }
     ],
     "location": [
@@ -564,5 +585,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1629403350
+    "modified": 1633016387
 }

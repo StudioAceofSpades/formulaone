@@ -659,17 +659,34 @@ END;
         </div>
     <?php endif; ?>
 
-    <?php if(get_field('video')): ?>
+    <?php if(have_rows('videos')): ?>
         <div id="video" class="scroll-to">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <h1 class="text-center">Video</h1>
-                        <?php $vid = get_field('video'); ?>
-                        <div class="video-container">
-                            <?php echo $vid; ?>
+                    <?php 
+                    $number = count(get_field('videos'));
+                    if($number == 1) {
+                        $class = 'col-md-8 offset-md-2';
+                        $title = 'Video';
+                    } elseif ($number == 2) {
+                        $class = 'col-md-6';
+                        $title = 'Videos';
+                    } else {
+                        $class = 'col-md-4';
+                        $title = 'Videos';
+                    }
+                    ?>
+
+                    <div class="col-12"><h1 class="text-center"><?php echo $title; ?></h1></div>
+                    
+                    <?php while(have_rows('videos')) : the_row(); ?>
+                        <div class="<?php echo $class; ?>">
+                            <?php $vid = get_sub_field('video'); ?>
+                            <div class="video-container">
+                                <?php echo $vid; ?>
+                            </div>
                         </div>
-                    </div>
+                    <?php endwhile; ?>
                 </div>
             </div>
         </div>

@@ -181,7 +181,14 @@
     }
 
     #video {
-        margin-bottom: 60px;
+        margin-bottom: 30px;
+
+        .row {
+            justify-content: center;
+        }
+        .video-container {
+            margin: 0 0 30px;
+        }
     }
 
     #request-a-quote {
