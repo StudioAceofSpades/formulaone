@@ -328,28 +328,28 @@ get_header(); ?>
                                     <?php endif; ?>
                                 </hgroup>
                                 <?php foreach($packages as $p): ?>
-                                    <div class="package" data-name="<?php echo $p['package_name']; ?>">
+                                    <div class="package" data-name="<?php echo $p->post_name; ?>">
                                         <div class="control">
                                             <i class="far fa-plus"></i>
                                             <i class="far fa-minus"></i>
                                         </div>
                                         <div class="contents">
-                                            <h3><?php echo $p['package_name']; ?></h3>
-                                            <?php if($p['package_items']): ?>
+                                            <h3><?php echo $p->post_title; ?></h3>
+                                            <?php if(have_rows('options', $p->ID)): ?>
                                                 <ul>
-                                                    <?php foreach($p['package_items'] as $i): ?>
-                                                        <?php if($i['item_description']): ?>
+                                                    <?php while(have_rows('options', $p->ID)): the_row(); ?>
+                                                        <?php if(get_sub_field('option_description')): ?>
                                                             <li class="tooltip">
-                                                                <span><?php echo $i['item_name']; ?></span>
+                                                                <span><?php the_sub_field('option_name'); ?></span>
                                                                 <i class="far fa-info-circle"></i>
                                                                 <div class="tip">
-                                                                    <span><?php echo $i['item_description']; ?></span>
+                                                                    <span><?php the_sub_field('option_description'); ?></span>
                                                                 </div>
                                                             </li>
                                                         <?php else: ?>
-                                                            <li><?php echo $i['item_name']; ?></li>
+                                                            <li><?php the_sub_field('option_name'); ?></li>
                                                         <?php endif; ?>
-                                                    <?php endforeach; ?>
+                                                    <?php endwhile; ?>
                                                 </ul>
                                             <?php endif; ?>
                                         </div>

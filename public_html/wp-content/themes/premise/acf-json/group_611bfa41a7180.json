@@ -533,7 +533,7 @@
             "key": "field_611bfb2856398",
             "label": "Packages",
             "name": "packages",
-            "type": "repeater",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -542,91 +542,19 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "field_611bfb3156399",
-            "min": 0,
-            "max": 0,
-            "layout": "block",
-            "button_label": "Add Package",
-            "sub_fields": [
-                {
-                    "key": "field_611bfb3156399",
-                    "label": "Package Name",
-                    "name": "package_name",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                },
-                {
-                    "key": "field_611bfb385639a",
-                    "label": "Package Items",
-                    "name": "package_items",
-                    "type": "repeater",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "collapsed": "field_611bfb3f5639b",
-                    "min": 0,
-                    "max": 0,
-                    "layout": "block",
-                    "button_label": "Add Item",
-                    "sub_fields": [
-                        {
-                            "key": "field_611bfb3f5639b",
-                            "label": "Item Name",
-                            "name": "item_name",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_611bfb4b5639c",
-                            "label": "Item Description",
-                            "name": "item_description",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "maxlength": "",
-                            "rows": "",
-                            "new_lines": ""
-                        }
-                    ]
-                }
-            ]
+            "post_type": [
+                "package"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "elements": "",
+            "min": "",
+            "max": "",
+            "return_format": "object"
         }
     ],
     "location": [
@@ -658,5 +586,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1629819576
+    "modified": 1633015970
 }
