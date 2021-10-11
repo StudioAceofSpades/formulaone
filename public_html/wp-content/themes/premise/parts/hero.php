@@ -2,6 +2,8 @@
     <?php
     if(is_front_page()):
         include(locate_template('parts/hero/hero-home.php'));
+	elseif(is_blog()):
+        include(locate_template('parts/hero/hero-blog.php'));
     elseif(is_page_template('single-contact.php')):
         include(locate_template('parts/hero/hero-contact.php'));
     elseif(is_tax()):

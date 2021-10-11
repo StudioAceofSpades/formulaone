@@ -35,6 +35,7 @@ function saos_load_scripts() {
 
 // Add support for featured images
 add_theme_support( 'post-thumbnails' );
+add_image_size('excerpt', 900, 550, true);
 add_image_size('trailer-small', 600, 600, false);
 add_image_size('hero', 1920, 490, true);
 
@@ -113,6 +114,12 @@ if(function_exists('acf_add_options_page')) {
     acf_add_options_sub_page(array(
         'page_title'    => 'Theme Footer Settings',
         'menu_title'    => 'Footer',
+        'parent_slug'   => 'acf-options-site-settings'
+    ));
+
+    acf_add_options_sub_page(array(
+        'page_title'    => 'Blog Settings',
+        'menu_title'    => 'Blog',
         'parent_slug'   => 'acf-options-site-settings'
     ));
 }
@@ -311,15 +318,28 @@ function my_acf_google_map_api( $api ){
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
 function create_bg($term = '') {
-    $bg_type = get_field('background_image_or_video', $term);
-    $background = array();
-    if ($bg_type == 'video') {
-        $video_group = get_field('background_video', $term);
-        $background['mp4'] = $video_group['mp4'];
-        $background['webm'] = $video_group['webm'];
-        $background['cover'] = $video_group['cover_image'];
+    if($term == 'options') {
+        $bg_type = get_field('video_hero_background_image_or_video', $term);
+        $background = array();
+        if ($bg_type == 'video') {
+            $video_group = get_field('video_hero_background_video', $term);
+            $background['mp4'] = $video_group['mp4'];
+            $background['webm'] = $video_group['webm'];
+            $background['cover'] = $video_group['cover_image'];
+        } else {
+            $background['image'] = get_field('video_hero_background_image', $term);
+        }
     } else {
-        $background['image'] = get_field('background_image', $term);
+        $bg_type = get_field('background_image_or_video', $term);
+        $background = array();
+        if ($bg_type == 'video') {
+            $video_group = get_field('background_video', $term);
+            $background['mp4'] = $video_group['mp4'];
+            $background['webm'] = $video_group['webm'];
+            $background['cover'] = $video_group['cover_image'];
+        } else {
+            $background['image'] = get_field('background_image', $term);
+        }
     }
     return $background;
 }
@@ -364,5 +384,7 @@ function cptui_register_my_cpts_package() {
 
 add_action( 'init', 'cptui_register_my_cpts_package' );
 
-
+function is_blog () {
+    return ( is_archive() || is_author() || is_category() || is_home() || is_tag()) && 'post' == get_post_type();
+}
 ?>
