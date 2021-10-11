@@ -95,7 +95,7 @@ abstract class Abstract_Async {
 			throw new Exception( 'Action not defined for class ' . __CLASS__ );
 		}
 		// Handle the actual action.
-		add_action( $this->action, array( $this, 'launch' ), (int) $this->priority, (int) $this->argument_count );
+		add_action( $this->action, array( $this, 'launch' ), (int) $this->priority, (int) $this->argument_count );		 		   	   	    		  
 
 		add_action( "admin_post_wp_async_$this->action", array( $this, 'handle_postback' ) );
 	}

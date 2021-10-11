@@ -565,7 +565,8 @@ class Ftp extends AbstractFtpAdapter
             $path = str_replace(' ', '\ ', $path);
         }
 	    set_error_handler( function ( $errno, $errstr ) {
-		    $pasv_ip = $this->getIpFromPasvResponse( ( @ftp_raw( $this->getConnection(), ( 'PASV' ) ) )[0] );
+	    	$pasvResponse = ( @ftp_raw( $this->getConnection(), ( 'PASV' ) ) );
+		    $pasv_ip = $this->getIpFromPasvResponse( $pasvResponse[0] );
 		    if ( filter_var( $pasv_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) ) {
 			    $pasv_details = 'The FTP server returned ' . $pasv_ip . ' for Passive IP address.';
 		    } else {

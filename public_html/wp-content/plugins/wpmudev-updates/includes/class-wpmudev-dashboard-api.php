@@ -99,6 +99,10 @@ class WPMUDEV_Dashboard_Api {
 				wp_schedule_event( time(), 'twicedaily', 'wpmudev_scheduled_jobs' );
 			}
 
+			// Simulate admin.
+			// Temporarly disable.
+			// $this->maybe_simulate_admin_for_cron();
+
 			add_action(
 				'wpmudev_scheduled_jobs',
 				array( $this, 'hub_sync' )
@@ -247,7 +251,7 @@ class WPMUDEV_Dashboard_Api {
 		if ( defined( 'WPMUDEV_HUB_ADMIN_URL' ) ) {
 			return WPMUDEV_HUB_ADMIN_URL;
 		} elseif ( defined( 'WPMUDEV_HUB_SITE_URL' ) ) {
-			return is_multisite() ? trailingslashit( WPMUDEV_HUB_SITE_URL ) . 'wp-admin/network/' : trailingslashit( WPMUDEV_HUB_SITE_URL ) . 'wp-admin/';		 	  	  		  	 					
+			return is_multisite() ? trailingslashit( WPMUDEV_HUB_SITE_URL ) . 'wp-admin/network/' : trailingslashit( WPMUDEV_HUB_SITE_URL ) . 'wp-admin/';
 		} else {
 			return network_admin_url();
 		}
@@ -792,6 +796,29 @@ class WPMUDEV_Dashboard_Api {
 	}
 
 	/**
+	 * Checks if tickets are hidden on UI.
+	 *
+	 * @since 4.11.4
+	 *
+	 * @return bool is hidden.
+	 */
+	public function is_tickets_hidden() {
+		// Get membership data.
+		$data = $this->get_membership_data();
+		// Check tickets visibility.
+		$hidden = isset( $data['is_tickets_hidden'] ) && (bool) $data['is_tickets_hidden'];
+
+		/**
+		 * Filter hook to change tickets visibility.
+		 *
+		 * @param bool $visible Is hidden.
+		 *
+		 * @since 4.11.4
+		 */
+		return apply_filters( 'wpmudev_dashboard_is_tickets_hidden', $hidden );
+	}
+
+	/**
 	 * Returns the details of a single project from the API.
 	 *
 	 * @since  4.0.0
@@ -1259,6 +1286,32 @@ class WPMUDEV_Dashboard_Api {
 	 */
 	public function is_wpmu_dev_hosting() {
 		return isset( $_SERVER['WPMUDEV_HOSTED'] );
+	}
+
+	/**
+	 * Maybe simulate admin environment if required.
+	 *
+	 * If our plugin's status check cron is being executed,
+	 * simulate admin before running cron.
+	 *
+	 * @since 4.11.4
+	 *
+	 * @return void
+	 */
+	private function maybe_simulate_admin_for_cron() {
+		// Do nothing if not cron.
+		if ( ! defined( 'DOING_CRON' ) || ! DOING_CRON ) {
+			return;
+		}
+
+		// Get ready hooks.
+		$hooks = WPMUDEV_Dashboard::$utils->get_ready_cron_hooks();
+
+		// If our cron job is ready to run.
+		if ( in_array( 'wpmudev_scheduled_jobs', $hooks, true ) ) {
+			// Simulate admin.
+			WPMUDEV_Dashboard::$utils->simulate_admin();
+		}
 	}
 
 	/**
@@ -2396,9 +2449,16 @@ class WPMUDEV_Dashboard_Api {
 				'token'         => $token,
 				'pre_sso_state' => $hashed_pre_sso_state,
 				'redirect'      => $redirect,
-				'email'         => rawurlencode( $profile['profile']['user_name'] ),
 				'_hubteam'      => $hubteam,
 			);
+
+			// Use user id if available.
+			if ( isset( $profile['profile']['id'] ) ) {
+				$auth_params['user_id'] = (int) $profile['profile']['id'];
+			} else {
+				// Fallback to email in case we are still on old cache.
+				$auth_params['email'] = rawurlencode( $profile['profile']['user_name'] );
+			}
 
 			if ( $jwttoken ) {
 				$auth_params['_jwttoken'] = $jwttoken;
@@ -3295,6 +3355,7 @@ class WPMUDEV_Dashboard_Api {
 				}
 				if ( ! in_array( 'page_time', $metrics, true ) ) {
 					unset( $data['overall']['chart']['page_time'] );
+					unset( $data['overall']['chart']['visit_time'] );
 				}
 				if ( ! in_array( 'bounce_rate', $metrics, true ) ) {
 					unset( $data['overall']['chart']['bounce_rate'] );
@@ -3316,6 +3377,7 @@ class WPMUDEV_Dashboard_Api {
 				}
 				if ( ! in_array( 'page_time', $metrics, true ) ) {
 					unset( $data['overall']['totals']['page_time'] );
+					unset( $data['overall']['totals']['visit_time'] );
 				}
 				if ( ! in_array( 'bounce_rate', $metrics, true ) ) {
 					unset( $data['overall']['totals']['bounce_rate'] );
@@ -3340,6 +3402,7 @@ class WPMUDEV_Dashboard_Api {
 				}
 				if ( ! in_array( 'page_time', $metrics, true ) ) {
 					unset( $data['pages'][ $key ]['page_time'] );
+					unset( $data['pages'][ $key ]['visit_time'] );
 				}
 				if ( ! in_array( 'bounce_rate', $metrics, true ) ) {
 					unset( $data['pages'][ $key ]['bounce_rate'] );
@@ -3364,6 +3427,7 @@ class WPMUDEV_Dashboard_Api {
 				}
 				if ( ! in_array( 'page_time', $metrics, true ) ) {
 					unset( $data['sites'][ $key ]['page_time'] );
+					unset( $data['sites'][ $key ]['visit_time'] );
 				}
 				if ( ! in_array( 'bounce_rate', $metrics, true ) ) {
 					unset( $data['sites'][ $key ]['bounce_rate'] );
@@ -3388,6 +3452,7 @@ class WPMUDEV_Dashboard_Api {
 				}
 				if ( ! in_array( 'page_time', $metrics, true ) ) {
 					unset( $data['authors'][ $key ]['page_time'] );
+					unset( $data['authors'][ $key ]['visit_time'] );
 				}
 				if ( ! in_array( 'bounce_rate', $metrics, true ) ) {
 					unset( $data['authors'][ $key ]['bounce_rate'] );

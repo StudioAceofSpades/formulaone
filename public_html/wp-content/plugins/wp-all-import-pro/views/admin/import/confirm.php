@@ -179,7 +179,7 @@
 
 						<?php if ( "new" == $post['wizard_type']): ?>
 						
-							<p><?php printf(__('Your unique key is <span style="color:#000; font-weight:bold;">%s</span>', 'wp_all_import_plugin'), $post['unique_key']); ?></p>
+							<p><?php printf(__('Your unique key is <span style="color:#000; font-weight:bold;">%s</span>', 'wp_all_import_plugin'), wp_all_import_clear_xss($post['unique_key'])); ?></p>
 							
 							<?php if ( ! $isWizard and !empty($custom_type)): ?>
 								
@@ -248,6 +248,15 @@
 									<?php endif; ?>
 									<?php if ( $post['is_update_content']): ?>
 									<li> <?php _e('content', 'wp_all_import_plugin'); ?></li>
+									<?php endif; ?>
+									<?php if ( $post['is_update_author']): ?>
+                                    <li> <?php _e('author', 'wp_all_import_plugin'); ?></li>
+									<?php endif; ?>
+									<?php if ( $post['is_update_comment_status']): ?>
+                                    <li> <?php _e('comment status', 'wp_all_import_plugin'); ?></li>
+									<?php endif; ?>
+									<?php if ( $post['is_update_post_format']): ?>
+                                    <li> <?php _e('post format', 'wp_all_import_plugin'); ?></li>
 									<?php endif; ?>
 									<?php if ( $post['is_update_excerpt'] && 'taxonomies' != $post['custom_type'] && 'comments' != $post['custom_type']): ?>
 									<li> <?php _e('excerpt', 'wp_all_import_plugin'); ?></li>

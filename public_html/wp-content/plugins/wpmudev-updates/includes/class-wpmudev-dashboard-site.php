@@ -171,6 +171,7 @@ class WPMUDEV_Dashboard_Site {
 			'wdp-login-success',
 			'wdp-sso-status',
 			'wdp-dismiss-highlights',
+			'wdp-reset-settings',
 		);
 		foreach ( $ajax_actions as $action ) {
 			add_action( "wp_ajax_$action", array( $this, 'process_ajax' ) );
@@ -380,7 +381,9 @@ class WPMUDEV_Dashboard_Site {
 			'staff_notes'                       => '',
 			'redirected_v4'                     => 0, // We want to redirect all users after first v4 activation!
 			'autoupdate_dashboard'              => 1,
+			'enable_auto_translation'           => false,
 			'notifications'                     => array(),
+			'translation_locale'                => 'en_US',
 			// 'blog_active_projects' => array(), // Only used on multisite. Not finished.
 			'auth_user'                         => null, // NULL means: Ignore during 'reset' action.
 			'highlights_dismissed'              => true,
@@ -402,7 +405,14 @@ class WPMUDEV_Dashboard_Site {
 			'whitelabel_doc_links_enabled'      => false,
 			// Analytics options.
 			'analytics_enabled'                 => false,
+			'analytics_metrics'                 => array( 'pageviews', 'unique_pageviews', 'page_time', 'visits', 'bounce_rate', 'exit_rate' ),
 			'analytics_role'                    => 'administrator',
+			// Data settings on uninstall.
+			'data_preserve_settings'            => true,
+			'data_keep_data'                    => true,
+			// SSO.
+			'enable_sso'                        => false,
+			'sso_userid'                        => false,
 		);
 
 		foreach ( $options as $key => $default_val ) {
@@ -535,7 +545,7 @@ class WPMUDEV_Dashboard_Site {
 		}
 
 		// If upgrading to 4.11.3.
-		if ( version_compare( $old_version, '4.11.3-beta', '<' ) ) {
+		if ( version_compare( $old_version, '4.11.3', '<' ) ) {
 			$metrics = (array) $this->get_option( 'analytics_metrics', true, array() );
 			if ( ! empty( $metrics ) ) {
 				// Add new visits metrics as checked.
@@ -543,6 +553,15 @@ class WPMUDEV_Dashboard_Site {
 				// Update metrics.
 				$this->set_option( 'analytics_metrics', $metrics );
 			}
+		}
+
+		// If upgrading to 4.11.4.
+		if ( version_compare( $old_version, '4.11.4', '<' ) ) {
+			// Set data settings.
+			$this->set_option( 'data_keep_data', true );
+			$this->set_option( 'data_preserve_settings', true );
+			// Refresh profile data to include new user id.
+			WPMUDEV_Dashboard::$api->refresh_profile();
 		}
 	}
 
@@ -1011,7 +1030,13 @@ class WPMUDEV_Dashboard_Site {
 						$success = false;
 						break;
 				}
+				break;
 
+			// Setup data settings.
+			case 'data-setup':
+				$this->set_option( 'data_keep_data', ! empty( $_REQUEST['data_keep_data'] ) );
+				$this->set_option( 'data_preserve_settings', ! empty( $_REQUEST['data_preserve_settings'] ) );
+				$success = true;
 				break;
 			default:
 				$success = false;
@@ -1152,7 +1177,7 @@ class WPMUDEV_Dashboard_Site {
 					if ( $pid ) {
 						$local = $this->get_cached_projects( $pid );
 						if ( empty( $local ) ) {
-							$this->send_json_error( array( 'message' => __( 'Not installed' ) ) );
+							$this->send_json_error( array( 'message' => __( 'Not installed', 'wpmudev' ) ) );
 						}
 						$other_pids = false;
 
@@ -1199,7 +1224,7 @@ class WPMUDEV_Dashboard_Site {
 					if ( $pid ) {
 						$local = $this->get_cached_projects( $pid );
 						if ( empty( $local ) ) {
-							$this->send_json_error( array( 'message' => __( 'Not installed' ) ) );
+							$this->send_json_error( array( 'message' => __( 'Not installed', 'wpmudev' ) ) );
 						}
 
 						if ( 'plugin' == $local['type'] ) {
@@ -1222,7 +1247,7 @@ class WPMUDEV_Dashboard_Site {
 					if ( $pid ) {
 						$local = $this->get_cached_projects( $pid );
 						if ( ! empty( $local ) ) {
-							$this->send_json_error( array( 'message' => __( 'Already installed' ) ) );
+							$this->send_json_error( array( 'message' => __( 'Already installed', 'wpmudev' ) ) );
 						}
 
 						if ( $this->maybe_replace_free_with_pro( $pid ) ) {
@@ -1249,7 +1274,7 @@ class WPMUDEV_Dashboard_Site {
 
 						// Can not continue.
 						if ( empty( $local['filename'] ) ) {
-							$this->send_json_error( array( 'message' => __( 'Could not install' ) ) );
+							$this->send_json_error( array( 'message' => __( 'Could not install', 'wpmudev' ) ) );
 						}
 
 						// Activate the plugin.
@@ -1578,6 +1603,24 @@ class WPMUDEV_Dashboard_Site {
 					// Set dismissal flag.
 					WPMUDEV_Dashboard::$site->set_option( 'highlights_dismissed', true );
 					$this->send_json_success();
+					break;
+
+				case 'reset-settings':
+					// Reset settings.
+					$this->init_options( 'reset' );
+					// URL to redirect.
+					$url = add_query_arg(
+						array(
+							'success'        => time() + 10,
+							'success-action' => 'reset-settings',
+						),
+						WPMUDEV_Dashboard::$ui->page_urls->settings_url
+					);
+					$this->send_json_success(
+						array(
+							'redirect' => $url . '#data',
+						)
+					);
 					break;
 
 				default:

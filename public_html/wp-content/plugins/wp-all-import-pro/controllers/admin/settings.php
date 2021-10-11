@@ -592,6 +592,10 @@ class PMXI_Admin_Settings extends PMXI_Controller_Admin {
 		$targetDir = self::$path;
 
 		if (! is_dir($targetDir) || ! is_writable($targetDir)){
+		    wp_mkdir_p($targetDir);
+		}
+
+		if (! is_dir($targetDir) || ! is_writable($targetDir)){
 			delete_transient( self::$upload_transient );
 			exit(json_encode(array("jsonrpc" => "2.0", "error" => array("code" => 100, "message" => __("Uploads folder is not writable.", "wp_all_import_plugin")), "id" => "id")));
 		}
@@ -716,6 +720,9 @@ class PMXI_Admin_Settings extends PMXI_Controller_Admin {
 		$taxonomy_type = false;
 
 		$notice = false;
+
+		// declare gravity form title variable
+		$gravity_form_title = null;
 
 		// Check if file has been uploaded
 		if (!$chunks || $chunk == $chunks - 1) {

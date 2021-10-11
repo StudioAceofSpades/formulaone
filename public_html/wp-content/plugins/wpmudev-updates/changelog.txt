@@ -6,6 +6,29 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+4.11.5 - 08/10/2021 - Joel
+- Fix: Hub plugin updates are failing due to a fatal error.
+- Fix: Automate is blocking cron jobs.
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+4.11.4 - 29/09/2021 - Joel
+- New: Ability to reset plugin settings.
+- New: Optional data and settings cleanup on plugin uninstallation.
+- New: Ability to configure support tickets visibility from Hub.
+- New: Ability to force sync from Hub.
+- Enhance: Premium plugins and themes updates with Automate.
+- Enhance: Analytics settings UX.
+- Enhance: Hide analytics widget if no metrics are selected.
+- Enhance: SSO authentication process.
+- Enhance: Plugins bulk action confirmation notice.
+- Fix: Hidden metrics are still visible on the analytics widget.
+- Fix: Wrong colspan for update notifications.
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
 4.11.3 - 26/08/2021 - Joel
 - Enhance: Update analytics metrics.
 - Enhance: White label improvements.
@@ -761,4 +784,4 @@ Added option to disable admin notices.
 Initial Release.
 
 
-861672-1632326215-au
+861672-1633981287-au

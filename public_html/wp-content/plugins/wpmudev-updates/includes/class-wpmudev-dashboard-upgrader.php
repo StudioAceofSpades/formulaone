@@ -639,7 +639,7 @@ class WPMUDEV_Dashboard_Upgrader {
 	 * @param int $pid Project ID.
 	 *
 	 * @since  1.0.0
-	 * @return array Details about the project needed by upgrade().
+	 * @return array|bool Details about the project needed by upgrade().
 	 */
 	protected function prepare_dev_upgrade( $pid ) {
 		$resp = array(
@@ -818,8 +818,7 @@ class WPMUDEV_Dashboard_Upgrader {
 						return array(
 							'success' => false,
 							'log'     => $response['log'],
-							'code'    => $response['error']['code'],
-							'message' => $response['error']['message'],
+							'error'   => $response['error'],
 						);
 					}
 				}
@@ -829,8 +828,10 @@ class WPMUDEV_Dashboard_Upgrader {
 		return array(
 			'success' => false,
 			'log'     => false,
-			'code'    => 'UPG.13',
-			'message' => __( 'Update failed for an unknown reason', 'wpmudev' ),
+			'error'   => array(
+				'code'    => 'UPG.13',
+				'message' => __( 'Update failed for an unknown reason', 'wpmudev' ),
+			),
 		);
 	}
 
@@ -939,7 +940,7 @@ class WPMUDEV_Dashboard_Upgrader {
 			global $wp_filesystem;
 
 			$response['error']['code']    = 'UPG.05';
-			$response['error']['message'] = __( 'Unable to connect to the filesystem. Please confirm your credentials' );
+			$response['error']['message'] = __( 'Unable to connect to the filesystem. Please confirm your credentials', 'wpmudev' );
 
 			// Pass through the error from WP_Filesystem if one was raised.
 			if ( $wp_filesystem instanceof WP_Filesystem_Base && is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->get_error_code() ) {
@@ -982,7 +983,7 @@ class WPMUDEV_Dashboard_Upgrader {
 	 *
 	 * A lot of logic is borrowed from ajax-actions.php
 	 *
-	 * @param int/string $pid The project ID or a plugin slug.
+	 * @param int|string $pid The project ID or a plugin slug.
 	 *
 	 * @since  4.0.0
 	 *
@@ -1053,7 +1054,7 @@ class WPMUDEV_Dashboard_Upgrader {
 
 		// Both methods failed.
 		if ( empty( $result['success'] ) ) {
-			$this->set_error( $pid, $result['code'], $result['message'] );
+			$this->set_error( $pid, $result['error']['code'], $result['error']['message'] );
 
 			return false;
 		} else {
@@ -1108,7 +1109,7 @@ class WPMUDEV_Dashboard_Upgrader {
 		} elseif ( false === $result ) {
 			global $wp_filesystem;
 
-			$error = __( 'Unable to connect to the filesystem. Please confirm your credentials.' );
+			$error = __( 'Unable to connect to the filesystem. Please confirm your credentials.', 'wpmudev' );
 
 			// Pass through the error from WP_Filesystem if one was raised.
 			if ( $wp_filesystem instanceof WP_Filesystem_Base && is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->get_error_code() ) {
@@ -1355,7 +1356,7 @@ class WPMUDEV_Dashboard_Upgrader {
 		} elseif ( is_null( $result ) ) {
 			global $wp_filesystem;
 
-			$error = __( 'Unable to connect to the filesystem. Please confirm your credentials.' );
+			$error = __( 'Unable to connect to the filesystem. Please confirm your credentials.', 'wpmudev' );
 
 			// Pass through the error from WP_Filesystem if one was raised.
 			if ( $wp_filesystem instanceof WP_Filesystem_Base && is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->get_error_code() ) {
@@ -1431,7 +1432,7 @@ class WPMUDEV_Dashboard_Upgrader {
 		// Used to see if WP_Filesystem is set up to allow unattended updates.
 		$skin = new Automatic_Upgrader_Skin();
 		if ( ! $skin->request_filesystem_credentials( false, ABSPATH, false ) ) {
-			$this->set_error( 'core', 'fs_unavailable', __( 'Could not access filesystem.' ) ); // this string is from core translation
+			$this->set_error( 'core', 'fs_unavailable', __( 'Could not access filesystem.', 'wpmudev' ) ); // this string is from core translation
 
 			return false;
 		}

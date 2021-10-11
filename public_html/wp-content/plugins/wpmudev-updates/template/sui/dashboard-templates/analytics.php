@@ -2,7 +2,11 @@
 /**
  * Analytics widget template.
  *
- * @package templates
+ * @var bool                            $analytics_enabled Is analytics enabled.
+ * @var array                           $membership_data   Membership data.
+ * @var WPMUDEV_Dashboard_Sui_Page_Urls $urls              URL class.
+ *
+ * @package Templates
  */
 
 $data     = array();
@@ -14,6 +18,16 @@ if ( WPMUDEV_Dashboard::$api->is_analytics_allowed() ) {
 		$data = WPMUDEV_Dashboard::$api->analytics_stats_overall( $days_ago, get_current_blog_id() );
 	}
 }
+
+// Setup activation URL.
+$activate_url = add_query_arg(
+	array(
+		'status' => 'activate',
+		'action' => 'analytics-setup',
+	),
+	$urls->analytics_url
+);
+$activate_url = wp_nonce_url( $activate_url, 'analytics-setup', 'hash' );
 
 $stats_defaults = array(
 	'pageviews'   => array(
@@ -74,28 +88,28 @@ $have_stats = intval( $stats['pageviews']['value'] ) || intval( $stats['visits']
 	<div class="sui-box-body">
 		<?php // Body area, description. ?>
 		<?php if ( 'free' === $membership_data['membership'] ) : ?>
-		<p><?php esc_html_e( 'Add basic analytics tracking that doesn\'t require any third party integration, and display the data in the WordPress Admin Dashboard area. An active WPMU DEV membership is required.', 'wpmudev' ); ?></p>
+			<p><?php esc_html_e( 'Add basic analytics tracking that doesn\'t require any third party integration, and display the data in the WordPress Admin Dashboard area. An active WPMU DEV membership is required.', 'wpmudev' ); ?></p>
 		<?php else : ?>
-		<p><?php esc_html_e( 'Add basic analytics tracking that doesn\'t require any third party integration, and display the data in the WordPress Admin Dashboard area.', 'wpmudev' ); ?></p>
+			<p><?php esc_html_e( 'Add basic analytics tracking that doesn\'t require any third party integration, and display the data in the WordPress Admin Dashboard area.', 'wpmudev' ); ?></p>
 		<?php endif; ?>
 
 		<?php if ( 'free' !== $membership_data['membership'] ) : ?>
 			<?php // Body area, not activated. ?>
 			<?php if ( ! $analytics_enabled ) : ?>
-			<a href="<?php echo esc_url( $urls->analytics_url ); ?>" class="sui-button sui-button-blue" style="margin: 10px 0;">
-				<?php esc_html_e( 'ACTIVATE', 'wpmudev' ); ?>
-			</a>
+				<a href="<?php echo esc_url( $activate_url ); ?>" class="sui-button sui-button-blue" style="margin: 10px 0;">
+					<?php esc_html_e( 'ACTIVATE', 'wpmudev' ); ?>
+				</a>
 			<?php endif; ?>
 			<?php // Body area, not enough data. ?>
 			<?php if ( $analytics_enabled && false === $have_stats ) : ?>
-		<div class="sui-notice sui-notice-info">
-			<div class="sui-notice-content">
-				<div class="sui-notice-message">
-					<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>
-					<p><?php esc_html_e( 'We haven\'t collected enough data. Please check back soon.', 'wpmudev' ); ?></p>
+				<div class="sui-notice sui-notice-info">
+					<div class="sui-notice-content">
+						<div class="sui-notice-message">
+							<span class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></span>
+							<p><?php esc_html_e( 'We haven\'t collected enough data. Please check back soon.', 'wpmudev' ); ?></p>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
 			<?php endif; ?>
 		<?php endif; ?>
 	</div>
@@ -122,32 +136,32 @@ $have_stats = intval( $stats['pageviews']['value'] ) || intval( $stats['visits']
 			),
 		);
 		?>
-	<table class="sui-table">
-		<tbody>
+		<table class="sui-table">
+			<tbody>
 			<?php foreach ( $stat_attrs as $a ) : ?>
 				<?php $stat = $stats[ $a['type'] ]; ?>
 				<?php $dir = $stat['direction']; ?>
-			<tr>
-				<td class="sui-table-item-title"><?php echo esc_html( $a['text'] ); ?></td>
-				<td
-					class="wpmud-analytics-table-change wpmud-analytics-table-<?php echo esc_attr( $dir ); ?>"
-				>
-					<?php if ( in_array( $dir, array( 'up', 'down' ), true ) ) : ?>
-					<i class="sui-icon-arrow-<?php echo esc_attr( $dir ); ?>" aria-hidden="true"></i>
-					<?php endif; ?>
-					<?php echo esc_html( $stat['change'] ); ?>
-				</td>
-				<td class="wpmud-analytics-table-total"><?php echo esc_html( $stat['value'] ); ?></td>
-			</tr>
+				<tr>
+					<td class="sui-table-item-title"><?php echo esc_html( $a['text'] ); ?></td>
+					<td
+						class="wpmud-analytics-table-change wpmud-analytics-table-<?php echo esc_attr( $dir ); ?>"
+					>
+						<?php if ( in_array( $dir, array( 'up', 'down' ), true ) ) : ?>
+							<i class="sui-icon-arrow-<?php echo esc_attr( $dir ); ?>" aria-hidden="true"></i>
+						<?php endif; ?>
+						<?php echo esc_html( $stat['change'] ); ?>
+					</td>
+					<td class="wpmud-analytics-table-total"><?php echo esc_html( $stat['value'] ); ?></td>
+				</tr>
 			<?php endforeach; ?>
-		</tbody>
-	</table>
+			</tbody>
+		</table>
 		<?php // Body area, links. ?>
-	<div class="sui-box-footer">
+		<div class="sui-box-footer">
 			<a href="<?php echo esc_url( admin_url( '#wdpun_analytics' ) ); ?>" class="sui-button sui-button-ghost">
 				<i class="sui-icon-eye" aria-hidden="true"></i>
 				<?php esc_html_e( 'View full report', 'wpmudev' ); ?>
 			</a>
-	</div>
+		</div>
 	<?php endif; ?>
 </div>

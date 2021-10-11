@@ -496,7 +496,7 @@ class WPMUDEV_Dashboard_Ui {
 		    id="<?php echo esc_attr( dirname( $filename ) ); ?>-update"
 		    data-slug="<?php echo esc_attr( dirname( $filename ) ); ?>"
 		    data-plugin="<?php echo esc_attr( $filename ); ?>">
-			<td colspan="3" class="plugin-update colspanchange">
+			<td colspan="4" class="plugin-update colspanchange">
 				<div class="update-message notice inline notice-warning notice-alt">
 					<p>
 						<?php
@@ -628,9 +628,11 @@ class WPMUDEV_Dashboard_Ui {
 	public function analytics_widget_setup() {
 		// Only if analytics enabled.
 		$analytics_enabled = WPMUDEV_Dashboard::$site->get_option( 'analytics_enabled' );
+		// Enabled metrics.
+		$metrics_enabled = WPMUDEV_Dashboard::$site->get_metrics_on_analytics();
 
 		// Only if required.
-		if ( WPMUDEV_Dashboard::$api->is_analytics_allowed() && $analytics_enabled ) {
+		if ( WPMUDEV_Dashboard::$api->is_analytics_allowed() && $analytics_enabled && ! empty( $metrics_enabled ) ) {
 			if ( is_blog_admin() && WPMUDEV_Dashboard::$site->user_can_analytics() ) {
 				wp_add_dashboard_widget(
 					'wdpun_analytics',
@@ -708,7 +710,7 @@ class WPMUDEV_Dashboard_Ui {
 			// Our custom script.
 			wp_enqueue_script(
 				'wpmudev-dashboard-widget',
-				WPMUDEV_Dashboard::$site->plugin_url . 'assets/js/dashboard-widget.js',
+				WPMUDEV_Dashboard::$site->plugin_url . 'assets/js/dashboard-widget.min.js',
 				array( 'jquery', 'chart-js-unbundled', 'jquery-ui-widget', 'jquery-ui-autocomplete' ),
 				$script_version,
 				true
@@ -1984,6 +1986,7 @@ class WPMUDEV_Dashboard_Ui {
 		$access          = WPMUDEV_Dashboard::$site->get_option( 'remote_access' );
 		$membership_data = WPMUDEV_Dashboard::$site->get_option( 'membership_data' );
 		$membership_type = WPMUDEV_Dashboard::$api->get_membership_type();
+		$tickets_hidden  = WPMUDEV_Dashboard::$api->is_tickets_hidden();
 
 		if ( empty( $access['logins'] ) || ! is_array( $access['logins'] ) ) {
 			$access_logs = array();
@@ -1996,7 +1999,20 @@ class WPMUDEV_Dashboard_Ui {
 		 */
 		do_action( 'wpmudev_dashboard_notice-support' );
 
-		$this->render_with_sui_wrapper( 'sui/support', compact( 'profile', 'data', 'urls', 'staff_login', 'notes', 'access_logs', 'membership_data', 'membership_type' ) );
+		$this->render_with_sui_wrapper(
+			'sui/support',
+			compact(
+				'profile',
+				'data',
+				'urls',
+				'staff_login',
+				'notes',
+				'access_logs',
+				'membership_data',
+				'membership_type',
+				'tickets_hidden'
+			)
+		);
 	}
 
 	/**
@@ -2086,13 +2102,30 @@ class WPMUDEV_Dashboard_Ui {
 		$membership_type         = WPMUDEV_Dashboard::$api->get_membership_type();
 		$enable_auto_translation = WPMUDEV_Dashboard::$site->get_option( 'enable_auto_translation' );
 		$translation_update      = WPMUDEV_Dashboard::$site->get_option( 'translation_updates_available' );
+		$keep_data               = WPMUDEV_Dashboard::$site->get_option( 'data_keep_data' );
+		$preserve_settings       = WPMUDEV_Dashboard::$site->get_option( 'data_preserve_settings' );
 
 		/**
 		 * Custom hook to display own notifications inside Dashboard.
 		 */
 		do_action( 'wpmudev_dashboard_notice-settings' );
 
-		$this->render_with_sui_wrapper( 'sui/settings', compact( 'member', 'urls', 'allowed_users', 'available_users', 'auto_update', 'enable_sso', 'membership_type', 'translation_update', 'enable_auto_translation' ) );
+		$this->render_with_sui_wrapper(
+			'sui/settings',
+			compact(
+				'member',
+				'urls',
+				'allowed_users',
+				'available_users',
+				'auto_update',
+				'enable_sso',
+				'membership_type',
+				'translation_update',
+				'enable_auto_translation',
+				'keep_data',
+				'preserve_settings'
+			)
+		);
 	}
 
 	/**
@@ -2121,81 +2154,5 @@ class WPMUDEV_Dashboard_Ui {
 			'sui/header-no-access',
 			compact( 'is_logged_in', 'urls', 'username', 'reason', 'licensed_projects', 'notice_id', 'membership_data' )
 		);
-	}
-}
-
-// phpcs:ignore Generic.Files.OneClassPerFile.MultipleFound
-class WPMUDEV_Dashboard_Sui_Page_Urls {
-	public $dashboard_url = '';
-	public $settings_url = '';
-	public $plugins_url = '';
-	public $support_url = '';
-	public $tools_url = '';
-	public $remote_site = 'https://wpmudev.com/';
-	public $external_support_url = '';
-	public $hub_url = 'https://wpmudev.com/hub2';
-	public $hub_url_old = 'https://wpmudev.com/hub';
-	public $documentation_url = array(
-		'dashboard'  => 'https://wpmudev.com/docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/',
-		'plugins'    => 'https://wpmudev.com/docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-plugin-manager',
-		'support'    => 'https://wpmudev.com/docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-support',
-		'analytics'  => 'https://wpmudev.com/docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-analytics',
-		'whitelabel' => 'https://wpmudev.com/docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-whitelabel',
-		'settings'   => 'https://wpmudev.com/docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#the-wpmu-dev-dashboard-plugin-settings',
-	);
-	public $community_url = 'https://wpmudev.com/hub2/community';
-	public $academy_url = 'https://wpmudev.com/academy';
-	public $hub_account_url = 'https://wpmudev.com/hub/account';
-	public $trial_url = 'https://wpmudev.com/#trial';
-
-	// backward compat
-	public $real_support_url = '';
-	public $themes_url = '';
-	public $whip_url = '';
-	public $blog_url = '';
-	public $roadmap_url = '';
-
-	public function __construct() {
-		$url_callback = 'admin_url';
-		if ( is_multisite() ) {
-			$url_callback = 'network_admin_url';
-		}
-		$this->dashboard_url = call_user_func( $url_callback, 'admin.php?page=wpmudev' );
-		$this->settings_url  = $this->dashboard_url;
-		$this->plugins_url   = $this->dashboard_url;
-		$this->support_url   = $this->dashboard_url;
-		$this->tools_url     = $this->dashboard_url;
-
-		if ( WPMUDEV_Dashboard::$api->has_key() ) {
-			$this->settings_url   = call_user_func( $url_callback, 'admin.php?page=wpmudev-settings' );
-			$this->plugins_url    = call_user_func( $url_callback, 'admin.php?page=wpmudev-plugins' );
-			$this->support_url    = call_user_func( $url_callback, 'admin.php?page=wpmudev-support' );
-			$this->tools_url      = call_user_func( $url_callback, 'admin.php?page=wpmudev-tools' );
-			$this->analytics_url  = call_user_func( $url_callback, 'admin.php?page=wpmudev-analytics' );
-			$this->whitelabel_url = call_user_func( $url_callback, 'admin.php?page=wpmudev-whitelabel' );
-		}
-		if ( WPMUDEV_CUSTOM_API_SERVER ) {
-			$this->remote_site = trailingslashit( WPMUDEV_CUSTOM_API_SERVER );
-		}
-
-		$this->hub_url              = $this->remote_site . 'hub2';
-		$this->documentation_url    = array(
-			'dashboard'  => $this->remote_site . 'docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/',
-			'plugins'    => $this->remote_site . 'docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-plugin-manager',
-			'support'    => $this->remote_site . 'docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-support',
-			'analytics'  => $this->remote_site . 'docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-analytics',
-			'whitelabel' => $this->remote_site . 'docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#wpmu-dev-dashboard-whitelabel',
-			'settings'   => $this->remote_site . 'docs/wpmu-dev-plugins/wpmu-dev-dashboard-plugin-instructions/#the-wpmu-dev-dashboard-plugin-settings',
-		);
-		$this->external_support_url = $this->remote_site . 'hub/support/';
-		$this->community_url        = $this->remote_site . 'hub/community/';
-		$this->academy_url          = $this->remote_site . 'academy/';
-		$this->hub_account_url      = $this->remote_site . 'hub/account';
-		$this->blog_url             = $this->remote_site . 'blog';
-		$this->whip_url             = $this->remote_site . 'blog/get-the-whip/';
-		$this->roadmap_url          = $this->remote_site . 'roadmap/';
-		$this->trial_url            = $this->remote_site . '#trial';
-		$this->skip_trial_url       = $this->remote_site . 'hub/account/?skip_trial ';
-
 	}
 }

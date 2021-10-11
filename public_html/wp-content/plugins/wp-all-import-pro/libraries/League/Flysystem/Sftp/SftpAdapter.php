@@ -498,9 +498,9 @@ class SftpAdapter extends AbstractFtpAdapter
     /**
      * @inheritdoc
      */
-    public function updateStream($path, $contents, Config $config)
+    public function updateStream($path, $resource, Config $config)
     {
-        return $this->writeStream($path, $contents, $config);
+        return $this->writeStream($path, $resource, $config);
     }
 
     /**
