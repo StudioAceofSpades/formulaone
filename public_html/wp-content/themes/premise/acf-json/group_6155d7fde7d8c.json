@@ -3,6 +3,27 @@
     "title": "Packages",
     "fields": [
         {
+            "key": "field_6176f8e4a44eb",
+            "label": "Price",
+            "name": "price",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
             "key": "field_6155d806b1c33",
             "label": "Options",
             "name": "options",
@@ -93,5 +114,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1633015908
+    "modified": 1635186923
 }

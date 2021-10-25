@@ -91,6 +91,8 @@
             }
 
             $select.addClass('init');
+
+            updatePrice(getBasePrice(), getColorPrice(), getPackagePrice());
         });
         $('.color').trigger('change');
     }
@@ -125,22 +127,69 @@
         });
     }
 
+    function updatePrice(base, color, package) {
+        var total = base + color + package;
+        $('[data-summary="msrp"]').html('$' + total);
+    }
+
+    function getBasePrice() {
+        return $('[data-summary="name"] .price').data('pricing');
+    }
+    function getColorPrice() {
+        var total = 0;
+        $('.color').each(function() {
+            var $selected = $(this).find(':selected');
+            if($selected.length && $selected.data('premium') == 1) {
+                total += 200;
+            }
+        });
+        return total;
+    }
+    function getPackagePrice() {
+        var $pricePackage = $('.package.selected.has-price');
+        if($pricePackage.length) {
+            return $pricePackage.data('price');
+        } else {
+            return 0;
+        }
+    }
+
     function initPackages() {
         $('.package .control').click(function(e) {
             e.preventDefault();
-            if($(this).parents('.package').hasClass('selected')) {
-                $(this).parents('.package').removeClass('selected');
+
+            var basePrice       = $('[data-summary="name"] .price').data('pricing');
+            var $price          = $('[data-summary="msrp"]');
+            var $package        = $(this).parents('.package');
+
+            if($package.hasClass('selected')) {
+                $package.removeClass('selected');
                 $('.package').removeClass('disabled');
                 $('[data-summary="package"]').html('None');
             } else {
-                if(!$(this).parents('.package').hasClass('disabled')) {
+                if(!$package.hasClass('disabled')) {
                     $('.package').addClass('disabled');
-                    $(this).parents('.package').removeClass('disabled').addClass('selected');
-                    var $package = $('.package.selected');
-                    var name = $('.package').find('h3').html();
-                    $('[data-summary="package"]').html(name);
+                    $package.removeClass('disabled').addClass('selected');
+                    var name = $package.find('h3').html();
+                    
+                    if(getPackagePrice()) {
+                        $('[data-summary="package"]')
+                            .html(name + '<span class="price">$' + getPackagePrice() + '</span>')
+                            .parents('.summary-item')
+                            .addClass("has-price");
+                    } else {
+                        $('[data-summary="package"]')
+                        .html(name)
+                        .parents('.summary-item')
+                        .removeClass('has-price');
+                    }
                 }
             }
+            
+            if(getBasePrice()) {
+                updatePrice(getBasePrice(), getColorPrice(), getPackagePrice());
+            }
+
         });
     }
 })( jQuery )

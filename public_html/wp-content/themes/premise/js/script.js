@@ -76,7 +76,6 @@ var bounds;
 
     function photoGalleryDesktop() {
         var slideCount = $('.photo-gallery-desktop').children().length;
-        console.log(slideCount);
         if (slideCount <= 1) {
             $('.slick-arrow-desktop').attr('style','display:none !important');
         }
@@ -93,7 +92,6 @@ var bounds;
 
     function photoGalleryMobile() {
         var slideCount = $('.photo-gallery-mobile').children().length;
-        console.log(slideCount);
         if (slideCount <= 1) {
             $('.slick-arrow-mobile').attr('style','display:none !important');
         }
@@ -154,7 +152,6 @@ var bounds;
             geocoder.geocode(
                 { 'address' : address }, 
                 function(results, status) {
-                    console.log('running');
                     if (status == google.maps.GeocoderStatus.OK) {
                         lat = results[0].geometry.location.lat();
                         lng = results[0].geometry.location.lng();

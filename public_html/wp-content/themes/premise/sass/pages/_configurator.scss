@@ -251,6 +251,20 @@
 
         .summary-item {
             margin: 0 0 20px;
+
+            &.has-price {
+                p {
+                    position: relative;
+                    padding-right: 100px;
+
+                    span {
+                        position: absolute;
+                        right: 0;
+                        top: 20px;
+                        padding-right: 20px;
+                    }
+                }
+            }
         }
 
         .buttons {
@@ -378,6 +392,8 @@
                 li {
                     position: relative;
                     margin: 0 0 5px;
+                    font-size: 15px;
+                    line-height: 19px;
 
                     &::before {
                         content: '';
@@ -753,6 +769,15 @@
 
             .summary-item {
                 margin: 0 0 25px;
+
+                &.has-price {
+                    p {
+                        span {
+                            padding-right: 15px;
+                            top: 8px;
+                        }
+                    }
+                }
             }
 
             .button-container {
