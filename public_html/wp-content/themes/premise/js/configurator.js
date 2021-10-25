@@ -113,8 +113,18 @@
         $('[data-name]').on('change', function() {
             var name    = $(this).data('name');
             var value   = $(this).val();
-
-            $('[data-summary="' + name + '"]').html(value);
+            
+            if($(this).find(':selected').data('premium') == 1) {
+                $('[data-summary="' + name + '"]')
+                    .html(value + '<span class="price">$200</span>')
+                    .parents('.summary-item')
+                    .addClass('has-price');
+            } else {
+                $('[data-summary="' + name + '"]')
+                    .html(value)
+                    .parents('.summary-item')
+                    .removeClass('has-price');
+            }
         });
         $('[data-name]').trigger('change');
         $('.close-summary').click(function(e) {
