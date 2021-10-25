@@ -22,6 +22,7 @@ if($trailer_slug) {
     $back       = get_field('rear_color', $id);
     $stripe     = get_field('diagonal_split', $id);
     $packages   = get_field('packages', $id);
+    $tprice     = get_field('price', $id);
 
     $second_image = $image;
 }
@@ -328,7 +329,11 @@ get_header(); ?>
                                     <?php endif; ?>
                                 </hgroup>
                                 <?php foreach($packages as $p): ?>
+                                    <?php if($price = get_field('price', $p->ID)): ?>
+                                    <div class="package has-price" data-price="<?php echo $price; ?>" data-name="<?php echo $p->post_name; ?>">
+                                    <?php else: ?>
                                     <div class="package" data-name="<?php echo $p->post_name; ?>">
+                                    <?php endif; ?>
                                         <div class="control">
                                             <i class="far fa-plus"></i>
                                             <i class="far fa-minus"></i>
@@ -375,13 +380,18 @@ get_header(); ?>
                         <div class="stripe"></div>
                     </div>
                     <h2>Your Trailer Summary <span class="close-summary"><i class="far fa-edit"></i></span></h2>
+
+                    <?php if($tprice): ?>
+                    <div class="summary-item has-price">
+                    <?php else: ?>
                     <div class="summary-item">
+                    <?php endif; ?>
                         <div class="row">
                             <div class="col-xl-6 col-lg-4">
                                 <h3>Trailer</h3>
                             </div>
                             <div class="col-xl-6 col-lg-8">
-                                <p data-summary="name"><?php echo $title; ?></p>
+                                <p data-summary="name"><?php echo $title; ?><?php if($tprice): ?><span class="price" data-pricing="<?php echo $tprice; ?>">$<?php echo $tprice; ?></span><?php endif; ?></p>
                             </div>
                         </div>
                     </div>
@@ -435,6 +445,18 @@ get_header(); ?>
                             </div>
                         </div>
                     </div>
+                    <?php if($tprice): ?>
+                    <div class="summary-item total">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-4">
+                                <h3>MSRP</h3>
+                            </div>
+                            <div class="col-xl-6 col-lg-8">
+                                <p data-summary="msrp" data-msrp="<?php echo $tprice; ?>">$<?php echo $tprice; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                     <div class="row button-container">
                         <div class="col-xl-6 offset-xl-6 col-lg-8 offset-lg-4">
                             <div class="buttons modal-controls">

@@ -81,6 +81,27 @@
             "mime_types": ""
         },
         {
+            "key": "field_6176f813c3fe2",
+            "label": "Price",
+            "name": "price",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
             "key": "field_611c053c87a4e",
             "label": "Options",
             "name": "",
@@ -586,5 +607,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1633015970
+    "modified": 1635186900
 }
