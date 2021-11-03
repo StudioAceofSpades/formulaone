@@ -255,13 +255,16 @@
             &.has-price {
                 p {
                     position: relative;
-                    padding-right: 100px;
+                    margin-bottom: 22px;
 
                     span {
                         position: absolute;
-                        right: 0;
-                        top: 20px;
-                        padding-right: 20px;
+                        left: 0;
+                        bottom: -22px;
+                        padding: 5px 20px;
+                        background: $orange;
+                        color: $white;
+                        font-size: 12px;
                     }
                 }
             }

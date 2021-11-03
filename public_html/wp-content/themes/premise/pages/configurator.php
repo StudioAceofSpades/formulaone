@@ -29,7 +29,11 @@ if($trailer_slug) {
 
 get_header(); ?>
 
-<section class="configurator <?php if($trailer) { ?>preload<?php } ?>">
+<section 
+    data-one="<?php the_field('surcharge', 'options'); ?>"
+    data-two="<?php the_field('msrp_markup','options'); ?>"
+    data-three="<?php the_field('premium_color_price','options'); ?>"
+    class="configurator <?php if($trailer) { ?>preload<?php } ?>">
 
     <div class="trailer-select">
         <div class="lifestyle-select">
@@ -329,11 +333,28 @@ get_header(); ?>
                                     <?php endif; ?>
                                 </hgroup>
                                 <?php foreach($packages as $p): ?>
-                                    <?php if($price = get_field('price', $p->ID)): ?>
-                                    <div class="package has-price" data-price="<?php echo $price; ?>" data-name="<?php echo $p->post_name; ?>">
-                                    <?php else: ?>
-                                    <div class="package" data-name="<?php echo $p->post_name; ?>">
+                                    
+                                    <?php if(!get_field('price_type', $p->ID)): ?>
+                                        <?php if($price = get_field('price', $p->ID)): ?>
+                                        <div class="package has-price" data-price="<?php echo $price; ?>" data-name="<?php echo $p->post_name; ?>">
+                                        <?php else: ?>
+                                        <div class="package" data-name="<?php echo $p->post_name; ?>">
+                                        <?php endif; ?>
+                                    <?php 
+                                    else: 
+                                        $min    = get_field('minimum_price', $p->ID);
+                                        $max    = get_field('maximum_price', $p->ID);
+                                        if($min && $max): ?>
+                                        <div 
+                                            class="package has-price has-price-range" 
+                                            data-min-price="<?php echo $min; ?>" 
+                                            data-max-price="<?php echo $max; ?>"
+                                            data-name="<?php echo $p->post_name; ?>">
+                                        <?php else: ?>
+                                        <div class="package" data-name="<?php echo $p->post_name; ?>">
+                                        <?php endif; ?>
                                     <?php endif; ?>
+
                                         <div class="control">
                                             <i class="far fa-plus"></i>
                                             <i class="far fa-minus"></i>
@@ -391,7 +412,12 @@ get_header(); ?>
                                 <h3>Trailer</h3>
                             </div>
                             <div class="col-xl-6 col-lg-8">
-                                <p data-summary="name"><?php echo $title; ?><?php if($tprice): ?><span class="price" data-pricing="<?php echo $tprice; ?>">$<?php echo $tprice; ?></span><?php endif; ?></p>
+                                <p data-summary="name">
+                                    <?php echo $title; ?>
+                                    <?php if($tprice): ?>
+                                        <span class="price" data-pricing="<?php echo $tprice; ?>"></span>
+                                    <?php endif; ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -452,7 +478,7 @@ get_header(); ?>
                                 <h3>MSRP</h3>
                             </div>
                             <div class="col-xl-6 col-lg-8">
-                                <p data-summary="msrp" data-msrp="<?php echo $tprice; ?>">$<?php echo $tprice; ?></p>
+                                <p data-summary="msrp" data-msrp="<?php echo $tprice; ?>"></p>
                             </div>
                         </div>
                     </div>

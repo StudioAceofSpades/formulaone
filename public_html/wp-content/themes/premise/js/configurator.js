@@ -110,13 +110,16 @@
     }
 
     function initSummaryControls() {
+        setBasePrice();
+
         $('[data-name]').on('change', function() {
             var name    = $(this).data('name');
             var value   = $(this).val();
             
             if($(this).find(':selected').data('premium') == 1) {
+                var price = roundPrice(parseInt($('.configurator').data('three')) * getMarkup());
                 $('[data-summary="' + name + '"]')
-                    .html(value + '<span class="price">$200</span>')
+                    .html(value + '<span class="price">$' + price + '</span>')
                     .parents('.summary-item')
                     .addClass('has-price');
             } else {
@@ -138,13 +141,26 @@
     }
 
     function updatePrice(base, color, package) {
-        var total = base + color + package;
-        $('[data-summary="msrp"]').html('$' + total);
+        if(typeof package == 'number') {
+            var total       = base + color + package;
+            $('[data-summary="msrp"]').html('$' + total);
+        } else {
+            var minTotal = base + color + package[0];
+            var maxTotal = base + color + package[1];
+            $('[data-summary="msrp"]').html('$' + minTotal + ' - $' + maxTotal);
+        }
+    }
+
+    function setBasePrice() {
+        var $price      = $('[data-summary="name"] .price');
+        var price       = roundPrice(getMarkup() * $price.data('pricing'));
+        $price.html('$' + price);
     }
 
     function getBasePrice() {
-        return $('[data-summary="name"] .price').data('pricing');
+        return roundPrice(getMarkup() * $('[data-summary="name"] .price').data('pricing'));
     }
+
     function getColorPrice() {
         var total = 0;
         $('.color').each(function() {
@@ -153,12 +169,38 @@
                 total += 200;
             }
         });
-        return total;
+        return roundPrice(getMarkup() * total);
     }
+
+    function getSurcharge() {
+        return (1 + (parseInt($('.configurator').data('one')) / 100));
+    }
+
+    function getMSRP() {
+        return (1 + (parseInt($('.configurator').data('one')) / 100));
+    }
+
+    function getMarkup() {
+        return getSurcharge() * getMSRP();
+    }
+
+    function roundPrice(number) {
+        return Math.ceil(number / 10) * 10;
+    }
+
     function getPackagePrice() {
-        var $pricePackage = $('.package.selected.has-price');
+        var $pricePackage   = $('.package.selected.has-price');
+        var markup          = getMarkup();
+
         if($pricePackage.length) {
-            return $pricePackage.data('price');
+
+            if($pricePackage.hasClass('has-price-range')) {
+                var min = parseInt($pricePackage.data('min-price')) * markup;
+                var max = parseInt($pricePackage.data('max-price')) * markup;
+                return [roundPrice(min), roundPrice(max)];
+            } else {
+                return roundPrice(parseInt($pricePackage.data('price')) * markup);
+            }
         } else {
             return 0;
         }
@@ -182,11 +224,23 @@
                     $package.removeClass('disabled').addClass('selected');
                     var name = $package.find('h3').html();
                     
-                    if(getPackagePrice()) {
-                        $('[data-summary="package"]')
-                            .html(name + '<span class="price">$' + getPackagePrice() + '</span>')
-                            .parents('.summary-item')
-                            .addClass("has-price");
+                    var price = getPackagePrice();
+                    if(price) {
+
+                        if(typeof price == 'number') { 
+                            $('[data-summary="package"]')
+                                .html(name + '<span class="price">$' + price + '</span>')
+                                .parents('.summary-item')
+                                .addClass("has-price");
+                        } else {
+                            minPrice    = price[0];
+                            maxPrice    = price[1];
+
+                            $('[data-summary="package"]')
+                                .html(name + '<span class="price">$' + minPrice + ' - $' + maxPrice +'</span>')
+                                .parents('.summary-item')
+                                .addClass("has-price");
+                        }
                     } else {
                         $('[data-summary="package"]')
                         .html(name)

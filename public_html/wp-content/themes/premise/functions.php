@@ -122,6 +122,12 @@ if(function_exists('acf_add_options_page')) {
         'menu_title'    => 'Blog',
         'parent_slug'   => 'acf-options-site-settings'
     ));
+
+    acf_add_options_sub_page(array(
+        'page_title'    => 'Configurator Settings',
+        'menu_title'    => 'Configurator',
+        'parent_slug'   => 'acf-options-site-settings'
+    ));
 }
 
 function saos_configure_link($link) {

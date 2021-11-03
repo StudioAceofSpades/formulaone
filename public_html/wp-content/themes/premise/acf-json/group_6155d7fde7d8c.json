@@ -3,15 +3,100 @@
     "title": "Packages",
     "fields": [
         {
+            "key": "field_6182abe788171",
+            "label": "Price Type",
+            "name": "price_type",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Range",
+            "ui_off_text": "Single"
+        },
+        {
             "key": "field_6176f8e4a44eb",
             "label": "Price",
             "name": "price",
             "type": "number",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6182abe788171",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_6182ac0a88172",
+            "label": "Minimum Price",
+            "name": "minimum_price",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6182abe788171",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_6182ac1d88173",
+            "label": "Maximum Price",
+            "name": "maximum_price",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6182abe788171",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -114,5 +199,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1635186923
+    "modified": 1635953796
 }
