@@ -8,13 +8,29 @@ get_header(); ?>
 
         <?php include(get_stylesheet_directory() . '/parts/hero.php'); ?>
 
-        <section class="about bg-white">
+        <section class="bg-white">
             <div class="container">
+                <?php if(get_field('copy_header') || get_field('copy_content')): ?>
+                    <div class="copy">
+                        <div class="row">
+                            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 text-center">
+                                <?php if(get_field('copy_header')): ?>
+                                    <h1><?php the_field('copy_header'); ?></h1>
+                                    <?php
+                                endif;
+                                if (get_field('copy_content')):
+                                    the_field('copy_content');
+                                endif;
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
                 <?php if($header = get_field('lifestyle_header')): ?>
                     <div class="row">
                         <div class="col text-center">
-                            <p class="title"><?php echo $header; ?></p>
+                            <h1><?php echo $header; ?></h1>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -51,6 +67,25 @@ get_header(); ?>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <?php if(get_field('video_mp4') || get_field('video_webm')): ?>
+            <div class="video">
+                <div class="row no-gutters">
+                    <div class="col">
+                        <video controls>
+                            <source src="<?php the_field('video_webm'); ?>" type="video/webm">
+                            <source src="<?php the_field('video_mp4'); ?>" type="video/mp4">
+                            Sorry, your browser doesn't support embedded videos.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <section class="bg-white">
+            <div class="container">
 
                 <div class="testimonials">
                     <div class="row">

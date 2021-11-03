@@ -1,16 +1,19 @@
 .home {
     font-family : $font;
 
-    p.title {
-        display: block;
-        margin: 0 auto;
-        text-align: center;
-        margin-top: 80px;
+    h1 {
         margin-bottom: 30px;
-        font-weight: 600;
-        font-size: 48px;
-        line-height: 56.3px;
-        color: $orange;
+    }
+
+    .copy {
+        margin-bottom: 60px;
+
+        p {
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 36px;
+            color: $black;
+        }
     }
 
     .lifestyle {
@@ -41,6 +44,14 @@
 
         .buttons {
             margin-bottom: 0;
+        }
+    }
+
+    .video {
+        margin-top: 80px;
+
+        video {
+            width: 100%;
         }
     }
 
@@ -89,7 +100,7 @@
 
 @include media-breakpoint-down(lg) {
     .home {
-        p.title {
+        h1 {
             margin-top: 30px;
         }
 

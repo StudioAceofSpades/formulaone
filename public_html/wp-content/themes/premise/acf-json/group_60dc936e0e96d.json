@@ -3,6 +3,60 @@
     "title": "Home Settings",
     "fields": [
         {
+            "key": "field_617bcd2fbbdbc",
+            "label": "Copy",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_617bcd3abbdbd",
+            "label": "Header",
+            "name": "copy_header",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_617bcd50bbdbe",
+            "label": "Content",
+            "name": "copy_content",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": "wpautop"
+        },
+        {
             "key": "field_60dc93acb367f",
             "label": "Lifestyle",
             "name": "",
@@ -117,6 +171,21 @@
             ]
         },
         {
+            "key": "field_60dc941ab3686",
+            "label": "Button",
+            "name": "lifestyle_button",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
             "key": "field_613a0a64e1de5",
             "label": "Build",
             "name": "",
@@ -169,6 +238,60 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_61819aa00201f",
+            "label": "Video",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_61819aa902020",
+            "label": "Video (webm)",
+            "name": "video_webm",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ".webm"
+        },
+        {
+            "key": "field_61819acc02021",
+            "label": "Video (mp4)",
+            "name": "video_mp4",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ".mp4"
         },
         {
             "key": "field_60dc93bbb3680",
@@ -312,5 +435,5 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1632849659
+    "modified": 1635883744
 }
