@@ -19,6 +19,33 @@
             "endpoint": 0
         },
         {
+            "key": "field_6192c2abfeb04",
+            "label": "Associated Buildable Trailer",
+            "name": "associated_buildable_trailer",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "configurations"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "elements": "",
+            "min": "",
+            "max": 1,
+            "return_format": "object"
+        },
+        {
             "key": "field_610d87f902b84",
             "label": "Introduction",
             "name": "introduction",
@@ -585,5 +612,6 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1633016387
+    "show_in_rest": 0,
+    "modified": 1637008082
 }
