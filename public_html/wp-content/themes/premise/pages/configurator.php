@@ -192,7 +192,7 @@ get_header(); ?>
     </div>
 
     <div class="container">
-        <div class="trailer-image large-screen">
+        <div class="trailer-image large-screen" data-original="<?php echo $image['url']; ?>">
             <?php if($trailer): ?>
                 <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
             <?php endif; ?>
@@ -354,6 +354,10 @@ get_header(); ?>
                                         <div class="package" data-name="<?php echo $p->post_name; ?>">
                                         <?php endif; ?>
                                     <?php endif; ?>
+                                        
+                                        <?php if(get_field('does_this_change_the_base_trailer_image', $p->ID)): ?>
+                                        <div class="new-base" data-image="<?php the_field('new_base_image', $p->ID); ?>"></div>
+                                        <?php endif; ?>
 
                                         <div class="control">
                                             <i class="far fa-plus"></i>

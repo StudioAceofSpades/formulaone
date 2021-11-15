@@ -226,7 +226,6 @@
                     
                     var price = getPackagePrice();
                     if(price) {
-
                         if(typeof price == 'number') { 
                             $('[data-summary="package"]')
                                 .html(name + '<span class="price">$' + price + '</span>')
@@ -246,6 +245,14 @@
                         .html(name)
                         .parents('.summary-item')
                         .removeClass('has-price');
+                    }
+                    
+                    var newBase         = $package.find('.new-base');
+                    var originalBase    = $('.trailer-image').data('original');
+                    if(newBase.length) {
+                        $('.base').attr('src', newBase.data('image'));
+                    } else {
+                        $('.trailer-image').attr('src', originalBase);
                     }
                 }
             }
