@@ -46,8 +46,29 @@
         },
         {
             "key": "field_6182bf4738b45",
-            "label": "Premium Color Price",
+            "label": "Premium Color Price Minimum",
             "name": "premium_color_price",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "$",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_6192b2e9b6aec",
+            "label": "Premium Color Price Maximum",
+            "name": "premium_color_price_max",
             "type": "number",
             "instructions": "",
             "required": 0,
@@ -83,5 +104,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1635958777
+    "show_in_rest": 0,
+    "modified": 1637004028
 }

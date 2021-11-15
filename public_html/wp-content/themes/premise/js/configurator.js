@@ -108,7 +108,6 @@
         });
         $('[data-update]').trigger('change');
     }
-
     function initSummaryControls() {
         setBasePrice();
 
@@ -117,9 +116,10 @@
             var value   = $(this).val();
             
             if($(this).find(':selected').data('premium') == 1) {
-                var price = roundPrice(parseInt($('.configurator').data('three')) * getMarkup());
+                var minPrice = roundPrice(parseInt($('.configurator').data('three')) * getMarkup());
+                var maxPrice = roundPrice(parseInt($('.configurator').data('four')) * getMarkup());
                 $('[data-summary="' + name + '"]')
-                    .html(value + '<span class="price">$' + price + '</span>')
+                    .html(value + '<span class="price">$' + minPrice + ' - $' + maxPrice + '</span>')
                     .parents('.summary-item')
                     .addClass('has-price');
             } else {
@@ -141,12 +141,27 @@
     }
 
     function updatePrice(base, color, package) {
+        var colorMinPrice   = 0;
+        var colorMaxPrice   = 0;
+        if(color.length) {
+            for(var n = 0; n < color.length; n++) {
+                colorMinPrice += color[n][0];
+                colorMaxPrice += color[n][1];
+            }
+        }
+
         if(typeof package == 'number') {
-            var total       = base + color + package;
-            $('[data-summary="msrp"]').html('$' + total);
+            if(colorMinPrice == 0) {
+                var total       = base + package;
+                $('[data-summary="msrp"]').html('$' + total);
+            } else {
+                var minTotal = base + colorMinPrice + package;
+                var maxTotal = base + colorMaxPrice + package;
+                $('[data-summary="msrp"]').html('$' + minTotal + ' - $' + maxTotal);
+            }
         } else {
-            var minTotal = base + color + package[0];
-            var maxTotal = base + color + package[1];
+            var minTotal = base + colorMinPrice + package[0];
+            var maxTotal = base + colorMaxPrice + package[1];
             $('[data-summary="msrp"]').html('$' + minTotal + ' - $' + maxTotal);
         }
     }
@@ -162,14 +177,18 @@
     }
 
     function getColorPrice() {
-        var total = 0;
+        var total   = [];
+        var markup  = getMarkup();
+        var min     = roundPrice(parseInt($('.configurator').data('three')) * markup);
+        var max     = roundPrice(parseInt($('.configurator').data('four')) * markup);
+
         $('.color').each(function() {
             var $selected = $(this).find(':selected');
             if($selected.length && $selected.data('premium') == 1) {
-                total += 200;
+                total.push([min,max]);
             }
         });
-        return roundPrice(getMarkup() * total);
+        return total;
     }
 
     function getSurcharge() {

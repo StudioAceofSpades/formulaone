@@ -33,6 +33,7 @@ get_header(); ?>
     data-one="<?php the_field('surcharge', 'options'); ?>"
     data-two="<?php the_field('msrp_markup','options'); ?>"
     data-three="<?php the_field('premium_color_price','options'); ?>"
+    data-four="<?php the_field('premium_color_price_max','options'); ?>"
     class="configurator <?php if($trailer) { ?>preload<?php } ?>">
 
     <div class="trailer-select">
