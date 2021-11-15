@@ -184,6 +184,7 @@ class SB_Instagram_Token_Refresher
 
 		$connected_accounts[ $this->connected_account['user_id'] ]['expires_timestamp'] = $expires_timestamp;
 		$connected_accounts[ $this->connected_account['user_id'] ]['access_token'] = $token_data['access_token'];
+		$connected_accounts[ $this->connected_account['user_id'] ] = SB_Instagram_Connected_Account::encrypt_connected_account_tokens( $connected_accounts[ $this->connected_account['user_id'] ] );
 
 		$options['connected_accounts'] = $connected_accounts;
 

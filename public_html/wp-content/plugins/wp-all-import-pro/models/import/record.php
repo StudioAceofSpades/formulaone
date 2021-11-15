@@ -377,6 +377,10 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 									foreach ($missing_ids_arr as $key => $missingPostRecords) {
 										if (!empty($missingPostRecords)){
 											foreach ( $missingPostRecords as $k => $missingPostRecord ) {
+
+												// Invalidate hash for records even if they're not deleted
+												$this->invalidateHash( $missingPostRecord['post_id']);
+
 												$to_delete = true;
 												// Instead of deletion, set Custom Field.
 												if ($this->options['is_update_missing_cf']){
@@ -546,6 +550,10 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 									foreach ($missing_ids_arr as $key => $missingPostRecords) {
 										if (!empty($missingPostRecords)) {
 											foreach ( $missingPostRecords as $k => $missingPostRecord ) {
+
+												// Invalidate hash for records even if they're not deleted
+												$this->invalidateHash( $missingPostRecord['post_id']);
+
 												$this->update_meta( $missingPostRecord['post_id'], '_stock_status', 'outofstock' );
 												$this->update_meta( $missingPostRecord['post_id'], '_stock', 0 );
                                                 $term_ids = wp_get_object_terms($missingPostRecord['post_id'], 'product_visibility', array('fields' => 'ids'));
@@ -4868,6 +4876,9 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 					if ( ! empty($missingPostRecords) ) {
 
 						foreach ( $missingPostRecords as $k => $missingPostRecord ) {
+
+							// Invalidate hash for records even if they're not deleted
+							$this->invalidateHash( $missingPostRecord['post_id']);
 							
 							$to_delete = true;
 							
@@ -5326,6 +5337,35 @@ class PMXI_Import_Record extends PMXI_Model_Record {
 	public function canBeScheduled()
     {
         return in_array($this->type, array('url', 'ftp', 'file'));
+    }
+
+    private function invalidateHash( $post_id ){
+	    // Should we invalidate the hash of the missing record?
+	    $is_invalidate_missing_posts_hash = apply_filters('wp_all_import_is_invalidate_missing_posts_hash', true, $this->id, $post_id);
+
+	    if( $is_invalidate_missing_posts_hash ){
+
+		    $hash_type = 'post';
+
+		    switch($this->options['custom_type']){
+			    case 'taxonomies':
+				    $hash_type = 'taxonomy';
+				    break;
+
+			    case 'shop_customer':
+			    case 'import_users':
+				    $hash_type = 'user';
+				    break;
+
+			    // Add other types stored in custom database tables as needed.
+
+		    }
+
+		    // Delete entries from the hash table
+		    $hashRecord = new PMXI_Hash_Record();
+		    $hashRecord->getBy(['post_id' => $post_id, 'post_type' => $hash_type])->isEmpty() or $hashRecord->delete();
+
+	    }
     }
 	
 }

@@ -17,14 +17,6 @@ defined( 'WPINC' ) || die;
 class WPMUDEV_Dashboard_Utils {
 
 	/**
-	 * Holds update check data for cache.
-	 *
-	 * @since 4.11.4
-	 * @var null|array
-	 */
-	private $updates_cache = array();
-
-	/**
 	 * WPMUDEV_Dashboard_Utils constructor.
 	 *
 	 * @since 4.11.4
@@ -33,6 +25,10 @@ class WPMUDEV_Dashboard_Utils {
 		// Load Dash plugin first whenever possible.
 		add_filter( 'pre_update_option_active_plugins', array( $this, 'set_plugin_priority' ), 9999 );
 		add_filter( 'pre_update_site_option_active_sitewide_plugins', array( $this, 'set_plugin_priority' ), 9999 );
+		// Handle admin action request.
+		add_action( 'admin_post_nopriv_wpmudev_dashboard_admin_request', array( $this, 'run_admin_request' ) );
+		// Clear staff flag on logout.
+		add_action( 'wp_logout', array( $this, 'unset_staff_flag' ) );
 	}
 
 	/**
@@ -64,196 +60,141 @@ class WPMUDEV_Dashboard_Utils {
 	}
 
 	/**
-	 * Simulate current environment as WP Admin environment.
+	 * Make an self post request to wp-admin.
 	 *
-	 * DO NOT call this for regular requests. This is required
-	 * only for hub-sync and update actions.
-	 * Many premium plugins and themes initialize their update
-	 * checks only on wp admin side. So we need to simulate the
-	 * admin side to make the hooks feels like they are on admin
-	 * side of WP.
+	 * Make an HTTP request to our own WP Admin to process admin side actions
+	 * specifically hub sync or status updates which requires to be run on wp admin.
 	 *
-	 * @since 4.11.4
+	 * @param string $action Action name.
+	 * @param string $from   From (remote or cron).
+	 * @param array  $params Parameters.
 	 *
-	 * @return void
+	 * @since 4.11.6
+	 *
+	 * @uses  admin_url()
+	 * @uses  wp_remote_post()
+	 * @uses  wp_generate_password()
+	 * @uses  set_site_transient()
+	 * @uses  delete_site_transient()
+	 *
+	 * @return string|bool
 	 */
-	public function simulate_admin() {
-		// Simulate the current page global.
-		$GLOBALS['pagenow'] = 'update-core.php'; // phpcs:ignore
+	public function send_admin_request( $action, $from = 'remote', $params = array() ) {
+		// Create a random hash.
+		$hash = md5( wp_generate_password() );
+		// Create nonce.
+		$nonce = wp_create_nonce( 'wpmudev_dashboard_admin_request' );
 
-		// Simulate PHP's request headers.
-		$_SERVER['PHP_SELF'] = '/wp-admin/update-core.php';
-		if ( defined( 'FORCE_SSL_ADMIN' ) && FORCE_SSL_ADMIN ) {
-			$_SERVER['HTTPS']       = 'on';
-			$_SERVER['SERVER_PORT'] = '443';
-		}
-
-		// Define constants to simulate admin checks.
-		if ( ! defined( 'WP_ADMIN' ) ) {
-			define( 'WP_ADMIN', true );
-		}
-		if ( ! defined( 'WP_NETWORK_ADMIN' ) ) {
-			// For multisite, do it as network admin.
-			is_multisite() ? define( 'WP_NETWORK_ADMIN', true ) : define( 'WP_NETWORK_ADMIN', false );
-		}
-		if ( ! defined( 'WP_USER_ADMIN' ) ) {
-			define( 'WP_USER_ADMIN', false );
-		}
-		if ( ! defined( 'WP_BLOG_ADMIN' ) ) {
-			define( 'WP_BLOG_ADMIN', true );
-		}
-
-		// Simulate actions required for updates.
-		// Do not change the priority.
-		add_action( 'wp_loaded', array( $this, 'simulate_admin_actions' ), 9998 );
-
-		// Don't make any redirects now.
-		add_filter( 'wp_redirect', '__return_false' );
-
-		// Stop cron actions.
-		remove_action( 'init', 'wp_cron' );
-	}
-
-	/**
-	 * Run admin loaded actions for updates.
-	 *
-	 * Make sure the required admin hooks are executed to get
-	 * the updates' info for plugins and themes.
-	 *
-	 * @since 4.11.4
-	 * @return void
-	 */
-	public function simulate_admin_actions() {
-		// Reuse update check https response to avoid multiple http requests.
-		add_filter( 'http_response', array( $this, 'http_response_handler' ), 999, 3 );
-		add_filter( 'pre_http_request', array( $this, 'pre_http_response_handler' ), 999, 3 );
-
-		require_once ABSPATH . 'wp-admin/includes/admin.php';
-
-		// Simulate admin int hook.
-		if ( ! did_action( 'admin_init' ) ) {
-			do_action( 'admin_init' );
-		}
-
-		// Set the current hook as load-update-core.php to run update check.
-		global $wp_current_filter;
-		$wp_current_filter[] = 'load-update-core.php'; // phpcs:ignore
-
-		// Clear updates cache.
-		if ( function_exists( 'wp_clean_update_cache' ) ) {
-			wp_clean_update_cache();
-		}
-
-		// Run update checks.
-		wp_update_plugins();
-		wp_update_themes();
-
-		// Remove current filter.
-		array_pop( $wp_current_filter );
-
-		// Set current screen as update core page.
-		set_current_screen( 'load-update-core.php' );
-
-		// Simulate update core action hook.
-		do_action( 'load-update-core.php' ); // phpcs:ignore
-	}
-
-	/**
-	 * Store the updates check HTTP response in cache.
-	 *
-	 * We may make multiple http requests to get plugin and themes
-	 * updates check. Store them in so that we can reuse them instead
-	 * of making multiple requests.
-	 *
-	 * @param mixed  $response HTTP response.
-	 * @param array  $args     HTTP request arguments.
-	 * @param string $url      The request URL.
-	 *
-	 * @since 4.11.4
-	 * @return mixed
-	 */
-	public function http_response_handler( $response, $args, $url ) {
-		// Only themes and plugins checks.
-		$urls = array(
-			'https://api.wordpress.org/plugins/update-check/1.1/',
-			'https://api.wordpress.org/themes/update-check/1.1/',
+		// Set data in cache.
+		set_site_transient(
+			$hash,
+			array(
+				'action' => $action,
+				'params' => $params,
+				'from'   => $from,
+			),
+			120 // Expire it after 2 minutes in case we couldn't delete it.
 		);
 
-		// If required, save data for updates check.
-		if ( in_array( $url, $urls, true ) ) {
-			$this->updates_cache[ $url ] = array(
-				'body'     => $args['body'],
-				'response' => $response,
+		// Make post request.
+		$response = wp_remote_post(
+			admin_url( 'admin-post.php' ),
+			array(
+				'blocking' => true,
+				'timeout'  => 15,
+				'body'     => array(
+					'action' => 'wpmudev_dashboard_admin_request',
+					'nonce'  => $nonce,
+					'hash'   => $hash,
+				),
+			)
+		);
+
+		// Delete data after getting response.
+		delete_site_transient( $hash );
+
+		// If request not failed.
+		if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
+			// Get response body.
+			return wp_remote_retrieve_body( $response );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Handle the post request for processing admin request.
+	 *
+	 * After verification a hook is triggered so we can use it
+	 * to perform admin actions.
+	 *
+	 * @since 4.11.6
+	 *
+	 * @return void
+	 */
+	public function run_admin_request() {
+		// Make sure required values are set.
+		$nonce = isset( $_POST['nonce'] ) ? $_POST['nonce'] : ''; // phpcs:ignore
+		$hash  = isset( $_POST['hash'] ) ? $_POST['hash'] : ''; // phpcs:ignore
+
+		// Nonce and hash are required.
+		if ( empty( $nonce ) || empty( $hash ) ) {
+			wp_send_json_error(
+				array(
+					'code'    => 'invalid_params',
+					'message' => __( 'Required parameters are missing', 'wpmudev' ),
+				)
 			);
 		}
 
-		return $response;
+		// If nonce check failed.
+		if ( ! wp_verify_nonce( $nonce, 'wpmudev_dashboard_admin_request' ) ) {
+			wp_send_json_error(
+				array(
+					'code'    => 'nonce_failed',
+					'message' => __( 'Nonce check failed', 'wpmudev' ),
+				)
+			);
+		}
+
+		// Get request data from cache.
+		$data = get_site_transient( $hash );
+
+		// Make sure action and params are set.
+		if ( ! isset( $data['action'], $data['params'], $data['from'] ) ) {
+			wp_send_json_error(
+				array(
+					'code'    => 'invalid_request',
+					'message' => __( 'Invalid request', 'wpmudev' ),
+				)
+			);
+		}
+
+		/**
+		 * Run admin action after http request is processed.
+		 *
+		 * @param string $action Action name.
+		 * @param array  $params Params.
+		 * @param string $from   From (remote or cron).
+		 *
+		 * @since 4.11.6
+		 */
+		do_action(
+			'wpmudev_dashboard_admin_action',
+			$data['action'],
+			$data['params'],
+			$data['from']
+		);
 	}
 
 	/**
-	 * Return the update check http response from cache.
+	 * Clear staff flag cookie on logout.
 	 *
-	 * If there are duplicate http requests for update check, see if we can
-	 * return response from cache instead of another http request.
+	 * @since 4.11.6
 	 *
-	 * @param mixed  $response A preemptive return value of an HTTP request. Default false.
-	 * @param array  $args     HTTP request arguments.
-	 * @param string $url      The request URL.
-	 *
-	 * @since 4.11.4
-	 * @return mixed
+	 * @return void
 	 */
-	public function pre_http_response_handler( $response, $args, $url ) {
-		// If the url the same request is found in cache.
-		if ( isset( $this->updates_cache[ $url ]['body'], $this->updates_cache[ $url ]['response'] ) ) {
-			if ( $this->updates_cache[ $url ]['body'] === $args['body'] ) {
-				$response = $this->updates_cache[ $url ]['response'];
-			}
-		}
-
-		return $response;
-	}
-
-	/**
-	 * Retrieve cron hooks ready to be run.
-	 *
-	 * Returns the results of _get_cron_array() limited to hooks ready to be run,
-	 * ie, with a timestamp in the past.
-	 *
-	 * @since 4.11.4
-	 * @uses  _get_cron_array
-	 *
-	 * @return array Cron jobs ready to be run.
-	 */
-	public function get_ready_cron_hooks() {
-		// Make sure the required function exists.
-		if ( ! function_exists( '_get_cron_array' ) ) {
-			return array();
-		}
-
-		// Get cron events.
-		$crons = _get_cron_array();
-
-		// No need to continue if no events found.
-		if ( empty( $crons ) ) {
-			return array();
-		}
-
-		// Current time.
-		$gmt_time = microtime( true );
-
-		$cron_hooks = array();
-
-		foreach ( $crons as $timestamp => $hooks ) {
-			// Exclude future events.
-			if ( empty( $hooks ) || $timestamp > $gmt_time ) {
-				break;
-			}
-
-			// Get the hook names only.
-			$cron_hooks = array_merge( $cron_hooks, array_keys( $hooks ) );
-		}
-
-		return $cron_hooks;
+	public function unset_staff_flag() {
+		unset( $_COOKIE['wpmudev_is_staff'] );
 	}
 }

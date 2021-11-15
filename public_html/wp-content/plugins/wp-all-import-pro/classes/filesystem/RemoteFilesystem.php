@@ -319,7 +319,7 @@ class RemoteFilesystem {
 			// Check if a relative file reference was provided.
 			preg_match( '#{(.*)\.(.{0,4})}#', $this->options['dir'], $matches );
 
-			// Ensure all of the expected pieces were found or do nothing.
+			// Ensure all the expected pieces were found or do nothing.
 			if ( isset( $matches[0] ) && isset( $matches[1] ) && isset( $matches[2] ) ) {
 				$relative       = $matches[1]; // Relative reference such as oldest.
 				$this->rel_type = $matches[2]; // The file extension to find.
@@ -378,6 +378,13 @@ class RemoteFilesystem {
 
 						$file = array_pop( $contents );
 						isset( $file['path'] ) && $this->options['dir'] = $file['path'];
+						break;
+
+					case ( 'custom' ):
+
+						// Pass the current dir, found files, and target extension back to the user via filter.
+						// The full directory pointing to a single file must be returned.
+						$this->options['dir'] = apply_filters('wpai_ftp_custom_target_file_filter', $this->options['dir'], $contents, $this->rel_type);
 						break;
 				}
 			}

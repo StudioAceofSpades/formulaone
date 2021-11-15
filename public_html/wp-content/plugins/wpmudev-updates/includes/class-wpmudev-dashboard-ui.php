@@ -493,9 +493,9 @@ class WPMUDEV_Dashboard_Ui {
 
 		?>
 		<tr class="plugin-update-tr<?php echo esc_attr( $active_class ); ?>"
-		    id="<?php echo esc_attr( dirname( $filename ) ); ?>-update"
-		    data-slug="<?php echo esc_attr( dirname( $filename ) ); ?>"
-		    data-plugin="<?php echo esc_attr( $filename ); ?>">
+			id="<?php echo esc_attr( dirname( $filename ) ); ?>-update"
+			data-slug="<?php echo esc_attr( dirname( $filename ) ); ?>"
+			data-plugin="<?php echo esc_attr( $filename ); ?>">
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="update-message notice inline notice-warning notice-alt">
 					<p>
@@ -626,13 +626,8 @@ class WPMUDEV_Dashboard_Ui {
 	 * @return void
 	 */
 	public function analytics_widget_setup() {
-		// Only if analytics enabled.
-		$analytics_enabled = WPMUDEV_Dashboard::$site->get_option( 'analytics_enabled' );
-		// Enabled metrics.
-		$metrics_enabled = WPMUDEV_Dashboard::$site->get_metrics_on_analytics();
-
 		// Only if required.
-		if ( WPMUDEV_Dashboard::$api->is_analytics_allowed() && $analytics_enabled && ! empty( $metrics_enabled ) ) {
+		if ( $this->can_show_analytics_widget() ) {
 			if ( is_blog_admin() && WPMUDEV_Dashboard::$site->user_can_analytics() ) {
 				wp_add_dashboard_widget(
 					'wdpun_analytics',
@@ -670,11 +665,8 @@ class WPMUDEV_Dashboard_Ui {
 			}
 		}
 
-		// Only if analytics enabled.
-		$analytics_enabled = WPMUDEV_Dashboard::$site->get_option( 'analytics_enabled' );
-
 		// Only if required.
-		if ( WPMUDEV_Dashboard::$api->is_analytics_allowed() && $analytics_enabled ) {
+		if ( $this->can_show_analytics_widget() ) {
 			global $wp_locale;
 
 			// Beta-testers will not have cached scripts!
@@ -683,35 +675,17 @@ class WPMUDEV_Dashboard_Ui {
 
 			// Enqueue styles.
 			wp_enqueue_style(
-				'wpmudev-widget-analytics-css',
+				'wpmudev-widget-analytics',
 				WPMUDEV_Dashboard::$site->plugin_url . 'assets/css/dashboard-widget.min.css',
 				array(),
 				$script_version
-			);
-
-			// Enqueue scripts.
-			wp_enqueue_script(
-				'wpmudev-moment-js',
-				WPMUDEV_Dashboard::$site->plugin_url . 'assets/js/moment.min.js',
-				array(),
-				'2.22.2',
-				true
-			);
-
-			// ChartJS.
-			wp_enqueue_script(
-				'chart-js-unbundled', // Adding handler to remove conflict with bundled version.
-				WPMUDEV_Dashboard::$site->plugin_url . 'assets/js/chart.min.js',
-				array( 'wpmudev-moment-js' ),
-				'2.7.2',
-				true
 			);
 
 			// Our custom script.
 			wp_enqueue_script(
 				'wpmudev-dashboard-widget',
 				WPMUDEV_Dashboard::$site->plugin_url . 'assets/js/dashboard-widget.min.js',
-				array( 'jquery', 'chart-js-unbundled', 'jquery-ui-widget', 'jquery-ui-autocomplete' ),
+				array( 'jquery', 'jquery-ui-widget', 'jquery-ui-autocomplete' ),
 				$script_version,
 				true
 			);
@@ -745,7 +719,13 @@ class WPMUDEV_Dashboard_Ui {
 					'nonce'           => wp_create_nonce( 'analytics' ),
 					'overall_data'    => isset( $data['overall'] ) ? $data['overall'] : array(),
 					'current_data'    => isset( $data['overall'] ) ? $data['overall'] : array(),
+					'pages'           => isset( $data['pages'] ) ? $data['pages'] : array(),
+					'authors'         => isset( $data['authors'] ) ? $data['authors'] : array(),
+					'sites'           => isset( $data['sites'] ) ? $data['sites'] : array(),
 					'autocomplete'    => isset( $data['autocomplete'] ) ? $data['autocomplete'] : array(),
+					'flags'           => array(
+						'network' => is_network_admin(),
+					),
 					'locale_settings' => array(
 						'locale'      => $user_locale,
 						'monthsShort' => array_values( $wp_locale->month_abbrev ),
@@ -753,7 +733,129 @@ class WPMUDEV_Dashboard_Ui {
 					),
 				)
 			);
+
+			$strings = array(
+				'metrics' => array(),
+				'tabs'    => array(
+					'overview' => __( 'Overview', 'wpmudev' ),
+					'pages'    => __( 'Top Pages & Posts', 'wpmudev' ),
+					'authors'  => __( 'Authors', 'wpmudev' ),
+					'sites'    => __( 'Top Sites', 'wpmudev' ),
+				),
+				'periods' => array(
+					'yesterday' => __( 'Yesterday', 'wpmudev' ),
+					'last7'     => __( 'Last 7 days', 'wpmudev' ),
+					'last30'    => __( 'Last 30 days', 'wpmudev' ),
+					'last90'    => __( 'Last 90 days', 'wpmudev' ),
+				),
+				'labels'  => array(
+					'page_post'   => __( 'Page/Post title', 'wpmudev' ),
+					'page'        => __( 'Page', 'wpmudev' ),
+					'author'      => __( 'Author', 'wpmudev' ),
+					'site'        => __( 'Site', 'wpmudev' ),
+					'site_domain' => __( 'Site domain/name', 'wpmudev' ),
+					'empty'       => __( 'We haven’t collected enough data of your website yet.', 'wpmudev' ),
+					'try_again'   => __( 'Try again', 'wpmudev' ),
+					'goto'        => __( 'Go to', 'wpmudev' ),
+					'of'          => __( 'of', 'wpmudev' ),
+					'show'        => __( 'Show', 'wpmudev' ),
+					'data_for'    => __( 'data for', 'wpmudev' ),
+				),
+				'desc'    => array(
+					'empty'      => __( 'You will start viewing the performance statistics of your website shortly. So feel free to check back soon', 'wpmudev' ),
+					'temp_issue' => __( 'There was a temporary issue fetching analytics data. Please try again later.', 'wpmudev' ),
+				),
+			);
+
+			$metrics = array(
+				array(
+					'key'  => 'pageviews',
+					'name' => __( 'Page Views', 'wpmudev' ),
+					'desc' => __( 'Total number of pages viewed. Repeated views of a single page are counted.', 'wpmudev' ),
+				),
+				array(
+					'key'  => 'unique_pageviews',
+					'name' => __( 'Unique Page Views', 'wpmudev' ),
+					'desc' => __( 'The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once.', 'wpmudev' ),
+				),
+				array(
+					'key'  => 'page_time',
+					'name' => __( 'Page Time', 'wpmudev' ),
+					'desc' => __( 'The average amount of time visitors spent on a page.', 'wpmudev' ),
+				),
+				array(
+					'key'  => 'visit_time',
+					'name' => __( 'Visit Time', 'wpmudev' ),
+					'desc' => __( 'The average amount of time visitors spent on the site.', 'wpmudev' ),
+				),
+				array(
+					'key'  => 'visits',
+					'name' => __( 'Entrances', 'wpmudev' ),
+					'desc' => __( 'The number of time visitors entered your site through this page, from any source (e.g. search, direct, referral, etc.).', 'wpmudev' ),
+				),
+				array(
+					'key'  => 'bounce_rate',
+					'name' => __( 'Bounce Rate', 'wpmudev' ),
+					'desc' => __( 'Single-page sessions. The percentage of visitors who left the website after their first page.', 'wpmudev' ),
+				),
+				array(
+					'key'  => 'exit_rate',
+					'name' => __( 'Exit Rate', 'wpmudev' ),
+					'desc' => __( 'Number of exits divided by page views. Indicates percentage of exits from a specified page or average across your site.', 'wpmudev' ),
+				),
+			);
+
+			// Enabled metrics.
+			$selected_metrics = WPMUDEV_Dashboard::$site->get_metrics_on_analytics();
+
+			// Remove unchecked items.
+			foreach ( $metrics as $metric ) {
+				// Visit time and page time are same.
+				if ( 'visit_time' === $metric['key'] ) {
+					if ( ! in_array( 'page_time', $selected_metrics, true ) ) {
+						continue;
+					}
+				} elseif ( ! in_array( $metric['key'], $selected_metrics, true ) ) {
+					continue;
+				}
+
+				// Set metrics.
+				$strings['metrics'][] = $metric;
+			}
+
+			// Translated strings for react widget.
+			wp_localize_script(
+				'wpmudev-dashboard-widget',
+				'wdpI18n',
+				$strings
+			);
 		}
+	}
+
+	/**
+	 * Check if analytics widget can be shown.
+	 *
+	 * @since 4.11.6
+	 *
+	 * @return bool
+	 */
+	private function can_show_analytics_widget() {
+		// Enabled metrics.
+		$metrics_enabled = (array) WPMUDEV_Dashboard::$site->get_metrics_on_analytics();
+
+		// Unique pageviews alone can not be used.
+		$metrics_enabled = array_filter(
+			$metrics_enabled,
+			function ( $metric ) {
+				return 'unique_pageviews' !== $metric;
+			}
+		);
+
+		return (
+			WPMUDEV_Dashboard::$api->is_analytics_allowed() // Only if analytics allowed.
+			&& WPMUDEV_Dashboard::$site->get_option( 'analytics_enabled' ) // Only if analytics enabled.
+			&& ! empty( $metrics_enabled ) // Only if at least one metric is selected.
+		);
 	}
 
 	/**
@@ -1869,7 +1971,7 @@ class WPMUDEV_Dashboard_Ui {
 	 * @since    4.6
 	 */
 	public function render_analytics_widget() {
-		$this->render( 'widget-analytics' );
+		echo '<div id="wpmudui-analytics-app"></div>';
 	}
 
 	public function render_plugins() {

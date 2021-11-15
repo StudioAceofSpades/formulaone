@@ -60,6 +60,7 @@
 			<input type="checkbox" id="set_missing_to_draft" name="set_missing_to_draft" value="1" <?php echo $post['set_missing_to_draft'] ? 'checked="checked"': '' ?> <?php if ( "new" != $post['wizard_type']): ?>disabled="disabled"<?php endif; ?>/>
 			<label for="set_missing_to_draft"><?php _e('Instead of deletion, change post status to Draft', 'wp_all_import_plugin') ?></label>					
 		</div>
+        <?php do_action('wp_all_import_delete_missing_options', $post_type, $post); ?>
 	</div>	
 </div>	
 <div class="input">

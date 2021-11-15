@@ -77,7 +77,7 @@ if ( ! $hide_row ) :
 									data-project="<?php echo esc_attr( $pid ); ?>">
 								<?php
 								if( $res->is_installed ):
-									printf( '%s <span class="sui-tag sui-tag-sm" style="margin-left:10px;">v%s</span>', esc_html( $res->name ), esc_html( $res->version_installed ) );
+									printf( '%s <span class="sui-tag sui-tag-sm" style="margin-left:10px;">v%s</span>', esc_html( $res->name ), esc_html( $res->version_installed ) );		 	  	  		  	 					
 								else:
 									echo esc_html( $res->name );
 								endif; ?>

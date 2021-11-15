@@ -176,6 +176,9 @@
 
 												$scheduling_times = wp_all_import_sanitize_scheduling_times($post['scheduling_times']);
 
+												if(!is_array($scheduling_times))
+												    $scheduling_times = [];
+
 												foreach ($scheduling_times as $time) { ?>
 													<?php if ($time) { ?>
 														<input class="timepicker" type="text" name="scheduling_times[]"

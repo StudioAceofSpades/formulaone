@@ -69,6 +69,26 @@ class SB_Instagram_Feed_Locator
 		global $wpdb;
 
 		$feed_locator_table_name = esc_sql( $wpdb->prefix . SBI_INSTAGRAM_FEED_LOCATOR );
+		$two_minutes_ago = date( 'Y-m-d H:i:s', time() - 120 );
+
+		$results_recent_entries = $wpdb->get_results( $wpdb->prepare("
+			SELECT COUNT(*) AS num_entries
+            FROM $feed_locator_table_name 
+            WHERE last_update > %s;
+            ", $two_minutes_ago ), ARRAY_A );
+
+		// Only allow 5 new entries within 5 minutes
+		if ( isset( $results_recent_entries[0]['num_entries'] ) && (int)$results_recent_entries[0]['num_entries'] > 5 ) {
+			return;
+		}
+
+		// Only allow 1000 total entries
+		$results_total_entries = $wpdb->get_results( "
+			SELECT COUNT(*) AS num_entries
+            FROM $feed_locator_table_name", ARRAY_A );
+		if ( isset( $results_total_entries[0]['num_entries'] ) && (int)$results_total_entries[0]['num_entries'] > 1000 ) {
+			$this->delete_oldest_entry();
+		}
 
 		$affected = $wpdb->query( $wpdb->prepare( "INSERT INTO $feed_locator_table_name
       	(feed_id,
@@ -87,6 +107,18 @@ class SB_Instagram_Feed_Locator
 			$this->feed_details['location']['html'],
 			sbi_json_encode( $this->feed_details['atts'] ),
 			date( 'Y-m-d H:i:s' ) ) );
+	}
+
+	public function delete_oldest_entry() {
+		global $wpdb;
+
+		$feed_locator_table_name = esc_sql( $wpdb->prefix . SBI_INSTAGRAM_FEED_LOCATOR );
+
+		$affected = $wpdb->query(
+			"DELETE FROM $feed_locator_table_name 
+					ORDER BY last_update ASC 
+					LIMIT 1;" );
+
 	}
 
 	/**
@@ -348,8 +380,6 @@ class SB_Instagram_Feed_Locator
             FROM $feed_locator_table_name 
             WHERE html_location = 'content'
             ", ARRAY_A );
-		//echo '<pre>';
-		//var_dump( $results_content );
 
 		$results_other = $wpdb->get_results( "
 			SELECT COUNT(*) AS num_entries
@@ -358,7 +388,6 @@ class SB_Instagram_Feed_Locator
             AND html_location != 'unknown'
             GROUP BY feed_id
             ", ARRAY_A );
-		//var_dump( $results_other );
 
 		$total = 0;
 		if ( isset( $results_content[0]['num_entries'] ) ) {

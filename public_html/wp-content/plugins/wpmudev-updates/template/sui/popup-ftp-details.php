@@ -22,7 +22,7 @@ $credentials             = get_option(
 $credentials['hostname'] = defined( 'FTP_HOST' ) ? FTP_HOST : $credentials['hostname'];
 $credentials['username'] = defined( 'FTP_USER' ) ? FTP_USER : $credentials['username'];
 $hostname                = isset( $credentials['hostname'] ) ? $credentials['hostname'] : '';
-$username                = isset( $credentials['username'] ) ? $credentials['username'] : '';		 	  	  		  	 					
+$username                = isset( $credentials['username'] ) ? $credentials['username'] : '';
 ?>
 <div class="sui-modal sui-modal-lg">
 	<div

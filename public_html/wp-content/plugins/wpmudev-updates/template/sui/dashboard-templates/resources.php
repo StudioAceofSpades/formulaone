@@ -6,11 +6,6 @@ $resources = array(
 		'url'   => $urls->documentation_url['dashboard'],
 	),
 	array(
-		'title' => __( 'Academy', 'wpmudev' ),
-		'icon'  => 'academy',
-		'url'   => $urls->academy_url,
-	),
-	array(
 		'title' => __( 'Member Forums', 'wpmudev' ),
 		'icon'  => 'community-people',
 		'url'   => $urls->community_url,

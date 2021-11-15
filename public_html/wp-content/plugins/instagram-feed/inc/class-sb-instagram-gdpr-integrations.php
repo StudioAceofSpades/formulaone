@@ -30,15 +30,14 @@ class SB_Instagram_GDPR_Integrations {
 	 *
 	 * @return array
 	 */
-	
-    public static function undo_script_blocking($scripts) { 
-        $settings = sbi_get_database_settings(); 
-        if ( ! SB_Instagram_GDPR_Integrations::doing_gdpr( $settings ) ) { 
-            return $scripts; 
-        } unset($scripts['instagram-feed']); 
-        
-        return $scripts;
-    }
+	public static function undo_script_blocking( $blocking ) {
+		$settings = sbi_get_database_settings();
+		if ( ! SB_Instagram_GDPR_Integrations::doing_gdpr( $settings ) ) {
+			return $blocking;
+		}
+		unset($blocking['instagram-feed']);
+		return $blocking;
+	}
 
 	/**
 	 * Whether or not consent plugins that Instagram Feed
@@ -50,7 +49,7 @@ class SB_Instagram_GDPR_Integrations {
 		if ( class_exists( 'Cookie_Notice' ) ) {
 			return 'Cookie Notice by dFactory';
 		}
-		if ( function_exists( 'run_cookie_law_info' ) || class_exists( 'Cookie_Law_Info' ) ) {
+		if ( class_exists( 'Cookie_Law_Info' ) ) {
 			return 'GDPR Cookie Consent by WebToffee';
 		}
 		if ( class_exists( 'Cookiebot_WP' ) ) {
@@ -121,9 +120,22 @@ class SB_Instagram_GDPR_Integrations {
 			if ( ! is_wp_error( $image_editor ) ) {
 				$sbi_statuses_option['gdpr']['image_editor'] = true;
 			} else {
-				$image_editor = wp_get_image_editor( 'http://plugin.smashballoon.com/editor-test.png' );
+				$test_image = 'http://plugin.smashballoon.com/editor-test.png';
+
+				$image_editor = wp_get_image_editor( $test_image );
 				if ( ! is_wp_error( $image_editor ) ) {
 					$sbi_statuses_option['gdpr']['image_editor'] = true;
+				} else {
+					// Set a timeout for downloading the image
+					$timeout_seconds = 5;
+
+					// Download file to temp dir.
+					$temp_file = download_url( $test_image, $timeout_seconds );
+
+					$image_editor = wp_get_image_editor( $temp_file );
+					if ( ! is_wp_error( $image_editor ) ) {
+						$sbi_statuses_option['gdpr']['image_editor'] = true;
+					}
 				}
 			}
 

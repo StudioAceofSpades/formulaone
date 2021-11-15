@@ -6,7 +6,7 @@
 	 *
 	 * @since 4.11.4
 	 */
-	$(window).load(function () {
+	$(window).on('load', function () {
 		let confirmButton = $('#wpmudev-reset-settings-confirm-button');
 
 		// Hide/Show fields when redirect to value changes.

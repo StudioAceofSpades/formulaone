@@ -40,9 +40,9 @@ function display_instagram( $atts = array() ) {
 		$style = current_user_can( 'manage_instagram_feed_options' ) ? ' style="display: block;"' : '';
 		ob_start(); ?>
         <div id="sbi_mod_error" <?php echo $style; ?>>
-            <span><?php _e('This error message is only visible to WordPress admins', 'instagram-feed' ); ?></span><br />
-            <p><b><?php _e( 'Error: No connected account.', 'instagram-feed' ); ?></b>
-            <p><?php _e( 'Please go to the Instagram Feed settings page to connect an account.', 'instagram-feed' ); ?></p>
+            <span><?php esc_html_e('This error message is only visible to WordPress admins', 'instagram-feed' ); ?></span><br />
+            <p><b><?php esc_html_e( 'Error: No connected account.', 'instagram-feed' ); ?></b>
+            <p><?php esc_html_e( 'Please go to the Instagram Feed settings page to connect an account.', 'instagram-feed' ); ?></p>
         </div>
 		<?php
 		$html = ob_get_contents();
@@ -198,10 +198,11 @@ function sbi_get_next_post_set() {
 		die( 'invalid feed ID');
 	}
 
-	$feed_id = sanitize_text_field( $_POST['feed_id'] );
+	$feed_id = sanitize_text_field( wp_unslash( $_POST['feed_id'] ) );
+
 	$atts_raw = isset( $_POST['atts'] ) ? json_decode( stripslashes( $_POST['atts'] ), true ) : array();
 	if ( is_array( $atts_raw ) ) {
-		array_map( 'sanitize_text_field', $atts_raw );
+		$atts_raw = SB_Instagram_Settings::sanitize_raw_atts( $atts_raw );
 	} else {
 		$atts_raw = array();
 	}
@@ -227,7 +228,7 @@ function sbi_get_next_post_set() {
 
 	$settings = $instagram_feed_settings->get_settings();
 
-	$location = isset( $_POST['location'] ) && in_array( $_POST['location'], array( 'header', 'footer', 'sidebar', 'content' ), true ) ? sanitize_text_field( $_POST['location'] ) : 'unknown';
+	$location = isset( $_POST['location'] ) && in_array( $_POST['location'], array( 'header', 'footer', 'sidebar', 'content' ), true ) ? sanitize_text_field( wp_unslash( $_POST['location'] ) ) : 'unknown';
 	$post_id = isset( $_POST['post_id'] ) && $_POST['post_id'] !== 'unknown' ? (int)$_POST['post_id'] : 'unknown';
 	$feed_details = array(
 		'feed_id' => $transient_name,
@@ -238,7 +239,19 @@ function sbi_get_next_post_set() {
 		)
 	);
 
-	sbi_do_background_tasks( $feed_details );
+	$can_do_background_tasks = false;
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		$nonce = isset( $_POST['locator_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['locator_nonce'] ) ) : '';
+		if ( wp_verify_nonce( $nonce, esc_attr( 'sbi-locator-nonce-' . $post_id . '-' . $transient_name ) ) ) {
+		    $can_do_background_tasks = true;
+		}
+	} else {
+		$can_do_background_tasks = true;
+	}
+
+	if ( $can_do_background_tasks ) {
+		sbi_do_background_tasks( $feed_details );
+	}
 
 	$feed_type_and_terms = $instagram_feed_settings->get_feed_type_and_terms();
 
@@ -351,8 +364,8 @@ function sbi_process_submitted_resize_ids() {
 		die( 'invalid feed ID');
 	}
 
-	$feed_id = sanitize_text_field( $_POST['feed_id'] );
-	$images_need_resizing_raw = isset( $_POST['needs_resizing'] ) ? $_POST['needs_resizing'] : array();
+	$feed_id = sanitize_text_field( wp_unslash( $_POST['feed_id'] ) );
+	$images_need_resizing_raw = isset( $_POST['needs_resizing'] ) ? wp_unslash( $_POST['needs_resizing'] ) : array();
 	if ( is_array( $images_need_resizing_raw ) ) {
 		array_map( 'sanitize_text_field', $images_need_resizing_raw );
 	} else {
@@ -360,9 +373,9 @@ function sbi_process_submitted_resize_ids() {
 	}
 	$images_need_resizing = $images_need_resizing_raw;
 
-	$atts_raw = isset( $_POST['atts'] ) ? json_decode( stripslashes( $_POST['atts'] ), true ) : array();
+	$atts_raw = isset( $_POST['atts'] ) ? json_decode( wp_unslash( $_POST['atts'] ), true ) : array();
 	if ( is_array( $atts_raw ) ) {
-		array_map( 'sanitize_text_field', $atts_raw );
+		$atts_raw = SB_Instagram_Settings::sanitize_raw_atts( $atts_raw );
 	} else {
 		$atts_raw = array();
 	}
@@ -381,9 +394,14 @@ function sbi_process_submitted_resize_ids() {
 	$instagram_feed_settings->set_feed_type_and_terms();
 	$instagram_feed_settings->set_transient_name();
 	$transient_name = $instagram_feed_settings->get_transient_name();
+
+	if ( $transient_name !== $feed_id ) {
+		die( 'id does not match' );
+	}
+
 	$settings = $instagram_feed_settings->get_settings();
 
-	$location = isset( $_POST['location'] ) && in_array( $_POST['location'], array( 'header', 'footer', 'sidebar', 'content' ), true ) ? sanitize_text_field( $_POST['location'] ) : 'unknown';
+	$location = isset( $_POST['location'] ) && in_array( $_POST['location'], array( 'header', 'footer', 'sidebar', 'content' ), true ) ? sanitize_text_field( wp_unslash(  $_POST['location'] ) ) : 'unknown';
 	$post_id = isset( $_POST['post_id'] ) && $_POST['post_id'] !== 'unknown' ? (int)$_POST['post_id'] : 'unknown';
 	$feed_details = array(
 		'feed_id' => $transient_name,
@@ -394,14 +412,22 @@ function sbi_process_submitted_resize_ids() {
 		)
 	);
 
-	sbi_do_background_tasks( $feed_details );
+	$can_do_background_tasks = false;
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		$nonce = isset( $_POST['locator_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['locator_nonce'] ) ) : '';
+		if ( wp_verify_nonce( $nonce, esc_attr( 'sbi-locator-nonce-' . $post_id . '-' . $transient_name ) ) ) {
+			$can_do_background_tasks = true;
+		}
+	} else {
+		$can_do_background_tasks = true;
+	}
+
+	if ( $can_do_background_tasks ) {
+		sbi_do_background_tasks( $feed_details );
+	}
 
 	if ( $cache_all ) {
 		$settings['cache_all'] = true;
-	}
-
-	if ( $transient_name !== $feed_id ) {
-		die( 'id does not match' );
 	}
 
 	sbi_resize_posts_by_id( $images_need_resizing, $transient_name, $settings );
@@ -425,16 +451,22 @@ function sbi_do_locator() {
 		die( 'invalid feed ID');
 	}
 
-	$feed_id = sanitize_text_field( $_POST['feed_id'] );
+	$feed_id = sanitize_text_field( wp_unslash( $_POST['feed_id'] ) );
 
-
-	$atts_raw = isset( $_POST['atts'] ) ? json_decode( stripslashes( $_POST['atts'] ), true ) : array();
+	$atts_raw = isset( $_POST['atts'] ) ? json_decode( wp_unslash( $_POST['atts'] ), true ) : array();
 	if ( is_array( $atts_raw ) ) {
-		array_map( 'sanitize_text_field', $atts_raw );
+		$atts_raw = SB_Instagram_Settings::sanitize_raw_atts( $atts_raw );
 	} else {
 		$atts_raw = array();
 	}
 	$atts = $atts_raw; // now sanitized
+
+	$database_settings = sbi_get_database_settings();
+	$instagram_feed_settings = new SB_Instagram_Settings( $atts, $database_settings );
+
+	$instagram_feed_settings->set_feed_type_and_terms();
+	$instagram_feed_settings->set_transient_name();
+	$transient_name = $instagram_feed_settings->get_transient_name();
 
 	$location = isset( $_POST['location'] ) && in_array( $_POST['location'], array( 'header', 'footer', 'sidebar', 'content' ), true ) ? sanitize_text_field( $_POST['location'] ) : 'unknown';
 	$post_id = isset( $_POST['post_id'] ) && $_POST['post_id'] !== 'unknown' ? (int)$_POST['post_id'] : 'unknown';
@@ -447,9 +479,23 @@ function sbi_do_locator() {
 		)
 	);
 
-	sbi_do_background_tasks( $feed_details );
+	$can_do_background_tasks = false;
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		$nonce = isset( $_POST['locator_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['locator_nonce'] ) ) : '';
+		if ( wp_verify_nonce( $nonce, esc_attr( 'sbi-locator-nonce-' . $post_id . '-' . $transient_name ) ) ) {
+			$can_do_background_tasks = true;
+		}
+	} else {
+		$can_do_background_tasks = true;
+	}
 
-	wp_die( 'locating success' );
+	if ( $can_do_background_tasks ) {
+		sbi_do_background_tasks( $feed_details );
+
+		wp_die( 'locating success' );
+	}
+
+	wp_die( 'skipped locating' );
 }
 add_action( 'wp_ajax_sbi_do_locator', 'sbi_do_locator' );
 add_action( 'wp_ajax_nopriv_sbi_do_locator', 'sbi_do_locator' );
@@ -478,7 +524,7 @@ function sbi_error_report( $instagram_feed, $feed_id ) {
 
 	if ( ! empty( $error_messages ) ) {?>
         <div id="sbi_mod_error"<?php echo $style; ?>>
-            <span><?php _e('This error message is only visible to WordPress admins', 'instagram-feed' ); ?></span><br />
+            <span><?php esc_html_e('This error message is only visible to WordPress admins', 'instagram-feed' ); ?></span><br />
 			<?php foreach ( $error_messages as $error_message ) {
 
 				echo '<div><strong>' . esc_html( $error_message['error_message'] )  . '</strong>';
@@ -508,6 +554,10 @@ function sbi_current_user_can( $cap ) {
 	$cap = apply_filters( 'sbi_settings_pages_capability', $cap );
 
 	return current_user_can( $cap );
+}
+
+function sbi_doing_openssl() {
+	return extension_loaded( 'openssl' );
 }
 
 /**
@@ -793,6 +843,12 @@ add_action( 'sbi_feed_update', 'sbi_cron_updater' );
  * @return string
  */
 function sbi_maybe_clean( $maybe_dirty ) {
+	$encryption = new SB_Instagram_Data_Encryption();
+
+	$decrypted = $encryption->decrypt( $maybe_dirty );
+	if ( $decrypted ) {
+		$maybe_dirty = $decrypted;
+	}
 	if ( substr_count ( $maybe_dirty , '.' ) < 3 ) {
 		return str_replace( '634hgdf83hjdj2', '', $maybe_dirty );
 	}
@@ -949,12 +1005,27 @@ function sbi_get_utc_offset() {
 	return get_option( 'gmt_offset', 0 ) * HOUR_IN_SECONDS;
 }
 
+function sbi_delete_all_platform_data() {
+	global $sb_instagram_posts_manager;
+	$manager = new SB_Instagram_Data_Manager();
+	$sb_instagram_posts_manager->add_action_log( 'Deleted all platform data.' );
+	$sb_instagram_posts_manager->reset_api_errors();
+	$manager->delete_caches();
+	$manager->delete_comments_data();
+	$manager->delete_hashtag_data();
+	SB_Instagram_Connected_Account::update_connected_accounts( array() );
+}
+
 function sbi_get_current_timestamp() {
 	$current_time = time();
 
 	//$current_time = strtotime( 'November 25, 2022' ) + 1;
 
 	return $current_time;
+}
+
+function sbi_get_current_time() {
+	return sbi_get_current_timestamp();
 }
 
 function sbi_is_after_deprecation_deadline() {
@@ -1105,7 +1176,7 @@ function sb_instagram_scripts_enqueue() {
 	$data = array(
 		'font_method' => 'svg',
 		'resized_url' => sbi_get_resized_uploads_url(),
-		'placeholder' => trailingslashit( SBI_PLUGIN_URL ) . 'img/placeholder.png'
+		'placeholder' => trailingslashit( SBI_PLUGIN_URL ) . 'img/placeholder.png',
     );
 	//Pass option to JS file
 	wp_localize_script('sb_instagram_scripts', 'sb_instagram_js_options', $data );

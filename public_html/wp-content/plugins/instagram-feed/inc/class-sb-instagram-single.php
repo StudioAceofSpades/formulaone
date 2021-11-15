@@ -34,6 +34,13 @@ class SB_Instagram_Single
 	private $error;
 
 	/**
+	 * @var object|SB_Instagram_Data_Encryption
+	 *
+	 * @since 5.14.5
+	 */
+	protected $encryption;
+
+	/**
 	 * SB_Instagram_Single constructor.
 	 *
 	 * @param $permalink_or_permalink_id string
@@ -50,6 +57,8 @@ class SB_Instagram_Single
 			$this->permalink = 'https://www.instagram.com/p/' . $this->permalink_id;
 		}
 		$this->error = false;
+
+		$this->encryption = new SB_Instagram_Data_Encryption();
 	}
 
 	/**
@@ -107,7 +116,7 @@ class SB_Instagram_Single
 			return false;
 		}
 
-		return (time() - 14 * DAY_IN_SECONDS) < $this->post['last_update'];
+		return (time() - 21 * DAY_IN_SECONDS) < $this->post['last_update'];
 	}
 
 
@@ -197,13 +206,15 @@ class SB_Instagram_Single
 	 */
 	private function update_single_cache() {
 		$stored_option = get_option( 'sbi_single_cache', array() );
-
+		if ( ! is_array( $stored_option ) ) {
+			$stored_option = json_decode( $this->encryption->decrypt( $stored_option ), true );
+		}
 		$new = array( $this->permalink_id => $this->post );
 		$stored_option = array_merge( $new, $stored_option );
 		// only latest 400 posts
 		$stored_option = array_slice( $stored_option, 0, 400 );
 
-		update_option( 'sbi_single_cache', $stored_option, false );
+		update_option( 'sbi_single_cache', $this->encryption->encrypt( sbi_json_encode( $stored_option ) ), false );
 	}
 
 	/**
@@ -243,12 +254,14 @@ class SB_Instagram_Single
 	 */
 	private function maybe_saved_data() {
 		$stored_option = get_option( 'sbi_single_cache', array() );
-
+		if ( ! is_array( $stored_option ) ) {
+			$stored_option = json_decode( $this->encryption->decrypt( $stored_option ), true );
+		}
 		$data = array();
 		if ( ! empty( $stored_option[ $this->permalink_id ] ) ) {
 			return $stored_option[ $this->permalink_id ];
 		} else {
-			$settings = get_option( 'sb_instagram_settings', array() );//
+			$settings = get_option( 'sb_instagram_settings', array() );
 
 			$resize_disabled = isset( $settings['sb_instagram_disable_resize'] ) && $settings['sb_instagram_disable_resize'] === 'on';
 
@@ -262,7 +275,7 @@ class SB_Instagram_Single
 					WHERE instagram_id = %s
 					LIMIT 1", $this->permalink_id ) );
 				if ( isset( $results[0] ) ) {
-					$data = json_decode( $results[0], true );
+					$data = json_decode( $this->encryption->decrypt( $results[0] ), true );
 				}
 
 			}

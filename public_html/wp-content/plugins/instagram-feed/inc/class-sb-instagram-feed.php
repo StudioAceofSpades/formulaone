@@ -114,6 +114,13 @@ class SB_Instagram_Feed
 	protected $one_post_found;
 
 	/**
+	 * @var object|SB_Instagram_Data_Encryption
+	 *
+	 * @since 5.14.5
+	 */
+	protected $encryption;
+
+	/**
 	 * SB_Instagram_Feed constructor.
 	 *
 	 * @param string $transient_name ID of this feed
@@ -147,6 +154,8 @@ class SB_Instagram_Feed
 		$this->resized_images = array();
 
 		$this->one_post_found = false;
+
+		$this->encryption = new SB_Instagram_Data_Encryption();
 	}
 
 	/**
@@ -281,7 +290,9 @@ class SB_Instagram_Feed
 	public function set_header_data_from_cache() {
 		$header_cache = get_transient( $this->header_transient_name );
 
-		$header_cache = json_decode( $header_cache, true );
+		$decrypted = $this->encryption->decrypt( $header_cache );
+
+		$header_cache = $decrypted ? json_decode( $decrypted, true ) : json_decode( $header_cache, true );
 
 		if ( ! empty( $header_cache ) ) {
 			$this->header_data = $header_cache;
@@ -310,7 +321,9 @@ class SB_Instagram_Feed
 	public function set_post_data_from_cache( $atts = array() ) {
 		$transient_data = get_transient( $this->regular_feed_transient_name );
 
-		$transient_data = json_decode( $transient_data, true );
+		$decrypted = $this->encryption->decrypt( $transient_data );
+
+		$transient_data = $decrypted ? json_decode( $decrypted, true ) : json_decode( $transient_data, true );
 
 		if ( $transient_data ) {
 			$post_data = isset( $transient_data['data'] ) ? $transient_data['data'] : array();
@@ -424,7 +437,13 @@ class SB_Instagram_Feed
 		$cache = $offset === 0 ? get_transient( $images_transient_name ) : false;
 
 		if ( $cache ) {
-			$return = json_decode( $cache, true );
+			$encryption = new SB_Instagram_Data_Encryption();
+
+			$decrypted = $encryption->decrypt( $cache );
+
+			$cache = $decrypted ? json_decode( $decrypted, true ) : json_decode( $cache, true );
+
+			$return = $cache;
 		} else {
 
 			global $wpdb;
@@ -497,7 +516,11 @@ class SB_Instagram_Feed
 			}
 
 			if ( $offset === 0 && $should_cache ) {
-				set_transient( $images_transient_name, sbi_json_encode( $return ), HOUR_IN_SECONDS );
+				$encryption = new SB_Instagram_Data_Encryption();
+
+				$encrypted = $encryption->encrypt( sbi_json_encode( $return ) );
+
+				set_transient( $images_transient_name, $encrypted, HOUR_IN_SECONDS );
 			}
 		}
 
@@ -633,7 +656,7 @@ class SB_Instagram_Feed
 			foreach ( $terms as $term_and_params ) {
 
 				if ( isset( $term_and_params['one_time_request'] ) ) {
-					$params['num'] = 200;
+					$params['num'] = 13;
 				}
 
 				$term = $term_and_params['term'];
@@ -706,6 +729,50 @@ class SB_Instagram_Feed
 							$next_page_found = true;
 						} else {
 							$next_pages[ $term . '_' . $type ] = false;
+						}
+
+						// One time requests are broken into smaller API requests
+						// to avoid an API error "1" due to too much data
+
+						if ( isset( $term_and_params['one_time_request'] ) && ! empty( $next_pages[ $term . '_' . $type ] ) ) {
+							for ( $k = 1; $k <= 3; $k++ ) {
+
+								if ( ! empty( $next_pages[ $term . '_' . $type ] ) ) {
+									$next_page_term = $next_pages[ $term . '_' . $type ];
+									if ( strpos( $next_page_term, 'https://' ) !== false ) {
+										$additional_connection = $this->make_api_connection( $next_page_term );
+									} else {
+										$params['cursor'] = $next_page_term;
+										$additional_connection = $this->make_api_connection( $connected_account_for_term, $type, $params );
+									}
+									$additional_connection->connect();
+								}
+
+								if ( isset( $additional_connection )
+								     && ! $additional_connection->is_wp_error()
+								     && ! $additional_connection->is_instagram_error() ) {
+									$additional_data = $additional_connection->get_data();
+
+									if ( isset( $additional_data[0]['id'] ) ) {
+										$one_post_found = true;
+
+										$post_set         = $this->filter_posts( $additional_data, $settings );
+										$post_set['term'] = $this->get_account_term( $term_and_params );
+										$new_post_sets[]  = $post_set;
+
+										$this->add_report( 'additional posts sets found in loop ' . $k );
+
+									}
+
+									$next_page = $additional_connection->get_next_page( $type );
+									if ( ! empty( $next_page ) ) {
+										$next_pages[ $term . '_' . $type ] = $next_page;
+										$next_page_found                   = true;
+									} else {
+										$next_pages[ $term . '_' . $type ] = false;
+									}
+								}
+							}
 						}
 					} else {
 
@@ -894,12 +961,13 @@ class SB_Instagram_Feed
 	 *
 	 * @param int $cache_time
 	 * @param bool $save_backup
+	 * @param bool $force_cache
 	 *
 	 * @since 2.0/5.0
 	 * @since 2.0/5.1 duplicate posts removed
 	 */
-	public function cache_feed_data( $cache_time, $save_backup = true ) {
-		if ( ! empty( $this->post_data ) || ! empty( $this->next_pages ) || ! empty( $this->cached_feed_error ) ) {
+	public function cache_feed_data( $cache_time, $save_backup = true, $force_cache = false ) {
+		if ( ! empty( $this->post_data ) || ! empty( $this->next_pages ) || ! empty( $this->cached_feed_error ) || $force_cache ) {
 			$this->remove_duplicate_posts();
 			$this->trim_posts_to_max();
 
@@ -917,7 +985,8 @@ class SB_Instagram_Feed
 				$to_cache['errors'] = $error_messages;
 			}
 
-			set_transient( $this->regular_feed_transient_name, sbi_json_encode( $to_cache ), $cache_time );
+			$encrypted = $this->encryption->encrypt( sbi_json_encode( $to_cache ) );
+			set_transient( $this->regular_feed_transient_name, $encrypted, $cache_time );
 
 			sbi_delete_image_cache( $this->regular_feed_transient_name );
 
@@ -925,7 +994,7 @@ class SB_Instagram_Feed
 				if ( isset( $to_cache['errors'] ) ) {
 					unset( $to_cache['errors'] );
 				}
-				update_option( $this->backup_feed_transient_name, sbi_json_encode( $to_cache ), false );
+				update_option( $this->backup_feed_transient_name, $encrypted, false );
 			}
 
 		} else {
@@ -967,8 +1036,9 @@ class SB_Instagram_Feed
 			} else {
 				$to_cache['errors'] = array();
 			}
+			$encrypted = $this->encryption->encrypt( sbi_json_encode( $to_cache ) );
 
-			set_transient( $this->regular_feed_transient_name, sbi_json_encode( $to_cache ), $cache_time );
+			set_transient( $this->regular_feed_transient_name, $encrypted, $cache_time );
 
 			if ( $save_backup ) {
 				if ( ! empty( $this->post_data )
@@ -996,13 +1066,15 @@ class SB_Instagram_Feed
 	 */
 	public function cache_header_data( $cache_time, $save_backup = true ) {
 		if ( $this->header_data ) {
-			set_transient( $this->header_transient_name, sbi_json_encode( $this->header_data ), $cache_time );
+			$encrypted = $this->encryption->encrypt( sbi_json_encode( $this->header_data ) );
+
+			set_transient( $this->header_transient_name, $encrypted, $cache_time );
 
 			if ( $save_backup ) {
 				if ( isset( $this->header_data['errors'] ) ) {
 					unset( $this->header_data['errors'] );
 				}
-				update_option( $this->backup_header_transient_name, sbi_json_encode( $this->header_data ), false );
+				update_option( $this->backup_header_transient_name, $encrypted, false );
 			}
 		}
 	}
@@ -1136,6 +1208,7 @@ class SB_Instagram_Feed
 		}
 
 		$other_atts .= ' data-postid="' . esc_attr( get_the_ID() ) . '"';
+		$other_atts .= ' data-locatornonce="' . esc_attr( wp_create_nonce( 'sbi-locator-nonce-' . get_the_ID() . '-' . $this->regular_feed_transient_name ) ) . '"';
 
 		$other_atts = $this->add_other_atts( $other_atts, $settings );
 
@@ -1205,7 +1278,7 @@ class SB_Instagram_Feed
 			ob_start();
 			$html = ob_get_contents();
 			ob_get_clean();		?>
-            <p><?php _e( 'No posts found.', 'instagram-feed' ); ?></p>
+            <p><?php esc_html_e( 'No posts found.', 'instagram-feed' ); ?></p>
 			<?php
 			$html = ob_get_contents();
 			ob_get_clean();

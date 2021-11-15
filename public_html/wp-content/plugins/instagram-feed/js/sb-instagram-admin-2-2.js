@@ -305,7 +305,6 @@ jQuery(document).ready(function($) {
                     '</div>'+
 
                     '<div class="sbi_ca_accesstoken">' +
-                    '<span class="sbi_ca_token_label">Access Token:</span><input type="text" class="sbi_ca_token" value="'+savedToken.access_token+'" readonly="readonly" onclick="this.focus();this.select()" title="To copy, click the field then press Ctrl + C (PC) or Cmd + C (Mac)."><br>' +
                     '<span class="sbi_ca_token_label">User ID:</span><input type="text" class="sbi_ca_user_id" value="'+savedToken.user_id+'" readonly="readonly" onclick="this.focus();this.select()" title="To copy, click the field then press Ctrl + C (PC) or Cmd + C (Mac)."><br>' +
                     '<span class="sbi_ca_token_label">Permissions:</span><span class="sbi_permissions_desc">All</span>' +
                     '</div>' +
@@ -647,7 +646,8 @@ jQuery(document).ready(function($) {
             url : sbiA.ajax_url,
             type : 'post',
             data : {
-                action : 'sbi_reset_resized'
+                action : 'sbi_reset_resized',
+                sbi_nonce: sbiA.sbi_nonce
             },
             success : function(data) {
                 $sbiClearResizedButton.prop('disabled',false);
@@ -679,7 +679,6 @@ jQuery(document).ready(function($) {
             jQuery('.sbi-caching-cron-options').slideDown();
         }
     });
-
 
     //Should we show the caching time settings?
     var sbi_cache_cron_interval = jQuery('#sbi_cache_cron_interval').val(),
@@ -738,7 +737,8 @@ jQuery(document).ready(function($) {
             url : sbiA.ajax_url,
             type : 'post',
             data : {
-                action : 'sbi_reset_log'
+                action : 'sbi_reset_log',
+                sbi_nonce : sbiA.sbi_nonce,
             },
             success : function(data) {
                 $sbiClearLog.prop('disabled',false);
@@ -799,6 +799,38 @@ jQuery(document).ready(function($) {
             }
         }); // ajax call
     }
+
+    //clear platform data
+    jQuery('#sbi_clear_platform_data').on('click',function(event) {
+        jQuery('.sbi-success').remove();
+        var $self = jQuery(this);
+        event.preventDefault();
+        if (window.confirm("Warning: Clicking this button will permanently delete all Instagram data, including all connected accounts, cached posts, and stored images.")) {
+            $self.prop('disabled',true);
+            jQuery.ajax({
+                url: sbiA.ajax_url,
+                type: 'post',
+                data: {
+                    action: 'sbi_delete_platform_data',
+                    sbi_nonce: sbiA.sbi_nonce
+                },
+                success: function (data) {
+                    $self.prop('disabled',false);
+
+                    jQuery('#sbi_clear_platform_data').after('<span class="sbi-success"><i class="fa fa-check-circle"></i></span>');
+                }
+            });
+        }
+
+    });
+
+    jQuery('select[name=sb_instagram_cache_time_unit]').on('change',function() {
+        var newMax = 24;
+        if (jQuery(this).val() === 'minutes') {
+            newMax = 1440;
+        }
+        jQuery('input[name=sb_instagram_cache_time]').prop('max', newMax);
+    });
 
     //Tooltips
     jQuery('#sbi_admin').on('click', '.sbi_tooltip_link, .sbi_type_tooltip_link', function(){

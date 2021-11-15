@@ -180,7 +180,7 @@ switch ($post_type) {
 					</div>					
 					<div class="input">
 						<input type="radio" id="update_custom_fields_logic_only" name="update_custom_fields_logic" value="only" <?php echo ( "only" == $post['update_custom_fields_logic'] ) ? 'checked="checked"': '' ?> class="switcher"/>
-						<label for="update_custom_fields_logic_only"><?php printf(__('Update only these % Meta, leave the rest alone', 'wp_all_import_plugin'), $custom_type->labels->singular_name); ?></label>
+						<label for="update_custom_fields_logic_only"><?php printf(__('Update only these %s Meta, leave the rest alone', 'wp_all_import_plugin'), $custom_type->labels->singular_name); ?></label>
 						<div class="switcher-target-update_custom_fields_logic_only pmxi_choosen" style="padding-left:17px;">								
 							<span class="hidden choosen_values"><?php if (!empty($existing_meta_keys)) echo esc_html(implode(',', $existing_meta_keys));?></span>
 							<input class="choosen_input" value="<?php if (!empty($post['custom_fields_list']) and "only" == $post['update_custom_fields_logic']) echo esc_html(implode(',', $post['custom_fields_list'])); ?>" type="hidden" name="custom_fields_only_list"/>										

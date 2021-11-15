@@ -179,9 +179,11 @@ class SB_Instagram_API_Connect
 	 */
 	public function connect() {
 		$args = array(
-			'timeout' => 60,
-			'sslverify' => false
+			'timeout' => 20
 		);
+		if ( version_compare( get_bloginfo( 'version' ), '3.7' , '<' ) ) {
+			$args['sslverify'] = false;
+		}
 		$response = wp_remote_get( $this->url, $args );
 
 		if ( ! is_wp_error( $response ) ) {
@@ -190,7 +192,6 @@ class SB_Instagram_API_Connect
 		}
 
 		$this->response = $response;
-
 	}
 
 	/**

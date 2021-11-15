@@ -435,11 +435,15 @@ if(!sbi_js_exists) {
                 }
             },
             sendNeedsResizingToServer: function() {
-                var feed = this;
+                var feed = this,
+                    $self = $(this.el);
                 if (feed.needsResizing.length > 0 && feed.settings.resizingEnabled) {
                     var itemOffset = $(this.el).find('.sbi_item').length,
                         cacheAll = typeof feed.settings.general.cache_all !== 'undefined' ? feed.settings.general.cache_all : false;
-
+                    var locatorNonce = '';
+                    if ( typeof $self.attr( 'data-locatornonce' ) !== 'undefined' ) {
+                        locatorNonce = $self.attr( 'data-locatornonce' );
+                    }
                     var submitData = {
                         action: 'sbi_resized_images_submit',
                         needs_resizing: feed.needsResizing,
@@ -448,7 +452,8 @@ if(!sbi_js_exists) {
                         atts: feed.settings.shortCodeAtts,
                         location: feed.locationGuess(),
                         post_id: feed.settings.postID,
-                        cache_all: cacheAll
+                        cache_all: cacheAll,
+                        locator_nonce: locatorNonce
                     };
                     var onSuccess = function(data) {
                         if (data.trim().indexOf('{') === 0) {
@@ -470,12 +475,17 @@ if(!sbi_js_exists) {
                     };
                     sbiAjax(submitData,onSuccess);
                 } else if (feed.settings.locator) {
+                    var locatorNonce = '';
+                    if ( typeof $self.attr( 'data-locatornonce' ) !== 'undefined' ) {
+                        locatorNonce = $self.attr( 'data-locatornonce' );
+                    }
                     var submitData = {
                         action: 'sbi_do_locator',
                         feed_id: feed.settings.feedID,
                         atts: feed.settings.shortCodeAtts,
                         location: feed.locationGuess(),
-                        post_id: feed.settings.postID
+                        post_id: feed.settings.postID,
+                        locator_nonce: locatorNonce
                     };
                     var onSuccess = function(data) {
 
@@ -498,6 +508,11 @@ if(!sbi_js_exists) {
                     feed = this;
                 feed.page ++;
 
+                var locatorNonce = '';
+                if ( typeof $self.attr( 'data-locatornonce' ) !== 'undefined' ) {
+                    locatorNonce = $self.attr( 'data-locatornonce' );
+                }
+
                 var itemOffset = $self.find('.sbi_item').length,
                     submitData = {
                         action: 'sbi_load_more_clicked',
@@ -507,7 +522,8 @@ if(!sbi_js_exists) {
                         atts: feed.settings.shortCodeAtts,
                         location: feed.locationGuess(),
                         post_id: feed.settings.postID,
-                        current_resolution: feed.imageResolution
+                        current_resolution: feed.imageResolution,
+                        locator_nonce: locatorNonce
                     };
                 var onSuccess = function (data) {
                     if (data.trim().indexOf('{') === 0) {
@@ -963,7 +979,7 @@ if(!sbi_js_exists) {
                         if (CLI_Cookie.read('cookielawinfo-checkbox-non-necessary') !== null) {
                             this.settings.consentGiven = CLI_Cookie.read('cookielawinfo-checkbox-non-necessary') === 'yes';
                         }
-    
+
                         if (CLI_Cookie.read('cookielawinfo-checkbox-necessary') !== null) {
                             this.settings.consentGiven = CLI_Cookie.read('cookielawinfo-checkbox-necessary') === 'yes';
                         }

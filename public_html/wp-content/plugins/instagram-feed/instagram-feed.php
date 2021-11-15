@@ -3,7 +3,7 @@
 Plugin Name: Smash Balloon Instagram Feed
 Plugin URI: https://smashballoon.com/instagram-feed
 Description: Display beautifully clean, customizable, and responsive Instagram feeds.
-Version: 2.9.3.1
+Version: 2.9.5
 Author: Smash Balloon
 Author URI: https://smashballoon.com/
 License: GPLv2 or later
@@ -23,11 +23,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if ( ! defined( 'SBIVER' ) ) {
-	define( 'SBIVER', '2.9.3.1' );
+	define( 'SBIVER', '2.9.5' );
 }
 // Db version.
 if ( ! defined( 'SBI_DBVERSION' ) ) {
-	define( 'SBI_DBVERSION', '1.9' );
+	define( 'SBI_DBVERSION', '1.91' );
 }
 
 // Upload folder name for local image files for posts
@@ -99,6 +99,10 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-api-connect.php';
 		include_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-connected-account.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-cron-updater.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-data-encryption.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-data-manager.php';
+		$manager = new SB_Instagram_Data_Manager();
+		$manager->init();
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-display-elements.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-feed.php';
 		include_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-feed-locator.php';
@@ -598,6 +602,15 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 
 			update_option( 'sbi_db_version', SBI_DBVERSION );
 		}
+
+		//$manager = new SB_Instagram_Data_Manager();
+		//$manager->reset(); die();
+		if ( (float) $db_ver < 1.91 ) {
+			$manager = new SB_Instagram_Data_Manager();
+			$manager->update_db_for_dpa();
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
 	}
 
 	add_action( 'wp_loaded', 'sbi_check_for_db_updates' );
@@ -617,44 +630,64 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		//If the user is preserving the settings then don't delete them
 		$options                        = get_option( 'sb_instagram_settings' );
 		$sb_instagram_preserve_settings = isset( $options['sb_instagram_preserve_settings'] ) ? $options['sb_instagram_preserve_settings'] : false;
-		if ( $sb_instagram_preserve_settings ) {
-			return;
-		}
 
-		//Settings
-		delete_option( 'sb_instagram_settings' );
-		delete_option( 'sbi_ver' );
-		delete_option( 'sbi_db_version' );
-		delete_option( 'sb_expired_tokens' );
-		delete_option( 'sbi_cron_report' );
-		delete_option( 'sb_instagram_errors' );
-		delete_option( 'sb_instagram_ajax_status' );
-		delete_option( 'sbi_statuses' );
-
-		// Clear backup caches
+		/* ALL platform Data */
+		/* Backup Caches */
 		global $wpdb;
 		$table_name = $wpdb->prefix . "options";
-		$wpdb->query( "
-	        DELETE
-	        FROM $table_name
-	        WHERE `option_name` LIKE ('%!sbi\_%')
-        " );
-		$wpdb->query( "
-	        DELETE
-	        FROM $table_name
-	        WHERE `option_name` LIKE ('%\_transient\_&sbi\_%')
-        " );
-		$wpdb->query( "
-	        DELETE
-	        FROM $table_name
-	        WHERE `option_name` LIKE ('%\_transient\_timeout\_&sbi\_%')
-        " );
-		$wpdb->query( "
-		    DELETE
-		    FROM $table_name
-		    WHERE `option_name` LIKE ('%sb_wlupdated_%')
-	    " );
 
+		$wpdb->query( "
+	    DELETE
+	    FROM $table_name
+	    WHERE `option_name` LIKE ('%!sbi\_%')
+	    " );
+		$wpdb->query( "
+	    DELETE
+	    FROM $table_name
+	    WHERE `option_name` LIKE ('%\_transient\_&sbi\_%')
+	    " );
+		$wpdb->query( "
+	    DELETE
+	    FROM $table_name
+	    WHERE `option_name` LIKE ('%\_transient\_timeout\_&sbi\_%')
+    " );
+
+		/* Regular Caches */
+		//Delete all transients
+		$wpdb->query( "
+		        DELETE
+		        FROM $table_name
+		        WHERE `option_name` LIKE ('%\_transient\_sbi\_%')
+		        " );
+		$wpdb->query( "
+		        DELETE
+		        FROM $table_name
+		        WHERE `option_name` LIKE ('%\_transient\_timeout\_sbi\_%')
+		        " );
+		$wpdb->query( "
+		        DELETE
+		        FROM $table_name
+		        WHERE `option_name` LIKE ('%\_transient\_&sbi\_%')
+		        " );
+		$wpdb->query( "
+		        DELETE
+		        FROM $table_name
+		        WHERE `option_name` LIKE ('%\_transient\_timeout\_&sbi\_%')
+		        " );
+		$wpdb->query( "
+		        DELETE
+		        FROM $table_name
+		        WHERE `option_name` LIKE ('%\_transient\_\$sbi\_%')
+		        " );
+		$wpdb->query( "
+		        DELETE
+		        FROM $table_name
+		        WHERE `option_name` LIKE ('%\_transient\_timeout\_\$sbi\_%')
+            " );
+
+		delete_option( 'sbi_single_cache' );
+		delete_transient( 'sbinst_comment_cache' );
+		delete_option( 'sbi_oembed_token' );
 		//image resizing
 		$upload                 = wp_upload_dir();
 		$posts_table_name       = $wpdb->prefix . 'sbi_instagram_posts';
@@ -687,15 +720,28 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 			        FROM $table_name
 			        WHERE `option_name` LIKE ('%\_transient\_timeout\_\$sbi\_%')
 			        " );
+		delete_option( 'sbi_db_version' );
+
+		/* End Platform Data */
+		if ( $sb_instagram_preserve_settings ) {
+			return;
+		}
+
+		//Settings
+		delete_option( 'sb_instagram_settings' );
+		delete_option( 'sbi_ver' );
+		delete_option( 'sb_expired_tokens' );
+		delete_option( 'sbi_cron_report' );
+		delete_option( 'sb_instagram_errors' );
+		delete_option( 'sb_instagram_ajax_status' );
+		delete_option( 'sbi_statuses' );
+
 		delete_option( 'sbi_usage_tracking_config' );
 		delete_option( 'sbi_usage_tracking' );
 		delete_option( 'sbi_notifications' );
 		delete_option( 'sbi_newuser_notifications' );
-		delete_option( 'sbi_oembed_token' );
 		delete_option( 'sbi_rating_notice' );
 		delete_option( 'sbi_refresh_report' );
-		delete_option( 'sbi_single_cache' );
-
 
 		global $wp_roles;
 		$wp_roles->remove_cap( 'administrator', 'manage_instagram_feed_options' );

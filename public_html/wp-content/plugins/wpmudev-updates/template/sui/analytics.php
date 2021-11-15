@@ -137,10 +137,6 @@ $url_upgrade = add_query_arg(
 										$roles = wp_roles()->roles;
 
 										foreach ( $roles as $key => $site_role ) :
-											// Core roles define level_X caps, that's what we'll use to check permissions.
-											if ( ! isset( $site_role['capabilities']['level_0'] ) ) {
-												continue;
-											}
 											?>
 											<option <?php selected( $analytics_role, $key ); ?> value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $site_role['name'] ); ?></option>
 										<?php endforeach; ?>

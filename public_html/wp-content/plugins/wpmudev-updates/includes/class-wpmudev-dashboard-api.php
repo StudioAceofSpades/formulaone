@@ -99,13 +99,12 @@ class WPMUDEV_Dashboard_Api {
 				wp_schedule_event( time(), 'twicedaily', 'wpmudev_scheduled_jobs' );
 			}
 
-			// Simulate admin.
-			// Temporarly disable.
-			// $this->maybe_simulate_admin_for_cron();
+			// Run action on wpmudev admin actions.
+			add_action( 'wpmudev_dashboard_admin_action', array( $this, 'run_admin_cron' ), 10, 3 );
 
 			add_action(
 				'wpmudev_scheduled_jobs',
-				array( $this, 'hub_sync' )
+				array( $this, 'admin_hub_sync' )
 			);
 			add_action(
 				'wpmudev_scheduled_jobs',
@@ -330,6 +329,37 @@ class WPMUDEV_Dashboard_Api {
 	 */
 	public function is_server_url( $url ) {
 		return false !== strpos( $url, $this->server_url );
+	}
+
+	/**
+	 * Process admin side actions if it's from cron.
+	 *
+	 * @param string $action Action name.
+	 * @param array  $params Parameters.
+	 * @param string $from   Action from (remote or cron).
+	 *
+	 * @since  4.11.6
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function run_admin_cron( $action, $params, $from ) {
+		if ( 'cron' === $from && 'hub_sync' === $action ) {
+			// Run hub sync.
+			$this->hub_sync();
+		}
+	}
+
+	/**
+	 * Run hub sync using admin HTTP request.
+	 *
+	 * @since  4.11.6
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function admin_hub_sync() {
+		WPMUDEV_Dashboard::$utils->send_admin_request( 'hub_sync', 'cron' );
 	}
 
 	/**
@@ -761,7 +791,7 @@ class WPMUDEV_Dashboard_Api {
 	 */
 	private function is_feature_allowed( $feature ) {
 		$data     = $this->get_membership_data();
-		$features = $data['membership_access'];
+		$features = isset( $data['membership_access'] ) ? $data['membership_access'] : array();
 
 		// The membership_access can be boolean true for full accesss, or array with allowed features strings.
 		if ( true === $features ) {
@@ -1286,32 +1316,6 @@ class WPMUDEV_Dashboard_Api {
 	 */
 	public function is_wpmu_dev_hosting() {
 		return isset( $_SERVER['WPMUDEV_HOSTED'] );
-	}
-
-	/**
-	 * Maybe simulate admin environment if required.
-	 *
-	 * If our plugin's status check cron is being executed,
-	 * simulate admin before running cron.
-	 *
-	 * @since 4.11.4
-	 *
-	 * @return void
-	 */
-	private function maybe_simulate_admin_for_cron() {
-		// Do nothing if not cron.
-		if ( ! defined( 'DOING_CRON' ) || ! DOING_CRON ) {
-			return;
-		}
-
-		// Get ready hooks.
-		$hooks = WPMUDEV_Dashboard::$utils->get_ready_cron_hooks();
-
-		// If our cron job is ready to run.
-		if ( in_array( 'wpmudev_scheduled_jobs', $hooks, true ) ) {
-			// Simulate admin.
-			WPMUDEV_Dashboard::$utils->simulate_admin();
-		}
 	}
 
 	/**
@@ -2706,6 +2710,18 @@ class WPMUDEV_Dashboard_Api {
 		if ( false !== ( $cached = get_transient( $transient_key ) ) ) {
 			$cached = $this->_analytics_overall_filter_metrics( $cached );
 
+			// Temporary fix to make data format in autocomplete format.
+			if ( ! empty( $cached['autocomplete'][0]['value'] ) && is_array( $cached['autocomplete'][0]['value'] ) ) {
+				foreach ( $cached['autocomplete'] as $index => $item ) {
+					$cached['autocomplete'][ $index ] = array(
+						'label'  => $item['label'],
+						'value'  => $item['label'],
+						'filter' => $item['value']['filter'],
+						'type'   => $item['value']['type'],
+					);
+				}
+			}
+
 			return $cached;
 		}
 
@@ -2957,11 +2973,10 @@ class WPMUDEV_Dashboard_Api {
 				}
 				$final_data['pages'][]        = $new_page;
 				$final_data['autocomplete'][] = array(
-					'label' => sprintf( __( 'Page: %s', 'wpmudev' ), $new_page['name'] ),
-					'value' => array(
-						'type'   => 'page',
-						'filter' => $new_page['filter'],
-					),
+					'label'  => sprintf( __( 'Page: %s', 'wpmudev' ), $new_page['name'] ),
+					'value'  => sprintf( __( 'Page: %s', 'wpmudev' ), $new_page['name'] ),
+					'type'   => 'page',
+					'filter' => $new_page['filter'],
 				);
 			}
 		}
@@ -3000,11 +3015,10 @@ class WPMUDEV_Dashboard_Api {
 				}
 				$final_data['sites'][]        = $new_site;
 				$final_data['autocomplete'][] = array(
-					'label' => sprintf( __( 'Site: %s', 'wpmudev' ), $new_site['name'] ),
-					'value' => array(
-						'type'   => 'subsite',
-						'filter' => $new_site['filter'],
-					),
+					'label'  => sprintf( __( 'Site: %s', 'wpmudev' ), $new_site['name'] ),
+					'value'  => sprintf( __( 'Site: %s', 'wpmudev' ), $new_site['name'] ),
+					'type'   => 'subsite',
+					'filter' => $new_site['filter'],
 				);
 			}
 		}
@@ -3048,11 +3062,10 @@ class WPMUDEV_Dashboard_Api {
 				}
 				$final_data['authors'][]      = $new_author;
 				$final_data['autocomplete'][] = array(
-					'label' => sprintf( __( 'Author: %s', 'wpmudev' ), $new_author['name'] ),
-					'value' => array(
-						'type'   => 'author',
-						'filter' => $new_author['filter'],
-					),
+					'label'  => sprintf( __( 'Author: %s', 'wpmudev' ), $new_author['name'] ),
+					'value'  => sprintf( __( 'Author: %s', 'wpmudev' ), $new_author['name'] ),
+					'type'   => 'author',
+					'filter' => $new_author['filter'],
 				);
 			}
 		}
@@ -3174,6 +3187,11 @@ class WPMUDEV_Dashboard_Api {
 		}
 
 		foreach ( $data as $date => $day ) {
+			// Do not convert non-date values.
+			if ( 'comparisions' === $date ) {
+				continue;
+			}
+
 			if ( isset( $day[0] ) ) {
 				$day = $day[0];
 			}
@@ -3191,6 +3209,11 @@ class WPMUDEV_Dashboard_Api {
 		}
 
 		foreach ( $comparison_data as $date => $day ) {
+			// Do not convert non-date values.
+			if ( 'comparisions' === $date ) {
+				continue;
+			}
+
 			if ( isset( $day[0] ) ) {
 				$day = $day[0];
 			}
@@ -3203,7 +3226,6 @@ class WPMUDEV_Dashboard_Api {
 					't' => $timestamp,
 					'y' => $y_value,
 				);
-
 			}
 		}
 		foreach ( $to_process as $key => $process ) {
@@ -3291,7 +3313,7 @@ class WPMUDEV_Dashboard_Api {
 		if ( false === $decimal ) {
 			return '-';
 		}
-		return round( $decimal * 100, 1 ) . '%';
+		return round( $decimal * 100, 2 ) . '%';
 	}
 
 	/**

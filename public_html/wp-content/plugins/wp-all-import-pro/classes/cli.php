@@ -41,7 +41,7 @@ class PMXI_Cli {
         foreach( $import_ids as $import_id) {
             try {
             	$logger = function($m) {
-		            print("<p>[". date("H:i:s") ."] $m</p>\n");
+		            print("<p>[". date("H:i:s") ."] ".wp_all_import_filter_html_kses($m)."</p>\n");
 	            };
                 $logger = apply_filters('wp_all_import_logger', $logger);
                 if (array_key_exists('disable-log', $assoc_args)) {

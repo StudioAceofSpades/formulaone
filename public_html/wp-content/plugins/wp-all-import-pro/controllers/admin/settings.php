@@ -436,7 +436,8 @@ class PMXI_Admin_Settings extends PMXI_Controller_Admin {
 
 		$files = array_diff(@scandir($dir), array('.','..'));
 
-		$cacheFiles = @array_diff(@scandir($cacheDir), array('.','..'));
+		$cacheFiles = @scandir($cacheDir);
+		$cacheFiles = is_array($cacheFiles) ? @array_diff($cacheFiles, array('.','..')) : null;
 
 		$msg = __('Files not found', 'wp_all_import_plugin');
 

@@ -111,6 +111,7 @@ class SB_Instagram_Settings {
 				'resizeprocess'    => isset( $db['sb_instagram_resizeprocess'] ) ? $db['sb_instagram_resizeprocess'] : 'background',
 				'customtemplates'    => isset( $db['custom_template'] ) ? $db['custom_template'] : '',
 				'gdpr'    => isset( $db['gdpr'] ) ? $db['gdpr'] : 'auto',
+				'altresize'    => isset( $db['altresize'] ) ? $db['altresize'] : true,
 			), $atts );
 
 		$this->settings['customtemplates'] = $this->settings['customtemplates'] === 'true' || $this->settings['customtemplates'] === 'on';
@@ -124,6 +125,8 @@ class SB_Instagram_Settings {
 		}
 		if ( isset( $atts['showheader'] ) && $atts['showheader'] === 'false' ) {
 			$this->settings['showheader'] = false;
+		} elseif ( isset( $atts['showheader'] ) && $atts['showheader'] === 'true' ) {
+			$this->settings['showheader'] = true;
 		}
 		$this->settings['disable_resize'] = isset( $db['sb_instagram_disable_resize'] ) && ($db['sb_instagram_disable_resize'] === 'on');
 		$this->settings['favor_local'] = ! isset( $db['sb_instagram_favor_local'] ) || ($db['sb_instagram_favor_local'] === 'on') || ($db['sb_instagram_favor_local'] === true);
@@ -540,7 +543,9 @@ class SB_Instagram_Settings {
 			if ( $cache_time_unit == 'hours' ) $cache_time_unit = 60*60;
 			if ( $cache_time_unit == 'days' ) $cache_time_unit = 60*60*24;
 
-			return $cache_time * $cache_time_unit;
+			$cache_time_return = min( $cache_time * $cache_time_unit, DAY_IN_SECONDS );
+
+			return $cache_time_return;
 		}
 	}
 
@@ -689,5 +694,209 @@ class SB_Instagram_Settings {
 		);
 
 		return $defaults;
+	}
+
+	/**
+	 * Compares given array with an allow list of
+	 * setting keys and how they should be sanitized
+	 *
+	 * @param array $atts
+	 *
+	 * @return array
+	 */
+	public static function sanitize_raw_atts( $atts ) {
+
+		$sanitized_atts = array();
+
+		$allowed_atts = array(
+			'id' => array(
+				'method' => 'alpha_numeric_and_comma',
+				'allowed_vals' => 'any'
+			),
+			'width' => array(
+				'method' => 'page_load_only',
+			),
+			'widthunit'=> array(
+				'method' => 'page_load_only',
+			),
+			'widthresp'  => array(
+				'method' => 'page_load_only',
+			),
+			'height' => array(
+				'method' => 'page_load_only',
+			),
+			'heightunit' => array(
+				'method' => 'page_load_only',
+			),
+			'sortby' => array(
+				'method' => 'enum',
+				'allowed_vals' => array( 'none', 'random', 'likes' )
+			),
+			'num' => array(
+				'method' => 'intval',
+				'allowed_vals' => 500
+			),
+			'nummobile' => array(
+				'method' => 'intval',
+				'allowed_vals' => 500
+			),
+			'apinum' => array(
+				'method' => 'intval',
+				'allowed_vals' => 100
+			),
+			'cols' => array(
+				'method' => 'intval',
+				'allowed_vals' => 15
+			),
+			'disablemobile' => array(
+				'method' => 'page_load_only',
+			),
+			'imagepadding' => array(
+				'method' => 'page_load_only',
+			),
+			'imagepaddingunit' => array(
+				'method' => 'page_load_only',
+			),
+			'background' => array(
+				'method' => 'page_load_only',
+			),
+			'showbutton' => array(
+				'method' => 'page_load_only',
+			),
+			'buttoncolor' => array(
+				'method' => 'page_load_only',
+			),
+			'buttontextcolor' => array(
+				'method' => 'page_load_only',
+			),
+			'buttontext' => array(
+				'method' => 'page_load_only',
+			),
+			'imageres' => array(
+				'method' => 'enum',
+				'allowed_vals' => array( 'auto', 'thumb', 'low', 'full' )
+			),
+			'showfollow' => array(
+				'method' => 'page_load_only',
+			),
+			'followcolor' => array(
+				'method' => 'page_load_only',
+			),
+			'followtextcolor' => array(
+				'method' => 'page_load_only',
+			),
+			'followtext' => array(
+				'method' => 'page_load_only',
+			),
+			'showheader' => array(
+				'method' => 'page_load_only',
+			),
+			'headersize' => array(
+				'method' => 'page_load_only',
+			),
+			'showbio' => array(
+				'method' => 'page_load_only',
+			),
+			'custombio' => array(
+				'method' => 'page_load_only',
+			),
+			'customavatar' => array(
+				'method' => 'page_load_only',
+			),
+			'headercolor' => array(
+				'method' => 'page_load_only',
+			),
+			'class' => array(
+				'method' => 'page_load_only',
+			),
+			'ajaxtheme' => array(
+				'method' => 'page_load_only',
+			),
+			'cachetime' => array(
+				'method' => 'page_load_only',
+			),
+			'media' => array(
+				'method' => 'page_load_only',
+			),
+			'headeroutside' => array(
+				'method' => 'page_load_only',
+			),
+			'user' => array(
+				'method' => 'alpha_numeric_and_comma',
+				'allowed_vals' => 'any'
+			),
+			'feedid' => array(
+				'method' => 'feedid_chars',
+				'allowed_vals' => 'any'
+			),
+			'resizeprocess' => array(
+				'method' => 'enum',
+				'allowed_vals' => array( 'page', 'background' )
+			),
+			'customtemplates' => array(
+				'method' => 'string_true',
+				'allowed_vals' => 'any'
+			),
+			'gdpr' => array(
+				'method' => 'enum',
+				'allowed_vals' => array( 'auto', 'yes', 'no' )
+			)
+		);
+
+		foreach ( $atts as $key => $value ) {
+			$value = (string)$value;
+
+			if ( isset( $allowed_atts[ $key ] ) && strlen( $value ) < 500 ) {
+				$sanitization_method = $allowed_atts[ $key ]['method'];
+
+				switch ( $sanitization_method ) {
+					case 'enum' :
+						if ( in_array( $value, $allowed_atts[ $key ]['allowed_vals'] ) ) {
+							$sanitized_atts[ $key ] = sanitize_text_field( $value );
+						}
+						break;
+					case 'alpha_numeric_and_comma' :
+							$sanitized_atts[ $key ] = preg_replace( "/[^A-Za-z0-9,]/", '', $value );
+						break;
+					case 'feedid_chars' :
+						$sanitized_atts[ $key ] = preg_replace( "/[^A-Za-z0-9#_%-\/?]/", '', urlencode( $value ) );
+						break;
+					case 'intval' :
+						$value = intval( $value );
+
+						if ( $value < (int)$allowed_atts[ $key ]['allowed_vals'] ) {
+							$sanitized_atts[ $key ] = $value;
+						}
+
+						break;
+					case 'floatval' :
+						$value = floatval( $value );
+
+						if ( $allowed_atts[ $key ]['allowed_vals'] === 'any' ) {
+							$sanitized_atts[ $key ] = $value;
+						} elseif ( $value < (float)$allowed_atts[ $key ]['allowed_vals'] ) {
+							$sanitized_atts[ $key ] = $value;
+						}
+						
+						if ( floor( $value ) === $value ) {
+							$sanitized_atts[ $key ] = (int)$value;
+						}
+
+						break;
+					case 'string_true' :
+						$value = floatval( $value );
+
+						if ( $value === 'true' || $value === 'on' || $value === true ) {
+							$sanitized_atts[ $key ] = 'true';
+						} else {
+							$sanitized_atts[ $key ] = 'false';
+						}
+
+						break;
+				}
+			}
+		}
+
+		return $sanitized_atts;
 	}
 }

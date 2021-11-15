@@ -59,6 +59,8 @@ class WPMUDEV_Dashboard_Remote {
 	public function __construct() {
 		// Using priority because some plugins may initialize updates with low priority.
 		add_action( 'init', array( $this, 'run_request' ), 999 );
+		// Run action on wpmudev admin actions.
+		add_action( 'wpmudev_dashboard_admin_action', array( $this, 'run_admin_action' ), 10, 3 );
 	}
 
 	/**
@@ -118,7 +120,79 @@ class WPMUDEV_Dashboard_Remote {
 		$this->current_params = $body->params;
 
 		// Now process the actions.
-		$this->process_action();
+		if ( $this->is_admin_action( $body->action ) ) {
+			// Process admin actions.
+			$this->send_admin_request();
+		} else {
+			// Process normal actions.
+			$this->process_action();
+		}
+	}
+
+	/**
+	 * Run admin side actions after registering all actions.
+	 *
+	 * @param string $action Action name.
+	 * @param array  $params Parameters.
+	 * @param string $from   Action from (remote or cron).
+	 *
+	 * @since  4.11.6
+	 * @access protected
+	 *
+	 * @return void
+	 */
+	public function run_admin_action( $action, $params, $from = 'remote' ) {
+		if ( 'remote' === $from ) {
+			// Register actions.
+			$this->register_internal_actions();
+			$this->register_plugin_actions();
+
+			// Set request data.
+			$this->timer          = microtime( true );
+			$this->current_action = $action;
+			$this->current_params = $params;
+
+			// Now process the actions.
+			$this->process_action();
+		}
+	}
+
+	/**
+	 * Make an self post request to wp-admin.
+	 *
+	 * Make an HTTP request to our own WP Admin to process admin side actions
+	 * specifically update requests and hub sync request since most of the premium
+	 * plugins and themes are initializing the update logic only in admin side of WP.
+	 * This may not work in some servers if the request is timed out
+	 * But that's the maximum we can do from Dash plugin.
+	 *
+	 * @since 4.11.6
+	 *
+	 * @uses  admin_url()
+	 * @uses  wp_remote_post()
+	 *
+	 * @return void
+	 */
+	private function send_admin_request() {
+		// Make post request.
+		$response = WPMUDEV_Dashboard::$utils->send_admin_request(
+			$this->current_action,
+			'remote',
+			$this->current_params
+		);
+
+		// If request not failed.
+		if ( ! empty( $response ) ) {
+			// Get response body.
+			wp_send_json( json_decode( $response, true ) );
+		}
+
+		wp_send_json_error(
+			array(
+				'code'    => 'invalid_request',
+				'message' => __( 'Invalid request', 'wpmudev' ),
+			)
+		);
 	}
 
 	/**
@@ -219,6 +293,81 @@ class WPMUDEV_Dashboard_Remote {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check signature hash of the request.
+	 *
+	 * @param string $req_id         The request id as passed by Hub.
+	 * @param string $json           The full json body that hash was created on.
+	 * @param bool   $die_on_failure If set to false the function returns a bool.
+	 *
+	 * @since  4.0.0
+	 * @access protected
+	 *
+	 * @return bool True on success.
+	 */
+	protected function validate_request_hash( $req_id, $json, $die_on_failure = true ) {
+		if ( defined( 'WPMUDEV_IS_REMOTE' ) && ! WPMUDEV_IS_REMOTE ) {
+			if ( $die_on_failure ) {
+				wp_send_json_error(
+					array(
+						'code'    => 'remote_disabled',
+						'message' => __( 'Remote calls are disabled in wp-config.php', 'wpmudev' ),
+					)
+				);
+			} else {
+				return false;
+			}
+		}
+
+		if ( empty( $_SERVER['HTTP_WDP_AUTH'] ) ) {
+			if ( $die_on_failure ) {
+				wp_send_json_error(
+					array(
+						'code'    => 'missing_auth_header',
+						'message' => __( 'Missing authentication header', 'wpmudev' ),
+					)
+				);
+			} else {
+				return false;
+			}
+		}
+
+		// phpcs:ignore
+		$hash = $_SERVER['HTTP_WDP_AUTH'];
+
+		// Validate auth hash.
+		$is_valid = $this->validate_hash( $hash, $req_id, $json );
+
+		if ( ! $is_valid && $die_on_failure ) {
+			wp_send_json_error(
+				array(
+					'code'    => 'incorrect_auth',
+					'message' => __( 'Incorrect authentication', 'wpmudev' ),
+				)
+			);
+		}
+
+		// Check nonce to prevent replay attacks.
+		if ( ! $this->validate_nonce( $req_id ) ) {
+			if ( $die_on_failure ) {
+				wp_send_json_error(
+					array(
+						'code'    => 'nonce_failed',
+						'message' => __( 'Nonce check failed', 'wpmudev' ),
+					)
+				);
+			} else {
+				return false;
+			}
+		}
+
+		if ( ! defined( 'WPMUDEV_IS_REMOTE' ) ) {
+			define( 'WPMUDEV_IS_REMOTE', $is_valid );
+		}
+
+		return $is_valid;
 	}
 
 	/**
@@ -508,8 +657,14 @@ class WPMUDEV_Dashboard_Remote {
 		$errors       = array();
 		$installed    = array();
 		$only_wpmudev = true;
-		// Activation is available only for plugins.
-		$activate = ! empty( $params->is_activate );
+
+		// Set options.
+		$options = array(
+			// Activation is available only for plugins.
+			'activate'  => ! empty( $params->is_activate ),
+			// Overwrite if folder already exists.
+			'overwrite' => ! isset( $params->overwrite ) || (bool) $params->overwrite,
+		);
 
 		// Process plugins.
 		if ( isset( $params->plugins ) && is_array( $params->plugins ) ) {
@@ -519,7 +674,7 @@ class WPMUDEV_Dashboard_Remote {
 					$only_wpmudev = false;
 				}
 				// Install now.
-				$success = WPMUDEV_Dashboard::$upgrader->install( $plugin, 'plugin', $activate );
+				$success = WPMUDEV_Dashboard::$upgrader->install( $plugin, 'plugin', $options );
 				// If successfully installed.
 				if ( $success ) {
 					$installed[] = array(
@@ -548,7 +703,7 @@ class WPMUDEV_Dashboard_Remote {
 					$only_wpmudev = false;
 				}
 				// Install now.
-				$success = WPMUDEV_Dashboard::$upgrader->install( $theme, 'theme' );
+				$success = WPMUDEV_Dashboard::$upgrader->install( $theme, 'theme', $options );
 				// Prepare success response.
 				if ( $success ) {
 					$installed[] = array(
@@ -1155,10 +1310,9 @@ class WPMUDEV_Dashboard_Remote {
 	}
 
 	/**
-	 * Check if a request is an admin request.
+	 * Check if an action is an admin action.
 	 *
-	 * Admin requests needs to simulate WP admin environment
-	 * before running it.
+	 * Admin actions needs to be run in WP admin environment.
 	 * Use `wpmudev_dashboard_remote_admin_actions` filter to
 	 * add new actions to the admin actions list.
 	 *
@@ -1187,80 +1341,5 @@ class WPMUDEV_Dashboard_Remote {
 		$admin_actions = apply_filters( 'wpmudev_dashboard_remote_admin_actions', $admin_actions );
 
 		return in_array( $action, $admin_actions, true );
-	}
-
-	/**
-	 * Check signature hash of the request.
-	 *
-	 * @param string $req_id         The request id as passed by Hub.
-	 * @param string $json           The full json body that hash was created on.
-	 * @param bool   $die_on_failure If set to false the function returns a bool.
-	 *
-	 * @since  4.0.0
-	 * @access protected
-	 *
-	 * @return bool True on success.
-	 */
-	protected function validate_request_hash( $req_id, $json, $die_on_failure = true ) {
-		if ( defined( 'WPMUDEV_IS_REMOTE' ) && ! WPMUDEV_IS_REMOTE ) {
-			if ( $die_on_failure ) {
-				wp_send_json_error(
-					array(
-						'code'    => 'remote_disabled',
-						'message' => __( 'Remote calls are disabled in wp-config.php', 'wpmudev' ),
-					)
-				);
-			} else {
-				return false;
-			}
-		}
-
-		if ( empty( $_SERVER['HTTP_WDP_AUTH'] ) ) {
-			if ( $die_on_failure ) {
-				wp_send_json_error(
-					array(
-						'code'    => 'missing_auth_header',
-						'message' => __( 'Missing authentication header', 'wpmudev' ),
-					)
-				);
-			} else {
-				return false;
-			}
-		}
-
-		// phpcs:ignore
-		$hash = $_SERVER['HTTP_WDP_AUTH'];
-
-		// Validate auth hash.
-		$is_valid = $this->validate_hash( $hash, $req_id, $json );
-
-		if ( ! $is_valid && $die_on_failure ) {
-			wp_send_json_error(
-				array(
-					'code'    => 'incorrect_auth',
-					'message' => __( 'Incorrect authentication', 'wpmudev' ),
-				)
-			);
-		}
-
-		// Check nonce to prevent replay attacks.
-		if ( ! $this->validate_nonce( $req_id ) ) {
-			if ( $die_on_failure ) {
-				wp_send_json_error(
-					array(
-						'code'    => 'nonce_failed',
-						'message' => __( 'Nonce check failed', 'wpmudev' ),
-					)
-				);
-			} else {
-				return false;
-			}
-		}
-
-		if ( ! defined( 'WPMUDEV_IS_REMOTE' ) ) {
-			define( 'WPMUDEV_IS_REMOTE', $is_valid );
-		}
-
-		return $is_valid;
 	}
 }

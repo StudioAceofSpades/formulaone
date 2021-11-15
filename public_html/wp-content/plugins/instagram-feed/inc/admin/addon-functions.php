@@ -12,17 +12,17 @@ function sbi_deactivate_addon() {
 	check_ajax_referer( 'sbi-admin', 'nonce' );
 
 	// Check for permissions.
-	if ( ! current_user_can( 'manage_instagram_feed_options' ) ) {
+	if ( ! current_user_can( 'deactivate_plugins' ) ) {
 		wp_send_json_error();
 	}
 
 	$type = 'addon';
 	if ( ! empty( $_POST['type'] ) ) {
-		$type = sanitize_key( $_POST['type'] );
+		$type = sanitize_key( wp_unslash( $_POST['type'] ) );
 	}
 
 	if ( isset( $_POST['plugin'] ) ) {
-		deactivate_plugins( $_POST['plugin'] );
+		deactivate_plugins( wp_unslash( $_POST['plugin'] ) );
 
 		if ( 'plugin' === $type ) {
 			wp_send_json_success( esc_html__( 'Plugin deactivated.', 'instagram-feed' ) );
@@ -46,18 +46,18 @@ function sbi_activate_addon() {
 	check_ajax_referer( 'sbi-admin', 'nonce' );
 
 	// Check for permissions.
-	if ( ! current_user_can( 'manage_instagram_feed_options' ) ) {
-		wp_send_json_error();
+	if ( ! current_user_can( 'activate_plugins' ) ) {
+		wp_send_json_error(esc_html__( 'Cant deactivate.', 'instagram-feed' ));
 	}
 
 	if ( isset( $_POST['plugin'] ) ) {
 
 		$type = 'addon';
 		if ( ! empty( $_POST['type'] ) ) {
-			$type = sanitize_key( $_POST['type'] );
+			$type = sanitize_key( wp_unslash( $_POST['type'] ) );
 		}
 
-		$activate = activate_plugins( $_POST['plugin'] );
+		$activate = activate_plugins( wp_unslash( $_POST['plugin'] ) );
 
 		if ( ! is_wp_error( $activate ) ) {
 			if ( 'plugin' === $type ) {
@@ -83,7 +83,7 @@ function sbi_install_addon() {
 	check_ajax_referer( 'sbi-admin', 'nonce' );
 
 	// Check for permissions.
-	if ( ! current_user_can( 'manage_instagram_feed_options' ) ) {
+	if ( ! current_user_can( 'install_plugins' ) ) {
 		wp_send_json_error();
 	}
 
@@ -134,7 +134,7 @@ function sbi_install_addon() {
 		wp_send_json_error( $error );
 	}
 
-	$installer->install( $_POST['plugin'] ); // phpcs:ignore
+	$installer->install( esc_url_raw( wp_unslash( $_POST['plugin'] ) ) );
 
 	// Flush the cache and return the newly installed plugin basename.
 	wp_cache_flush();
@@ -145,7 +145,7 @@ function sbi_install_addon() {
 
 		$type = 'addon';
 		if ( ! empty( $_POST['type'] ) ) {
-			$type = sanitize_key( $_POST['type'] );
+			$type = sanitize_key( wp_unslash( $_POST['type'] ) );
 		}
 
 		// Activate the plugin silently.

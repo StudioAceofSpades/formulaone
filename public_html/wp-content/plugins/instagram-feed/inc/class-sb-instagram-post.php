@@ -52,6 +52,13 @@ class SB_Instagram_Post
 	private $resized_image_array;
 
 	/**
+	 * @var object|SB_Instagram_Data_Encryption
+	 *
+	 * @since 5.14.5
+	 */
+	private $encryption;
+
+	/**
 	 * SB_Instagram_Post constructor.
 	 *
 	 * @param string $instagram_post_id from the Instagram API
@@ -68,6 +75,8 @@ class SB_Instagram_Post
 		$this->images_done = ! empty( $feed_id_match ) && isset( $feed_id_match[0]['images_done'] ) ? $feed_id_match[0]['images_done'] === '1' : 0;
 
 		$this->instagram_post_id = $instagram_post_id;
+
+		$this->encryption = new SB_Instagram_Data_Encryption();
 	}
 
 	/**
@@ -151,7 +160,7 @@ class SB_Instagram_Post
 			"'" . esc_sql( $parsed_data['id'] ) . "'",
 			"'" . esc_sql( $timestamp ) . "'",
 			"'" . esc_sql( $timestamp ) . "'",
-			"'" . esc_sql( sbi_json_encode( $this->instagram_api_data ) ) . "'",
+			"'" . esc_sql( $this->encryption->encrypt( sbi_json_encode( $this->instagram_api_data ) ) ) . "'",
 			"'pending'",
 			"'pending'",
 			0,
@@ -197,6 +206,8 @@ class SB_Instagram_Post
 	 *                custom sizes in the future
 	 */
 	public function resize_and_save_image( $image_sizes, $upload_dir, $upload_url ) {
+		$sbi_statuses_option = get_option( 'sbi_statuses', array() );
+
 		if ( isset( $this->instagram_api_data['id'] ) ) {
 			$image_source_set    = SB_Instagram_Parse::get_media_src_set( $this->instagram_api_data );
 			$account_type        = SB_Instagram_Parse::get_account_type( $this->instagram_api_data );
@@ -238,6 +249,24 @@ class SB_Instagram_Post
 					$this_image_file_name = $new_file_name . $suffix . '.jpg';
 
 					$image_editor = wp_get_image_editor( $file_name );
+
+					// If there is an error then lets try a fallback approach
+					if ( is_wp_error( $image_editor ) ) {
+
+						// Gives us access to the download_url() and wp_handle_sideload() functions.
+						require_once( ABSPATH . 'wp-admin/includes/file.php' );
+
+						$timeout_seconds = 5;
+
+						// Download file to temp dir.
+						$temp_file = download_url( $file_name, $timeout_seconds );
+
+						$image_editor = wp_get_image_editor( $temp_file );
+
+						global $sb_instagram_posts_manager;
+						$details =  __( 'Using backup editor method.', 'instagram-feed' ) . ' ' . $file_name;
+						$sb_instagram_posts_manager->add_error( 'image_editor', $details );
+					}
 
 					// not uncommon for the image editor to not work using it this way
 					if ( ! is_wp_error( $image_editor ) ) {
@@ -357,7 +386,7 @@ class SB_Instagram_Post
 		}
 
 		$to_update = array(
-			'json_data' => sbi_json_encode( $this->instagram_api_data )
+			'json_data' => $this->encryption->encrypt( sbi_json_encode( $this->instagram_api_data ) )
 		);
 
 		if ( $update_last_requested ) {

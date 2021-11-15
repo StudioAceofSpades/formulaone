@@ -54,7 +54,8 @@ class SB_Instagram_Posts_Manager
 				'upload_dir' => array(),
 				'accounts' => array(),
 				'error_log' => array(),
-				'action_log' => array()
+				'action_log' => array(),
+				'revoked' => array()
 			);
 		}
 
@@ -121,8 +122,18 @@ class SB_Instagram_Posts_Manager
 			$connection_details['critical'] = false;
 			if ( isset( $details['error']['code'] ) ) {
 				$connection_details['error_id'] = $details['error']['code'];
+
+
 				if ( $this->is_critical_error( $details ) ) {
 					$connection_details['critical'] = true;
+				}
+
+				if ( $this->is_app_permission_related( $details ) ) {
+					if ( ! in_array( $connected_account['user_id'], $this->errors['revoked'], true ) ) {
+						$this->errors['revoked'][] = $connected_account['user_id'];
+					}
+
+					$this->delete_platform_data( $connected_account );
 				}
 			} elseif ( isset( $details['response'] ) && is_wp_error( $details['response'] ) ) {
 				foreach ( $details['response']->errors as $key => $item ) {
@@ -262,10 +273,42 @@ class SB_Instagram_Posts_Manager
 		$critical_codes = array(
 			803, // ID doesn't exist
 			100, // access token or permissions
+			190, // access token or permissions
 			10, // app permissions or scopes
 		);
 
 		return in_array( $error_code, $critical_codes, true );
+	}
+
+	/**
+	 * Should clear platform data
+	 *
+	 * @param $details
+	 *
+	 * @return bool
+	 *
+	 * @since 2.7/5.10
+	 */
+	public function is_app_permission_related( $details ) {
+		$error_code = (int)$details['error']['code'];
+		$error_subcode = isset( $details['error']['error_subcode'] ) ? (int)$details['error']['error_subcode'] : 0;
+
+		$critical_codes = array(
+			190, // access token or permissions
+		);
+
+		$critical_subcodes = array(
+			458, // access token or permissions
+		);
+
+		if ( in_array( $error_code, $critical_codes, true ) ) {
+			if ( strpos( $details['error']['message'], 'user has not authorized application' ) !== false ) {
+				return true;
+			}
+			return in_array( $error_subcode, $critical_subcodes, true );
+		}
+
+		return false;
 	}
 
 	/**
@@ -479,21 +522,20 @@ class SB_Instagram_Posts_Manager
 	 * @since 2.0/5.0
 	 */
 	public function does_resizing_tables_exist() {
-        global $wpdb;
+		global $wpdb;
 
-        $feeds_posts_table_name = esc_sql( $wpdb->prefix . SBI_INSTAGRAM_FEEDS_POSTS );
-        $resizing_key = "sbi_resizing_exists";
+		$table_name = esc_sql( $wpdb->prefix . SBI_INSTAGRAM_FEEDS_POSTS );
+		$resizing_key = "sbi_resizing_exists";
 
-        $sbi_resizing_cache = wp_cache_get( $resizing_key );
+		$sbi_resizing_cache = wp_cache_get( $resizing_key );
 
 		if ( false === $sbi_resizing_cache ) {
-			global $wpdb;
 
-			if ( $wpdb->get_var( "show tables like '$feeds_posts_table_name'" ) == $feeds_posts_table_name ) {
+			if ( $wpdb->get_var( "show tables like '$table_name'" ) == $table_name ) {
 				wp_cache_set( $resizing_key, true );
-            } else {
-                wp_cache_set( $resizing_key, false );
-            }
+			} else {
+				wp_cache_set( $resizing_key, false );
+			}
 		}
 
 		return $sbi_resizing_cache;
@@ -630,6 +672,12 @@ class SB_Instagram_Posts_Manager
 			if ( $type === 'connection' ) {
 				if ( $this->remove_connected_account_error( $connected_account, 'api', false ) ) {
 					$this->add_action_log( 'Cleared connected account error ' . $connected_account['username'] . '.' );
+				}
+			}
+
+			if ( ! empty( $this->errors['revoked'] ) ) {
+				if (($key = array_search($connected_account['user_id'], $this->errors['revoked'])) !== false) {
+					unset($this->errors['revoked'][$key]);
 				}
 			}
 
@@ -1074,4 +1122,57 @@ class SB_Instagram_Posts_Manager
 
 		return false;
 	}
+
+	/**
+	 * Whether or not there was a platform data clearing error
+	 *
+	 * @return bool
+	 */
+	public function was_app_permission_related_error() {
+		return ! empty( $this->errors['revoked'] );
+	}
+
+	public function get_app_permission_related_error_ids() {
+		return $this->errors['revoked'];
+	}
+
+
+	/**
+	 * Delete any data associated with the Instagram API and the
+	 * connected account being deleted.
+	 *
+	 * @param $to_delete_connected_account
+	 */
+	public function delete_platform_data( $to_delete_connected_account ) {
+
+		$are_other_business_accounts = false;
+		$all_connected_accounts = SB_Instagram_Connected_Account::get_all_connected_accounts();
+
+		$to_update = array();
+		foreach ( $all_connected_accounts as $connected_account ) {
+			if ( (int)$connected_account['user_id'] !== (int)$to_delete_connected_account['user_id'] ) {
+				$to_update[ $connected_account['user_id'] ] = $connected_account;
+
+				if ( isset( $connected_account['type'] )
+				     && $connected_account['type'] === 'business' ) {
+					$are_other_business_accounts = true;
+				}
+			}
+		}
+
+		SB_Instagram_Connected_Account::update_connected_accounts( $to_update );
+
+		$manager = new SB_Instagram_Data_Manager();
+
+		$manager->delete_caches();
+		$manager->delete_comments_data();
+
+		if ( empty( $to_update ) || ! $are_other_business_accounts ) {
+			$manager->delete_hashtag_data();
+		} else {
+			$manager->delete_non_hashtag_sbi_instagram_posts( $to_delete_connected_account['username'] );
+		}
+	}
+
+
 }

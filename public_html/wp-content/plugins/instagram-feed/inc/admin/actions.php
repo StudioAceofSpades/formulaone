@@ -21,6 +21,9 @@ function sb_instagram_admin_style() {
 add_action( 'admin_enqueue_scripts', 'sb_instagram_admin_style' );
 
 function sb_instagram_admin_scripts() {
+	if ( ! current_user_can( 'manage_instagram_feed_options' ) ) {
+		return;
+	}
 	wp_enqueue_script( 'sb_instagram_admin_js', SBI_PLUGIN_URL . 'js/sb-instagram-admin-2-2.js', array(), SBIVER );
 	wp_localize_script( 'sb_instagram_admin_js', 'sbiA', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -93,16 +96,14 @@ function sbi_add_settings_link( $links, $file ) {
  * retrieved with the big blue button
  */
 function sbi_auto_save_tokens() {
-	$nonce = $_POST['sbi_nonce'];
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
 
-    wp_cache_delete ( 'alloptions', 'options' );
-
     $options = sbi_get_database_settings();
-    $new_access_token = isset( $_POST['access_token'] ) ? sanitize_text_field( $_POST['access_token'] ) : false;
+    $new_access_token = isset( $_POST['access_token'] ) ? sanitize_text_field( wp_unslash( $_POST['access_token'] ) ) : false;
     $split_token = $new_access_token ? explode( '.', $new_access_token ) : array();
     $new_user_id = isset( $split_token[0] ) ? $split_token[0] : '';
 
@@ -148,10 +149,10 @@ function sbi_delete_local_avatar( $username ) {
 }
 
 function sbi_connect_business_accounts() {
-	$nonce = $_POST['sbi_nonce'];
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
 
 	$accounts = isset( $_POST['accounts'] ) ? json_decode( stripslashes( $_POST['accounts'] ), true ) : false;
@@ -177,18 +178,18 @@ function sbi_connect_business_accounts() {
 add_action( 'wp_ajax_sbi_connect_business_accounts', 'sbi_connect_business_accounts' );
 
 function sbi_auto_save_id() {
-	$nonce = $_POST['sbi_nonce'];
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
-	if ( current_user_can( 'edit_posts' ) && isset( $_POST['id'] ) ) {
-		$options = get_option( 'sb_instagram_settings', array() );
 
-		$options['sb_instagram_user_id'] = array( sanitize_text_field( $_POST['id'] ) );
+    $options = get_option( 'sb_instagram_settings', array() );
 
-		update_option( 'sb_instagram_settings', $options );
-	}
+    $options['sb_instagram_user_id'] = array( sanitize_text_field( wp_unslash( $_POST['id'] ) ) );
+
+    update_option( 'sb_instagram_settings', $options );
+
 	die();
 }
 add_action( 'wp_ajax_sbi_auto_save_id', 'sbi_auto_save_id' );
@@ -213,8 +214,14 @@ function sbi_formatted_error( $response ) {
 }
 
 function sbi_test_token() {
-	$access_token = isset( $_POST['access_token'] ) ? trim( sanitize_text_field( $_POST['access_token'] ) ) : false;
-	$account_id = isset( $_POST['account_id'] ) ? sanitize_text_field( $_POST['account_id'] ) : false;
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
+
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
+	}
+
+	$access_token = isset( $_POST['access_token'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['access_token'] ) ) ) : false;
+	$account_id = isset( $_POST['account_id'] ) ? sanitize_text_field( wp_unslash( $_POST['account_id'] ) ) : false;
 
 	$return = sbi_connect_new_account( $access_token, $account_id );
 
@@ -224,12 +231,12 @@ function sbi_test_token() {
 add_action( 'wp_ajax_sbi_test_token', 'sbi_test_token' );
 
 function sbi_delete_account() {
-	$nonce = $_POST['sbi_nonce'];
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
-	$account_id = isset( $_POST['account_id'] ) ? sanitize_text_field( $_POST['account_id'] ) : false;
+	$account_id = isset( $_POST['account_id'] ) ? sanitize_text_field( wp_unslash( $_POST['account_id'] ) ) : false;
 
 	sbi_do_account_delete( $account_id );
 
@@ -246,9 +253,11 @@ function sbi_account_data_for_token( $access_token ) {
 	);
 	$url = 'https://api.instagram.com/v1/users/self/?access_token=' . sbi_maybe_clean( $access_token );
 	$args = array(
-		'timeout' => 60,
-		'sslverify' => false
+		'timeout' => 20
 	);
+	if ( version_compare( get_bloginfo( 'version' ), '3.7' , '<' ) ) {
+		$args['sslverify'] = false;
+	}
 	$result = wp_remote_get( $url, $args );
 
 	if ( ! is_wp_error( $result ) ) {
@@ -281,7 +290,7 @@ function sbi_do_account_delete( $account_id ) {
 	$connected_accounts =  isset( $options['connected_accounts'] ) ? $options['connected_accounts'] : array();
 	global $sb_instagram_posts_manager;
 	$sb_instagram_posts_manager->reset_api_errors();
-	wp_cache_delete ( 'alloptions', 'options' );
+
 	$username = $connected_accounts[ $account_id ]['username'];
 	$sb_instagram_posts_manager->add_action_log( 'Deleting account ' . $username );
 
@@ -307,6 +316,18 @@ function sbi_do_account_delete( $account_id ) {
 
 	update_option( 'sb_instagram_settings', $options );
 }
+
+function sbi_delete_platform_data_listener() {
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
+
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
+	}
+	sbi_delete_all_platform_data();
+
+	wp_send_json_success();
+}
+add_action( 'wp_ajax_sbi_delete_platform_data', 'sbi_delete_platform_data_listener' );
 
 function sbi_connect_new_account( $access_token, $account_id ) {
 	$split_id = explode( ' ', trim( $account_id ) );
@@ -341,23 +362,55 @@ function sbi_connect_new_account( $access_token, $account_id ) {
 }
 
 function sbi_no_js_connected_account_management() {
-	if ( ! current_user_can( 'manage_instagram_feed_options' ) ) {
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
 		return;
 	}
 	if ( isset( $_POST['sb_manual_at'] ) ) {
-		$access_token = isset( $_POST['sb_manual_at'] ) ? trim( sanitize_text_field( $_POST['sb_manual_at'] ) ) : false;
-		$account_id = isset( $_POST['sb_manual_account_id'] ) ? sanitize_text_field( $_POST['sb_manual_account_id'] ) : false;
+		$access_token = isset( $_POST['sb_manual_at'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['sb_manual_at'] ) ) ) : false;
+		$account_id = isset( $_POST['sb_manual_account_id'] ) ? sanitize_text_field( wp_unslash( $_POST['sb_manual_account_id'] ) ) : false;
 		if ( ! $access_token || ! $account_id ) {
 			return;
 		}
 		sbi_connect_new_account( $access_token, $account_id );
 	} elseif ( isset( $_GET['disconnect'] ) && isset( $_GET['page'] ) && $_GET['page'] === 'sb-instagram-feed' ) {
-		$account_id = sanitize_text_field( $_GET['disconnect'] );
+		$account_id = sanitize_text_field( wp_unslash( $_GET['disconnect'] ) );
 		sbi_do_account_delete( $account_id );
 	}
 
 }
 add_action( 'admin_init', 'sbi_no_js_connected_account_management' );
+
+add_action('admin_notices', 'sbi_admin_ssl_notice');
+function sbi_admin_ssl_notice() {
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		return;
+	}
+	if ( isset( $_GET['page'] ) && in_array( $_GET['page'], array( 'sb-instagram-feed' )) ) {
+		global $current_user;
+		$user_id = $current_user->ID;
+		$was_dismissed = get_user_meta($user_id, 'sbi_ignore_openssl', true);
+
+		if ( ! $was_dismissed && ! sbi_doing_openssl() ) : ?>
+            <div class="notice notice-warning is-dismissible sbi-admin-notice">
+                <p><?php _e( sprintf( 'Instagram Feed recommends Open SSL for encrypting Instagram platform data in your database. Contact your host or follow %1$sthese%2$s directions.', '<a href="https://www.php.net/manual/en/openssl.installation.php" target="_blank">', '</a>' ), 'instagram-feed' ); ?> <a href="<?php echo admin_url( 'admin.php?page=sb-instagram-feed&openssldismiss=1' ); ?>"><?php _e('Dismiss', 'instagram-feed' ); ?></a></p>
+            </div>
+		<?php endif;
+	}
+
+}
+
+add_action( 'admin_init', 'sbi_check_notice_dismiss' );
+function sbi_check_notice_dismiss() {
+    if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		return;
+	}
+	global $current_user;
+	$user_id = $current_user->ID;
+
+	if ( isset( $_GET['openssldismiss'] ) ) {
+		add_user_meta($user_id, 'sbi_ignore_openssl', 'true', true);
+	}
+}
 
 function sbi_get_connected_accounts_data( $sb_instagram_at ) {
 	$sbi_options = get_option( 'sb_instagram_settings' );
@@ -482,6 +535,8 @@ function sbi_connect_basic_account( $new_account_details ) {
 		$accounts_to_save[ $new_account_details['user_id'] ]['private'] = true;
 	}
 
+	$accounts_to_save[ $new_account_details['user_id'] ] = SB_Instagram_Connected_Account::encrypt_connected_account_tokens( $accounts_to_save[ $new_account_details['user_id'] ] );
+
 	$options['connected_accounts'] = $accounts_to_save;
 	$options['sb_instagram_user_id'] = $ids_to_save;
 
@@ -556,9 +611,11 @@ function sbi_matches_existing_personal( $new_account_details ) {
 
 function sbi_business_account_request( $url, $account, $remove_access_token = true ) {
 	$args = array(
-		'timeout' => 60,
-		'sslverify' => false
+		'timeout' => 20
 	);
+	if ( version_compare( get_bloginfo( 'version' ), '3.7' , '<' ) ) {
+		$args['sslverify'] = false;
+	}
 	$result = wp_remote_get( $url, $args );
 
 	if ( ! is_wp_error( $result ) ) {
@@ -570,9 +627,14 @@ function sbi_business_account_request( $url, $account, $remove_access_token = tr
 }
 
 function sbi_after_connection() {
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
+	}
+	
 	if ( isset( $_POST['access_token'] ) ) {
-		$access_token = sanitize_text_field( $_POST['access_token'] );
+		$access_token = sanitize_text_field( wp_unslash( $_POST['access_token'] ) );
 		$account_info = 	sbi_account_data_for_token( $access_token );
 		echo sbi_json_encode( $account_info );
 	}
@@ -581,14 +643,16 @@ function sbi_after_connection() {
 }
 add_action( 'wp_ajax_sbi_after_connection', 'sbi_after_connection' );
 
-function sbi_get_business_account_connection_modal($sb_instagram_user_id) {
-	$access_token = sbi_maybe_clean(urldecode($_GET['sbi_access_token']));
+function sbi_get_business_account_connection_modal( $sb_instagram_user_id ) {
+    $access_token = sbi_maybe_clean(urldecode( ( $_GET['sbi_access_token'] ) ));
 	//
 	$url = 'https://graph.facebook.com/me/accounts?fields=instagram_business_account,access_token&limit=500&access_token='.$access_token;
 	$args = array(
-		'timeout' => 60,
-		'sslverify' => false
+		'timeout' => 20
 	);
+	if ( version_compare( get_bloginfo( 'version' ), '3.7' , '<' ) ) {
+		$args['sslverify'] = false;
+	}
 	$result = wp_remote_get( $url, $args );
 	$pages_data = '{}';
 	if ( ! is_wp_error( $result ) ) {
@@ -645,9 +709,11 @@ function sbi_get_business_account_connection_modal($sb_instagram_user_id) {
 							$instagram_account_url = 'https://graph.facebook.com/'.$instagram_business_id.'?fields=name,username,profile_picture_url&access_token='.$access_token;
 
 							$args = array(
-								'timeout' => 60,
-								'sslverify' => false
+								'timeout' => 20
 							);
+							if ( version_compare( get_bloginfo( 'version' ), '3.7' , '<' ) ) {
+								$args['sslverify'] = false;
+							}
 							$result = wp_remote_get( $instagram_account_url, $args );
 							$instagram_account_info = '{}';
 							if ( ! is_wp_error( $result ) ) {
@@ -696,10 +762,10 @@ function sbi_get_business_account_connection_modal($sb_instagram_user_id) {
 }
 
 function sbi_get_personal_connection_modal( $connected_accounts, $action_url = 'admin.php?page=sb-instagram-feed' ) {
-	$access_token = sanitize_text_field( $_GET['sbi_access_token'] );
-	$account_type = sanitize_text_field( $_GET['sbi_account_type'] );
-	$user_id = sanitize_text_field( $_GET['sbi_id'] );
-	$user_name = sanitize_text_field( $_GET['sbi_username'] );
+	$access_token = sanitize_text_field( wp_unslash( $_GET['sbi_access_token'] ) );
+	$account_type = sanitize_text_field( wp_unslash( $_GET['sbi_account_type'] ) );
+	$user_id = sanitize_text_field( wp_unslash( $_GET['sbi_id'] ) );
+	$user_name = sanitize_text_field( wp_unslash( $_GET['sbi_username'] ) );
 	$expires_in = (int)$_GET['sbi_expires_in'];
 	$expires_timestamp = time() + $expires_in;
 
@@ -756,12 +822,12 @@ function sbi_account_type_display( $type, $private = false ) {
 }
 
 function sbi_clear_backups() {
-	$nonce = isset( $_POST['sbi_nonce'] ) ? sanitize_text_field( $_POST['sbi_nonce'] ) : '';
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
-
+	
 	//Delete all transients
 	global $wpdb;
 	$table_name = $wpdb->prefix . "options";
@@ -786,7 +852,12 @@ function sbi_clear_backups() {
 add_action( 'wp_ajax_sbi_clear_backups', 'sbi_clear_backups' );
 
 function sbi_reset_resized() {
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
+	}
+	
 	global $sb_instagram_posts_manager;
 	$sb_instagram_posts_manager->delete_all_sbi_instagram_posts();
 	delete_option( 'sbi_top_api_calls' );
@@ -800,6 +871,12 @@ function sbi_reset_resized() {
 add_action( 'wp_ajax_sbi_reset_resized', 'sbi_reset_resized' );
 
 function sbi_reset_log() {
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
+
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
+	}
+	
 	global $sb_instagram_posts_manager;
 
 	$sb_instagram_posts_manager->remove_all_errors();
@@ -811,6 +888,12 @@ function sbi_reset_log() {
 add_action( 'wp_ajax_sbi_reset_log', 'sbi_reset_log' );
 
 function sbi_reset_api_errors() {
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
+
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
+	}
+	
 	global $sb_instagram_posts_manager;
 	$sb_instagram_posts_manager->add_action_log( 'View feed and retry button clicked.' );
 
@@ -823,10 +906,10 @@ function sbi_reset_api_errors() {
 add_action( 'wp_ajax_sbi_reset_api_errors', 'sbi_reset_api_errors' );
 
 function sbi_lite_dismiss() {
-	$nonce = isset( $_POST['sbi_nonce'] ) ? sanitize_text_field( $_POST['sbi_nonce'] ) : '';
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
 
 	set_transient( 'instagram_feed_dismiss_lite', 'dismiss', 1 * WEEK_IN_SECONDS );
@@ -837,7 +920,9 @@ add_action( 'wp_ajax_sbi_lite_dismiss', 'sbi_lite_dismiss' );
 
 add_action('admin_notices', 'sbi_admin_error_notices');
 function sbi_admin_error_notices() {
-
+	if ( ! current_user_can( 'manage_instagram_feed_options' ) ) {
+		return;
+	}
 	if ( isset( $_GET['page'] ) && in_array( $_GET['page'], array( 'sb-instagram-feed' )) ) {
 
 		global $sb_instagram_posts_manager;
@@ -865,7 +950,16 @@ function sbi_admin_error_notices() {
 				if ( $error_page ) {
 					echo '<a href="' . get_the_permalink( $error_page ) . '" class="sbi-clear-errors-visit-page sbi-space-left button button-secondary">' . __( 'View Feed and Retry', 'instagram-feed' ) . '</a>';
 				}
-				?>
+				if ( $sb_instagram_posts_manager->was_app_permission_related_error() ) :
+					$accounts_revoked = $sb_instagram_posts_manager->get_app_permission_related_error_ids();
+					if ( count( $accounts_revoked ) > 1 ) {
+						$accounts_revoked = implode( ', ', $accounts_revoked );
+					} else {
+						$accounts_revoked = $accounts_revoked[0];
+					}
+					?>
+                    <p class="sbi_notice"><?php echo sprintf( __('Instagram Feed related data for the account(s) %s was removed due to permission for the Smash Balloon App on Facebook or Instagram being revoked.', 'instagram-feed'), $accounts_revoked ); ?></p>
+				<?php endif;?>
             </div>
 		<?php endif;
 	}
@@ -907,15 +1001,6 @@ function sbi_get_user_names_of_personal_accounts_not_also_already_updated() {
 	}
 
 	return array();
-}
-
-function sbi_get_current_time() {
-	$current_time = time();
-
-	// where to do tests
-	// $current_time = strtotime( 'November 25, 2020' ) + 1;
-
-	return $current_time;
 }
 
 // generates the html for the admin notices
@@ -997,6 +1082,9 @@ add_action( 'admin_print_scripts', 'sbi_admin_hide_unrelated_notices' );
 /* Usage */
 add_action( 'admin_notices', 'sbi_usage_opt_in' );
 function sbi_usage_opt_in() {
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		return;
+	}
 	if ( isset( $_GET['trackingdismiss'] ) ) {
 		$usage_tracking = get_option( 'sbi_usage_tracking', array( 'last_send' => 0, 'enabled' => false ) );
 
@@ -1036,10 +1124,10 @@ function sbi_usage_opt_in() {
 }
 
 function sbi_usage_opt_in_or_out() {
-	$nonce = isset( $_POST['sbi_nonce'] ) ? sanitize_text_field( $_POST['sbi_nonce'] ) : '';
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
 
 	$usage_tracking = sbi_get_option( 'sbi_usage_tracking', array( 'last_send' => 0, 'enabled' => false ) );
@@ -1053,12 +1141,12 @@ function sbi_usage_opt_in_or_out() {
 add_action( 'wp_ajax_sbi_usage_opt_in_or_out', 'sbi_usage_opt_in_or_out' );
 
 function sbi_oembed_disable() {
-	$nonce = isset( $_POST['sbi_nonce'] ) ? sanitize_text_field( $_POST['sbi_nonce'] ) : '';
+	check_ajax_referer( 'sbi_nonce', 'sbi_nonce' );
 
-	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
-		die ( 'You did not do this the right way!' );
+	if ( ! sbi_current_user_can( 'manage_instagram_feed_options' ) ) {
+		wp_send_json_error();
 	}
-
+	
 	$oembed_settings = get_option( 'sbi_oembed_token', array() );
 	$oembed_settings['access_token'] = '';
 	$oembed_settings['disabled'] = true;

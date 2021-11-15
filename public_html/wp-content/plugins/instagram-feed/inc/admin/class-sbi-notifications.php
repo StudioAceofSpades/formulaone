@@ -138,7 +138,13 @@ class SBI_Notifications {
 	 * @return array
 	 */
 	public function fetch_feed() {
-		$res = wp_remote_get( $this->source_url() );
+		$args = array(
+			'timeout' => 20
+		);
+		if ( version_compare( get_bloginfo( 'version' ), '3.7' , '<' ) ) {
+			$args['sslverify'] = false;
+		}
+		$res = wp_remote_get( $this->source_url(), $args );
 
 		if ( is_wp_error( $res ) ) {
 			return array();
@@ -172,6 +178,10 @@ class SBI_Notifications {
 		$option = $this->get_option();
 
 		foreach ( $notifications as $notification ) {
+			// Ignore if max wp version detected
+			if ( ! empty( $notification['maxwpver'] ) && version_compare( get_bloginfo( 'version' ), $notification['maxwpver'] , '>=' ) ) {
+				continue;
+			}
 
 			// The message and license should never be empty, if they are, ignore.
 			if ( empty( $notification['content'] ) || empty( $notification['type'] ) ) {
@@ -226,6 +236,11 @@ class SBI_Notifications {
 
 		// Remove notfications that are not active.
 		foreach ( $notifications as $key => $notification ) {
+			// Ignore if max wp version detected
+			if ( ! empty( $notification['maxwpver'] ) && version_compare( get_bloginfo( 'version' ), $notification['maxwpver'] , '>=' ) ) {
+				unset( $notifications[ $key ] );
+			}
+
 			if ( ( ! empty( $notification['start'] ) && sbi_get_current_time() < strtotime( $notification['start'] ) )
 			     || ( ! empty( $notification['end'] ) && sbi_get_current_time() > strtotime( $notification['end'] ) ) ) {
 				unset( $notifications[ $key ] );

@@ -21,7 +21,12 @@ class SB_Instagram_Connected_Account {
 	 */
 	public $account;
 
-	public function construct( $search_term_or_account, $search_type = 'user' ) {
+	/**
+	 * @since 5.12.4
+	 */
+	const ALGORITHM = 'AES-256-CBC';
+
+	public function __construct( $search_term_or_account, $search_type = 'user' ) {
 		if ( is_array( $search_term_or_account ) ) {
 			$this->account = $search_term_or_account;
 		} else {
@@ -120,5 +125,119 @@ class SB_Instagram_Connected_Account {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Encrypt string (access token) with an included initialization vector
+	 *
+	 * @param string $access_token
+	 * @param string $initialization_vector
+	 *
+	 * @return string
+	 *
+	 * @since 5.12.4
+	 */
+	public static function encrypt_access_token( $access_token ) {
+		$encryption = new SB_Instagram_Data_Encryption();
+
+		return $encryption->encrypt( $access_token );
+	}
+
+	/**
+	 * Attempt to decrypt access token
+	 *
+	 * @param string $access_token
+	 * @param string $initialization_vector
+	 *
+	 * @return string
+	 *
+	 * @since 5.12.4
+	 */
+	public static function decrypt_access_token( $access_token ) {
+		$encryption = new SB_Instagram_Data_Encryption();
+
+		return $encryption->decrypt( $access_token );
+	}
+
+	/**
+	 * Encrypt access tokens in a connected account and return it
+	 *
+	 * @param array $connected_account
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 *
+	 * @since 5.12.4
+	 */
+	public static function encrypt_connected_account_tokens( $connected_account ) {
+		if ( ! self::decrypt_access_token( $connected_account['access_token'] ) ) {
+			$encrypted_access_token = self::encrypt_access_token( $connected_account['access_token'] );
+			$connected_account['access_token'] = $encrypted_access_token;
+
+			if ( isset( $connected_account['page_access_token'] ) ) {
+				$encrypted_page_access_token = self::encrypt_access_token( $connected_account['page_access_token'] );
+
+				$connected_account['page_access_token'] = $encrypted_page_access_token;
+			}
+
+			$connected_account['wp_user'] = get_current_user_id();
+		}
+
+		return $connected_account;
+	}
+
+	/**
+	 * Encrypt all access tokens in all connected accounts. Used for
+	 * a one-time update.
+	 *
+	 * @return array
+	 * @throws Exception
+	 *
+	 * @since 5.12.4
+	 */
+	public static function encrypt_all_access_tokens() {
+		$options = sbi_get_database_settings();
+		$connected_accounts =  isset( $options['connected_accounts'] ) ? $options['connected_accounts'] : array();
+
+		$updated = array();
+		foreach ( $connected_accounts as $key => $connected_account ) {
+			$updated[ $key ] = $connected_account;
+
+			if ( ! self::decrypt_access_token( $connected_account['access_token'] ) ) {
+				$encrypted_access_token = self::encrypt_access_token( $connected_account['access_token'] );
+				$updated[ $key ]['access_token'] = $encrypted_access_token;
+
+				if ( isset( $connected_account['page_access_token'] ) ) {
+					$encrypted_page_access_token = self::encrypt_access_token( $connected_account['page_access_token'] );
+
+					$updated[ $key ]['page_access_token'] = $encrypted_page_access_token;
+				}
+
+				$updated[ $key ]['wp_user'] = get_current_user_id();
+			}
+		}
+
+		$options['connected_accounts'] = $updated;
+
+		update_option( 'sb_instagram_settings', $options );
+
+		return $connected_accounts;
+	}
+
+	public static function get_all_connected_accounts() {
+		$options = sbi_get_database_settings();
+		$connected_accounts =  isset( $options['connected_accounts'] ) ? $options['connected_accounts'] : array();
+
+		return $connected_accounts;
+	}
+
+	public static function update_connected_accounts( $connected_accounts ) {
+		$options = sbi_get_database_settings();
+
+		$options['connected_accounts'] = $connected_accounts;
+
+		update_option( 'sb_instagram_settings', $options );
+
+		return $connected_accounts;
 	}
 }

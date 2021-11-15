@@ -25,6 +25,8 @@
 				if (!empty($terms_arr) and is_array($terms_arr)){
 					foreach ($terms_arr as $terms) {
 
+						$terms = wp_all_import_filter_html_kses($terms);
+
 						// Apply mapping before splitting via separator symbol
 						if (! empty($post['tax_enable_mapping'][$ctx]) and !empty($post['tax_logic_mapping'][$ctx])){
 							$mapping_rules = json_decode($post['tax_mapping'][$ctx], true);

@@ -4,7 +4,7 @@
  * Plugin URI:  https://wpmudev.com/project/wpmu-dev-dashboard/
  * Description: Brings the powers of WPMU DEV directly to you. It will revolutionize how you use WordPress. Activate now!
  * Author:      WPMU DEV
- * Version:     4.11.5
+ * Version:     4.11.6
  * Author URI:  https://wpmudev.com/
  * Text Domain: wpmudev
  * Domain Path: includes/languages/
@@ -44,7 +44,7 @@ class WPMUDEV_Dashboard {
 	 *
 	 * @var string (Version number)
 	 */
-	public static $version = '4.11.5';
+	public static $version = '4.11.6';
 
 	/**
 	 * The current SUI version.
@@ -90,6 +90,14 @@ class WPMUDEV_Dashboard {
 	 * @since 4.0.0
 	 */
 	public static $site = null;
+
+	/**
+	 * Holds the ajax module.
+	 *
+	 * @var   WPMUDEV_Dashboard_Site
+	 * @since 4.11.6
+	 */
+	public static $ajax = null;
 
 	/**
 	 * Holds the UI module.
@@ -167,6 +175,7 @@ class WPMUDEV_Dashboard {
 		require_once 'shared-ui/plugin-ui.php';
 
 		require_once 'includes/class-wpmudev-dashboard-site.php';
+		require_once 'includes/class-wpmudev-dashboard-ajax.php';
 		require_once 'includes/class-wpmudev-dashboard-api.php';
 		require_once 'includes/class-wpmudev-dashboard-remote.php';
 		require_once 'includes/class-wpmudev-dashboard-sui-page-urls.php';
@@ -178,6 +187,7 @@ class WPMUDEV_Dashboard {
 
 		self::$utils      = new WPMUDEV_Dashboard_Utils();
 		self::$site       = new WPMUDEV_Dashboard_Site( __FILE__ );
+		self::$ajax       = new WPMUDEV_Dashboard_Ajax();
 		self::$api        = new WPMUDEV_Dashboard_Api();
 		self::$remote     = new WPMUDEV_Dashboard_Remote();
 		self::$notice     = new WPMUDEV_Dashboard_Message();

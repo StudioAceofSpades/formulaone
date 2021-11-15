@@ -95,7 +95,7 @@ class SB_Instagram_About {
 	public function init() {
 
 		// Check what page we are on.
-		$page = isset( $_GET['page'] ) ? $_GET['page'] : '';
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 
 		// Only load if we are actually on the settings page.
 		if ( self::SLUG !== $page ) {
@@ -134,7 +134,7 @@ class SB_Instagram_About {
 		}
 
 		// Determine the current active settings tab.
-		$this->view = ! empty( $_GET['view'] ) ? esc_html( $_GET['view'] ) : self::DEFAULT_TAB;
+		$this->view = ! empty( $_GET['view'] ) ? esc_html( wp_unslash( $_GET['view'] ) ) : self::DEFAULT_TAB;
 
 		// If the user tries to load an invalid view - fallback to About Us.
 		if (
@@ -289,7 +289,7 @@ class SB_Instagram_About {
 
 			<div class="sbi-admin-about-image sbi-admin-column-last">
 				<figure>
-					<img src="<?php echo SBI_PLUGIN_URL; ?>img/about/team.jpg" alt="<?php esc_attr_e( 'The Sbi Team photo', 'instagram-feed' ); ?>">
+					<img src="<?php echo esc_url( SBI_PLUGIN_URL . 'img/about/team.jpg' ); ?>" alt="<?php esc_attr_e( 'The Sbi Team photo', 'instagram-feed' ); ?>">
 					<figcaption>
 						<?php esc_html_e( 'The Smash Balloon Team', 'instagram-feed' ); ?><br>
 					</figcaption>
@@ -319,14 +319,14 @@ class SB_Instagram_About {
 		?>
 		<div id="sbi-admin-addons">
 			<div class="addons-container">
-                <h3><?php echo __( 'Our Other Plugins', 'instagram-feed' ); ?></h3>
+                <h3><?php esc_html_e( 'Our Other Plugins', 'instagram-feed' ); ?></h3>
 				<?php
 				foreach ( $am_plugins as $plugin => $details ) :
 
 					$plugin_data = $this->get_plugin_data( $plugin, $details, $all_plugins );
 
 					if ( $plugin === 'wpforms-lite/wpforms.php' ) {
-					    echo '<h3>' .__( 'Plugins We Recommend', 'instagram-feed' ). '</h3>';
+					    echo '<h3>' . esc_html__( 'Plugins We Recommend', 'instagram-feed' ). '</h3>';
 	                }
 
 					?>
@@ -625,7 +625,7 @@ class SB_Instagram_About {
 
         <div class="sbi-admin-about-section sbi-admin-about-section-squashed sbi-admin-about-section-post sbi-admin-columns">
             <div class="sbi-admin-column-20">
-                <img src="<?php echo SBI_PLUGIN_URL; ?>img/about/steps.png" alt="">
+                <img src="<?php echo esc_url( SBI_PLUGIN_URL . 'img/about/steps.png' ); ?>" alt="">
             </div>
             <div class="sbi-admin-column-80">
                 <h2>
@@ -644,7 +644,7 @@ class SB_Instagram_About {
 
 		<div class="sbi-admin-about-section sbi-admin-about-section-squashed sbi-admin-about-section-post sbi-admin-columns">
 			<div class="sbi-admin-column-20">
-				<img src="<?php echo SBI_PLUGIN_URL; ?>img/about/api-error.png" alt="">
+				<img src="<?php echo esc_url(  SBI_PLUGIN_URL . 'img/about/api-error.png' ); ?>" alt="">
 			</div>
 			<div class="sbi-admin-column-80">
 				<h2>

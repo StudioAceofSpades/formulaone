@@ -79,7 +79,7 @@ $database_settings = sbi_get_database_settings();
                                 <td><?php echo $display . $comma_separated; ?></td>
                                 <td>
                                     <span class="sbi-condensed-wrap"><a class="sbi-locator-more" href="JavaScript:void(0);"><?php esc_html_e( 'Show', 'instagram-feed' ); ?></a></span>
-                                    <span class="sbi-full-wrap"><?php echo $full_shortcode_string; ?></span>
+                                    <span class="sbi-full-wrap"><?php echo esc_html( $full_shortcode_string ); ?></span>
                                 </td>
                                 <td><a href="<?php echo esc_url( get_the_permalink( $result['post_id'] ) ); ?>" target="_blank" rel="noopener"><?php echo esc_html( get_the_title( $result['post_id'] ) ); ?></a></td>
                             </tr>

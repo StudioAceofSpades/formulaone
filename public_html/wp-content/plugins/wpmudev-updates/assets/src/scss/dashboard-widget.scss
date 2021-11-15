@@ -326,12 +326,16 @@
 
     > [data-panes] {
 
-      > [data-pane] {
-        display: none;
-      }
-
       + [data-tabs] {
         margin-top: 20px;
+      }
+    }
+
+    #{$prefix}-tab-content {
+      display: none;
+
+      &#{$prefix}-tab-current {
+        display: block;
       }
     }
   }
@@ -467,7 +471,7 @@
       background-color: transparent;
     }
 
-    .wpmudui-icon {
+    #{$prefix}-icon:not(#{$prefix}-period-loader) {
       right: -25px;
       position: relative;
       margin-left: -13px;
@@ -483,7 +487,6 @@
     #{$prefix}-#{$widget-prefix}-chart-empty {
       width: 100%;
       max-width: 240px;
-      display: none;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -521,11 +524,11 @@
   // Element: Chart options
   #{$prefix}-chart-options {
     margin: 0 -#{$widget-gutter};
+    overflow: hidden;
 
     button {
       width: 100%;
       cursor: pointer;
-      display: none;
       margin: 0 0 $widget-spacing;
       padding: 5px $widget-gutter 5px #{$widget-gutter + $widget-chop--border-width};
       border: 0;

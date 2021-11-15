@@ -24,6 +24,7 @@
 			this.initBrandingLinkLogo()
 			this.showAlertNotice()
 			this.initSitesActions()
+			this.overflowTabsShowArrowRight()
 		},
 		attachEvents: function() {
 			var self = this
@@ -37,7 +38,6 @@
 				tabWrapper.find('div[data-panes=""] div').removeClass('active')
 				tabWrapper.find('div[data-panes=""] div[data-index="' + index + '"]').addClass('active')
 			})
-
 
 			$(window).on('hashchange', function() {
 				self.processHash()
@@ -364,6 +364,24 @@
 			}
 
 			SUI.openNotice(noticeID, message, noticeOptions)
+		},
+
+		/**
+		 * Shows right arrow to scroll tab panes in the overflown tab menu
+		 *
+		 * @since 4.11.6
+		 *
+		 * @return {void}
+		 */
+		overflowTabsShowArrowRight: function () {
+			this.$el.on('click', '.sui-side-tabs .sui-tab-item', function (e) {
+				let $parentTabsElement = $(this).closest('.sui-side-tabs')
+				let $tabsElements = $parentTabsElement.find('.sui-tabs-overflow')
+
+				$tabsElements.each(function (index, element) {
+					SUI.tabsOverflow($(element))
+				})
+			})
 		}
 	})
 

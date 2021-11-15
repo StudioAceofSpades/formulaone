@@ -32,10 +32,6 @@ $footer_nav_links = array(
 		'href' => 'https://wpmudev.com/hub2/community/',
 		'name' => __( 'Community', 'wpmudev' ),
 	),
-	array(
-		'href' => 'https://wpmudev.com/academy/',
-		'name' => __( 'Academy', 'wpmudev' ),
-	),
 );
 
 if ( 'free' === $membership_type ) {

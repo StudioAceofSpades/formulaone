@@ -299,7 +299,7 @@ class Lazy extends Abstract_Module {
 			return;
 		}
 
-		$script = "function rw() { Waypoint.refreshAll(); } window.addEventListener( 'lazybeforeunveil', rw, false); window.addEventListener( 'lazyloaded', rw, false);";
+		$script = "function rw() { Waypoint.refreshAll(); } window.addEventListener( 'lazybeforeunveil', rw, false); window.addEventListener( 'lazyloaded', rw, false);";		 		   	   	    		  
 
 		wp_add_inline_script( 'smush-lazy-load', $script );
 	}
