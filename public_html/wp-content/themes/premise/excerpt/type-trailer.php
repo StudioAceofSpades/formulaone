@@ -19,6 +19,8 @@ $slug = $post->post_name;
 
     <div class="buttons block">
         <a href="<?php the_permalink(); ?>" class="button orange-border">Learn More</a>
-        <a href="<?php bloginfo('url'); ?>/build-yours?model=<?php echo $slug; ?>" class="button orange">Build Yours</a>
+        <?php if($related = get_field('associated_buildable_trailer')):?>
+            <a href="<?php bloginfo('url'); ?>/build-yours?model=<?php echo $related[0]->post_name; ?>" class="button orange">Build Yours</a>
+        <?php endif; ?>
     </div>
 </div>

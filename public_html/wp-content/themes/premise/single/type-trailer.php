@@ -2,6 +2,8 @@
 if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) { die(); }
 if (CFCT_DEBUG) { cfct_banner(__FILE__); }
 
+$related = get_field('associated_buildable_trailer');
+
 get_header(); ?>
 
 <div id="single-trailer">
@@ -26,9 +28,11 @@ get_header(); ?>
                         the_field('introduction');
                     endif;
                     ?>
+                    <?php if($related): ?>
                     <div class="buttons left">
-                        <a href="<?php bloginfo('url'); ?>/build-yours" class="button orange">Build Yours</a>
+                        <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $related[0]->post_name; ?>" class="button orange">Build Yours</a>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <div class="col-xl col-lg-5 d-none d-lg-block">
                     <?php

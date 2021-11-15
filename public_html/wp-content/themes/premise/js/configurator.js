@@ -110,7 +110,13 @@
     }
     function initSummaryControls() {
         setBasePrice();
-
+        
+   		var trailer = getParameterByName('model');
+        console.log(trailer);
+        if(!trailer) {
+            console.log('here');
+            $('#switch-model').trigger('click');
+        }
         $('[data-name]').on('change', function() {
             var name    = $(this).data('name');
             var value   = $(this).val();
@@ -282,4 +288,12 @@
 
         });
     }
+	function getParameterByName(name, url = window.location.href) {
+		name = name.replace(/[\[\]]/g, '\\$&');
+		var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+			results = regex.exec(url);
+		if (!results) return null;
+		if (!results[2]) return '';
+		return decodeURIComponent(results[2].replace(/\+/g, ' '));
+	}
 })( jQuery )
