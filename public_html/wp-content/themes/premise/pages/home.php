@@ -70,15 +70,15 @@ get_header(); ?>
             </div>
         </section>
 
-        <?php if(get_field('video_mp4') || get_field('video_webm')): ?>
-            <div class="video">
-                <div class="row no-gutters">
-                    <div class="col">
-                        <video controls>
-                            <source src="<?php the_field('video_webm'); ?>" type="video/webm">
-                            <source src="<?php the_field('video_mp4'); ?>" type="video/mp4">
-                            Sorry, your browser doesn't support embedded videos.
-                        </video>
+        <?php if(get_field('youtube_video_link')): ?>
+            <div class="container">
+                <div class="video">
+                    <div class="row">
+                        <div class="col">
+                            <div class="video-container">
+                                <?php the_field('youtube_video_link'); ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

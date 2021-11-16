@@ -294,6 +294,22 @@
             "mime_types": ".mp4"
         },
         {
+            "key": "field_6193d49abb97c",
+            "label": "YouTube Video Link",
+            "name": "youtube_video_link",
+            "type": "oembed",
+            "instructions": "Enter a YouTube link:<br><br>Example: <i>https:\/\/www.youtube.com\/watch?v=dQw4w9WgXcQ<\/i>",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "width": "",
+            "height": ""
+        },
+        {
             "key": "field_60dc93bbb3680",
             "label": "Testimonials",
             "name": "",
@@ -435,5 +451,6 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1635883744
+    "show_in_rest": 0,
+    "modified": 1637078447
 }
