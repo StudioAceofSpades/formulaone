@@ -256,7 +256,7 @@ get_header(); ?>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <?php
                         if (get_field('trailer_image')):
                             $image = get_field('trailer_image');
@@ -266,27 +266,31 @@ get_header(); ?>
                         endif;
                         ?>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <div class="d-md-flex <?php echo $has_optional; ?>">
                             <div class="standard">
                                 <p>Standard colors</p>
-                                <?php
-                                $n = 0;
-                                while (have_rows('standard_colors')): the_row();
-                                    $n++;
-                                    $color_name = get_sub_field('color_name');
-                                    $color = get_sub_field('color');
-                                    ?>
-                                    <div class="color">
-                                        <div style="background-image: url(<?php echo $color; ?>);"></div>
-                                        <p><?php echo $color_name; ?></p>
-                                    </div>
+                                <div class="color-row">
                                     <?php
-                                    if($n % 3 == 0) {
-                                        echo '<div class="break"></div>';
-                                    }
-                                endwhile;
-                                ?>
+                                    $n = 0;
+                                    while (have_rows('standard_colors')): the_row();
+                                        $n++;
+                                        $color_name = get_sub_field('color_name');
+                                        $color = get_sub_field('color');
+                                        ?>
+                                        <div class="color">
+                                            <div style="background-image: url(<?php echo $color; ?>);"></div>
+                                            <p><?php echo $color_name; ?></p>
+                                        </div>
+                                        <?php
+                                        if($n % 3 == 0) {
+                                            echo '</div>'; // Close Color Row
+                                            //echo '<div class="break"></div>';
+                                            echo '<div class="color-row">'; // Open Color Row
+                                        }
+                                    endwhile;
+                                    ?>
+                                </div>
                             </div>
                             <?php if (have_rows('optional_colors')): ?>
                                 <div class="gutter"></div>
@@ -670,7 +674,7 @@ END;
                     <?php 
                     $number = count(get_field('videos'));
                     if($number == 1) {
-                        $class = 'col-md-8 offset-md-2';
+                        $class = 'col-md-8';
                         $title = 'Video';
                     } elseif ($number == 2) {
                         $class = 'col-md-6';
@@ -681,8 +685,12 @@ END;
                     }
                     ?>
 
-                    <div class="col-12"><h1 class="text-center"><?php echo $title; ?></h1></div>
-                    
+                    <div class="col-12">
+                        <h1 class="text-center"><?php echo $title; ?></h1>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+
                     <?php while(have_rows('videos')) : the_row(); ?>
                         <div class="<?php echo $class; ?>">
                             <?php $vid = get_sub_field('video'); ?>

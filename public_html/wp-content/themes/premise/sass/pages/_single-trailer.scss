@@ -113,7 +113,7 @@
     #colors {
         $gutter-width: 30px;
         text-align: center;
-        margin-bottom: 60px;
+        margin: 60px 0;
 
         h1 {
             margin-bottom: 40px;
@@ -135,10 +135,14 @@
             min-width: $gutter-width;
         }
 
+        .color-row {
+            display: flex;
+            justify-content: center;
+        }
+
         .color {
             margin: 0 15px 30px;
-            width: calc((100% - 120px) * .25);
-            float: left;
+            width: calc((100% - 90px) * .3333);
 
             div {
                 margin-bottom: 10px;
@@ -164,10 +168,6 @@
         .has-optional {
             .standard {
                 width: calc((100% - #{$gutter-width}) * .75);
-
-                .color {
-                    width: calc((100% - 90px) * .3333);
-                }
             }
 
             .optional {
@@ -183,9 +183,6 @@
     #video {
         margin-bottom: 30px;
 
-        .row {
-            justify-content: center;
-        }
         .video-container {
             margin: 0 0 30px;
         }
@@ -418,8 +415,6 @@
     #single-trailer {
         #colors {
             .color {
-                width: calc((100% - 60px) * .5);
-
                 div {
                     height: 50px;
                 }
@@ -466,20 +461,6 @@
                             width: 6px;
                             height: 6px;
                             border-width: 1px;
-                        }
-                    }
-                }
-            }
-        }
-
-        #colors {
-            .has-optional {
-                .standard {
-                    .color {
-                        width: calc((100% - 60px) * .5);
-
-                        div {
-                            height: 50px;
                         }
                     }
                 }
@@ -556,11 +537,13 @@
                 display: none;
             }
 
-            .color {
-                width: calc((100% - 90px) * .333);
+            .color-row {
+                display: block;
+            }
 
+            .color {
                 div {
-                    height: 75px;
+                    height: 50px;
                 }
             }
 
@@ -569,6 +552,19 @@
                 .optional {
                     @include clearfix();
                     width: 100%;
+
+                    .color {
+                        width: 100%;
+                        margin: 0 0 15px;
+
+                        div {
+                            margin-bottom: 5px;
+                        }
+
+                         p {
+                             margin-bottom: 0;
+                         }
+                    }
                 }
             }
         }
@@ -590,14 +586,6 @@
 
                 .button {
                     line-height: 30px;
-                }
-            }
-        }
-
-        #colors {
-            .color {
-                div {
-                    height: 50px;
                 }
             }
         }
