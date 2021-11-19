@@ -387,6 +387,20 @@
                 }
             }
 
+            .rft {
+                display: inline-block;
+                border: 1px solid $orange;
+                color: $orange;
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: .5px;
+                line-height: 1;
+                padding: 5px 10px;
+                margin: 0 0 5px;
+                position: relative;
+                top: -10px;
+            }
+
             ul {
                 list-style: none;
                 margin-left: 20px;
@@ -850,6 +864,10 @@
 
             .contents {
                 padding: 10px;
+
+                .rft {
+                    top: 0;
+                }
 
                 li {
                     font-size: 14px;

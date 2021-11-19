@@ -1,5 +1,6 @@
 (function($) {
     $(document).ready(function() {
+        initConfigurator();
         initColorSelects();
         initImageControls();
         initPackages();
@@ -108,15 +109,20 @@
         });
         $('[data-update]').trigger('change');
     }
+
+    function initConfigurator() {
+   		var trailer = getParameterByName('model');
+        if(!trailer) {
+            $('#switch-model').trigger('click');
+        }
+        var lifestyle = getParameterByName('lifestyle');
+        if(lifestyle) {
+            $('[data-panel="' + lifestyle +  '"]').trigger('click');
+        }
+    }
     function initSummaryControls() {
         setBasePrice();
         
-   		var trailer = getParameterByName('model');
-        console.log(trailer);
-        if(!trailer) {
-            console.log('here');
-            $('#switch-model').trigger('click');
-        }
         $('[data-name]').on('change', function() {
             var name    = $(this).data('name');
             var value   = $(this).val();

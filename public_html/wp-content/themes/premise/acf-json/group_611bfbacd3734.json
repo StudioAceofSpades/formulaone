@@ -185,10 +185,10 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": "",
-            "taxonomy": [
-                "lifestyle:cargo"
+            "post_type": [
+                "configurations"
             ],
+            "taxonomy": "",
             "filters": [
                 "search"
             ],
@@ -234,10 +234,10 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": "",
-            "taxonomy": [
-                "lifestyle:racing"
+            "post_type": [
+                "configurations"
             ],
+            "taxonomy": "",
             "filters": [
                 "search"
             ],
@@ -283,10 +283,10 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": "",
-            "taxonomy": [
-                "lifestyle:commercial"
+            "post_type": [
+                "configurations"
             ],
+            "taxonomy": "",
             "filters": [
                 "search"
             ],
@@ -332,10 +332,10 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": "",
-            "taxonomy": [
-                "lifestyle:recreational"
+            "post_type": [
+                "configurations"
             ],
+            "taxonomy": "",
             "filters": [
                 "search"
             ],
@@ -373,5 +373,6 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1630435955
+    "show_in_rest": 0,
+    "modified": 1637341642
 }

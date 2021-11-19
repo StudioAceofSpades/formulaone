@@ -56,7 +56,7 @@ get_header(); ?>
                         </div>
                         <div class="col-lg-6 d-flex flex-column justify-content-center">
                             <?php if(get_field('build_header')): ?>
-                                <p class="title"><?php the_field('build_header'); ?></p>
+                                <h2 class="title"><?php the_field('build_header'); ?></h2>
                             <?php endif; ?>
                             <?php if(get_field('build_subheader')): ?>
                                 <p><?php the_field('build_subheader'); ?></p>

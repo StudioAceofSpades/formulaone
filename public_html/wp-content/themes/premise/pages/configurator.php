@@ -75,12 +75,12 @@ get_header(); ?>
                             ?>
                             <div class="col-sm-4 col-6 d-flex">
                                 <?php
-                                $trailer_image = get_field('trailer_image');
+                                $trailer_image = get_field('base_image');
                                 $slug = $post->post_name;
                                 ?>
                                 <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
                                     <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
-                                    <?php the_field('page_title'); ?>
+                                    <?php the_title(); ?>
                                 </a>
                             </div>
                             <?php
@@ -366,6 +366,11 @@ get_header(); ?>
                                         </div>
                                         <div class="contents">
                                             <h3><?php echo $p->post_title; ?></h3>
+
+                                            <?php if($rft = get_field('rft_price', $p->ID)): ?>
+                                            <span class="rft"><?php echo $rft; ?></span>
+                                            <?php endif; ?>
+
                                             <?php if(have_rows('options', $p->ID)): ?>
                                                 <ul>
                                                     <?php while(have_rows('options', $p->ID)): the_row(); ?>

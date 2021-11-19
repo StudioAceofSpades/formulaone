@@ -3,6 +3,25 @@
     "title": "Packages",
     "fields": [
         {
+            "key": "field_6197db091d6a0",
+            "label": "RFT Price",
+            "name": "rft_price",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_6182abe788171",
             "label": "Price Type",
             "name": "price_type",
@@ -243,5 +262,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1637003504
+    "modified": 1637341974
 }
