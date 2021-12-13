@@ -6,6 +6,10 @@
 
     &.left {
         text-align: left;
+
+        a:first-child {
+            margin-left: 0;
+        }
     }
 
     .button {

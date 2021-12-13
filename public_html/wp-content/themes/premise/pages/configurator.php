@@ -73,7 +73,7 @@ get_header(); ?>
                             $i++;
                             setup_postdata($post);
                             ?>
-                            <div class="col-sm-4 col-6 d-flex">
+                            <div class="col-sm-3 col-6 d-flex">
                                 <?php
                                 $trailer_image = get_field('base_image');
                                 $slug = $post->post_name;
@@ -107,12 +107,12 @@ get_header(); ?>
                             ?>
                             <div class="col-sm-4 col-6 d-flex">
                                 <?php
-                                $trailer_image = get_field('trailer_image');
+                                $trailer_image = get_field('base_image');
                                 $slug = $post->post_name;
                                 ?>
                                 <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
                                     <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
-                                    <?php the_field('page_title'); ?>
+                                    <?php the_title(); ?>
                                 </a>
                             </div>
                             <?php
@@ -139,12 +139,12 @@ get_header(); ?>
                             ?>
                             <div class="col-sm-4 col-6 d-flex">
                                 <?php
-                                $trailer_image = get_field('trailer_image');
+                                $trailer_image = get_field('base_image');
                                 $slug = $post->post_name;
                                 ?>
                                 <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
                                     <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
-                                    <?php the_field('page_title'); ?>
+                                    <?php the_title(); ?>
                                 </a>
                             </div>
                             <?php
@@ -171,12 +171,12 @@ get_header(); ?>
                             ?>
                             <div class="col-sm-4 col-6 d-flex">
                                 <?php
-                                $trailer_image = get_field('trailer_image');
+                                $trailer_image = get_field('base_image');
                                 $slug = $post->post_name;
                                 ?>
                                 <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
                                     <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
-                                    <?php the_field('page_title'); ?>
+                                    <?php the_title(); ?>
                                 </a>
                             </div>
                             <?php
@@ -489,6 +489,7 @@ get_header(); ?>
                             </div>
                             <div class="col-xl-6 col-lg-8">
                                 <p data-summary="msrp" data-msrp="<?php echo $tprice; ?>"></p>
+                                <span class="note">This is the MSRP suggested price. Get a quote below for an offical quote.</span>
                             </div>
                         </div>
                     </div>

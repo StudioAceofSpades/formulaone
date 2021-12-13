@@ -14,7 +14,6 @@ var bounds;
         photoGalleryDesktop();
         photoGalleryMobile();
         singleTrailerSpecTable();
-        singleTrailerScrollSpy();
         configuratorTrailerSelect();
 
         if($('#map').length) {
@@ -47,14 +46,6 @@ var bounds;
             $(this).addClass('selected');
             $('.panel').hide();
             $('.panel-'+panelToShow).show();
-        });
-    }
-
-    function singleTrailerScrollSpy() {
-        scrollSpy('#jumplist', {
-            sectionClass: '.scroll-to',
-            menuActiveTarget: '.jumplist-link',
-            offset: 100,
         });
     }
 

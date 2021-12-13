@@ -14,7 +14,8 @@ get_header(); ?>
                         <div class="row">
                             <div class="col-xs-6 col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4">
                                 <label>ZIP Code or Address</label>
-                                <input 
+                                <input
+                                    value="<?php echo $_GET['zip']; ?>"
                                     id="autocomplete" 
                                     type="text">
                             </div>

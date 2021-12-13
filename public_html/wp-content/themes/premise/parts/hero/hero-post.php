@@ -21,7 +21,7 @@ $categories = get_the_category();
 $category_list = '';
 foreach($categories as $category) {
     $link = get_category_link($category);
-    $category_list .= '<a href="'.$link.'">'.$category->name.'</a>, ';
+    $category_list .= $category->name.', ';
 }
 $category_list = substr($category_list, 0, -2);
 
@@ -38,11 +38,6 @@ $category_list = substr($category_list, 0, -2);
         <h2>Categories: <?php echo $category_list; ?></h2>
         <?php endif; ?>
         
-        <div class="meta">
-            <span class="author"><?php the_author(); ?></span>
-            <span class="divider"></span>
-            <span class="date"><?php the_time('F j, Y'); ?></span>
-        </div>
     </div>
 
 </div>

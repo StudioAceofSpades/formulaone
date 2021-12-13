@@ -715,32 +715,5 @@ END;
         </div>
     </div>
 
-    <div class="jumplist d-none d-lg-block">
-        <ul id="jumplist">
-            <li><a href="#trailer-intro" class="jumplist-link"><span></span><i>Introduction</i></a></li>
-            <?php
-            if( have_rows('specifications') ) {
-                echo '<li><a href="#specs" class="jumplist-link"><span></span><i>Specifications</i></a></li>';
-            }
-            if( have_rows('features') ) {
-                echo '<li><a href="#features" class="jumplist-link"><span></span><i>Standard&nbsp;Features</i></a></li>';
-            }
-            if( have_rows('options_upgrades') ) {
-                echo '<li><a href="#options" class="jumplist-link"><span></span><i>Options&nbsp;&amp;&nbsp;Upgrades</i></a></li>';
-            }
-            if ( (have_rows('standard_colors')) || (have_rows('optional_colors')) ) {
-                echo '<li><a href="#colors" class="jumplist-link"><span></span><i>Available&nbsp;Colors</i></a></li>';
-            }
-            if (have_rows('photos')) {
-                echo '<li><a href="#photos" class="jumplist-link"><span></span><i>Photo&nbsp;Gallery</i></a></li>';
-            }
-            if(get_field('video')) {
-                echo '<li><a href="#video" class="jumplist-link"><span></span><i>Video</i></a></li>';
-            }
-            ?>
-            <li class="jumplist-link"><a href="#request-a-quote"><span></span><i>Request&nbsp;A&nbsp;Quote</i></a></li>
-        </ul>
-    </div>
-
 </div>
 <?php get_footer(); ?>

@@ -123,10 +123,11 @@
     }
 
     .img {
-        display: flex;
         max-width: 210px;
-        margin: 0 auto;
-        margin-top: 25%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
     }
 
     .cover {
@@ -306,6 +307,11 @@
             p {
                 text-align: center;
             }
+        }
+        .img {
+            position: static;
+            margin: 20px auto;
+            transform: translate(0,0);
         }
     }
 }
