@@ -291,8 +291,60 @@
     }
 
     form {
+        li {
+            position: relative;
+            
+            span {
+                &:first-child {
+                    display: block;
+                    padding-right: 130px;
+                }
+            }
+            .premium-color-up {
+                display: block;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translate(0,-50%);
+                font-size: 12px;
+                border: 1px solid $white;
+                line-height: 1;
+                padding: 3px;
+                border-radius: 5px;
+
+                svg {
+                    margin-right: 5px;
+                }
+            }
+        }
         .select {
+
             .select-styled {
+
+                position: relative;
+                
+                span {
+                    &:first-child {
+                        display: block;
+                        padding-right: 130px;
+                    }
+                }
+                .premium-color-up {
+                    display: block;
+                    position: absolute;
+                    right: 35px;
+                    top: 50%;
+                    transform: translate(0,-50%);
+                    font-size: 12px;
+                    border: 1px solid $white;
+                    line-height: 1;
+                    padding: 3px;
+                    border-radius: 5px;
+
+                    svg {
+                        margin-right: 5px;
+                    }
+                }
                 background-size: cover;
 
                 &.light {
