@@ -547,14 +547,26 @@ var bounds;
             var $list = $('<ul />', {
                 'class': 'select-options'
             }).insertAfter($styledSelect);
-
+            
             for (var i = 0; i < numberOfOptions; i++) {
-                $('<li />', {
-                    text: $this.children('option').eq(i).text(),
-                    rel: $this.children('option').eq(i).val(),
-                    class: $this.children('option').eq(i).attr("class"),
-                    tabindex: "0"
-                }).appendTo($list);
+
+                var option  = $this.children('option').eq(i);
+                var text    = "<span>" + option.text() + "</span>";
+                var rel     = option.val();
+                var css     = option.attr('class');
+
+                if(option.data('premium')) {
+                    text += '<span class="premium-color-up"><i class="far fa-badge-dollar"></i>Premium Color</span>';
+                }
+
+                var $li = $('<li>', {
+                    'class'     :   css,
+                    'rel'       : rel,
+                    'tabindex'  : 0,
+                });
+
+                $li.append(text);
+                $li.appendTo($list);
             }
 
             var $listItems = $list.children('li');
@@ -569,7 +581,7 @@ var bounds;
 
             $listItems.click(function(e) {
                 e.stopPropagation();
-                $styledSelect.text($(this).text()).removeClass('active');
+                $styledSelect.html($(this).html()).removeClass('active');
                 $this.val($(this).attr('rel')).change();
                 $list.slideUp(200).removeClass('open');
             });

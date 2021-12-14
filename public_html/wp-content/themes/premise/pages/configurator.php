@@ -106,11 +106,10 @@ get_header(); ?>
                                 <select data-name="front" class="color" data-update="front">
                                     <?php
                                     foreach($front as $f): 
-                                        var_dump($f); 
                                         $image  = wp_get_attachment_url($f['color_overlay']);
                                         $swatch = $f['color_swatch'];
                                         ?>
-                                        <option 
+                                        <option
                                             value="<?php echo $f['color_name']; ?>"
                                             data-background="<?php echo $swatch; ?>"
                                             data-text-color="<?php echo $f['text_color']; ?>"
