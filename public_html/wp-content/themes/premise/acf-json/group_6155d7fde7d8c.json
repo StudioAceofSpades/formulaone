@@ -7,7 +7,7 @@
             "label": "RFT Price",
             "name": "rft_price",
             "type": "text",
-            "instructions": "",
+            "instructions": "This value is only for display. It does not factor into the price calculation.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -26,7 +26,7 @@
             "label": "Price Type",
             "name": "price_type",
             "type": "true_false",
-            "instructions": "",
+            "instructions": "If set to single, price must be set below to calculate price. If set to range, both minimum and maximum price must be set to calculate price.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -262,5 +262,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1637341974
+    "modified": 1639498229
 }

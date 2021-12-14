@@ -123,6 +123,12 @@
     function initSummaryControls() {
         setBasePrice();
         
+        $('[data-name="size"]').on('change', function() {
+            console.log('running');
+            updatePrice(getBasePrice(), getColorPrice(), getPackagePrice());
+            setBasePrice(getBasePrice());
+        });
+
         $('[data-name]').on('change', function() {
             var name    = $(this).data('name');
             var value   = $(this).val();
@@ -153,6 +159,7 @@
     }
 
     function updatePrice(base, color, package) {
+        console.log(base);
         var colorMinPrice   = 0;
         var colorMaxPrice   = 0;
         if(color.length) {
@@ -178,14 +185,20 @@
         }
     }
 
-    function setBasePrice() {
-        var $price      = $('[data-summary="name"] .price');
-        var price       = roundPrice(getMarkup() * $price.data('pricing'));
-        $price.html('$' + price);
+    function setBasePrice(override) {
+        if(typeof override != 'undefined') {
+            var price = override;
+        } else {
+            var sizePrice   = parseInt($('[data-name="size"]').find(':selected').data('price'));
+
+            var price       = roundPrice(getMarkup() * sizePrice);
+        }
+        $('[data-summary="name"] .price').html('$' + price);
     }
 
     function getBasePrice() {
-        return roundPrice(getMarkup() * $('[data-summary="name"] .price').data('pricing'));
+        var sizePrice   = parseInt($('[data-name="size"]').find(':selected').data('price'));
+        return roundPrice(getMarkup() * sizePrice);
     }
 
     function getColorPrice() {
