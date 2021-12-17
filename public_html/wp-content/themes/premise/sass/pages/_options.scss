@@ -1,0 +1,88 @@
+#options {
+    > .container {
+        max-width: 1400px;
+    }
+}
+.filter {
+    max-width: 400px;
+    margin: 0 auto 30px;
+}
+.option-group {
+    margin: 0 0 30px;
+}
+.option {
+    position: relative;
+    margin: 0 0 30px;
+    cursor: pointer;
+
+    img {
+        max-width: 100%;
+    }
+    h4 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 5px;
+        background: $middle-gray;
+        color: $white;
+        font-size: 15px;
+        line-height: 1.2;
+        margin: 0;
+        transition: .3s ease all;
+    }
+    &:hover {
+        h4 {
+            background: $orange;
+        }
+    }
+}
+.lightbox {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,.75);
+    display: none;
+    
+    .lightbox-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 10px;
+        color: $white;
+        transition: .3s ease all;
+        cursor: pointer;
+
+        &:hover {
+            color: $orange;
+        }
+    }
+    .lightbox-content {
+        max-width: 95%;
+        max-height: 95%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 100%;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            max-height: 95vh;
+        }
+    }
+}
+@include media-breakpoint-down(sm) {
+    .option-group {
+        h3 {
+            text-align: center;
+        }
+    }
+    .option {
+        max-width: 400px;
+        margin: 0 auto 30px;
+    }
+}

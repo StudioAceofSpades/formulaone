@@ -15,11 +15,34 @@ var bounds;
         photoGalleryMobile();
         singleTrailerSpecTable();
         configuratorTrailerSelect();
+        optionsPage();
 
         if($('#map').length) {
             initMap();
         }
     });
+
+    function optionsPage() {
+        $('#option-filter').on('change', function() {
+            var selected = $(this).find('option:selected').val();
+            if(selected == 'all') {
+                $('.option-group').show();
+            } else {
+                $('.option-group').hide();
+                $('.option-group[data-name="' + selected + '"]').show();
+            }
+        });
+        $('.option').click(function(e) {
+            e.preventDefault();
+            $('.lightbox').show();
+            var image   = $(this).data('full');
+            $('.lightbox-content img').attr('src', image);
+        });
+        $('.lightbox-close').click(function(e) {
+            e.preventDefault();
+            $('.lightbox').hide();
+        });
+    }
 
     function configuratorTrailerSelect() {
         $('#switch-model').click(function(e) {

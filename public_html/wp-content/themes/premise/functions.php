@@ -37,6 +37,7 @@ function saos_load_scripts() {
 add_theme_support( 'post-thumbnails' );
 add_image_size('excerpt', 900, 550, true);
 add_image_size('trailer-small', 600, 600, false);
+add_image_size('option', 400, 400, true);
 add_image_size('hero', 1920, 490, true);
 
 function disable_emojis() {
@@ -393,4 +394,31 @@ add_action( 'init', 'cptui_register_my_cpts_package' );
 function is_blog () {
     return ( is_archive() || is_author() || is_category() || is_home() || is_tag()) && 'post' == get_post_type();
 }
+
+function slugify($text, string $divider = '-') {
+  // replace non letter or digits by divider
+  $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+
+  // transliterate
+  $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+  // remove unwanted characters
+  $text = preg_replace('~[^-\w]+~', '', $text);
+
+  // trim
+  $text = trim($text, $divider);
+
+  // remove duplicate divider
+  $text = preg_replace('~-+~', $divider, $text);
+
+  // lowercase
+  $text = strtolower($text);
+
+  if (empty($text)) {
+    return 'n-a';
+  }
+
+  return $text;
+}
+
 ?>

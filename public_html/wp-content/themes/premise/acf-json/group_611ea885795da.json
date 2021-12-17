@@ -181,6 +181,13 @@
                 "operator": "==",
                 "value": "post"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "single-options.php"
+            }
         ]
     ],
     "menu_order": 0,
@@ -193,5 +200,6 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1632341856
+    "show_in_rest": 0,
+    "modified": 1639500181
 }
