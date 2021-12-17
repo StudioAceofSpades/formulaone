@@ -45,7 +45,39 @@
     left: 0;
     background: rgba(0,0,0,.75);
     display: none;
-    
+    z-index: 5000;
+
+    .lightbox-nav {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translate(0,-50%);
+
+        .lightbox-next,
+        .lightbox-prev {
+            position: absolute;
+            z-index: 10;
+            color: $white;
+            transition: .3s ease all;
+            padding: 10px;
+            font-size: 25px;
+            line-height: 1;
+            display: block;
+            cursor: pointer;
+
+            &:hover {
+                color: $orange;
+            }
+        }
+        .lightbox-prev {
+            left: 0;
+        }
+        .lightbox-next {
+            right: 0;
+        }
+    }
     .lightbox-close {
         position: absolute;
         top: 0;

@@ -26,7 +26,9 @@ get_header(); ?>
 
         <?php if(have_rows('option_group')): ?>
         <div class="option-groups">
-            <?php while(have_rows('option_group')) : the_row(); ?>
+            <?php 
+            $index = 0;
+            while(have_rows('option_group')) : the_row(); ?>
             <div class="option-group" data-name="<?php echo slugify(get_sub_field('group_name')); ?>">
                 <h3><?php the_sub_field('group_name'); ?></h3>
                 <?php if(have_rows('options')): ?>
@@ -35,12 +37,17 @@ get_header(); ?>
                     $counter = 0;
                     while(have_rows('options')) : 
                         $counter++;
+                        $index++;
                         the_row(); 
                         $image = get_sub_field('image');
                         ?>
                         
                         <div class="col-md-4">
-                            <div class="option" data-full="<?php echo $image['url']; ?>">
+                            <div 
+                                class="option" 
+                                data-index="<?php echo $index; ?>"
+                                data-full="<?php echo $image['url']; ?>">
+
                                 <?php if($image): ?>
                                 <img src="<?php echo $image['sizes']['option']; ?>" alt="<?php echo $image['alt']; ?>">
                                 <?php endif; ?>
@@ -66,9 +73,15 @@ get_header(); ?>
 </div>
 
 <div class="lightbox">
-    <span class="lightbox-close"><i class="fa fa-times"></i></span>
+    <span class="lightbox-close"><i class="far fa-times"></i></span>
+    
+    <div class="lightbox-nav">
+        <span class="lightbox-prev"><i class="far fa-angle-left"></i></span>
+        <span class="lightbox-next"><i class="far fa-angle-right"></i></span>
+    </div>
+    
     <div class="lightbox-content">
-        <img src="<?php bloginfo('template_directory'); ?>/img/home-header.png">
+        <img src="">
     </div>
 </div>
 

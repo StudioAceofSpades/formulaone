@@ -36,7 +36,40 @@ var bounds;
             e.preventDefault();
             $('.lightbox').show();
             var image   = $(this).data('full');
-            $('.lightbox-content img').attr('src', image);
+            var index   = $(this).data('index');
+            $('.lightbox-content img')
+                .attr('src', image)
+                .data('index', index);
+        });
+        $('.lightbox-next').click(function(e) {
+            e.preventDefault();
+            var $current    = $('.lightbox-content img');
+            var current     = $current.data('index');
+            var next        = current + 1;
+            
+            var $next = $('.option[data-index="' + next + '"]');
+
+            if($next.length == 0) {
+                $next = $('.option[data-index="1"]');
+            }
+            $('.lightbox-content img')
+                .attr('src', $next.data('full'))
+                .data('index', $next.data('index'));
+        });
+        $('.lightbox-prev').click(function(e) {
+            e.preventDefault();
+            var $current    = $('.lightbox-content img');
+            var current     = $current.data('index');
+            var next        = current - 1;
+            
+            var $next = $('.option[data-index="' + next + '"]');
+
+            if($next.length == 0) {
+                $next = $('.option').last();
+            }
+            $('.lightbox-content img')
+                .attr('src', $next.data('full'))
+                .data('index', $next.data('index'));
         });
         $('.lightbox-close').click(function(e) {
             e.preventDefault();
