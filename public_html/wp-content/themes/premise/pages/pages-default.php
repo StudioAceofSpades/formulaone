@@ -6,7 +6,11 @@ get_header(); ?>
 
 <?php include(locate_template('parts/hero.php')); ?>
 
+<?php if(is_page('blog')): ?>
+<section class="page default blog">
+<?php else: ?>
 <section class="page default">
+<?php endif; ?>
     <?php 
     if(have_rows('content')) :
         $counter = 0;
