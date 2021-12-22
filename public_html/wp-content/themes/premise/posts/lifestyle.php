@@ -6,6 +6,8 @@ $tax        =	$wp_query->queried_object;
 $trailers   = get_posts(array(
     'posts_per_page'    => -1,
     'post_type'         => 'trailer',
+    'orderby'           => 'menu_order',
+    'order'             => 'ASC',
     'tax_query'         => array(
         array(
             'taxonomy'  => 'lifestyle',

@@ -97,7 +97,7 @@ get_header(); ?>
                         <?php if($header|| $subheader): ?>
                             <?php $n++; ?>
                             <div class="col-md-6 d-flex flex-column align-self-center">
-                                <p class="header"><?php echo $header; ?></p>
+                                <p class="testimonial-header"><?php echo $header; ?></p>
                                 <p class="subheader"><?php echo $subheader; ?></p>
                             </div>
                         <?php endif; ?>

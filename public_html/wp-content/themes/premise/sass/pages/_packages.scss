@@ -1,0 +1,35 @@
+.packages {
+    .config {
+        margin: 0 0 30px;
+        padding: 0 0 30px;
+        border-bottom: 1px solid $orange;
+
+        h3 {
+            color: $orange;
+            margin: 0 0 20px;
+        }
+
+        .package {
+            margin: 0 0 30px;
+
+            h4 {
+                color: $orange;
+                font-weight: 700;
+                margin: 0 0 10px;
+                padding: 0 0 10px;
+                border-bottom: 1px solid $offwhite;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0 0 0 20px;
+
+                li {
+                    font-size: 14px;
+                    line-height: 1.2;
+                    margin: 0 0 5px;
+                }
+            }
+        }
+    }
+}

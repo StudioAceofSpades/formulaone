@@ -26,10 +26,6 @@
                 include(locate_template('parts/hero/find-a-dealer.php'));
                 ?>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <h3>Newsletter</h3>
-                <?php echo do_shortcode(get_field('newsletter_script','options')); ?>
-            </div>
         </div>
     </div>
 </div>

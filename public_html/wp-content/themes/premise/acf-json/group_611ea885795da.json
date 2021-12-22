@@ -188,6 +188,13 @@
                 "operator": "==",
                 "value": "single-options.php"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "single-packages.php"
+            }
         ]
     ],
     "menu_order": 0,
@@ -201,5 +208,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1639500181
+    "modified": 1640191368
 }

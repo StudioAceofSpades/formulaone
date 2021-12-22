@@ -171,7 +171,7 @@ get_header(); ?>
                             </div>
                         <?php endif; ?>
 
-                        <?php if($packages): ?>
+                        <?php if($packages && 0 == 1): ?>
                             <div class="option">
                                 <hgroup>
                                     <h2>Packages</h2>
@@ -319,6 +319,7 @@ get_header(); ?>
                             </div>
                         </div>
                     </div>
+                    <!-- 
                     <div class="summary-item">
                         <div class="row">
                             <div class="col-xl-6 col-lg-4">
@@ -329,6 +330,7 @@ get_header(); ?>
                             </div>
                         </div>
                     </div>
+                    -->
                     <?php if($tprice): ?>
                     <div class="summary-item total">
                         <div class="row">

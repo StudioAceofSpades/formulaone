@@ -23,7 +23,7 @@ get_header(); ?>
                                 <label>Mile Search Radius</label>
                                 <input 
                                     id="radius" 
-                                    value="100" 
+                                    value="50" 
                                     min="5" 
                                     max="200" 
                                     step="1" 

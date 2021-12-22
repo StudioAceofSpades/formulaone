@@ -266,7 +266,7 @@ form {
 
         > .gfield {
             width: 100%;
-
+            
             &.gfield--width-full {
                 width: 100%;
             }
@@ -275,6 +275,9 @@ form {
             }
         }
 
+    }
+    .gform_validation_container {
+        display: none;
     }
     .ginput_container_date {
         width: 32%;

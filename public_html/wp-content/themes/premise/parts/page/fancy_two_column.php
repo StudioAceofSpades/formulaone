@@ -1,7 +1,7 @@
 <div class="fancy-cols">
     <?php if (have_rows('fancy_two_col')): ?>
         <?php while(have_rows('fancy_two_col') ): the_row(); ?>
-        <div class="header bg-orange">
+        <div class="bg-orange">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col text-center">
