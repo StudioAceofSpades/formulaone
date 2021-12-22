@@ -77,7 +77,7 @@ if ( ! $hide_row ) :
 									data-project="<?php echo esc_attr( $pid ); ?>">
 								<?php
 								if( $res->is_installed ):
-									printf( '%s <span class="sui-tag sui-tag-sm" style="margin-left:10px;">v%s</span>', esc_html( $res->name ), esc_html( $res->version_installed ) );		 	  	  		  	 					
+									printf( '%s <span class="sui-tag sui-tag-sm" style="margin-left:10px;">v%s</span>', esc_html( $res->name ), esc_html( $res->version_installed ) );
 								else:
 									echo esc_html( $res->name );
 								endif; ?>
@@ -121,9 +121,13 @@ if ( ! $hide_row ) :
 							</button>
 						<?php else: ?>
 							<div class="dashui-plugin-name">
-								<a href="<?php echo esc_url( $res->url->config ); ?>">
-								<?php echo esc_html( $res->name );  ?>
-								</a>
+								<?php if ( ! empty( $res->url->config ) ) : ?>
+									<a href="<?php echo esc_url( $res->url->config ); ?>">
+										<?php echo esc_html( $res->name ); ?>
+									</a>
+								<?php else : ?>
+									<?php echo esc_html( $res->name ); ?>
+								<?php endif; ?>
 								<a
 									href="#"
 									class="js-show-plugin-modal"

@@ -2,7 +2,6 @@
 /**
  * Dashboard home template
  *
- * @package WPMUDEV DASHBOARD 4.9.0
  * @var array       $member
  * @var array       $urls
  * @var int|string  $update_plugins
@@ -13,6 +12,8 @@
  * @var bool        $analytics_enabled
  * @var array       $whitelabel_settings
  * @var int         $total_visits
+ * @var bool        $tickets_hidden
+ * @package WPMUDEV DASHBOARD 4.9.0
  */
 
 $this->render_sui_header(
@@ -134,7 +135,7 @@ foreach ( $projects as $key => $item ) {
 		<div class="sui-col-md-6">
 			<?php $this->render( 'sui/dashboard-templates/installed-plugins', compact( 'data', 'urls', 'selected_plugins', 'membership_data' ) ); // BOX: Installed Plugins. ?>
 			<?php $this->render( 'sui/dashboard-templates/services', compact( 'urls', 'membership_data' ) ); // BOX: Services. ?>
-			<?php $this->render( 'sui/dashboard-templates/support', compact( 'urls', 'member', 'staff_login', 'membership_data' ) ); // BOX: Support. ?>
+			<?php $this->render( 'sui/dashboard-templates/support', compact( 'urls', 'member', 'staff_login', 'membership_data', 'tickets_hidden' ) ); // BOX: Support. ?>
 		</div>
 
 		<div class="sui-col-md-6">

@@ -2486,12 +2486,20 @@ class WPMUDEV_Dashboard_Site {
 	 * It instructs the dashboard to flush all caches (i.e. filesystem is
 	 * scanned again, the transient is re-generated, ...)
 	 *
+	 * @param object $upgrader Upgrader class.
+	 * @param array  $args     Hook arguments.
+	 *
 	 * @since  4.0.7
 	 */
-	public function after_local_files_changed() {
+	public function after_local_files_changed( $upgrader, $args ) {
 		self::$_cache_themeupdates  = false;
 		self::$_cache_pluginupdates = false;
 		$this->clear_local_file_cache();
+
+		// Recalculate available translation updates.
+		if ( isset( $args['type'], $args['bulk'] ) && 'translation' === $args['type'] && $args['bulk'] ) {
+			WPMUDEV_Dashboard::$api->calculate_translation_upgrades( true );
+		}
 	}
 
 	/**
@@ -3045,7 +3053,8 @@ class WPMUDEV_Dashboard_Site {
 		$analytics_enabled = WPMUDEV_Dashboard::$site->get_option( 'analytics_enabled' );
 		$analytics_site_id = WPMUDEV_Dashboard::$site->get_option( 'analytics_site_id' );
 		$analytics_tracker = WPMUDEV_Dashboard::$site->get_option( 'analytics_tracker' );
-		if ( is_wpmudev_member() && $analytics_enabled && $analytics_site_id && $analytics_tracker ) {
+		$analytics_allowed = WPMUDEV_Dashboard::$api->is_analytics_allowed();
+		if ( $analytics_allowed && $analytics_enabled && $analytics_site_id && $analytics_tracker ) {
 			?>
 
 			<script type="text/javascript">

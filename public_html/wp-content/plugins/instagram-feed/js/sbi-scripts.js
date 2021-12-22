@@ -132,9 +132,7 @@ if(!sbi_js_exists) {
         function sbiAddVisibilityListener() {
             /* Detect when element becomes visible. Used for when the feed is initially hidden, in a tab for example. https://github.com/shaunbowe/jquery.visibilityChanged */
             !function (i) {
-                var n = {
-                    callback: function () {
-                    }, runOnLoad: !0, frequency: 100, sbiPreviousVisibility: null
+                var n = { runOnLoad: !0, frequency: 100, sbiPreviousVisibility: null
                 }, c = {};
                 c.sbiCheckVisibility = function (i, n) {
                     if (jQuery.contains(document, i[0])) {
@@ -298,11 +296,7 @@ if(!sbi_js_exists) {
                     feed.lazyLoadCheck($(this));
                 });
             },
-            initLayout: function() {
-
-            },
             afterInitialImagesLoaded: function() {
-                this.initLayout();
                 this.loadMoreButtonInit();
                 this.hideExtraImagesForWidth();
                 this.beforeNewImagesRevealed();
@@ -339,8 +333,7 @@ if(!sbi_js_exists) {
                 this.setImageSizeClass();
             },
             revealNewImages: function() {
-                var $self = $(this.el),
-                    feed = this;
+                var $self = $(this.el);
 
                 $self.find('.sbi-screenreader').each(function() {
                     $(this).find('img').remove();
@@ -553,8 +546,7 @@ if(!sbi_js_exists) {
                 sbiAjax(submitData, onSuccess);
             },
             appendNewPosts: function (newPostsHtml) {
-                var $self = $(this.el),
-                    feed = this;
+                var $self = $(this.el);
                 if ($self.find('#sbi_images .sbi_item').length) {
                     $self.find('#sbi_images .sbi_item').last().after(newPostsHtml);
                 } else {
@@ -577,8 +569,8 @@ if(!sbi_js_exists) {
                 //Figure out what the width should be using the number of cols
                 //Figure out what the width should be using the number of cols
                 var imagesPadding = $self.find('#sbi_images').innerWidth() - $self.find('#sbi_images').width(),
-                    imagepadding = imagesPadding / 2;
-                sbi_photo_width_manual = ( $self.find('#sbi_images').width() / sbi_num_cols ) - imagesPadding;
+                    imagepadding = imagesPadding / 2,
+                    sbi_photo_width_manual = ( $self.find('#sbi_images').width() / sbi_num_cols ) - imagesPadding;
                 //If the width is less than it should be then set it manually
                 //if( sbi_photo_width <= (sbi_photo_width_manual) ) sbi_photo_width = sbi_photo_width_manual;
 
@@ -930,8 +922,7 @@ if(!sbi_js_exists) {
                 }
             },
             applyImageLiquid: function () {
-                var $self = $(this.el),
-                    feed = this;
+                var $self = $(this.el);
                 sbiAddImgLiquid();
                 if (typeof $self.find(".sbi_photo").sbi_imgLiquid == 'function') {
                     $self.find(".sbi_photo").sbi_imgLiquid({fill: true});
@@ -954,9 +945,8 @@ if(!sbi_js_exists) {
                 var $self = $(this.el),
                     cols = this.settings.cols,
                     colsmobile = this.settings.colsmobile,
-                    returnCols = cols;
-
-                sbiWindowWidth = window.innerWidth;
+                    returnCols = cols,
+                    sbiWindowWidth = window.innerWidth;
 
                 if ($self.hasClass('sbi_mob_col_auto')) {
                     if (sbiWindowWidth < 640 && (parseInt(cols) > 2 && parseInt(cols) < 7)) returnCols = 2;

@@ -1,5 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ){
+	exit;
+} // Exit if accessed directly
 
 /**
  * Deactivate addon.
@@ -22,7 +24,7 @@ function sbi_deactivate_addon() {
 	}
 
 	if ( isset( $_POST['plugin'] ) ) {
-		deactivate_plugins( wp_unslash( $_POST['plugin'] ) );
+		deactivate_plugins( preg_replace( '/[^a-z-_\/]/', '', wp_unslash( str_replace( '.php', '', $_POST['plugin'] ) ) ) . '.php' );
 
 		if ( 'plugin' === $type ) {
 			wp_send_json_success( esc_html__( 'Plugin deactivated.', 'instagram-feed' ) );
@@ -47,7 +49,7 @@ function sbi_activate_addon() {
 
 	// Check for permissions.
 	if ( ! current_user_can( 'activate_plugins' ) ) {
-		wp_send_json_error(esc_html__( 'Cant deactivate.', 'instagram-feed' ));
+		wp_send_json_error( esc_html__( 'Cant deactivate.', 'instagram-feed' ) );
 	}
 
 	if ( isset( $_POST['plugin'] ) ) {
@@ -57,7 +59,7 @@ function sbi_activate_addon() {
 			$type = sanitize_key( wp_unslash( $_POST['type'] ) );
 		}
 
-		$activate = activate_plugins( wp_unslash( $_POST['plugin'] ) );
+		$activate = activate_plugins( preg_replace( '/[^a-z-_\/]/', '', wp_unslash( str_replace( '.php', '', $_POST['plugin'] ) ) ) . '.php' );
 
 		if ( ! is_wp_error( $activate ) ) {
 			if ( 'plugin' === $type ) {
@@ -90,6 +92,11 @@ function sbi_install_addon() {
 	$error = esc_html__( 'Could not install addon. Please download from wpforms.com and install manually.', 'instagram-feed' );
 
 	if ( empty( $_POST['plugin'] ) ) {
+		wp_send_json_error( $error );
+	}
+
+	// Only install plugins from the .org repo
+	if ( strpos( $_POST['plugin'], 'https://downloads.wordpress.org/plugin/' ) !== 0 ) {
 		wp_send_json_error( $error );
 	}
 
