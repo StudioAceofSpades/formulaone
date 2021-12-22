@@ -277,49 +277,6 @@
                     "mime_types": ""
                 }
             ]
-        },
-        {
-            "key": "field_61c355b521cd0",
-            "label": "Content",
-            "name": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "left",
-            "endpoint": 0
-        },
-        {
-            "key": "field_61c35652fd314",
-            "label": "Configurations",
-            "name": "configurations",
-            "type": "relationship",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "post_type": [
-                "configurations"
-            ],
-            "taxonomy": "",
-            "filters": [
-                "search",
-                "post_type",
-                "taxonomy"
-            ],
-            "elements": "",
-            "min": "",
-            "max": "",
-            "return_format": "object"
         }
     ],
     "location": [
@@ -351,5 +308,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1640191589
+    "modified": 1640201963
 }
