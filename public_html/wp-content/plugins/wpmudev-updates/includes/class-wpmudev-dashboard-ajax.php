@@ -645,7 +645,7 @@ class WPMUDEV_Dashboard_Ajax {
 		if ( ! empty( $data ) ) {
 			$this->send_json_success( $data );
 		} else {
-			$this->send_json_error( array( 'message' => __( 'There was an API error, please try again.', 'wpmudev' ) ) );		 	  	  		  	 					
+			$this->send_json_error( array( 'message' => __( 'There was an API error, please try again.', 'wpmudev' ) ) );
 		}
 	}
 

@@ -355,7 +355,7 @@ class WPMUDEV_Dashboard_Site {
 			'data_preserve_settings'            => true,
 			'data_keep_data'                    => true,
 			// SSO.
-			'enable_sso'                        => true,
+			'enable_sso'                        => false,
 			'sso_userid'                        => false,
 		);
 
@@ -520,6 +520,18 @@ class WPMUDEV_Dashboard_Site {
 	public function first_time_actions() {
 		// On our hosting, if it's first time activation enable few services.
 		if ( defined( 'WPMUDEV_HOSTING_SITE_ID' ) || isset( $_SERVER['WPMUDEV_HOSTED'] ) ) {
+			$user_id = get_current_user_id();
+			// If we couldn't find a user.
+			if ( empty( $user_id ) ) {
+				// Let's get an admin user now.
+				$users = WPMUDEV_Dashboard::$site->get_available_users();
+				if ( ! empty( $users[0]['id'] ) ) {
+					$user_id = $users[0]['id'];
+				}
+			}
+			// Set a user for SSO.
+			WPMUDEV_Dashboard::$site->set_option( 'sso_userid', $user_id );
+
 			// We need to sync account first.
 			WPMUDEV_Dashboard::$api->hub_sync( false, true );
 			// If analytics allowed.

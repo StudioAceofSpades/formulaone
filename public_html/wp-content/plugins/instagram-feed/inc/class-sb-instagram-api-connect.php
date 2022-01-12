@@ -106,7 +106,7 @@ class SB_Instagram_API_Connect
 	 *
 	 * @since 2.2.2/5.3.3
 	 */
-	public function type_allows_after_paging( ) {
+	public function type_allows_after_paging() {
 		return false;
 	}
 
@@ -119,13 +119,13 @@ class SB_Instagram_API_Connect
 	 *
 	 * @since 2.0/5.0
 	 */
-	public function get_next_page( ) {
+	public function get_next_page() {
 		if ( ! empty( $this->response['pagination']['next_url'] ) ) {
 			return $this->response['pagination']['next_url'];
 		} elseif ( ! empty( $this->response['paging']['next'] ) ) {
 			return $this->response['paging']['next'];
 		} else {
-			if ( $this->type_allows_after_paging( ) ) {
+			if ( $this->type_allows_after_paging() ) {
 				if ( isset( $this->response['paging']['cursors']['after'] ) ) {
 					return $this->response['paging']['cursors']['after'];
 				}
@@ -186,6 +186,10 @@ class SB_Instagram_API_Connect
 	 * @since 2.0/5.0
 	 */
 	public function connect() {
+		if ( empty( $this->url ) ) {
+			$this->response = array();
+			return;
+		}
 		$args = array(
 			'timeout' => 20,
 		);

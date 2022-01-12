@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the WPMU DEV Dashboard plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPMU DEV Dashboard 4.11.7\n"
+"Project-Id-Version: WPMU DEV Dashboard 4.11.8\n"
 "Report-Msgid-Bugs-To: https://wpmudev.com\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-21T20:40:32+05:30\n"
+"POT-Creation-Date: 2021-12-26T17:19:57+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: wpmudev\n"
 
 #. Plugin Name of the plugin
-#: includes/class-wpmudev-dashboard-ui.php:1326
-#: includes/class-wpmudev-dashboard-ui.php:1339
+#: includes/class-wpmudev-dashboard-ui.php:1329
+#: includes/class-wpmudev-dashboard-ui.php:1342
 #: template/sui/login-system.php:54
 #: template/sui/support.php:816
 msgid "WPMU DEV Dashboard"
@@ -31,7 +31,7 @@ msgid "Brings the powers of WPMU DEV directly to you. It will revolutionize how 
 msgstr ""
 
 #. Author of the plugin
-#: includes/class-wpmudev-dashboard-ui.php:1327
+#: includes/class-wpmudev-dashboard-ui.php:1330
 msgid "WPMU DEV"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 
 #: includes/class-wpmudev-dashboard-ajax.php:237
 #: includes/class-wpmudev-dashboard-ajax.php:263
-#: includes/class-wpmudev-dashboard-ui.php:1922
+#: includes/class-wpmudev-dashboard-ui.php:1925
 msgid "Not installed"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgstr ""
 
 #: includes/class-wpmudev-dashboard-api.php:2760
 #: includes/class-wpmudev-dashboard-api.php:3118
-#: includes/class-wpmudev-dashboard-ui.php:803
+#: includes/class-wpmudev-dashboard-ui.php:806
 #: template/sui/analytics.php:209
 #: template/sui/dashboard-templates/analytics.php:131
 msgid "Bounce Rate"
@@ -109,13 +109,13 @@ msgstr ""
 
 #: includes/class-wpmudev-dashboard-api.php:2765
 #: includes/class-wpmudev-dashboard-api.php:3123
-#: includes/class-wpmudev-dashboard-ui.php:808
+#: includes/class-wpmudev-dashboard-ui.php:811
 #: template/sui/analytics.php:220
 msgid "Exit Rate"
 msgstr ""
 
 #: includes/class-wpmudev-dashboard-api.php:2770
-#: includes/class-wpmudev-dashboard-ui.php:793
+#: includes/class-wpmudev-dashboard-ui.php:796
 #: template/sui/analytics.php:187
 #: template/sui/dashboard-templates/analytics.php:127
 msgid "Visit Time"
@@ -123,7 +123,7 @@ msgstr ""
 
 #: includes/class-wpmudev-dashboard-api.php:2775
 #: includes/class-wpmudev-dashboard-api.php:3128
-#: includes/class-wpmudev-dashboard-ui.php:798
+#: includes/class-wpmudev-dashboard-ui.php:801
 #: template/sui/analytics.php:198
 #: template/sui/dashboard-templates/analytics.php:135
 msgid "Entrances"
@@ -134,13 +134,13 @@ msgid "Unique Visits"
 msgstr ""
 
 #: includes/class-wpmudev-dashboard-api.php:2785
-#: includes/class-wpmudev-dashboard-ui.php:778
+#: includes/class-wpmudev-dashboard-ui.php:781
 #: template/sui/analytics.php:165
 msgid "Page Views"
 msgstr ""
 
 #: includes/class-wpmudev-dashboard-api.php:2790
-#: includes/class-wpmudev-dashboard-ui.php:783
+#: includes/class-wpmudev-dashboard-ui.php:786
 #: template/sui/analytics.php:176
 msgid "Unique Page Views"
 msgstr ""
@@ -157,7 +157,7 @@ msgstr ""
 
 #: includes/class-wpmudev-dashboard-api.php:2810
 #: includes/class-wpmudev-dashboard-api.php:3133
-#: includes/class-wpmudev-dashboard-ui.php:788
+#: includes/class-wpmudev-dashboard-ui.php:791
 msgid "Page Time"
 msgstr ""
 
@@ -265,94 +265,94 @@ msgstr ""
 msgid "Passed invalid value for param \"status\", it must be either \"enabled\" or \"disabled\""
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:1536
+#: includes/class-wpmudev-dashboard-site.php:1548
 msgid "Requires Multisite"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:1540
+#: includes/class-wpmudev-dashboard-site.php:1552
 msgid "Requires BuddyPress"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:1544
+#: includes/class-wpmudev-dashboard-site.php:1556
 #: template/sui/element-project-info.php:166
 msgid "Incompatible"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:2250
+#: includes/class-wpmudev-dashboard-site.php:2262
 msgid "<b>The Upfront parent theme is missing!</b><br>Please install it to use your Upfront child themes"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:2277
+#: includes/class-wpmudev-dashboard-site.php:2289
 msgid "Awesome news for Upfront"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:2278
+#: includes/class-wpmudev-dashboard-site.php:2290
 msgid "We have a new version of Upfront for you! Install it right now to get all the latest improvements and features."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3509
+#: includes/class-wpmudev-dashboard-site.php:3521
 msgid "Failed to find plugin id."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3774
+#: includes/class-wpmudev-dashboard-site.php:3786
 msgid "you can now enable direct login to all your sites from The WPMU DEV Hub. To do this we don't store any passwords or usernames, you just need to visit the Dashboard's Settings area and check 'Enable Single Sign-on for this website'."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3784
+#: includes/class-wpmudev-dashboard-site.php:3796
 msgid "Single Sign-on Settings"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3785
+#: includes/class-wpmudev-dashboard-site.php:3797
 #: shared-ui/plugin-ui.php:272
 #: template/sui/wpmudev_default_notice.php:11
 msgid "Saving"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3786
+#: includes/class-wpmudev-dashboard-site.php:3798
 #: shared-ui/plugin-ui.php:301
 msgid "Dismiss"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3787
+#: includes/class-wpmudev-dashboard-site.php:3799
 msgid "Dismiss this notice."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:468
+#: includes/class-wpmudev-dashboard-ui.php:471
 msgid "There is a new version of %1$s available on WPMU DEV. <a href=\"#\" class=\"wpmudev-dashboard-changelog-btn\" data-pid=\"%2$s\" title=\"%3$s\">View version %4$s details</a> or <a href=\"%5$s\" class=\"update-link\">update now</a>."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:472
+#: includes/class-wpmudev-dashboard-ui.php:475
 msgid "There is a new version of %1$s available on WPMU DEV. <a href=\"#\" class=\"wpmudev-dashboard-changelog-btn\" data-pid=\"%2$s\" title=\"%3$s\">View version %4$s details</a> or <a href=\"%5$s\" target=\"_blank\" title=\"Download update from WPMU DEV\">download update</a>."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:479
+#: includes/class-wpmudev-dashboard-ui.php:482
 msgid "There is a new version of %1$s available on WPMU DEV. <a href=\"#\" class=\"wpmudev-dashboard-changelog-btn\" data-pid=\"%2$s\" title=\"%3$s\">View version %4$s details</a> or <a href=\"%5$s\" target=\"_blank\" title=\"Setup your WPMU DEV account to update\">login to update</a>."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:487
+#: includes/class-wpmudev-dashboard-ui.php:490
 msgid "There is a new version of %1$s available on WPMU DEV. <a href=\"#\" class=\"wpmudev-dashboard-changelog-btn\" data-pid=\"%2$s\" title=\"%3$s\">View version %4$s details</a> or <a href=\"%5$s\" target=\"_blank\" title=\"Upgrade your WPMU DEV membership\">upgrade to update</a>."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:491
+#: includes/class-wpmudev-dashboard-ui.php:494
 msgid "There is a new version of %1$s available on WPMU DEV. <a href=\"#\" class=\"wpmudev-dashboard-changelog-btn\" data-pid=\"%2$s\"  title=\"%3$s\">View version %4$s details</a>."
 msgstr ""
 
 #. translators: %s link to dashboard.
-#: includes/class-wpmudev-dashboard-ui.php:582
+#: includes/class-wpmudev-dashboard-ui.php:585
 msgid "<a href=\"%s\">Login to WPMU DEV Dashboard</a> to update"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:585
+#: includes/class-wpmudev-dashboard-ui.php:588
 msgid "Auto-update not possible."
 msgstr ""
 
 #. translators: %s link to dashboard.
-#: includes/class-wpmudev-dashboard-ui.php:588
+#: includes/class-wpmudev-dashboard-ui.php:591
 msgid "<a href=\"%s\">More info &raquo;</a>"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:640
-#: includes/class-wpmudev-dashboard-ui.php:1393
+#: includes/class-wpmudev-dashboard-ui.php:643
+#: includes/class-wpmudev-dashboard-ui.php:1396
 #: template/sui/analytics.php:19
 #: template/sui/analytics.php:97
 #: template/sui/dashboard-templates/analytics.php:76
@@ -360,195 +360,195 @@ msgstr ""
 msgid "Analytics"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:649
+#: includes/class-wpmudev-dashboard-ui.php:652
 msgid "Network Analytics"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:745
+#: includes/class-wpmudev-dashboard-ui.php:748
 #: template/sui/popup-project.php:410
 msgid "Overview"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:746
+#: includes/class-wpmudev-dashboard-ui.php:749
 msgid "Top Pages & Posts"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:747
+#: includes/class-wpmudev-dashboard-ui.php:750
 msgid "Authors"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:748
+#: includes/class-wpmudev-dashboard-ui.php:751
 msgid "Top Sites"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:751
+#: includes/class-wpmudev-dashboard-ui.php:754
 msgid "Yesterday"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:752
+#: includes/class-wpmudev-dashboard-ui.php:755
 msgid "Last 7 days"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:753
+#: includes/class-wpmudev-dashboard-ui.php:756
 msgid "Last 30 days"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:754
+#: includes/class-wpmudev-dashboard-ui.php:757
 msgid "Last 90 days"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:757
+#: includes/class-wpmudev-dashboard-ui.php:760
 msgid "Page/Post title"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:758
+#: includes/class-wpmudev-dashboard-ui.php:761
 msgid "Page"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:759
+#: includes/class-wpmudev-dashboard-ui.php:762
 msgid "Author"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:760
+#: includes/class-wpmudev-dashboard-ui.php:763
 msgid "Site"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:761
+#: includes/class-wpmudev-dashboard-ui.php:764
 msgid "Site domain/name"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:762
+#: includes/class-wpmudev-dashboard-ui.php:765
 msgid "We haven’t collected enough data of your website yet."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:763
+#: includes/class-wpmudev-dashboard-ui.php:766
 msgid "Try again"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:764
+#: includes/class-wpmudev-dashboard-ui.php:767
 msgid "Go to"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:765
+#: includes/class-wpmudev-dashboard-ui.php:768
 msgid "of"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:766
+#: includes/class-wpmudev-dashboard-ui.php:769
 #: template/sui/whitelabel.php:593
 msgid "Show"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:767
+#: includes/class-wpmudev-dashboard-ui.php:770
 msgid "data for"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:770
+#: includes/class-wpmudev-dashboard-ui.php:773
 msgid "You will start viewing the performance statistics of your website shortly. So feel free to check back soon"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:771
+#: includes/class-wpmudev-dashboard-ui.php:774
 msgid "There was a temporary issue fetching analytics data. Please try again later."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:779
+#: includes/class-wpmudev-dashboard-ui.php:782
 msgid "Total number of pages viewed. Repeated views of a single page are counted."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:784
+#: includes/class-wpmudev-dashboard-ui.php:787
 msgid "The number of visits that included this page. If a page was viewed multiple times during one visit, it is only counted once."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:789
+#: includes/class-wpmudev-dashboard-ui.php:792
 msgid "The average amount of time visitors spent on a page."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:794
+#: includes/class-wpmudev-dashboard-ui.php:797
 msgid "The average amount of time visitors spent on the site."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:799
+#: includes/class-wpmudev-dashboard-ui.php:802
 msgid "The number of time visitors entered your site through this page, from any source (e.g. search, direct, referral, etc.)."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:804
+#: includes/class-wpmudev-dashboard-ui.php:807
 msgid "Single-page sessions. The percentage of visitors who left the website after their first page."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:809
+#: includes/class-wpmudev-dashboard-ui.php:812
 msgid "Number of exits divided by page views. Indicates percentage of exits from a specified page or average across your site."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:883
+#: includes/class-wpmudev-dashboard-ui.php:886
 msgid "Business"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:884
+#: includes/class-wpmudev-dashboard-ui.php:887
 msgid "SEO"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:885
+#: includes/class-wpmudev-dashboard-ui.php:888
 msgid "Marketing"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:886
+#: includes/class-wpmudev-dashboard-ui.php:889
 msgid "Publishing"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:887
+#: includes/class-wpmudev-dashboard-ui.php:890
 #: template/sui/footer.php:33
 msgid "Community"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:888
+#: includes/class-wpmudev-dashboard-ui.php:891
 msgid "BuddyPress"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:889
+#: includes/class-wpmudev-dashboard-ui.php:892
 msgid "Multisite"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1157
-#: includes/class-wpmudev-dashboard-ui.php:1158
-#: includes/class-wpmudev-dashboard-ui.php:1188
-#: includes/class-wpmudev-dashboard-ui.php:1189
+#: includes/class-wpmudev-dashboard-ui.php:1160
+#: includes/class-wpmudev-dashboard-ui.php:1161
+#: includes/class-wpmudev-dashboard-ui.php:1191
+#: includes/class-wpmudev-dashboard-ui.php:1192
 msgid "Return to WPMU DEV Plugins"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1299
+#: includes/class-wpmudev-dashboard-ui.php:1302
 msgid "%s Plugin update"
 msgid_plural "%s Plugin updates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1314
+#: includes/class-wpmudev-dashboard-ui.php:1317
 msgid "Log in to your WPMU DEV account to use all features!"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1340
+#: includes/class-wpmudev-dashboard-ui.php:1343
 #: template/sui/dashboard.php:20
 msgid "Dashboard"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1365
+#: includes/class-wpmudev-dashboard-ui.php:1368
 msgid "WPMU DEV Plugins"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1366
+#: includes/class-wpmudev-dashboard-ui.php:1369
 #: template/sui/dashboard-templates/installed-plugins.php:15
 #: template/sui/footer.php:17
 #: template/sui/plugins.php:14
 msgid "Plugins"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1378
+#: includes/class-wpmudev-dashboard-ui.php:1381
 msgid "Support Access enabled"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1383
+#: includes/class-wpmudev-dashboard-ui.php:1386
 msgid "WPMU DEV Support"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1384
+#: includes/class-wpmudev-dashboard-ui.php:1387
 #: template/sui/dashboard-templates/support.php:49
 #: template/sui/footer.php:25
 #: template/sui/header.php:36
@@ -557,15 +557,15 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1392
+#: includes/class-wpmudev-dashboard-ui.php:1395
 msgid "WPMU DEV Analytics"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1401
+#: includes/class-wpmudev-dashboard-ui.php:1404
 msgid "WPMU DEV Whitelabel"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1402
+#: includes/class-wpmudev-dashboard-ui.php:1405
 #: template/sui/dashboard-templates/tools.php:58
 #: template/sui/dashboard-templates/whitelabel.php:29
 #: template/sui/whitelabel.php:15
@@ -573,86 +573,86 @@ msgstr ""
 msgid "White Label"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1411
+#: includes/class-wpmudev-dashboard-ui.php:1414
 msgid "WPMU DEV Settings"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1412
+#: includes/class-wpmudev-dashboard-ui.php:1415
 #: template/sui/data-settings/uninstall.php:30
 #: template/sui/settings.php:25
 msgid "Settings"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1664
+#: includes/class-wpmudev-dashboard-ui.php:1667
 #: template/sui/plugins.php:25
 msgid "All up to date"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1760
+#: includes/class-wpmudev-dashboard-ui.php:1763
 msgid "Error: The template %s does not exist. Please re-install the plugin."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1906
+#: includes/class-wpmudev-dashboard-ui.php:1909
 msgid "Updating %s ..."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1907
+#: includes/class-wpmudev-dashboard-ui.php:1910
 msgid "Activating %s ..."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1908
+#: includes/class-wpmudev-dashboard-ui.php:1911
 msgid "Installing %s ..."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1909
+#: includes/class-wpmudev-dashboard-ui.php:1912
 msgid "Deactivating %s ..."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1910
+#: includes/class-wpmudev-dashboard-ui.php:1913
 msgid "Deleting %s ..."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1911
+#: includes/class-wpmudev-dashboard-ui.php:1914
 msgid "Installing and activating %s ..."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1912
+#: includes/class-wpmudev-dashboard-ui.php:1915
 msgid "Installing %s translation..."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1913
+#: includes/class-wpmudev-dashboard-ui.php:1916
 msgid "%s translations successfully updated."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1914
+#: includes/class-wpmudev-dashboard-ui.php:1917
 msgid "There are no plugins matching your search, please try again."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1915
+#: includes/class-wpmudev-dashboard-ui.php:1918
 msgid "There are no active plugins matching your search, please try again."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1916
+#: includes/class-wpmudev-dashboard-ui.php:1919
 msgid "There are no deactivated plugins matching your search, please try again."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1917
+#: includes/class-wpmudev-dashboard-ui.php:1920
 msgid "There are no plugins with updates available matching your search, please try again."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1918
+#: includes/class-wpmudev-dashboard-ui.php:1921
 msgid "You don't have any WPMU DEV plugins installed and activated."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1919
+#: includes/class-wpmudev-dashboard-ui.php:1922
 msgid "You don't have any deactivated WPMU DEV plugins."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1920
+#: includes/class-wpmudev-dashboard-ui.php:1923
 msgid "There are no WPMU DEV plugin updates available."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1921
+#: includes/class-wpmudev-dashboard-ui.php:1924
 #: template/sui/dashboard-templates/services.php:16
 #: template/sui/dashboard-templates/services.php:23
 #: template/sui/dashboard-templates/services.php:30
@@ -665,7 +665,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-ui.php:1923
+#: includes/class-wpmudev-dashboard-ui.php:1926
 msgid "The following plugins are either active or not installed and cannot be deleted:"
 msgstr ""
 
@@ -1201,19 +1201,19 @@ msgstr ""
 msgid "White Labeling"
 msgstr ""
 
-#: template/sui/dashboard.php:114
+#: template/sui/dashboard.php:106
 #: template/sui/plugins.php:77
 msgid "Active Pro plugin"
 msgid_plural "Active Pro plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: template/sui/dashboard.php:121
+#: template/sui/dashboard.php:113
 #: template/sui/plugins.php:87
 msgid "Plugin Updates Available"
 msgstr ""
 
-#: template/sui/dashboard.php:125
+#: template/sui/dashboard.php:117
 msgid "Active Support Tickets"
 msgstr ""
 
@@ -1619,69 +1619,69 @@ msgstr ""
 msgid "</br><strong>Note:</strong> You still have %1$d site <a target=\"_blank\" href=\"%2$s\">hosted with us</a> available."
 msgstr ""
 
-#: template/sui/login.php:179
+#: template/sui/login.php:177
 msgid "Let’s unlock pro features"
 msgstr ""
 
-#: template/sui/login.php:181
+#: template/sui/login.php:179
 msgid "Let’s connect your site"
 msgstr ""
 
-#: template/sui/login.php:187
+#: template/sui/login.php:185
 msgid "To unlock pro features for %s, log in using your WPMU DEV account email and password."
 msgstr ""
 
-#: template/sui/login.php:191
+#: template/sui/login.php:189
 msgid "To unlock pro plugins and the Hub, log in using your WPMU DEV account email and password."
 msgstr ""
 
-#: template/sui/login.php:199
-#: template/sui/login.php:202
+#: template/sui/login.php:197
+#: template/sui/login.php:200
 msgid "Email"
 msgstr ""
 
-#: template/sui/login.php:208
+#: template/sui/login.php:206
 msgid "Email is required."
 msgstr ""
 
-#: template/sui/login.php:209
+#: template/sui/login.php:207
 msgid "Email is not valid."
 msgstr ""
 
-#: template/sui/login.php:214
-#: template/sui/login.php:219
+#: template/sui/login.php:212
+#: template/sui/login.php:217
 msgid "Password"
 msgstr ""
 
-#: template/sui/login.php:228
+#: template/sui/login.php:226
 msgid "Show Password"
 msgstr ""
 
-#: template/sui/login.php:229
+#: template/sui/login.php:227
 msgid "Hide Password"
 msgstr ""
 
-#: template/sui/login.php:231
+#: template/sui/login.php:229
 msgid "Password is required."
 msgstr ""
 
-#: template/sui/login.php:258
+#: template/sui/login.php:256
 msgid "Enable SSO"
 msgstr ""
 
-#: template/sui/login.php:259
+#: template/sui/login.php:257
 msgid "We will automatically log you in when you visit this site from The Hub."
 msgstr ""
 
-#: template/sui/login.php:267
+#: template/sui/login.php:265
 msgid "Connect"
 msgstr ""
 
-#: template/sui/login.php:284
+#: template/sui/login.php:282
 msgid "Don't have an account? %1$sSign up%2$s today!"
 msgstr ""
 
-#: template/sui/login.php:293
+#: template/sui/login.php:291
 msgid "%1$sSystem Information%2$s"
 msgstr ""
 

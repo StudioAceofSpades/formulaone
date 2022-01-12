@@ -18,11 +18,12 @@ if($trailer_slug) {
     $title      = get_the_title($id);
     $size       = get_field('trailer_size', $id);
     $specs      = get_field('sizing_specs', $id);
+    $color      = get_field('color', $id);
     $front      = get_field('front_color', $id);
     $back       = get_field('rear_color', $id);
     $stripe     = get_field('diagonal_split', $id);
     $packages   = get_field('packages', $id);
-
+    $color_type = get_field('color_style', $id);
     $tprice     = $size[0]['price'];
 
     $second_image = $image;
@@ -44,9 +45,14 @@ get_header(); ?>
             <?php if($trailer): ?>
                 <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
             <?php endif; ?>
-            <div class="front"></div>
-            <div class="back"></div>
-            <div class="stripe"></div>
+
+            <?php if($color_type == 'single'): ?>
+                <div class="front"></div>
+            <?php else: ?>
+                <div class="front"></div>
+                <div class="back"></div>
+                <div class="stripe"></div>
+            <?php endif; ?>
         </div>
 
         <div class="row">
@@ -69,9 +75,13 @@ get_header(); ?>
                         <?php if($trailer): ?>
                             <img class="base" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
                         <?php endif; ?>
-                        <div class="front"></div>
-                        <div class="back"></div>
-                        <div class="stripe"></div>
+                        <?php if($color_type == 'single'): ?>
+                            <div class="front"></div>
+                        <?php else: ?>
+                            <div class="front"></div>
+                            <div class="back"></div>
+                            <div class="stripe"></div>
+                        <?php endif; ?>
                     </div>
 
                     <form class="form">
@@ -98,14 +108,38 @@ get_header(); ?>
                             </div>
                         <?php endif; ?>
 
-                        <?php if($front): ?>
+                        <?php if($color && $color_type == 'single'): ?>
+                            <div class="option">
+                                <hgroup>
+                                    <h2>Color</h2>
+                                </hgroup>
+                                <select data-name="front" class="color" data-update="front">
+                                    <?php
+                                    foreach($color as $f): 
+                                        $image  = $f['color_overlay']['url'];
+                                        $swatch = $f['color_swatch'];
+                                        ?>
+                                        <option
+                                            value="<?php echo $f['color_name']; ?>"
+                                            data-background="<?php echo $swatch; ?>"
+                                            data-text-color="<?php echo $f['text_color']; ?>"
+                                            data-premium="<?php echo $f['premium_color']; ?>"
+                                            data-image="<?php echo $image; ?>">
+                                            <?php echo $f['color_name']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if($front && $color_type != 'single'): ?>
                             <div class="option">
                                 <hgroup>
                                     <h2>Front Color</h2>
                                 </hgroup>
                                 <select data-name="front" class="color" data-update="front">
                                     <?php
-                                    foreach($front as $f): 
+                                    foreach($front as $f): var_dump($f);
                                         $image  = wp_get_attachment_url($f['color_overlay']);
                                         $swatch = $f['color_swatch'];
                                         ?>
@@ -122,7 +156,7 @@ get_header(); ?>
                             </div>
                         <?php endif; ?>
 
-                        <?php if($back): ?>
+                        <?php if($back && $color_type != 'single'): ?>
                             <div class="option">
                                 <hgroup>
                                     <h2>Rear Color</h2>
@@ -146,7 +180,7 @@ get_header(); ?>
                             </div>
                         <?php endif; ?>
 
-                        <?php if($stripe): ?>
+                        <?php if($stripe && $color_type != 'single'): ?>
                             <div class="option">
                                 <hgroup>
                                     <h2>Diagonal Stripe</h2>
@@ -289,36 +323,49 @@ get_header(); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="summary-item">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-4">
-                                <h3>Front Color</h3>
-                            </div>
-                            <div class="col-xl-6 col-lg-8">
-                                <p data-summary="front"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-4">
-                                <h3>Rear Color</h3>
-                            </div>
-                            <div class="col-xl-6 col-lg-8">
-                                <p data-summary="rear"></p>
+                    <?php if($color_type == 'single'): ?>
+                        <div class="summary-item">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-4">
+                                    <h3>Color</h3>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <p data-summary="front"></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-4">
-                                <h3>Diagonal Stripe</h3>
-                            </div>
-                            <div class="col-xl-6 col-lg-8">
-                                <p data-summary="stripe"></p>
+                    <?php else: ?>
+                        <div class="summary-item">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-4">
+                                    <h3>Front Color</h3>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <p data-summary="front"></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="summary-item">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-4">
+                                    <h3>Rear Color</h3>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <p data-summary="rear"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-4">
+                                    <h3>Diagonal Stripe</h3>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <p data-summary="stripe"></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <!-- 
                     <div class="summary-item">
                         <div class="row">
