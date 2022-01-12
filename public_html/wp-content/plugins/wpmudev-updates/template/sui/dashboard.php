@@ -80,28 +80,20 @@ foreach ( $projects as $key => $item ) {
 		break;
 	}
 
-	// ignore plugin with updates.
-	if ( $wpmu_plugin->has_update ) {
-		continue;
-	}
-
-	// Skip plugin if it's already installed.
-	if ( ! $wpmu_plugin->is_active ) {
-		continue;
-	}
-
-	// Skip plugins that are not compatible with current site.
-	if ( ! $wpmu_plugin->is_compatible ) {
-		continue;
-	}
-
-	// Skip hidden/deprecated projects.
-	if ( $wpmu_plugin->is_hidden ) {
+	if (
+		// ignore plugin with updates.
+		$wpmu_plugin->has_update ||
+		// Skip plugin if it's already installed.
+		! $wpmu_plugin->is_active ||
+		// Skip plugins that are not compatible with current site.
+		! $wpmu_plugin->is_compatible ||
+		// Skip hidden/deprecated projects.
+		$wpmu_plugin->is_hidden
+	) {
 		continue;
 	}
 
 	$selected_plugins[] = $wpmu_plugin->pid;
-
 }
 
 ?>

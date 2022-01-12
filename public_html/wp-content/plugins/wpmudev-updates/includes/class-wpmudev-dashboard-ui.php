@@ -106,14 +106,17 @@ class WPMUDEV_Dashboard_Ui {
 	 * @return array List of plugins.
 	 */
 	public function maybe_hide_dashboard( $all_plugins ) {
-		// Is current user a allowed user?.
-		$allowed_user = WPMUDEV_Dashboard::$site->allowed_user();
-		// Get whitelabel settings.
-		$whitelabel_settings = WPMUDEV_Dashboard::$whitelabel->get_settings();
+		// Only when a real user is logged in and it's wp-admin.
+		if ( is_admin() && is_user_logged_in() ) {
+			// Is current user a allowed user?.
+			$allowed_user = WPMUDEV_Dashboard::$site->allowed_user();
+			// Get whitelabel settings.
+			$whitelabel_settings = WPMUDEV_Dashboard::$whitelabel->get_settings();
 
-		// Hide if not allowed user or white label is enabled.
-		if ( ! $allowed_user || $whitelabel_settings['enabled'] ) {
-			unset( $all_plugins[ WPMUDEV_Dashboard::$basename ] );
+			// Hide if not allowed user or white label is enabled.
+			if ( ! $allowed_user || $whitelabel_settings['enabled'] ) {
+				unset( $all_plugins[ WPMUDEV_Dashboard::$basename ] );
+			}
 		}
 
 		return $all_plugins;
