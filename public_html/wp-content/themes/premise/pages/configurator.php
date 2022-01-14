@@ -22,6 +22,7 @@ if($trailer_slug) {
     $front      = get_field('front_color', $id);
     $back       = get_field('rear_color', $id);
     $stripe     = get_field('diagonal_split', $id);
+    $decals     = get_field('decals', $id);
     $packages   = get_field('packages', $id);
     $color_type = get_field('color_style', $id);
     $tprice     = $size[0]['price'];
@@ -48,6 +49,9 @@ get_header(); ?>
 
             <?php if($color_type == 'single'): ?>
                 <div class="front"></div>
+            <?php elseif($color_type == 'decals'): ?>
+                <div class="front"></div>
+                <div class="stripe"></div>
             <?php else: ?>
                 <div class="front"></div>
                 <div class="back"></div>
@@ -108,7 +112,7 @@ get_header(); ?>
                             </div>
                         <?php endif; ?>
 
-                        <?php if($color && $color_type == 'single'): ?>
+                        <?php if($color && ($color_type == 'single' || $color_type == 'decals')): ?>
                             <div class="option">
                                 <hgroup>
                                     <h2>Color</h2>
@@ -189,6 +193,30 @@ get_header(); ?>
                                     <option value="None">None</option>
                                     <?php 
                                     foreach($stripe as $f): 
+                                        $image  = wp_get_attachment_url($f['color_overlay']['ID']);
+                                        $swatch = wp_get_attachment_url($f['color_swatch']['ID']);
+                                        ?>
+                                        <option 
+                                            value="<?php echo $f['color_name']; ?>"
+                                            data-background="<?php echo $swatch; ?>"
+                                            data-text-color="<?php echo $f['text_color']; ?>"
+                                            data-premium="<?php echo $f['premium_color']; ?>"
+                                            data-image="<?php echo $image; ?>">
+                                            <?php echo $f['color_name']; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($decals && $color_type == 'decals'): ?>
+                            <div class="option">
+                                <hgroup>
+                                    <h2>Decals</h2>
+                                </hgroup>
+                                <select data-name="stripe" class="color" data-update="stripe">
+                                    <option value="None">None</option>
+                                    <?php 
+                                    foreach($decals as $f):
                                         $image  = wp_get_attachment_url($f['color_overlay']['ID']);
                                         $swatch = wp_get_attachment_url($f['color_swatch']['ID']);
                                         ?>
@@ -331,6 +359,27 @@ get_header(); ?>
                                 </div>
                                 <div class="col-xl-6 col-lg-8">
                                     <p data-summary="front"></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php elseif($color_type == 'decals'): ?>
+                        <div class="summary-item">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-4">
+                                    <h3>Color</h3>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <p data-summary="front"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-4">
+                                    <h3>Decals</h3>
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
+                                    <p data-summary="stripe"></p>
                                 </div>
                             </div>
                         </div>

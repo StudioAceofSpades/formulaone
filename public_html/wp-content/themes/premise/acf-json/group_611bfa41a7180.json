@@ -193,6 +193,7 @@
             },
             "choices": {
                 "single": "Single Color",
+                "decals": "Single Color and Decals",
                 "double": "Two-Tone and Stripe"
             },
             "allow_null": 0,
@@ -215,6 +216,13 @@
                         "field": "field_61df45a2ae40a",
                         "operator": "==",
                         "value": "single"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_61df45a2ae40a",
+                        "operator": "==",
+                        "value": "decals"
                     }
                 ]
             ],
@@ -322,6 +330,145 @@
                 },
                 {
                     "key": "field_61df45beae410",
+                    "label": "Premium Color",
+                    "name": "premium_color",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                }
+            ]
+        },
+        {
+            "key": "field_61e1da512b4a4",
+            "label": "Decals",
+            "name": "decals",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61df45a2ae40a",
+                        "operator": "==",
+                        "value": "decals"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_611bfb0d56395",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add Color",
+            "sub_fields": [
+                {
+                    "key": "field_61e1da512b4a5",
+                    "label": "Color Name",
+                    "name": "color_name",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_61e1da512b4a6",
+                    "label": "Color Swatch",
+                    "name": "color_swatch",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
+                },
+                {
+                    "key": "field_61e1da512b4a7",
+                    "label": "Color Overlay",
+                    "name": "color_overlay",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
+                },
+                {
+                    "key": "field_61e1da512b4a8",
+                    "label": "Text Color",
+                    "name": "text_color",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "light": "Light",
+                        "dark": "Dark"
+                    },
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "save_other_choice": 0,
+                    "default_value": "light",
+                    "layout": "horizontal",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_61e1da512b4a9",
                     "label": "Premium Color",
                     "name": "premium_color",
                     "type": "true_false",
@@ -816,5 +963,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1642022409
+    "modified": 1642191458
 }
