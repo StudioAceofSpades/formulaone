@@ -96,7 +96,7 @@ get_header(); ?>
 
                                     <?php if($specs): ?>
                                         <div class="buttons">
-                                            <a class="button" href="<?php echo $specs['url']; ?>" target="_blank">
+                                            <a class="button spec-sheet" href="<?php echo $specs['url']; ?>">
                                                 <span>Trailer Size Specs</span>
                                             </a>
                                         </div>

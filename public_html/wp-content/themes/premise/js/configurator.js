@@ -6,6 +6,10 @@
         initPackages();
         initSummaryControls();
         initModalControls();
+
+        $('.spec-sheet').click(function(e) {
+            window.open($(this).attr('href'), '_blank');
+        });
     });
 
     function initModalControls() {
