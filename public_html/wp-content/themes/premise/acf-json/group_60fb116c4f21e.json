@@ -118,6 +118,27 @@
                     "save_other_choice": 0
                 }
             ]
+        },
+        {
+            "key": "field_61e9baa5a4e4d",
+            "label": "Background",
+            "name": "background",
+            "type": "clone",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_611ea885795da"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
         }
     ],
     "location": [
@@ -156,5 +177,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1639502475
+    "modified": 1642707736
 }
