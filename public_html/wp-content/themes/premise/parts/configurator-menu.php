@@ -35,15 +35,22 @@
                         $i++;
                         setup_postdata($post);
                         ?>
-                        <div class="col-sm-3 col-6 d-flex">
+                        <div class="col-md-3 col-sm-6 col-xs-12 d-flex">
                             <?php
                             $trailer_image = get_field('base_image');
                             $slug = $post->post_name;
                             ?>
-                            <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="d-flex flex-column justify-content-end">
-                                <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
-                                <?php the_title(); ?>
-                            </a>
+                            <div class="trailer-button">
+                                <div class="button-image">
+                                    <img src="<?php echo $trailer_image['url']; ?>" alt="<?php the_field('page_title'); ?>" class="img-fluid">
+                                </div>
+
+                                <span class="title">
+                                    <?php the_title(); ?>
+                                </span>
+
+                                <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $slug; ?>" class="panel-link"></a>
+                            </div>
                         </div>
                         <?php
                     endforeach;

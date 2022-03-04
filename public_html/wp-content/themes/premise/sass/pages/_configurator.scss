@@ -10,8 +10,8 @@
         position: fixed;
         right: 100%;
         z-index: 101;
-        top: 0;
-        height: 100vh;
+        top: 89px;
+        height: calc(100vh - 89px);
         padding-right: 40px;
 
         &.open {
@@ -22,6 +22,7 @@
             background-color: $orange;
             padding: 1px;
             margin-bottom: 20px;
+            margin-right: -3px;
 
              .lifestyle-button {
                  @extend .no-select;
@@ -82,7 +83,7 @@
                 font-size: 14px;
 
                 &:hover {
-                    background-color: rgba($black, .1);
+                    background-color: rgba($black, .2);
                     color: $black;
                     text-decoration: none;
                 }
@@ -92,12 +93,48 @@
                 }
             }
         }
+        .trailer-button {
+            position: relative;
+            border: 2px solid $orange;
+            padding: 10px 10px 40px 10px;
+            margin-bottom: 10px;
+
+            a {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 10;
+                margin-bottom: 0;
+            }
+            > * {
+                position: relative;
+                z-index: 5;
+            }
+            .title {
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: $orange;
+                color: $white;
+                font-size: 14px;
+                line-height: 1.2;
+                text-align: center;
+                padding: 5px;
+            }
+            .button-image {
+            }
+        }
 
         .close-trailer-select {
             width: 40px;
             color: $white;
             background-color: $orange;
-            position: absolute;
+            position: fixed;
             right: 0;
             top: 0;
             bottom: 0;
@@ -941,7 +978,27 @@
             }
         }
         .trailer-select {
+            top: 67px;
+            height: calc(100vh - 67px);
             overflow-y: scroll;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .lifestyle-select {
+                .lifestyle-button {
+                    height: 60px;
+                }
+            }
+
+            .trailer-button {
+                .title {
+                    font-size: 12px;
+                }
+            }
         }
     }
 
@@ -973,7 +1030,7 @@
 
         .trailer-select {
             .lifestyle-select {
-                margin-bottom: 30px;
+                margin-bottom: 10px;
 
                 .lifestyle-button {
                     height: 50px;
@@ -983,7 +1040,6 @@
             .panel {
                 a {
                     padding: 0;
-                    margin-bottom: 20px;
                 }
             }
         }
@@ -1016,7 +1072,17 @@
         .container-fluid {
             max-width: 900px;
             margin-left: auto;
-            margin-right: 0;
+        }
+        .trailer-select {
+            .lifestyle-select {
+                .lifestyle-button {
+                    height: 50px;
+
+                    h3 {
+                        font-size: 18px;
+                    }
+                }
+            }
         }
     }
 }
