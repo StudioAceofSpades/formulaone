@@ -531,6 +531,8 @@ class WPMUDEV_Dashboard_Site {
 			}
 			// Set a user for SSO.
 			WPMUDEV_Dashboard::$site->set_option( 'sso_userid', $user_id );
+			// Enable SSO.
+			WPMUDEV_Dashboard::$site->set_option( 'enable_sso', true );
 
 			// We need to sync account first.
 			WPMUDEV_Dashboard::$api->hub_sync( false, true );
@@ -3062,11 +3064,20 @@ class WPMUDEV_Dashboard_Site {
 	 * @since 4.6
 	 */
 	public function analytics_tracking_code() {
+		/**
+		 * Filter to enable/disable analytics tracking.
+		 *
+		 * @param bool $can_track Can be tracked.
+		 */
+		$can_track = apply_filters( 'wpmudev_dashboard_analytics_tracking', true );
+
 		$analytics_enabled = WPMUDEV_Dashboard::$site->get_option( 'analytics_enabled' );
 		$analytics_site_id = WPMUDEV_Dashboard::$site->get_option( 'analytics_site_id' );
 		$analytics_tracker = WPMUDEV_Dashboard::$site->get_option( 'analytics_tracker' );
 		$analytics_allowed = WPMUDEV_Dashboard::$api->is_analytics_allowed();
-		if ( $analytics_allowed && $analytics_enabled && $analytics_site_id && $analytics_tracker ) {
+
+		// Check if analytics can be used.
+		if ( $can_track && $analytics_allowed && $analytics_enabled && $analytics_site_id && $analytics_tracker ) {
 			?>
 
 			<script type="text/javascript">

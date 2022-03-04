@@ -61,7 +61,7 @@ class Deprecated_Hooks {
 	 * Hook into the new hook so we can handle deprecated hooks once fired.
 	 */
 	public function __construct() {
-		$deprecated_hooks = array_merge( array_keys( $this->deprecated_action_hooks ), array_keys( $this->deprecated_filter_hooks ) );
+		$deprecated_hooks = array_merge( array_keys( $this->deprecated_action_hooks ), array_keys( $this->deprecated_filter_hooks ) );		 		   	   	    		  
 		if ( $deprecated_hooks ) {
 			foreach ( $deprecated_hooks as $new_action ) {
 				add_filter( $new_action, array( $this, 'maybe_handle_deprecated_hook' ), -1000, 8 );

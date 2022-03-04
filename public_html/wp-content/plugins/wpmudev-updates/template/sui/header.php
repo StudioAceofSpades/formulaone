@@ -8,7 +8,7 @@
 
 			<?php if ( WPMUDEV_CUSTOM_API_SERVER ) { ?>
 
-				<div class="sui-tooltip sui-tooltip-bottom sui-tooltip-bottom-right-mobile"
+				<div class="sui-tooltip sui-tooltip-bottom-right sui-tooltip-bottom-right-mobile"
 					data-tooltip="<?php echo esc_attr( sprintf( "Custom API Server:\n%s", WPMUDEV_CUSTOM_API_SERVER ) ); ?>">
 					<i class="sui-icon-plug-connected"></i>
 				</div>

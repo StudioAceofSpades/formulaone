@@ -89,7 +89,11 @@ class S3 extends Abstract_Integration {
 		add_filter( 'wp_smush_integration_show_submit', '__return_true' );
 
 		// Load all our custom actions/filters after loading as3cf.
-		add_action( 'as3cf_init', array( $this, 'init' ) );
+		if ( did_action( 'as3cf_init' ) ) {
+			$this->init();
+		} else {
+			add_action( 'as3cf_init', array( $this, 'init' ) );
+		}
 	}
 
 	/**
@@ -462,11 +466,11 @@ class S3 extends Abstract_Integration {
 	public function maybe_active_smush_mode( $image_meta, $attachment_id ) {
 		if (
 			! $this->on_smush_mode
-			// When async uploading.
+			// When async uploading or the image is created from Gutenberg, activate smush mode.
 			&& empty( $new_meta['sizes'] )
 			&& ! empty( $image_meta['file'] )
 			// phpcs:ignore
-			&& ( isset( $_POST['post_id'] ) || isset( $_FILES['async-upload'] ) )
+			&& ( isset( $_POST['post_id'] ) || isset( $_FILES['async-upload'] ) || ! Helper::is_non_rest_media() )
 			// If enabling auto-smush.
 			&& $this->settings->get( 'auto' )
 			// Managed it.

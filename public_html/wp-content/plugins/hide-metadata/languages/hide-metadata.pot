@@ -1,11 +1,11 @@
-# Copyright (C) 2018-2021 Catch Plugins
+# Copyright (C) 2018-2022 Catch Plugins
 # This file is distributed under the GNU General Public License v2 or later.
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Hide/Remove Metadata\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
-"POT-Creation-Date: 2021-08-05 10:41-0700\n"
+"POT-Creation-Date: 2022-02-24 14:43-0800\n"
 "PO-Revision-Date: 2016-12-12 09:23-0500\n"
 "Last-Translator: Sakin Shrestha <info@catchplugins.com>\n"
 "Language-Team: Catch Plugins <info@catchplugins.com>\n"

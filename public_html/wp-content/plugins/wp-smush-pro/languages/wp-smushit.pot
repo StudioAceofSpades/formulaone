@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Smush Pro 3.9.6\n"
+"Project-Id-Version: Smush Pro 3.9.7\n"
 "Report-Msgid-Bugs-To: https://wpmudev.com\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-09T09:46:29+11:00\n"
+"POT-Creation-Date: 2022-03-01T10:29:14+11:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: wp-smushit\n"
@@ -76,7 +76,7 @@ msgstr ""
 #: app/pages/class-directory.php:177
 #: app/views/bulk/meta-box.php:80
 #: app/views/bulk/meta-box.php:88
-#: core/class-core.php:293
+#: core/class-core.php:309
 msgid "Dismiss"
 msgstr ""
 
@@ -184,7 +184,7 @@ msgstr ""
 #: app/views/cdn/meta-box-header.php:17
 #: app/views/dashboard/summary-meta-box.php:60
 #: app/views/settings/permissions-meta-box.php:85
-#: core/class-configs.php:604
+#: core/class-configs.php:608
 #: _src/react/modules/configs.jsx:148
 #: app/assets/js/smush-react-configs.min.js:6260
 msgid "CDN"
@@ -229,7 +229,7 @@ msgstr ""
 #: app/views/dashboard/summary-meta-box.php:108
 #: app/views/dashboard/summary-meta-box.php:130
 #: app/views/dashboard/tools-meta-box.php:37
-#: core/class-configs.php:638
+#: core/class-configs.php:642
 msgid "Active"
 msgstr ""
 
@@ -356,7 +356,7 @@ msgstr ""
 #: app/pages/class-lazy.php:45
 #: app/views/dashboard/summary-meta-box.php:125
 #: app/views/settings/permissions-meta-box.php:80
-#: core/class-configs.php:603
+#: core/class-configs.php:607
 #: _src/react/modules/configs.jsx:147
 #: app/assets/js/smush-react-configs.min.js:6259
 msgid "Lazy Load"
@@ -597,14 +597,14 @@ msgstr ""
 #: app/class-media-library.php:409
 #: app/class-media-library.php:457
 #: app/class-media-library.php:653
-#: core/class-core.php:291
+#: core/class-core.php:307
 #: core/class-rest.php:83
 #: core/integrations/nextgen/class-admin.php:308
 msgid "Not processed"
 msgstr ""
 
 #: app/class-media-library.php:453
-#: core/class-core.php:290
+#: core/class-core.php:306
 msgid "Ignored from auto-smush"
 msgstr ""
 
@@ -662,7 +662,7 @@ msgid "Restore"
 msgstr ""
 
 #: app/class-media-library.php:891
-#: core/class-core.php:266
+#: core/class-core.php:282
 #: core/class-settings.php:242
 #: core/integrations/nextgen/class-admin.php:211
 #: core/integrations/nextgen/class-stats.php:357
@@ -1165,7 +1165,7 @@ msgstr ""
 
 #: app/pages/class-bulk.php:324
 #: app/views/settings/permissions-meta-box.php:37
-#: core/class-configs.php:715
+#: core/class-configs.php:719
 msgid "All"
 msgstr ""
 
@@ -1558,7 +1558,7 @@ msgstr ""
 #: app/views/pro-features/meta-box-header.php:20
 #: app/views/webp/meta-box-header.php:24
 #: core/integrations/class-nextgen.php:704
-#: core/integrations/class-s3.php:417
+#: core/integrations/class-s3.php:421
 #: _src/react/views/webp/steps-bar.jsx:52
 #: app/assets/js/smush-react-webp.min.js:566
 msgid "Pro"
@@ -1610,7 +1610,7 @@ msgstr ""
 #: app/views/dashboard/summary-meta-box.php:117
 #: app/views/dashboard/summary-meta-box.php:134
 #: app/views/dashboard/tools-meta-box.php:39
-#: core/class-configs.php:638
+#: core/class-configs.php:642
 msgid "Inactive"
 msgstr ""
 
@@ -1772,7 +1772,7 @@ msgid "We've detected another active plugin that offers Lazy Load: %s. Smush may
 msgstr ""
 
 #: app/views/lazyload/meta-box.php:59
-#: core/class-configs.php:655
+#: core/class-configs.php:659
 msgid "Media Types"
 msgstr ""
 
@@ -1805,7 +1805,7 @@ msgid "iframe"
 msgstr ""
 
 #: app/views/lazyload/meta-box.php:108
-#: core/class-configs.php:656
+#: core/class-configs.php:660
 msgid "Output Locations"
 msgstr ""
 
@@ -1860,7 +1860,7 @@ msgstr ""
 
 #: app/views/lazyload/meta-box.php:173
 #: app/views/settings/permissions-meta-box.php:33
-#: core/class-configs.php:715
+#: core/class-configs.php:719
 msgid "None"
 msgstr ""
 
@@ -2068,7 +2068,7 @@ msgstr ""
 
 #: app/views/lazyload/meta-box.php:659
 #: app/views/lazyload/meta-box.php:679
-#: core/class-configs.php:661
+#: core/class-configs.php:665
 msgid "Disable Noscript"
 msgstr ""
 
@@ -2711,165 +2711,165 @@ msgid "The given config ID does not exist"
 msgstr ""
 
 #. translators: 1. Resize-size max width, 2. Resize-size max height
-#: core/class-configs.php:556
+#: core/class-configs.php:560
 msgid "Full images max-sizes to resize - Max-width: %1$s. Max height: %2$s"
 msgstr ""
 
-#: core/class-configs.php:601
-#: core/integrations/class-s3.php:179
+#: core/class-configs.php:605
+#: core/integrations/class-s3.php:183
 msgid "Amazon S3"
 msgstr ""
 
-#: core/class-configs.php:602
+#: core/class-configs.php:606
 #: core/integrations/class-nextgen.php:133
 msgid "NextGen Gallery"
 msgstr ""
 
-#: core/class-configs.php:605
+#: core/class-configs.php:609
 msgid "Keep Data On Uninstall"
 msgstr ""
 
-#: core/class-configs.php:657
+#: core/class-configs.php:661
 msgid "Included Post Types"
 msgstr ""
 
-#: core/class-configs.php:658
+#: core/class-configs.php:662
 msgid "Display And Animation"
 msgstr ""
 
-#: core/class-configs.php:659
+#: core/class-configs.php:663
 msgid "Load Scripts In Footer"
 msgstr ""
 
-#: core/class-configs.php:660
+#: core/class-configs.php:664
 msgid "Native Lazy Load Enabled"
 msgstr ""
 
-#: core/class-configs.php:674
+#: core/class-configs.php:678
 msgid "Selected: "
 msgstr ""
 
-#: core/class-configs.php:676
+#: core/class-configs.php:680
 msgid ". Fade in duration: "
 msgstr ""
 
-#: core/class-configs.php:677
+#: core/class-configs.php:681
 msgid ". Fade in delay: "
 msgstr ""
 
-#: core/class-configs.php:681
+#: core/class-configs.php:685
 msgid "Yes"
 msgstr ""
 
-#: core/class-configs.php:681
+#: core/class-configs.php:685
 msgid "No"
 msgstr ""
 
-#: core/class-configs.php:692
+#: core/class-configs.php:696
 msgid "none"
 msgstr ""
 
-#: core/class-core.php:252
+#: core/class-core.php:268
 #: core/integrations/nextgen/class-admin.php:200
 msgid "{{smushed}}/{{total}} images were successfully compressed, {{errors}} encountered issues."
 msgstr ""
 
 #. translators: %1$s - opening link tag, %2$s - </a>
-#: core/class-core.php:256
+#: core/class-core.php:272
 #: core/integrations/nextgen/class-admin.php:204
 msgid "{{smushed}}/{{total}} images were successfully compressed, {{errors}} encountered issues. Are you hitting the 5MB \"size limit exceeded\" warning? %1$sUpgrade to Smush Pro for FREE%2$s to optimize unlimited image files."
 msgstr ""
 
-#: core/class-core.php:265
+#: core/class-core.php:281
 msgid "Your settings have been updated"
 msgstr ""
 
-#: core/class-core.php:267
+#: core/class-core.php:283
 #: core/integrations/nextgen/class-admin.php:212
 msgid "Smush Now"
 msgstr ""
 
-#: core/class-core.php:269
+#: core/class-core.php:285
 #: core/integrations/nextgen/class-admin.php:214
 msgid "All images are fully optimized."
 msgstr ""
 
-#: core/class-core.php:270
+#: core/class-core.php:286
 #: core/integrations/nextgen/class-admin.php:215
 msgid "Restoring image..."
 msgstr ""
 
-#: core/class-core.php:271
+#: core/class-core.php:287
 #: core/integrations/nextgen/class-admin.php:216
 msgid "Smushing image..."
 msgstr ""
 
-#: core/class-core.php:272
+#: core/class-core.php:288
 msgid "We successfully verified your membership, all the Pro features should work completely. "
 msgstr ""
 
-#: core/class-core.php:273
+#: core/class-core.php:289
 msgid "Your membership couldn't be verified."
 msgstr ""
 
-#: core/class-core.php:274
+#: core/class-core.php:290
 msgid "Missing file path."
 msgstr ""
 
-#: core/class-core.php:276
+#: core/class-core.php:292
 msgid "image could not be smushed."
 msgstr ""
 
-#: core/class-core.php:277
+#: core/class-core.php:293
 msgid "images could not be smushed."
 msgstr ""
 
-#: core/class-core.php:278
+#: core/class-core.php:294
 #: core/integrations/nextgen/class-stats.php:270
 #: core/integrations/nextgen/class-stats.php:273
 msgid "Already Optimized"
 msgstr ""
 
-#: core/class-core.php:279
+#: core/class-core.php:295
 msgid "Ajax Error"
 msgstr ""
 
-#: core/class-core.php:280
+#: core/class-core.php:296
 msgid "Something went wrong with the request. Please reload the page and try again."
 msgstr ""
 
-#: core/class-core.php:281
+#: core/class-core.php:297
 msgid "All Done!"
 msgstr ""
 
-#: core/class-core.php:282
+#: core/class-core.php:298
 msgid "Give us a moment while we sync the stats."
 msgstr ""
 
-#: core/class-core.php:284
+#: core/class-core.php:300
 msgid "images optimized"
 msgstr ""
 
-#: core/class-core.php:285
+#: core/class-core.php:301
 msgid "Resume scan"
 msgstr ""
 
-#: core/class-core.php:286
+#: core/class-core.php:302
 msgid "Stop current bulk smush process."
 msgstr ""
 
-#: core/class-core.php:288
+#: core/class-core.php:304
 msgid "Ignore this image from bulk smushing"
 msgstr ""
 
-#: core/class-core.php:294
+#: core/class-core.php:310
 #: _src/react/modules/configs.jsx:62
 #: app/assets/js/smush-react-configs.min.js:6174
 msgid "Dismiss notice"
 msgstr ""
 
 #. translators: %1$s - opening a tag, %2$s - closing a tag
-#: core/class-core.php:296
+#: core/class-core.php:312
 msgid "The widget has been removed. Smush tutorials can still be found in the %1$sTutorials tab%2$s any time."
 msgstr ""
 
@@ -3090,42 +3090,42 @@ msgstr ""
 msgid "Unable to smush image, %s"
 msgstr ""
 
-#: core/integrations/class-s3.php:178
+#: core/integrations/class-s3.php:182
 msgid "Enable Amazon S3 support"
 msgstr ""
 
 #. translators: %1$s - <a>, %2$s - </a>
-#: core/integrations/class-s3.php:181
+#: core/integrations/class-s3.php:185
 msgid ""
 "Storing your image on S3 buckets using %1$sWP Offload Media%2$s? Smush can detect\n"
 "\t\t\t\tand smush those assets for you, including when you're removing files from your host server."
 msgstr ""
 
 #. Translators: %1$s: opening strong tag, %2$s: closing strong tag, %s: settings link, %3$s: opening a and strong tags, %4$s: closing a and strong tags
-#: core/integrations/class-s3.php:303
+#: core/integrations/class-s3.php:307
 msgid "We can see you have WP Offload Media installed with the %1$sRemove Files From Server%2$s option activated. If you want to optimize your S3 images, you’ll need to enable the %3$sAmazon S3 Support%4$s feature in Smush’s Integrations."
 msgstr ""
 
 #. Translators: %1$s: opening strong tag, %2$s: closing strong tag, %s: settings link, %3$s: opening a and strong tags, %4$s: closing a and strong tags
-#: core/integrations/class-s3.php:318
+#: core/integrations/class-s3.php:322
 msgid "We can see you have WP Offload Media installed with the %1$sRemove Files From Server%2$s option activated. If you want to optimize your S3 images you'll need to %3$supgrade to Smush Pro%4$s"
 msgstr ""
 
-#: core/integrations/class-s3.php:361
+#: core/integrations/class-s3.php:365
 msgid "To use this feature you need to install WP Offload Media and have an Amazon S3 account setup."
 msgstr ""
 
 #. translators: %1$s: opening a tag, %2$s: closing a tag
-#: core/integrations/class-s3.php:366
+#: core/integrations/class-s3.php:370
 msgid "We are having trouble interacting with WP Offload Media, make sure the plugin is activated. Or you can %1$sreport a bug%2$s."
 msgstr ""
 
 #. translators: %1$s: opening a tag, %2$s: closing a tag
-#: core/integrations/class-s3.php:377
+#: core/integrations/class-s3.php:381
 msgid "It seems you haven’t finished setting up WP Offload Media yet. %1$sConfigure it now%2$s to enable Amazon S3 support."
 msgstr ""
 
-#: core/integrations/class-s3.php:387
+#: core/integrations/class-s3.php:391
 msgid "Amazon S3 support is active."
 msgstr ""
 
@@ -3224,43 +3224,43 @@ msgstr ""
 msgid "Too many requests, please try again in a moment."
 msgstr ""
 
-#: core/modules/class-dir.php:250
+#: core/modules/class-dir.php:251
 msgid "Incorrect image id"
 msgstr ""
 
-#: core/modules/class-dir.php:282
+#: core/modules/class-dir.php:283
 msgid "Potential Phar PHP Object Injection detected"
 msgstr ""
 
-#: core/modules/class-dir.php:302
+#: core/modules/class-dir.php:303
 msgid "Image couldn't be optimized"
 msgstr ""
 
-#: core/modules/class-dir.php:519
-#: core/modules/class-dir.php:530
-#: core/modules/class-dir.php:775
-#: core/modules/class-dir.php:893
+#: core/modules/class-dir.php:520
+#: core/modules/class-dir.php:531
+#: core/modules/class-dir.php:776
+#: core/modules/class-dir.php:892
 msgid "Unauthorized"
 msgstr ""
 
-#: core/modules/class-dir.php:702
+#: core/modules/class-dir.php:704
 msgid "There was a problem getting the selected directories"
 msgstr ""
 
-#: core/modules/class-dir.php:901
+#: core/modules/class-dir.php:900
 msgid "Empty Directory Path"
 msgstr ""
 
-#: core/modules/class-dir.php:916
+#: core/modules/class-dir.php:915
 msgid "We could not find any images in the selected directory."
 msgstr ""
 
 #. translators: %s: total number of images
-#: core/modules/class-dir.php:1222
+#: core/modules/class-dir.php:1217
 msgid "You've smushed %d images in total."
 msgstr ""
 
-#: core/modules/class-dir.php:1299
+#: core/modules/class-dir.php:1294
 msgid "Directory smushing requires custom tables and it seems there was an error creating tables. For help, please contact our team on the support forums."
 msgstr ""
 
@@ -3348,38 +3348,38 @@ msgstr ""
 msgid "Image couldn't be smushed"
 msgstr ""
 
-#: core/modules/class-smush.php:832
+#: core/modules/class-smush.php:833
 msgid "No attachment ID was received."
 msgstr ""
 
-#: core/modules/class-smush.php:844
+#: core/modules/class-smush.php:845
 msgid "Skip ignored file."
 msgstr ""
 
 #. translators: %d - attachment ID
-#: core/modules/class-smush.php:848
-#: core/modules/class-smush.php:864
-#: core/modules/class-smush.php:888
+#: core/modules/class-smush.php:849
+#: core/modules/class-smush.php:865
+#: core/modules/class-smush.php:889
 msgid "undefined (attachment ID: %d)"
 msgstr ""
 
-#: core/modules/class-smush.php:860
+#: core/modules/class-smush.php:861
 msgid "File is in progress."
 msgstr ""
 
-#: core/modules/class-smush.php:884
+#: core/modules/class-smush.php:885
 msgid "No file data found in image meta"
 msgstr ""
 
-#: core/modules/class-smush.php:916
+#: core/modules/class-smush.php:917
 msgid "Skipped with wp_smush_image filter"
 msgstr ""
 
-#: core/modules/class-smush.php:931
+#: core/modules/class-smush.php:932
 msgid "Image not found."
 msgstr ""
 
-#: core/modules/class-smush.php:943
+#: core/modules/class-smush.php:944
 msgid "Skip animate file."
 msgstr ""
 
@@ -3401,29 +3401,29 @@ msgstr ""
 msgid "We couldn't check the WebP server rules status because there was an error with the test request. Please contact support for assistance. Code %1$s: %2$s."
 msgstr ""
 
-#: core/modules/class-webp.php:545
+#: core/modules/class-webp.php:553
 msgid "Webp no response was received."
 msgstr ""
 
-#: core/modules/class-webp.php:688
+#: core/modules/class-webp.php:696
 msgid "WebP files were deleted successfully."
 msgstr ""
 
 #. translators: 1. opening 'a' tag to premium support, 2. closing 'a' tag.
-#: core/modules/class-webp.php:823
+#: core/modules/class-webp.php:831
 msgid "We tried to apply the .htaccess rules automatically but we were unable to complete this action. Make sure the file permissions on your .htaccess file are set to 644, or switch to manual mode and apply the rules yourself. If you need further assistance, you can %1$scontact support%2$s for help."
 msgstr ""
 
 #. translators: 1. opening 'a' tag to docs, 2. opening 'a' tag to premium support, 3. closing 'a' tag.
-#: core/modules/class-webp.php:830
+#: core/modules/class-webp.php:838
 msgid "We tried different rules but your server still isn't serving WebP images. Please contact your hosting provider for further assistance. You can also see our %1$stroubleshooting guide%3$s or %2$scontact support%3$s for help."
 msgstr ""
 
-#: core/modules/class-webp.php:899
+#: core/modules/class-webp.php:907
 msgid "The .htaccess file doesn't contain the WebP rules from Smush."
 msgstr ""
 
-#: core/modules/class-webp.php:913
+#: core/modules/class-webp.php:921
 msgid "We were unable to automatically remove the rules. We recommend trying to remove the rules manually. If you don’t have access to the .htaccess file to remove it manually, please consult with your hosting provider to change the configuration on the server."
 msgstr ""
 

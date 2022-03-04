@@ -35,10 +35,6 @@
 				</h4>
 				<h4>
 					<span style="margin-right:10px;"><i class="sui-icon-check" aria-hidden="true"></i></span>
-					<?php echo __('Dedicated WordPress hosting up to 3 sites for FREE', 'wpmudev'); ?>
-				</h4>
-				<h4>
-					<span style="margin-right:10px;"><i class="sui-icon-check" aria-hidden="true"></i></span>
 					<?php echo __('Manage unlimited WordPress sites from the Hub', 'wpmudev'); ?>
 				</h4>
 				<h4>

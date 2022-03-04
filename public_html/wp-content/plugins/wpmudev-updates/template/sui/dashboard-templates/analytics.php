@@ -11,7 +11,7 @@
 
 $data     = array();
 $days_ago = 7; // Show a week of stats here.
-if ( WPMUDEV_Dashboard::$api->is_analytics_allowed() ) {
+if ( $analytics_enabled && WPMUDEV_Dashboard::$api->is_analytics_allowed() ) {
 	if ( is_network_admin() || ! is_multisite() ) {
 		$data = WPMUDEV_Dashboard::$api->analytics_stats_overall( $days_ago );
 	} else {

@@ -12,6 +12,7 @@
 
 namespace Smush\Core\Modules;
 
+use Exception;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Smush\Core\Core;
@@ -279,7 +280,7 @@ class Dir extends Abstract_Module {
 		if ( false !== stripos( $path, 'phar://' ) ) {
 			wp_send_json_error(
 				array(
-					'error' => esc_html_e( 'Potential Phar PHP Object Injection detected', 'wp-smushit' ),
+					'error' => esc_html__( 'Potential Phar PHP Object Injection detected', 'wp-smushit' ),
 					'image' => array(
 						'id' => $id,
 					),
@@ -543,15 +544,16 @@ class Dir extends Abstract_Module {
 	 */
 	private function get_directory_tree( $dir = null ) {
 		// Get the root path for a main site or subsite.
-		$root     = realpath( $this->get_root_path() );
-		// PHP 8.1 strlen doesn't accept null.
+		$root = realpath( $this->get_root_path() );
+
+        // PHP 8.1 strlen doesn't accept null.
 		if ( ! is_null( $dir ) && strlen( $dir ) >= 1 ) {
 			$post_dir = path_join( $root, $dir );
 		} else {
 			$post_dir = $root;
 		}
 
-		// If the final path doesn't contains the root path, bail out.
+		// If the final path doesn't contain the root path, bail out.
 		if ( ! $root || false === $post_dir || 0 !== strpos( $post_dir, $root ) ) {
 			return false;
 		}
@@ -620,7 +622,7 @@ class Dir extends Abstract_Module {
 		if ( is_main_site() ) {
 			/**
 			 * Sometimes content directories may reside outside
-			 * the installation sub directory. We need to make sure
+			 * the installation sub-directory. We need to make sure
 			 * we are selecting the root directory, not installation
 			 * directory.
 			 *
@@ -628,7 +630,7 @@ class Dir extends Abstract_Module {
 			 * @see https://app.asana.com/0/14491813218786/487682361460247/f
 			 */
 			$content_path = explode( '/', wp_normalize_path( WP_CONTENT_DIR ) );
-			// Get root path and explod.
+			// Get root path and explode.
 			$root_path = explode( '/', get_home_path() );
 
 			// Find the length of the shortest one.
@@ -693,7 +695,7 @@ class Dir extends Abstract_Module {
 	 *
 	 * @param string|array $paths  Path where to look for images, or selected images.
 	 *
-	 * @throws \Exception Never, actually. Supposedly, when an invalid directory was selected.
+	 * @throws Exception Never, actually. Supposedly, when an invalid directory was selected.
 	 * @return array
 	 */
 	private function get_image_list( $paths = '' ) {
@@ -727,10 +729,9 @@ class Dir extends Abstract_Module {
 			/**
 			 * Path is an image.
 			 *
-			 * @TODO: The is_dir() check fails directories with spaces.
+			 * TODO: The is_dir() check fails directories with spaces.
 			 */
 			if ( ! is_dir( $path ) && ! $this->is_media_library_file( $path ) && ! strpos( $path, '.bak' ) ) {
-
 				if ( ! $this->is_image( $path ) ) {
 					continue;
 				}
@@ -866,9 +867,7 @@ class Dir extends Abstract_Module {
 
 		// Replace with image path and respective parameters.
 		$query = "INSERT INTO {$wpdb->prefix}smush_dir_images (path, path_hash, orig_size, file_time, last_scan) VALUES $values ON DUPLICATE KEY UPDATE image_size = IF( file_time < VALUES(file_time), NULL, image_size ), file_time = IF( file_time < VALUES(file_time), VALUES(file_time), file_time ), last_scan = VALUES( last_scan )";
-		$query = $wpdb->prepare( $query, $images ); // Db call ok; no-cache ok.
-
-		return $query;
+		return $wpdb->prepare( $query, $images ); // Db call ok; no-cache ok.
 	}
 
 	/**
@@ -907,7 +906,7 @@ class Dir extends Abstract_Module {
 		try {
 			// This will add the images to the database and get the file list.
 			$files = $this->get_image_list( $smush_path );
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			$this->send_error( $e->getMessage() );
 		}
 
@@ -941,8 +940,8 @@ class Dir extends Abstract_Module {
 
 		$a = @getimagesize( $path );
 
-		// If a is not set.
-		if ( ! $a || empty( $a ) ) {
+		// If $a is not set.
+		if ( empty( $a ) ) {
 			return false;
 		}
 
@@ -968,9 +967,7 @@ class Dir extends Abstract_Module {
 		$admin_path = rtrim( str_replace( get_bloginfo( 'url' ) . '/', ABSPATH, get_admin_url() ), '/' );
 
 		// Make it filterable, so other plugins can hook into it.
-		$admin_path = apply_filters( 'wp_smush_get_admin_path', $admin_path );
-
-		return $admin_path;
+		return apply_filters( 'wp_smush_get_admin_path', $admin_path );
 	}
 
 	/**
@@ -978,7 +975,7 @@ class Dir extends Abstract_Module {
 	 *
 	 * @param string $path  File path.
 	 *
-	 * @return bool Whether a image or not
+	 * @return bool Whether an image or not
 	 */
 	private function is_image_from_extension( $path ) {
 		$supported_image = array( 'gif', 'jpg', 'jpeg', 'png' );
@@ -1038,9 +1035,7 @@ class Dir extends Abstract_Module {
 		}
 
 		// Can be used to skip/include folders matching a specific directory path.
-		$skip = apply_filters( 'wp_smush_skip_folder', $skip, $path );
-
-		return $skip;
+		return apply_filters( 'wp_smush_skip_folder', $skip, $path );
 	}
 
 	/**
@@ -1133,7 +1128,7 @@ class Dir extends Abstract_Module {
 		if ( ! empty( $this->stats ) && ! empty( $this->stats['orig_size'] ) ) {
 			$this->stats['bytes']   = ( $this->stats['orig_size'] > $this->stats['image_size'] ) ? $this->stats['orig_size'] - $this->stats['image_size'] : 0;
 			$this->stats['percent'] = number_format_i18n( ( ( $this->stats['bytes'] / $this->stats['orig_size'] ) * 100 ), 1 );
-			// Convert to human readable form.
+			// Convert to human-readable form.
 			$this->stats['human'] = size_format( $this->stats['bytes'], 1 );
 		}
 
@@ -1263,7 +1258,7 @@ class Dir extends Abstract_Module {
 		// If not already checked, check.
 		$table_exist = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->base_prefix . 'smush_dir_images' ) ) ); // Db call ok; no-cache ok.
 
-		self::$table_exist = $table_exist ? true : false;
+		self::$table_exist = (bool) $table_exist;
 
 		return self::$table_exist;
 	}

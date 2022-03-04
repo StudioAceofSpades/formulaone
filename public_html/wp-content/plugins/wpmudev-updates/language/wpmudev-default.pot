@@ -1,15 +1,15 @@
-# Copyright (C) 2021 WPMU DEV
+# Copyright (C) 2022 WPMU DEV
 # This file is distributed under the same license as the WPMU DEV Dashboard plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WPMU DEV Dashboard 4.11.8\n"
+"Project-Id-Version: WPMU DEV Dashboard 4.11.9\n"
 "Report-Msgid-Bugs-To: https://wpmudev.com\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-12-26T17:19:57+05:30\n"
+"POT-Creation-Date: 2022-02-25T10:54:31+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: wpmudev\n"
@@ -99,97 +99,101 @@ msgstr ""
 msgid "Your API Key was invalid. Please try again."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2760
-#: includes/class-wpmudev-dashboard-api.php:3118
+#: includes/class-wpmudev-dashboard-api.php:2767
+#: includes/class-wpmudev-dashboard-api.php:3125
 #: includes/class-wpmudev-dashboard-ui.php:806
 #: template/sui/analytics.php:209
 #: template/sui/dashboard-templates/analytics.php:131
 msgid "Bounce Rate"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2765
-#: includes/class-wpmudev-dashboard-api.php:3123
+#: includes/class-wpmudev-dashboard-api.php:2772
+#: includes/class-wpmudev-dashboard-api.php:3130
 #: includes/class-wpmudev-dashboard-ui.php:811
 #: template/sui/analytics.php:220
 msgid "Exit Rate"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2770
+#: includes/class-wpmudev-dashboard-api.php:2777
 #: includes/class-wpmudev-dashboard-ui.php:796
 #: template/sui/analytics.php:187
 #: template/sui/dashboard-templates/analytics.php:127
 msgid "Visit Time"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2775
-#: includes/class-wpmudev-dashboard-api.php:3128
+#: includes/class-wpmudev-dashboard-api.php:2782
+#: includes/class-wpmudev-dashboard-api.php:3135
 #: includes/class-wpmudev-dashboard-ui.php:801
 #: template/sui/analytics.php:198
 #: template/sui/dashboard-templates/analytics.php:135
 msgid "Entrances"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2780
+#: includes/class-wpmudev-dashboard-api.php:2787
 msgid "Unique Visits"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2785
+#: includes/class-wpmudev-dashboard-api.php:2792
 #: includes/class-wpmudev-dashboard-ui.php:781
 #: template/sui/analytics.php:165
 msgid "Page Views"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2790
+#: includes/class-wpmudev-dashboard-api.php:2797
 #: includes/class-wpmudev-dashboard-ui.php:786
 #: template/sui/analytics.php:176
 msgid "Unique Page Views"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2800
-#: includes/class-wpmudev-dashboard-api.php:3138
+#: includes/class-wpmudev-dashboard-api.php:2807
+#: includes/class-wpmudev-dashboard-api.php:3145
 msgid "Pageviews"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2805
-#: includes/class-wpmudev-dashboard-api.php:3143
+#: includes/class-wpmudev-dashboard-api.php:2812
+#: includes/class-wpmudev-dashboard-api.php:3150
 msgid "Unique Pageviews"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2810
-#: includes/class-wpmudev-dashboard-api.php:3133
+#: includes/class-wpmudev-dashboard-api.php:2817
+#: includes/class-wpmudev-dashboard-api.php:3140
 #: includes/class-wpmudev-dashboard-ui.php:791
 msgid "Page Time"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:2963
-#: includes/class-wpmudev-dashboard-api.php:2964
+#: includes/class-wpmudev-dashboard-api.php:2970
+#: includes/class-wpmudev-dashboard-api.php:2971
 msgid "Page: %s"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:3005
-#: includes/class-wpmudev-dashboard-api.php:3006
+#: includes/class-wpmudev-dashboard-api.php:3012
+#: includes/class-wpmudev-dashboard-api.php:3013
 msgid "Site: %s"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:3052
-#: includes/class-wpmudev-dashboard-api.php:3053
+#: includes/class-wpmudev-dashboard-api.php:3059
+#: includes/class-wpmudev-dashboard-api.php:3060
 msgid "Author: %s"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-api.php:3320
+#: includes/class-wpmudev-dashboard-api.php:3327
 msgid "%s min"
 msgid_plural "%s mins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wpmudev-dashboard-api.php:3323
+#: includes/class-wpmudev-dashboard-api.php:3330
 msgid "%s sec"
 msgid_plural "%s secs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wpmudev-dashboard-api.php:3326
+#: includes/class-wpmudev-dashboard-api.php:3333
 msgid "%s ms"
+msgstr ""
+
+#: includes/class-wpmudev-dashboard-compatibility.php:66
+msgid "Tracking visitors details."
 msgstr ""
 
 #: includes/class-wpmudev-dashboard-notice.php:475
@@ -209,7 +213,7 @@ msgid "Request failed."
 msgstr ""
 
 #: includes/class-wpmudev-dashboard-remote.php:200
-#: includes/class-wpmudev-dashboard-utils.php:182
+#: includes/class-wpmudev-dashboard-utils.php:191
 msgid "Invalid request."
 msgstr ""
 
@@ -230,7 +234,6 @@ msgid "Incorrect authentication"
 msgstr ""
 
 #: includes/class-wpmudev-dashboard-remote.php:365
-#: includes/class-wpmudev-dashboard-utils.php:169
 msgid "Nonce check failed"
 msgstr ""
 
@@ -265,55 +268,55 @@ msgstr ""
 msgid "Passed invalid value for param \"status\", it must be either \"enabled\" or \"disabled\""
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:1548
+#: includes/class-wpmudev-dashboard-site.php:1550
 msgid "Requires Multisite"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:1552
+#: includes/class-wpmudev-dashboard-site.php:1554
 msgid "Requires BuddyPress"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:1556
+#: includes/class-wpmudev-dashboard-site.php:1558
 #: template/sui/element-project-info.php:166
 msgid "Incompatible"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:2262
+#: includes/class-wpmudev-dashboard-site.php:2264
 msgid "<b>The Upfront parent theme is missing!</b><br>Please install it to use your Upfront child themes"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:2289
+#: includes/class-wpmudev-dashboard-site.php:2291
 msgid "Awesome news for Upfront"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:2290
+#: includes/class-wpmudev-dashboard-site.php:2292
 msgid "We have a new version of Upfront for you! Install it right now to get all the latest improvements and features."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3521
+#: includes/class-wpmudev-dashboard-site.php:3532
 msgid "Failed to find plugin id."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3786
+#: includes/class-wpmudev-dashboard-site.php:3797
 msgid "you can now enable direct login to all your sites from The WPMU DEV Hub. To do this we don't store any passwords or usernames, you just need to visit the Dashboard's Settings area and check 'Enable Single Sign-on for this website'."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3796
+#: includes/class-wpmudev-dashboard-site.php:3807
 msgid "Single Sign-on Settings"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3797
+#: includes/class-wpmudev-dashboard-site.php:3808
 #: shared-ui/plugin-ui.php:272
 #: template/sui/wpmudev_default_notice.php:11
 msgid "Saving"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3798
+#: includes/class-wpmudev-dashboard-site.php:3809
 #: shared-ui/plugin-ui.php:301
 msgid "Dismiss"
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-site.php:3799
+#: includes/class-wpmudev-dashboard-site.php:3810
 msgid "Dismiss this notice."
 msgstr ""
 
@@ -753,8 +756,12 @@ msgstr ""
 msgid "Plugin Uninstall hook could not be removed."
 msgstr ""
 
-#: includes/class-wpmudev-dashboard-utils.php:159
+#: includes/class-wpmudev-dashboard-utils.php:168
 msgid "Required parameters are missing"
+msgstr ""
+
+#: includes/class-wpmudev-dashboard-utils.php:178
+msgid "Admin request nonce check failed"
 msgstr ""
 
 #. translators: %s Heart icon.
@@ -981,22 +988,18 @@ msgid "White label tools"
 msgstr ""
 
 #: template/sui/dashboard-templates/expired_membership_info.php:38
-msgid "Dedicated WordPress hosting up to 3 sites for FREE"
-msgstr ""
-
-#: template/sui/dashboard-templates/expired_membership_info.php:42
 msgid "Manage unlimited WordPress sites from the Hub"
 msgstr ""
 
-#: template/sui/dashboard-templates/expired_membership_info.php:46
+#: template/sui/dashboard-templates/expired_membership_info.php:42
 msgid "24/7 live WordPress support"
 msgstr ""
 
-#: template/sui/dashboard-templates/expired_membership_info.php:50
+#: template/sui/dashboard-templates/expired_membership_info.php:46
 msgid "The WPMU DEV Guarantee"
 msgstr ""
 
-#: template/sui/dashboard-templates/expired_membership_info.php:52
+#: template/sui/dashboard-templates/expired_membership_info.php:48
 #: template/sui/element-project-info/plugin-row.php:501
 #: template/sui/header-no-access.php:86
 #: template/sui/plugins.php:219

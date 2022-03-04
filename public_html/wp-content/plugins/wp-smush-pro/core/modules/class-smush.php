@@ -551,6 +551,7 @@ class Smush extends Abstract_Module {
 			return $meta;
 		}
 
+		// Maybe add scaled file to the meta sizes.
 		$meta = apply_filters( 'wp_smush_add_scaled_images_to_meta', $meta, $attachment_id );
 
 		// Flag to check, if uploaded size image should be smushed or not.
@@ -1025,13 +1026,16 @@ class Smush extends Abstract_Module {
 		 */
 		do_action_ref_array( 'wp_smush_after_smush_file', array( $attachment_id, $ref_meta, &$ref_errors ) );
 
-		// Log all errors.
-		if ( $ref_errors && is_wp_error( $ref_errors ) && $ref_errors->has_errors() ) {
-			Helper::logger()->error( $ref_errors->errors );
-			$has_error = true;
-		} elseif ( ! $generating_metadata ) {
-			// If is not doing generate metadata, we will update the metadata after smushing, so that latest image is used in hook.
+		// Maybe update metadata after smushing image.
+		$has_error = $has_error || $ref_errors && is_wp_error( $ref_errors ) && $ref_errors->has_errors();
+		// Update the metadata if there are no errors or converted PNG2JPG or resized image.
+		if ( isset( $generating_metadata ) && ! $generating_metadata && ( ! $has_error || did_action( 'wp_smush_png_jpg_converted' ) || did_action( 'wp_smush_image_resized' ) ) ) {
 			Helper::wp_update_attachment_metadata( $attachment_id, $ref_meta );
+		}
+
+		// Log all errors.
+		if ( $has_error ) {
+			Helper::logger()->error( $ref_errors->errors );
 		}
 
 		// Delete the transient after attachment meta is updated.
@@ -1053,14 +1057,9 @@ class Smush extends Abstract_Module {
 	 */
 	public function smush_image( $meta, $id ) {
 		// We need to check if this call originated from Gutenberg and allow only media.
-		if ( ! empty( $GLOBALS['wp']->query_vars['rest_route'] ) ) {
-			$route = untrailingslashit( $GLOBALS['wp']->query_vars['rest_route'] );
-
-			// Only allow media routes.
-			if ( empty( $route ) || '/wp/v2/media' !== $route ) {
-				// If not - return image metadata.
-				return $this->no_smushit( $id, null, $meta );
-			}
+		if ( Helper::is_non_rest_media() ) {
+			// If not - return image metadata.
+			return $this->no_smushit( $id, null, $meta );
 		}
 
 		$upload_attachment    = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_SPECIAL_CHARS );
@@ -1347,7 +1346,7 @@ class Smush extends Abstract_Module {
 	 */
 	public function add_scaled_to_meta( $meta, $attachment_id ) {
 		// If the image is not a scaled version - do nothing.
-		if ( false === strpos( $meta['file'], '-scaled.' ) || ! isset( $meta['original_image'] ) ) {
+		if ( false === strpos( $meta['file'], '-scaled.' ) || ! isset( $meta['original_image'] ) || isset( $meta['sizes']['wp_scaled'] ) ) {
 			return $meta;
 		}
 

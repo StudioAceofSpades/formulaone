@@ -6,6 +6,13 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+= 3.9.7 ( 2022-03-01 ) =
+
+- Fix: Local WebP is not activated on applying config after reset settings
+- Fix: Missing webp file for WP scaled images
+- Fix: Fatal error on PHP 5.6
+- Fix: Compatibility issue with WP Offload Media
+
 = 3.9.6 ( 2022-02-09 ) =
 
 - Enhance: Do not close the Directory Smush modal in case of error
@@ -159,4 +166,4 @@ Change Log:
 
 
 
-861672-1645629460-au
+861672-1646421918-au

@@ -677,6 +677,28 @@ class Helper {
 		return delete_post_meta( $attachment_id, 'wp-smush-ignore-bulk' );
 	}
 
+	/**
+	 * Returns TRUE if the current request is REST API but is not media endpoint.
+	 *
+	 * @since 3.9.7
+	 */
+	public static function is_non_rest_media() {
+		static $is_not_rest_media;
+		if ( null === $is_not_rest_media ) {
+			$is_not_rest_media = false;
+			// We need to check if this call originated from Gutenberg and allow only media.
+			if ( ! empty( $GLOBALS['wp']->query_vars['rest_route'] ) ) {
+				$route = untrailingslashit( $GLOBALS['wp']->query_vars['rest_route'] );
+
+				// Only allow media routes.
+				if ( empty( $route ) || '/wp/v2/media' !== $route ) {
+					// If not - return image metadata.
+					$is_not_rest_media = true;
+				}
+			}
+		}
+		return $is_not_rest_media;
+	}
 
 	/*------ S3 Compatible Methods ------*/
 
@@ -792,7 +814,8 @@ class Helper {
 	 */
 	public static function file_exists( $file, $attachment_id = null, $should_download = false, $force_cache = false ) {
 		// If file is an attachment id we will reset the arguments.
-		if ( $file && is_int( $file ) ) {
+		// Use is_numeric for common case.
+		if ( $file && is_numeric( $file ) ) {
 			$attachment_id = $file;
 			$file = null;
 		}
@@ -861,7 +884,7 @@ class Helper {
 	 *
 	 * @since 3.9.6
 	 *
-	 * @param string|int $file  		File path or File ID.
+	 * @param string|int $file          File path or File ID.
 	 * @param int|null   $attachment_id File ID.
 	 *
 	 * @return bool Returns TRUE if file exists on the server.

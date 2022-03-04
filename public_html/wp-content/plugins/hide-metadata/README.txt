@@ -3,7 +3,7 @@ Contributors: catchplugins, catchthemes, sakinshrestha, pratikshrestha, maheshma
 Donate link: https://catchplugins.com/plugins/hide-metadata/
 Tags: hide, hide author, show hide author, hide posted-on, date, byline, author, hide meta
 Requires at least: 4.8
-Tested up to: 5.8
+Tested up to: 5.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,9 @@ Not so easy way (via FTP) :
 * Go to **Hide/Remove Metadata** from Dashboard menu
 
 == Changelog ==
+
+= 1.2.5 (Released: February 24, 2022) =
+* Compatibility check up to version 5.9
 
 = 1.2.4 (Released: August 05, 2021) =
 * Bug Fixed: User icon still showing when PHP is selected.

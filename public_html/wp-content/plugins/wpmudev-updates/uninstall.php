@@ -13,7 +13,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit();
 
 // Get uninstall settings.
 $keep_data     = get_site_option( 'wdp_un_data_keep_data' );
-$keep_settings = get_site_option( 'wdp_un_data_preserve_settings' );
+$keep_settings = get_site_option( 'wdp_un_data_preserve_settings' );		 	  	  		  	 					
 
 global $wpdb;
 

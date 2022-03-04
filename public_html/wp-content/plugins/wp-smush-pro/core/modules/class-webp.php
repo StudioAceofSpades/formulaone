@@ -495,6 +495,8 @@ class WebP extends Abstract_Module {
 		if ( ! $this->should_be_converted( $attachment_id ) ) {
 			return $webp_files;
 		}
+		// Maybe add scaled image file to the meta sizes.
+		$meta = apply_filters( 'wp_smush_add_scaled_images_to_meta', $meta, $attachment_id );
 
 		// File path and URL for original image.
 		$file_path = Helper::get_attached_file( $attachment_id );// S3+.
@@ -505,7 +507,13 @@ class WebP extends Abstract_Module {
 
 		// If images has other registered size, smush them first.
 		if ( ! empty( $meta['sizes'] ) && ! has_filter( 'wp_image_editors', 'photon_subsizes_override_image_editors' ) ) {
-			$converted_thumbs = array();
+			/**
+			 * Add the full image as a converted image to avoid doing it duplicate.
+			 * E.g. Exclude the scaled file when disable compress the original image.
+			 */
+			$converted_thumbs = array(
+				basename( $file_path ) => 1,
+			);
 			foreach ( $meta['sizes'] as $size_data ) {
 				// Some thumbnail sizes are using the same image path, so check if the thumbnail file is converted.
 				if ( isset( $converted_thumbs[ $size_data['file'] ] ) ) {

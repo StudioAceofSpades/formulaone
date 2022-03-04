@@ -325,6 +325,10 @@ class Configs {
 				// Update the flag file when local webp changes.
 				if ( isset( $new_settings['webp_mod'] ) && $new_settings['webp_mod'] !== $stored_settings['webp_mod'] ) {
 					WP_Smush::get_instance()->core()->mod->webp->toggle_webp( $new_settings['webp_mod'] );
+					// Hide the wizard form if Local Webp is configured.
+					if ( WP_Smush::get_instance()->core()->mod->webp->is_configured() ) {
+						update_site_option( 'wp-smush-webp_hide_wizard', 1 );
+					}
 				}
 
 				// Update the CDN status for CDN changes.

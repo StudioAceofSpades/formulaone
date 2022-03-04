@@ -806,6 +806,21 @@ class WPMUDEV_Dashboard_Api {
 	}
 
 	/**
+	 * Checks if feature is allowed for membership plan by feature string.
+	 *
+	 * This is here for other plugins to check feature availability.
+	 *
+	 * @param string $feature Feature string.
+	 *
+	 * @since 4.11.9
+	 *
+	 * @return boolean is allowed.
+	 */
+	public function has_access( $feature ) {
+		return $this->is_feature_allowed( $feature );
+	}
+
+	/**
 	 * Checks if whitelabel is allowed by membership plan.
 	 *
 	 * @return boolean is allowed.
@@ -943,12 +958,8 @@ class WPMUDEV_Dashboard_Api {
 
 		// Extract and collect details we need.
 		foreach ( $plugins as $slug => $data ) {
-
-			if ( is_multisite() ) {
-				$active = is_plugin_active_for_network( $slug ) || is_plugin_active( $slug );
-			} else {
-				$active = is_plugin_active( $slug );
-			}
+			// Only network active plugin should be considered as active.
+			$active = is_multisite() ? is_plugin_active_for_network( $slug ) : is_plugin_active( $slug );
 
 			$packages['plugins'][ $slug ] = array(
 				'name'       => $data['Name'],
@@ -962,7 +973,6 @@ class WPMUDEV_Dashboard_Api {
 		}
 
 		foreach ( $themes as $slug => $theme ) {
-
 			if ( is_multisite() ) {
 				$active = $theme->is_allowed() || get_stylesheet() == $slug; // network enabled or on main site
 			} else {
@@ -1209,22 +1219,19 @@ class WPMUDEV_Dashboard_Api {
 		$theme      = wp_get_theme();
 		$ms_allowed = $theme->get_allowed();
 		foreach ( $local_projects as $pid => $item ) {
-			if ( is_multisite() ) {
-				if ( 'theme' == $item['type'] ) {
-					$slug   = dirname( $item['filename'] );
+			if ( 'theme' == $item['type'] ) {
+				$slug = dirname( $item['filename'] );
+				if ( is_multisite() ) {
 					$active = ! empty( $ms_allowed[ $slug ] ) || ( $theme->stylesheet == $slug || $theme->template == $slug ); // network enabled or on main site
 				} else {
-					$active = is_plugin_active_for_network( $item['filename'] ) || is_plugin_active( $item['filename'] ); // network or main site
-				}
-			} else {
-				if ( 'theme' == $item['type'] ) {
-					$slug = dirname( $item['filename'] );
 					// If the theme is available on main site it's "active".
 					$active = ( $theme->stylesheet == $slug || $theme->template == $slug );
-				} else {
-					$active = is_plugin_active( $item['filename'] );
 				}
+			} else {
+				// On multisite, only consider network active plugins as active.
+				$active = is_multisite() ? is_plugin_active_for_network( $item['filename'] ) : is_plugin_active( $item['filename'] );
 			}
+
 			$extra = '';
 
 			/**

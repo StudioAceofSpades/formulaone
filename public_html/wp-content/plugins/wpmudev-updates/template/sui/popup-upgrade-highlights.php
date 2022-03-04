@@ -9,7 +9,7 @@
  * @since   4.11.0
  */
 
-defined( 'WPINC' ) || die();		 	  	  		  	 					
+defined( 'WPINC' ) || die();
 ?>
 
 <div class="sui-modal sui-modal-md">
