@@ -28,6 +28,9 @@ form {
             margin-left: 5px;
         }
     }
+    .ginput_recaptcha {
+        margin-bottom: 20px;
+    }
 
     input {
         @extend .all-inputs;
