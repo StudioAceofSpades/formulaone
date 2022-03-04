@@ -267,6 +267,12 @@ abstract class Field implements FieldInterface {
             return FALSE;
         }
 
+        // Do not import empty fields.
+        $value = $this->getFieldValue();
+        if ($value === '' && ! in_array($this->getType(), ['group', 'repeater', 'clone', 'flexible_content', 'button_group'])) {
+            return FALSE;
+        }
+
         switch ($this->getImportType()) {
             case 'import_users':
                 update_user_meta($this->getPostID(), "_" . $this->getFieldName(), $this->getFieldKey());

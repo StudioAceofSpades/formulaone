@@ -234,10 +234,13 @@ final class ACFService{
      * @param array $post_types
      * @return array
      */
-    public static function get_posts_by_relationship($values, $post_types = array()){
+    public static function get_posts_by_relationship($values, $post_types){
         $post_ids = array();
         $values = array_filter($values);
         if (!empty($values)) {
+			if (!empty($post_types) && !is_array($post_types)) {
+				$post_types = [$post_types];
+			}
             $values = array_map('trim', $values);
             global $wpdb;
             foreach ($values as $ev) {

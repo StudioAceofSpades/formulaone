@@ -98,12 +98,14 @@ class FieldCloneV5 extends Field {
 	                $acf_groups = acf_get_field_groups();
                     if (!empty($acf_groups)){
                         foreach ($acf_groups as $acf_group){
-	                        $groupFields = acf_get_fields($acf_group);
-                            if (!empty($groupFields)){
-                                foreach ($groupFields as $groupField){
-                                    $fieldsData[] = $groupField;
-                                }
-                            }
+							if ($acf_group['key'] == $sub_field_key) {
+								$groupFields = acf_get_fields($acf_group);
+								if (!empty($groupFields)){
+									foreach ($groupFields as $groupField){
+										$fieldsData[] = $groupField;
+									}
+								}
+							}
                         }
                     }
                 } else {

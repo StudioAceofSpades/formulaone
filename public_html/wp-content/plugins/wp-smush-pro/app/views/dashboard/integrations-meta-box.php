@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
 			<?php
 			$disable = apply_filters( 'wp_smush_integration_status_' . $name, false ); // Disable setting.
 			$upsell  = ! in_array( $name, $basic_features, true ) && ! $is_pro; // Gray out row, disable setting.
-			$value   = ! ( $upsell || empty( $settings[ $name ] ) || $disable ) && $settings[ $name ];
+			$value   = ! ( $upsell || empty( $settings[ $name ] ) || $disable ) && $settings[ $name ];		 		   	   	    		  
 			?>
 			<tr class="<?php echo $upsell ? 'smush-disabled-table-row' : ''; ?>">
 				<td class="sui-table-item-title">
