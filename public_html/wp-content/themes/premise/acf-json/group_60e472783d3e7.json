@@ -40,6 +40,30 @@
                             "toolbar": "full",
                             "media_upload": 1,
                             "delay": 1
+                        },
+                        {
+                            "key": "field_6222802413a7d",
+                            "label": "Sizing",
+                            "name": "sizing",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "standard": "Standard",
+                                "wide": "Wide"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "default_value": "",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "save_other_choice": 0
                         }
                     ],
                     "min": "",
@@ -852,5 +876,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1628002362
+    "show_in_rest": 0,
+    "modified": 1646428225
 }

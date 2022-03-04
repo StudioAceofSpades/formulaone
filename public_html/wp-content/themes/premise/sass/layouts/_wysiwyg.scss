@@ -6,6 +6,10 @@
     max-width: 920px;
     margin: 0 auto;
 
+    &.wide {
+        max-width: 1140px;
+    }
+
     strong {
         font-weight: 500;
     }
