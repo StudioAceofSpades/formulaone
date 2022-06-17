@@ -132,7 +132,7 @@ var geojson = {
                 },
                 'property'  : {
                     'title'         : '<?php the_title(); ?>',
-                    'address'       : '<?php echo $address; ?>',
+                    'address'       : <?php echo $address; ?>,
                     'phone'         : '<?php the_field('phone'); ?>',
                     'website'       : '<?php the_field('website'); ?>',
                     'marker-color'  : '#000000',

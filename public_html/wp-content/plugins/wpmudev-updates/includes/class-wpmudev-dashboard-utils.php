@@ -231,4 +231,45 @@ class WPMUDEV_Dashboard_Utils {
 		// Check if wpmudev request.
 		return $is_valid_request && 'wpmudev_dashboard_admin_request' === $_POST['action']; // phpcs:ignore
 	}
+
+	/**
+	 * Rename a folder to new name for backup.
+	 *
+	 * @param string $from Current folder name.
+	 * @param string $to   New folder name.
+	 *
+	 * @since 4.11.9
+	 *
+	 * @return bool
+	 */
+	public function rename_plugin( $from, $to = '' ) {
+		// Default backup name.
+		$to = empty( $to ) ? $from . '-bak' : $to;
+
+		// Rename plugin folder.
+		return rename(
+			WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $from,
+			WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $to
+		);
+	}
+
+	/**
+	 * Check if a feature can be accessed.
+	 *
+	 * Currently only free memberships are being checked.
+	 *
+	 * @param string $feature Feature name.
+	 *
+	 * @since 4.11.9
+	 *
+	 * @return bool
+	 */
+	public function can_access_feature( $feature ) {
+		$membership_type = WPMUDEV_Dashboard::$api->get_membership_status();
+
+		// Items not allowed for free users.
+		$free_disallow = array( 'plugins', 'support', 'whitelabel', 'translations' );
+
+		return 'free' !== $membership_type || ! in_array( $feature, $free_disallow, true );
+	}
 }

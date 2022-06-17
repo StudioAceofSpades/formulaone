@@ -4,7 +4,7 @@
 /* This provides notices of available updates for our premium products */
 if ( ! class_exists( 'WPMUDEV_Dashboard_Notice4' ) ) {
 	class WPMUDEV_Dashboard_Notice4 {
-		var $version        = '4.2.2';
+		var $version        = '4.2.3';
 		var $screen_id      = false;
 		var $product_name   = false;
 		var $product_update = false;
@@ -579,6 +579,9 @@ if ( ! class_exists( 'WPMUDEV_Dashboard_Notice4' ) ) {
 							$slug   = $item['filename'];
 							$active = ! empty( $ms_allowed[ $slug ] );
 						} else {
+							if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+								require_once ABSPATH . 'wp-admin/includes/plugin.php';
+							}
 							$active = is_plugin_active_for_network( $item['filename'] );
 						}
 					} else {
@@ -586,6 +589,9 @@ if ( ! class_exists( 'WPMUDEV_Dashboard_Notice4' ) ) {
 							$slug   = $item['filename'];
 							$active = $theme->stylesheet == $slug || $theme->template == $slug;
 						} else {
+							if ( ! function_exists( 'is_plugin_active' ) ) {
+								require_once ABSPATH . 'wp-admin/includes/plugin.php';
+							}
 							$active = is_plugin_active( $item['filename'] );
 						}
 					}

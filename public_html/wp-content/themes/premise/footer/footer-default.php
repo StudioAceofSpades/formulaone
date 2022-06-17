@@ -4,6 +4,7 @@
 
 <footer class="footer">
     <div class="container">
+        <?php /*
         <div class="row">
             <div class="col">
                 <h1 class="text-center">The latest from Instagram</h1>
@@ -20,6 +21,7 @@
                 <a href="https://www.instagram.com/formula.trailers/" target="_blank" class="button orange">Check us out</a>
             </div>
         </div>
+        */ ?>
         <div class="row">
             <div class="col-md-12 col-lg-4 footer-block">
                 <?php if($icon = get_field('logo','options')): ?>

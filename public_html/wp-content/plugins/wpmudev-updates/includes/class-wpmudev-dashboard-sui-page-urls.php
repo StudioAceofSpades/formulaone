@@ -196,7 +196,7 @@ class WPMUDEV_Dashboard_Sui_Page_Urls {
 			$this->support_url    = network_admin_url( 'admin.php?page=wpmudev-support' );
 			$this->tools_url      = network_admin_url( 'admin.php?page=wpmudev-tools' );
 			$this->analytics_url  = network_admin_url( 'admin.php?page=wpmudev-analytics' );
-			$this->whitelabel_url = network_admin_url( 'admin.php?page=wpmudev-whitelabel' );
+			$this->whitelabel_url = network_admin_url( 'admin.php?page=wpmudev-whitelabel' );		 	  	  		  	 					
 		}
 
 		// Set remote url if custom api is set.
