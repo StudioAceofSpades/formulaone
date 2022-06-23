@@ -1,24 +1,84 @@
 .packages {
+    h2 {
+        margin: 0 0 10px;
+        padding: 0 0 10px;
+        line-height: 1;
+    }
+    div[class^="col-md"] {
+        margin-bottom: 30px;
+    }
+    .package-group {
+        margin-bottom: 50px;
+    }
     .package {
-        margin: 0 0 30px;
+        border: 1px solid #ddd;
+        height: 100%;
 
         h4 {
             color: $orange;
             font-weight: 700;
-            margin: 0 0 10px;
-            padding: 0 0 10px;
-            border-bottom: 1px solid $offwhite;
+            padding: 10px;
+            background: #efefef;
+            border-bottom: 1px solid #ddd;
         }
 
         ul {
-            margin: 0;
-            padding: 0 0 0 20px;
+            margin: 0 0 0 15px;
+            padding: 20px;
 
             li {
                 font-size: 14px;
                 line-height: 1.2;
                 margin: 0 0 5px;
             }
+        }
+    }
+}
+.jumpnav {
+    position: sticky;
+    top: 87px;
+    margin: -30px 0 60px;
+    z-index: 10;
+
+    h3 {
+        text-align: center;
+        font-size: 21px;
+        line-height: 1;
+        padding: 10px 0;
+        margin: 0;
+        background: $white;
+    }
+    nav {
+        border: 1px solid #d4d4d4;
+        padding: 10px;
+        background: #efefef;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    li {
+        width: 25%;
+        padding: 5px 10px;
+    }
+    a {
+        display: block;
+        background: $orange;
+        color: $white;
+        text-align: center;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 10px;
+
+        &:hover {
+            text-decoration: none;
+            background: $light-gray;
+            color: $white;
         }
     }
 }

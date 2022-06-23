@@ -494,6 +494,13 @@ var bounds;
     }
 
     function smoothScroll() {
+
+        var offset = 87;
+
+        if($('.jumpnav').length) {
+            offset = offset + $('.jumpnav').outerHeight() + 10;
+        }
+
         $('a[href*="#"]')
             .not('[href="#"]')
             .not('[href="#0"]')
@@ -505,17 +512,8 @@ var bounds;
                     if (target.length) {
                         event.preventDefault();
                         $('html, body').animate({
-                            scrollTop: target.offset().top
-                        }, 1000, function() {
-                            var $target = $(target);
-                            $target.focus();
-                            if ($target.is(":focus")) { // Checking if the target was focused
-                                return false;
-                            } else {
-                                $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
-                                $target.focus(); // Set focus again
-                            };
-                        });
+                            scrollTop: target.offset().top - offset
+                        }, 1000);
                     }
                 }
             });
