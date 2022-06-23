@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Smush Pro 3.10.1\n"
+"Project-Id-Version: Smush Pro 3.10.2\n"
 "Report-Msgid-Bugs-To: https://wpmudev.com\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-09T10:50:08+10:00\n"
+"POT-Creation-Date: 2022-06-16T08:51:28+10:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wp-smushit\n"
@@ -405,65 +405,65 @@ msgstr ""
 msgid " and "
 msgstr ""
 
-#: app/class-ajax.php:327
+#: app/class-ajax.php:324
 msgid "Nonce verification failed"
 msgstr ""
 
-#: app/class-ajax.php:335
-#: app/class-ajax.php:399
+#: app/class-ajax.php:332
+#: app/class-ajax.php:396
 #: core/integrations/class-nextgen.php:412
 msgid "You don't have permission to work with uploaded files."
 msgstr ""
 
-#: app/class-ajax.php:343
+#: app/class-ajax.php:340
 #: core/integrations/class-nextgen.php:420
 msgid "No attachment ID was provided."
 msgstr ""
 
-#: app/class-ajax.php:359
+#: app/class-ajax.php:356
 msgid "Attachment Skipped - Check `wp_smush_image` filter."
 msgstr ""
 
-#: app/class-ajax.php:382
+#: app/class-ajax.php:379
 msgid "Image not smushed, fields empty."
 msgstr ""
 
-#: app/class-ajax.php:391
+#: app/class-ajax.php:388
 #: core/integrations/class-nextgen.php:658
 msgid "Image couldn't be smushed as the nonce verification failed, try reloading the page."
 msgstr ""
 
-#: app/class-ajax.php:435
+#: app/class-ajax.php:432
 msgid "We haven’t found any images in your media library yet so there’s no smushing to be done! Once you upload images, reload this page and start playing!"
 msgstr ""
 
-#: app/class-ajax.php:472
+#: app/class-ajax.php:469
 msgid "Yay! All images are optimized as per your current settings."
 msgstr ""
 
 #. translators: %1$d - number of images, %2$s - opening a tag, %3$s - closing a tag
-#: app/class-ajax.php:734
+#: app/class-ajax.php:731
 msgid "Image check complete, you have %1$d images that need smushing. %2$sBulk smush now!%3$s"
 msgstr ""
 
-#: app/class-ajax.php:1013
-#: app/class-ajax.php:1170
+#: app/class-ajax.php:1007
+#: app/class-ajax.php:1164
 msgid "User can not modify options"
 msgstr ""
 
-#: app/class-ajax.php:1054
+#: app/class-ajax.php:1048
 msgid "You don't have permission to do this."
 msgstr ""
 
-#: app/class-ajax.php:1077
+#: app/class-ajax.php:1071
 msgid "Either the nonce expired or you can't modify options. Please reload the page and try again."
 msgstr ""
 
-#: app/class-ajax.php:1124
+#: app/class-ajax.php:1118
 msgid "This user can not delete all WebP images."
 msgstr ""
 
-#: app/class-ajax.php:1280
+#: app/class-ajax.php:1279
 msgid "Missing config ID"
 msgstr ""
 
@@ -496,13 +496,13 @@ msgstr ""
 
 #: app/class-media-library.php:315
 #: app/class-media-library.php:711
-#: core/integrations/nextgen/class-stats.php:543
+#: core/integrations/nextgen/class-stats.php:546
 msgid "Image size"
 msgstr ""
 
 #: app/class-media-library.php:316
 #: app/class-media-library.php:712
-#: core/integrations/nextgen/class-stats.php:544
+#: core/integrations/nextgen/class-stats.php:547
 msgid "Savings"
 msgstr ""
 
@@ -612,7 +612,7 @@ msgstr ""
 #: core/class-core.php:297
 #: core/class-settings.php:234
 #: core/integrations/nextgen/class-admin.php:212
-#: core/integrations/nextgen/class-stats.php:357
+#: core/integrations/nextgen/class-stats.php:360
 msgid "Super-Smush"
 msgstr ""
 
@@ -2618,8 +2618,8 @@ msgid "images could not be smushed."
 msgstr ""
 
 #: core/class-core.php:309
-#: core/integrations/nextgen/class-stats.php:270
 #: core/integrations/nextgen/class-stats.php:273
+#: core/integrations/nextgen/class-stats.php:276
 msgid "Already Optimized"
 msgstr ""
 
@@ -2942,11 +2942,11 @@ msgid "Amazon S3 support is active."
 msgstr ""
 
 #. translators: %1$s: reduced by bytes, %2$s: size format
-#: core/integrations/nextgen/class-stats.php:284
+#: core/integrations/nextgen/class-stats.php:287
 msgid "Reduced by %1$s (%2$01.1f%%)"
 msgstr ""
 
-#: core/integrations/nextgen/class-stats.php:316
+#: core/integrations/nextgen/class-stats.php:319
 msgid "Smush stats"
 msgstr ""
 
@@ -3212,29 +3212,29 @@ msgstr ""
 msgid "We couldn't check the WebP server rules status because there was an error with the test request. Please contact support for assistance. Code %1$s: %2$s."
 msgstr ""
 
-#: core/modules/class-webp.php:582
+#: core/modules/class-webp.php:586
 msgid "Webp no response was received."
 msgstr ""
 
-#: core/modules/class-webp.php:725
+#: core/modules/class-webp.php:729
 msgid "WebP files were deleted successfully."
 msgstr ""
 
 #. translators: 1. opening 'a' tag to premium support, 2. closing 'a' tag.
-#: core/modules/class-webp.php:860
+#: core/modules/class-webp.php:864
 msgid "We tried to apply the .htaccess rules automatically but we were unable to complete this action. Make sure the file permissions on your .htaccess file are set to 644, or switch to manual mode and apply the rules yourself. If you need further assistance, you can %1$scontact support%2$s for help."
 msgstr ""
 
 #. translators: 1. opening 'a' tag to docs, 2. opening 'a' tag to premium support, 3. closing 'a' tag.
-#: core/modules/class-webp.php:867
+#: core/modules/class-webp.php:871
 msgid "We tried different rules but your server still isn't serving WebP images. Please contact your hosting provider for further assistance. You can also see our %1$stroubleshooting guide%3$s or %2$scontact support%3$s for help."
 msgstr ""
 
-#: core/modules/class-webp.php:936
+#: core/modules/class-webp.php:940
 msgid "The .htaccess file doesn't contain the WebP rules from Smush."
 msgstr ""
 
-#: core/modules/class-webp.php:950
+#: core/modules/class-webp.php:954
 msgid "We were unable to automatically remove the rules. We recommend trying to remove the rules manually. If you don’t have access to the .htaccess file to remove it manually, please consult with your hosting provider to change the configuration on the server."
 msgstr ""
 

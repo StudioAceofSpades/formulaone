@@ -6,6 +6,12 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+= 3.10.2 ( 2022-06-16 ) =
+
+- Enhance: Data processing
+- Enhance: Database calls
+- Fix: Loading images from remote location
+
 = 3.10.1 ( 2022-06-09 ) =
 
 - Fix: PHP error on dash page
@@ -97,4 +103,4 @@ Change Log:
 
 
 
-861672-1655131375-au
+861672-1655729722-au

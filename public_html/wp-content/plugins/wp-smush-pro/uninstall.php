@@ -127,7 +127,7 @@ if ( is_multisite() ) {
 				switch_to_blog( $blog['blog_id'] );
 				delete_metadata( $meta_type, null, $meta_key, $meta_value, $delete_all );
 				delete_metadata( $meta_type, null, 'wp-smush-lossy', '', $delete_all );
-				delete_metadata( $meta_type, null, 'wp-smush-resize_savings', '', $delete_all );		 		   	   	    		  
+				delete_metadata( $meta_type, null, 'wp-smush-resize_savings', '', $delete_all );
 				delete_metadata( $meta_type, null, 'wp-smush-original_file', '', $delete_all );
 				delete_metadata( $meta_type, null, 'wp-smush-pngjpg_savings', '', $delete_all );
 

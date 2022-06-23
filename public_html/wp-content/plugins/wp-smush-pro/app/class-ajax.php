@@ -318,9 +318,6 @@ class Ajax {
 	 * @uses smush_single()
 	 */
 	public function smush_manual() {
-		// Turn off errors for ajax result.
-		error_reporting( 0 );
-
 		if ( ! check_ajax_referer( 'wp-smush-ajax', '_nonce', false ) ) {
 			wp_send_json_error(
 				array(
@@ -841,9 +838,6 @@ class Ajax {
 	 * Processes the Smush request and sends back the next id for smushing.
 	 */
 	public function process_smush_request() {
-		// Turn off errors for ajax result.
-		error_reporting( 0 );
-
 		check_ajax_referer( 'wp-smush-ajax', '_nonce' );
 
 		// If the bulk smush needs to be stopped.
@@ -1230,7 +1224,12 @@ class Ajax {
 			wp_send_json_error( null, 403 );
 		}
 
-		$file = isset( $_FILES['file'] ) ? wp_unslash( $_FILES['file'] ) : false;
+		/**
+		 * Data escaped and sanitized via \Smush\Core\Configs::save_uploaded_config()
+		 *
+		 * @see \Smush\Core\Configs::decode_and_validate_config_file()
+		 */
+		$file = isset( $_FILES['file'] ) ? wp_unslash( $_FILES['file'] ) : false; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		$configs_handler = new Configs();
 		$new_config      = $configs_handler->save_uploaded_config( $file );
