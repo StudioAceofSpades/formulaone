@@ -50,7 +50,7 @@
     }
     nav {
         border: 1px solid #d4d4d4;
-        padding: 10px;
+        padding: 10px 5px;
         background: #efefef;
     }
     ul {
@@ -80,5 +80,22 @@
             background: $light-gray;
             color: $white;
         }
+    }
+}
+@include media-breakpoint-down(lg) {
+    .jumpnav {
+        top: 67px;
+    }
+}
+@include media-breakpoint-down(md) {
+    .jumpnav {
+        li {
+            width: 50%;
+        }
+    }
+}
+@include media-breakpoint-down(sm) {
+    .jumpnav {
+        position: static;
     }
 }
