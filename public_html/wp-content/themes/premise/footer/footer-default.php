@@ -101,6 +101,17 @@
 
 <?php the_field('scripts','options'); ?>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-46389270-5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-46389270-5');
+</script>
+
+
 </body>
 <?php wp_footer(); ?>
 </html>
