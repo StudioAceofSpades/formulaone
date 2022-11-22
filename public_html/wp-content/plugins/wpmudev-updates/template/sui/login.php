@@ -200,6 +200,7 @@ $logo3x = WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/onboarding/login
 				<input type="hidden" name="context" value="connect">
 				<input type="hidden" name="redirect_url" value="<?php echo esc_url( $urls->dashboard_url ); ?>">
 				<input type="hidden" name="domain" value="<?php echo esc_url( WPMUDEV_Dashboard::$api->network_site_url() ); ?>">
+				<input type="hidden" name="auth_nonce" value="<?php echo esc_attr( wp_create_nonce('auth_nonce') ); ?>" class="input-auth-nonce">
 				<button class="sui-button dashui-google-login-button" type="submit">
 					<span class="sui-icon-google-login" aria-hidden="true"></span>
 					<?php esc_html_e( 'Sign in with Google', 'wpmudev' ); ?>
@@ -211,6 +212,7 @@ $logo3x = WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/onboarding/login
 			</div>
 
 			<form action="<?php echo esc_url( $form_action ); ?>" method="post" class="js-wpmudev-login-form">
+				<input type="hidden" name="auth_nonce" value="<?php echo esc_attr( wp_create_nonce('auth_nonce') ); ?>" class="input-auth-nonce">
 				<div class="sui-form-field">
 					<label for="dashboard-email" class="sui-screen-reader-text">
 						<?php esc_html_e( 'Email', 'wpmudev' ); ?>

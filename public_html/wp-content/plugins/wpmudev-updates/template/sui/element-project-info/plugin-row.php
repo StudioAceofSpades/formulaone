@@ -36,11 +36,13 @@
 						<div class="dashui-plugin-title">
 
 							<label for="bulk-action-<?php echo esc_attr( $pid ); ?>" class="sui-checkbox">
-								<input type="checkbox"
-								       name="pids[]"
-								       value="<?php echo esc_attr( $pid ); ?>"
-								       id="bulk-action-<?php echo esc_attr( $pid ); ?>"
-								       class="js-plugin-check"/>
+								<input
+									type="checkbox"
+									name="pids[]"
+									value="<?php echo esc_attr( $pid ); ?>"
+									id="bulk-action-<?php echo esc_attr( $pid ); ?>"
+									class="js-plugin-check"
+								/>
 								<span aria-hidden="true"></span>
 								<span class="sui-screen-reader-text"><?php printf( '%s %s', esc_html_e( 'Select this plugin ', 'wpmudev' ), $res->name ); ?></span>
 							</label>
@@ -71,10 +73,12 @@
 								<?php endif; ?>
 							</div>
 							<?php if ( $res->has_update || ! $res->is_installed ): ?>
-								<button class="dashui-plugin-name js-show-plugin-modal"
-								        id="show-modal-<?php echo esc_attr( $pid ); ?>"
-								        data-action="<?php echo $res->has_update ? 'changelog' : 'info'; ?>"
-								        data-project="<?php echo esc_attr( $pid ); ?>">
+								<button
+									class="dashui-plugin-name js-show-plugin-modal"
+									id="show-modal-<?php echo esc_attr( $pid ); ?>"
+									data-action="<?php echo $res->has_update ? 'changelog' : 'info'; ?>"
+									data-project="<?php echo esc_attr( $pid ); ?>"
+								>
 									<?php
 									if ( $res->is_installed ):
 										printf( '%s <span class="sui-tag sui-tag-sm" style="margin-left:10px;">v%s</span>', esc_html( $res->name ), esc_html( $res->version_installed ) );
@@ -119,7 +123,7 @@
 										<?php } ?>
 									</div>
 								</button>
-							<?php else: ?>
+							<?php else : ?>
 								<div class="dashui-plugin-name">
 									<?php if ( ! empty( $res->url->config ) ) : ?>
 										<a href="<?php echo esc_url( $res->url->config ); ?>">
@@ -181,8 +185,9 @@
 								<div class="dashui-plugin-actions dashui-desktop-hidden" style="display:inline-flex">
 									<div class="dashui-mobile-main-action" style="width:60px">
 										<?php
-										// Primary action button
-										if ( ! empty( $main_action ) ) : ?>
+										// Primary action button.
+										if ( ! empty( $main_action ) ) :
+											?>
 
 											<a
 												href="<?php echo esc_url( $main_action['url'] ); ?>"
@@ -195,9 +200,9 @@
 												<?php endif; ?>
 											>
 
-												<?php if ( 'sui-button-icon' !== $main_action_class ): ?>
+												<?php if ( 'sui-button-icon' !== $main_action_class ) : ?>
 													<span class="sui-loading-text">
-													<?php if ( $main_action['icon'] ): ?>
+													<?php if ( $main_action['icon'] ) : ?>
 														<i class="<?php echo esc_attr( $main_action['icon'] ); ?>"></i>
 													<?php endif; ?>
 
@@ -205,9 +210,9 @@
 												</span>
 													<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
 
-												<?php else: ?>
+												<?php else : ?>
 
-													<?php if ( $main_action['icon'] ): ?>
+													<?php if ( $main_action['icon'] ) : ?>
 														<i class="<?php echo esc_attr( $main_action['icon'] ); ?>"></i>
 													<?php endif; ?>
 
@@ -219,11 +224,12 @@
 									</div>
 
 									<?php
-									// Secondary action button
-									if ( ! empty( $actions ) ) : ?>
+									// Secondary action button.
+									if ( ! empty( $actions ) ) :
+										?>
 
 										<?php
-										// Single action button
+										// Single action button.
 										if ( 1 === count( $actions ) ) { ?>
 
 											<?php $plugin_action = reset( $actions ); ?>
@@ -252,8 +258,9 @@
 											<?php endif; ?>
 
 											<?php
-											// Multiple actions dropdown
-										} else { ?>
+											// Multiple actions dropdown.
+										} else {
+											?>
 
 											<div class="sui-dropdown">
 
@@ -307,7 +314,7 @@
 
 					</td>
 
-					<?php if ( $res->is_installed ): ?>
+					<?php if ( $res->is_installed ) : ?>
 						<td class="dashui-column-actions plugin-row-actions dashui-mobile-hidden">
 							<?php if ( $res->has_update ) { ?>
 								<a
@@ -354,37 +361,37 @@
 						<td class="dashui-column-description plugin-row-info" <?php echo $colspan; ?>><?php echo esc_html( $res->info ); ?></td>
 					<?php endif; ?>
 					<?php if ( false === $res->is_installed && in_array( $membership_type, array( 'expired', 'paused' ), true ) ): ?>
-						<?php // do nothing ?>
-					<?php elseif ( false === $res->is_installed && 'free' === $membership_type ) : ?>
-					<td class="plugin-row-actions plugin-row-actions-right">
+						<?php // do nothing. ?>
+					<?php elseif ( false === $res->is_installed && 'free' === $membership_type && ! $res->is_licensed ) : ?>
+						<td class="plugin-row-actions plugin-row-actions-right">
 						<span class="sui-tag sui-tag-pro">
 							<?php esc_html_e( 'Pro', 'wpmudev' ); ?>
 						</span>
-					</td>
-					<?php else: ?>
+						</td>
+					<?php else : ?>
 						<td class="dashui-column-actions plugin-row-actions">
 
 							<div class="dashui-plugin-actions dashui-mobile-hidden">
 
 								<?php
 								// Show total number of installs.
-								if ( $show_num_install ) { ?>
+								if ( $show_num_install ) {
+									?>
 									<strong><?php echo esc_html( sprintf( _n( '%s install', '%s installs', $num_install, 'wpmudev' ), $rounded_num_install ) ); ?></strong>
 								<?php } ?>
 
-								<?php
-								// Plugin actions ?>
+								<?php // Plugin actions. ?>
 								<div class="sui-actions-right">
 
 									<?php
 									// Primary action button.
 									if ( ! empty( $main_action ) ) :
 										$additional_classes = '';
-										if ( ( in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) || ( $is_unit_membership && false === $is_unit_allowed ) ) && $res->is_installed && $res->has_update ) {
+										if ( ( in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) || ( $is_unit_membership && false === $is_unit_allowed ) ) && $res->is_installed && $res->has_update && ! $res->is_licensed ) {
 											$additional_classes = ' main-action-free sui-tooltip-constrained sui-tooltip-top-right sui-tooltip ';
 										}
 										$href = '';
-										if ( ( in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) || ( $is_unit_membership && false === $is_unit_allowed ) ) && $res->is_installed && $res->has_update ) {
+										if ( ( in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) || ( $is_unit_membership && false === $is_unit_allowed ) ) && $res->is_installed && $res->has_update && ! $res->is_licensed ) {
 											$href = $reactivate_url;
 										} else {
 											$href = $main_action['url'];
@@ -399,7 +406,7 @@
 												data-tooltip="<?php printf( esc_html__( 'Reactivate your membership to update %s and unlock pro features', 'wpmudev' ), esc_html( $res->name ) ); ?>"
 												data-action="reactivate-membership"
 											<?php else : ?>
-												<?php if ( $res->is_installed && ( ( false === $is_unit_allowed && $is_unit_membership ) || 'free' === $membership_type ) ) : ?>
+												<?php if ( $res->is_installed && ! $res->is_licensed && ( ( false === $is_unit_allowed && $is_unit_membership ) || 'free' === $membership_type ) ) : ?>
 													<?php // translators: %s name of the plugin that is updated. ?>
 													data-tooltip="<?php printf( esc_html__( 'Upgrade your membership to update %s and unlock pro features', 'wpmudev' ), esc_html( $res->name ) ); ?>"
 												<?php endif; ?>
@@ -422,7 +429,7 @@
 										</span>
 												<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
 
-											<?php else: ?>
+											<?php else : ?>
 
 												<?php if ( $main_action['icon'] ) : ?>
 													<i class="<?php echo esc_attr( $main_action['icon'] ); ?>"></i>
@@ -435,18 +442,19 @@
 									<?php endif; ?>
 
 									<?php
-									// Incompatible notice
+									// Incompatible notice.
 									if ( ! empty( $incompatible_reason ) ) : ?>
 										<span class="sui-tag sui-tag-sm sui-tag-red sui-tag-ghost"><?php echo esc_html( $incompatible_reason ); ?></span>
 									<?php endif; ?>
 
 									<?php
-									// Secondary action button
+									// Secondary action button.
 									if ( ! empty( $actions ) && false === $secondary_action_same_as_primary ) : ?>
 
 										<?php
-										// Single action button
-										if ( 1 === count( $actions ) ) { ?>
+										// Single action button.
+										if ( 1 === count( $actions ) ) {
+											?>
 
 											<?php $plugin_action = reset( $actions ); ?>
 
@@ -465,9 +473,11 @@
 
 											<span class="sui-loading-text">
 												<i class="<?php echo esc_attr( $plugin_action['icon'] ); ?>"></i>
-												<?php if ( ! $res->is_active ) {
+												<?php
+												if ( ! $res->is_active ) {
 													echo esc_html( $plugin_action['name'] );
-												} ?>
+												}
+												?>
 											</span>
 
 													<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
@@ -477,8 +487,9 @@
 											<?php endif; ?>
 
 											<?php
-											// Multiple actions dropdown
-										} else { ?>
+											// Multiple actions dropdown.
+										} else {
+											?>
 
 											<div class="sui-dropdown">
 
@@ -497,14 +508,14 @@
 
 												<ul
 													<?php
-													if ( in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) && $res->has_update ) {
+													if ( in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) && $res->has_update && ! $res->is_licensed ) {
 														echo 'class="reactivate-membership-dropdown"';
 													}
 													?>
 												>
 													<?php foreach ( $actions as $plugin_action ) : ?>
 														<li>
-															<?php if ( in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) && ( $plugin_action['icon'] === 'sui-icon-download' ) ): ?>
+															<?php if ( ! $res->is_licensed && in_array( $membership_type, array( 'expired', 'paused', 'free' ), true ) && ( $plugin_action['icon'] === 'sui-icon-download' ) ) : ?>
 																<a
 																	href="<?php echo 'free' === $membership_type ? esc_url( $url_upgrade ) : esc_url( $reactivate_url ); ?>"
 																	class="reactivate-membership-dropdown-action"
@@ -515,7 +526,7 @@
 																	<?php endif; ?>
 																	<?php 'free' === $membership_type ? esc_html_e( 'Upgrade Membership', 'wpmudev' ) : esc_html_e( 'Reactivate Membership', 'wpmudev' ); ?>
 																</a>
-															<?php else: ?>
+															<?php else : ?>
 																<a
 																	href="<?php echo esc_url( $plugin_action['url'] ); ?>"
 																	<?php if ( isset( $plugin_action['class'] ) ) : ?>

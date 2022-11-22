@@ -28,6 +28,25 @@ class WPMUDEV_Dashboard_Compatibility {
 		add_filter( "wp_consent_api_registered_$basename", '__return_true' );
 		add_action( 'plugins_loaded', array( $this, 'register_cookies' ) );
 		add_filter( 'wpmudev_dashboard_analytics_tracking', array( $this, 'check_analytics_cookie_consent' ) );
+		// add_action( 'deleted_plugin', array( $this, 'clear_plugins_cache' ), 1, 2 );
+	}
+
+	/**
+	 * Delete get_plugins cache when plugin is deleted.
+	 *
+	 * See https://incsub.atlassian.net/browse/WDD-366
+	 *
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param bool   $deleted     Whether the plugin deletion was successful.
+	 *
+	 * @since 4.11.17
+	 *
+	 * @return void
+	 */
+	public function clear_plugins_cache( $plugin_file, $deleted ) {
+		if ( $deleted && function_exists( 'WC' ) ) {
+			wp_clean_plugins_cache( false );
+		}
 	}
 
 	/**

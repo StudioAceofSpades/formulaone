@@ -789,21 +789,21 @@ class WPMUDEV_Dashboard_Api {
 		if ( 'full' === $data['membership'] ) {
 			return array();
 		}
-		if ( 'unit' === $data['membership'] ) {
-			$projects = $data['membership_projects'];
+		// For free and unit memberships.
+		if ( in_array( $data['membership'], array( 'free', 'unit' ), true ) ) {
+			$projects = is_array( $data['membership_projects'] ) ? $data['membership_projects'] : array();
 			foreach ( $projects as $i => $p ) {
 				$projects[ $i ] = intval( $p );
 			}
 			return $projects;
 		}
 		if ( is_numeric( $data['membership'] ) ) {
-			$project_id = intval( $data['membership'] );
-			return $project_id;
+			return intval( $data['membership'] );
 		}
 		if ( is_bool( $data['membership'] ) && is_numeric( $data['membership_full_level'] ) ) {
-			$project_id = intval( $data['membership_full_level'] );
-			return $project_id;
+			return intval( $data['membership_full_level'] );
 		}
+
 		return array();
 	}
 
@@ -1394,7 +1394,7 @@ class WPMUDEV_Dashboard_Api {
 		);
 
 		// Report the hosting site_id if in WPMUDEV Hosting environment.
-		if ( defined( 'WPMUDEV_HOSTING_SITE_ID' ) || isset( $_SERVER['WPMUDEV_HOSTED'] ) ) {
+		if ( WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting() ) {
 			$data['hosting_site_id'] = defined( 'WPMUDEV_HOSTING_SITE_ID' ) ? WPMUDEV_HOSTING_SITE_ID : gethostname();
 		}
 
@@ -1412,11 +1412,46 @@ class WPMUDEV_Dashboard_Api {
 	 * Checks if site is hosted on WPMU Dev hosting.
 	 *
 	 * @since 4.9.0
+	 * @since 4.11.15 Added extra checks.
 	 *
-	 * @return boolean - is site hosted on WPMU Dev, true if it is.
+	 * @return bool Is site hosted on WPMU Dev, true if it is.
 	 */
 	public function is_wpmu_dev_hosting() {
-		return isset( $_SERVER['WPMUDEV_HOSTED'] );
+		return defined( 'WPMUDEV_HOSTING_SITE_ID' ) || isset( $_SERVER['WPMUDEV_HOSTED'] );
+	}
+
+	/**
+	 * Checks if site is hosted on WPMU Dev hosting with standalone hosting plan.
+	 *
+	 * @since 4.11.15 Added extra checks.
+	 *
+	 * @return bool
+	 */
+	public function is_standalone_hosting_plan() {
+		// Get membership data.
+		$data = $this->get_membership_data();
+		// For standalone hosting there should be active products.
+		if ( isset( $data['membership_active_products'] ) && is_array( $data['membership_active_products'] ) ) {
+			foreach ( $data['membership_active_products'] as $product ) {
+				// If hosting plan found return early.
+				if ( strpos( $product, 'hosting-' ) === 0 ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if current site is a third party site with standalone hosting plan.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return bool
+	 */
+	public function is_hosted_third_party() {
+		return $this->is_standalone_hosting_plan() && ! $this->is_wpmu_dev_hosting();
 	}
 
 	/**

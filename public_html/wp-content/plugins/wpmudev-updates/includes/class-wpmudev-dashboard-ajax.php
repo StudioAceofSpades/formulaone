@@ -47,6 +47,8 @@ class WPMUDEV_Dashboard_Ajax {
 		'wdp-sso-status',
 		'wdp-dismiss-highlights',
 		'wdp-reset-settings',
+		'wdp-dismiss-upsell',
+		'wdp-extend-upsell',
 	);
 
 	/**
@@ -87,9 +89,8 @@ class WPMUDEV_Dashboard_Ajax {
 			add_action( "wp_ajax_nopriv_$action", array( $this, 'nopriv_process' ) );
 		}
 
-		// AUTO login ajax (no nonce, its called by our auto install server).
+		// AUTO login ajax (nonce protected, it's called by our auto install server).
 		add_action( 'wp_ajax_wdp-dashboard-autologin', array( $this, 'dashboard_autologin' ) );
-		add_action( 'wp_ajax_wdpun-connect', array( $this, 'ajax_connect' ) );
 	}
 
 	/**
@@ -868,6 +869,37 @@ class WPMUDEV_Dashboard_Ajax {
 	}
 
 	/**
+	 * Dismiss upsell modal dialog.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return void
+	 */
+	public function dismiss_upsell() {
+		// Set dismissal flag.
+		WPMUDEV_Dashboard::$settings->set( 'upsell_dismissed', true, 'flags' );
+		WPMUDEV_Dashboard::$settings->set( 'upsell_notice_time', time(), 'general' );
+
+		$this->send_json_success();
+	}
+
+	/**
+	 * Extend upsell modal dialog.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return void
+	 */
+	public function extend_upsell() {
+		// Set extension flag.
+		WPMUDEV_Dashboard::$settings->set( 'upsell_dismissed', false, 'flags' );
+		// Show after 1 week.
+		WPMUDEV_Dashboard::$settings->set( 'upsell_notice_time', strtotime( '+1 week' ), 'general' );
+
+		$this->send_json_success();
+	}
+
+	/**
 	 * Start authentication.
 	 *
 	 * Required POST params:
@@ -923,6 +955,37 @@ class WPMUDEV_Dashboard_Ajax {
 	 * @since 4.11.6
 	 */
 	public function dashboard_autologin() {
+		// nonce verifier.
+		$auth_verify_nonce = wp_verify_nonce( ( isset( $_REQUEST['auth_nonce'] ) ? $_REQUEST['auth_nonce'] : '' ), 'auth_nonce' );
+		if ( ! $auth_verify_nonce ) {
+			$this->send_json_error(
+				array(
+					'type'    => 'invalid_auth',
+					'message' => __( 'Invalid Authentication.', 'wpmudev' ),
+				)
+			);
+		}
+
+		// basic permissions ( even allowed_user have to have this cap anyway ).
+		if ( ! current_user_can( ( is_multisite() ? 'manage_network_options' : 'manage_options' ) ) ) {
+			$this->send_json_error(
+				array(
+					'type'    => 'invalid_permission',
+					'message' => __( 'Invalid Permission.', 'wpmudev' ),
+				)
+			);
+		}
+
+		// Dash Allowed users only.
+		if ( ! WPMUDEV_Dashboard::$site->allowed_user() ) {
+			$this->send_json_error(
+				array(
+					'type'    => 'invalid_allow',
+					'message' => __( 'Invalid Permission.', 'wpmudev' ),
+				)
+			);
+		}
+
 		$key               = isset( $_REQUEST['apikey'] ) ? trim( $_REQUEST['apikey'] ) : false;
 		$skip_free_upgrade = isset( $_REQUEST['skip_upgrade_free_plugins'] ) ? true : false;
 
@@ -1017,33 +1080,10 @@ class WPMUDEV_Dashboard_Ajax {
 	 * Used by the Getting started wizard on WPMU DEV to programmatically login to the dashboard.
 	 *
 	 * @since 4.11.6
+	 * @deprecated 4.11.17
 	 */
 	public function ajax_connect() {
-		// Check permissions.
-		if ( ! current_user_can( 'manage_network_options' ) ) {
-			$this->send_json_error( 'No permissions' );
-		}
-
-		WPMUDEV_Dashboard::$api->set_key( trim( $_REQUEST['apikey'] ) );
-		$result = WPMUDEV_Dashboard::$api->hub_sync( false, true );
-		if ( ! $result || empty( $result['membership'] ) ) {
-			// Don't logout at this point!.
-			WPMUDEV_Dashboard::$api->set_key( '' );
-			if ( false === $result ) {
-				$this->send_json_error( WPMUDEV_Dashboard::$api->api_error );
-			} else {
-				$this->send_json_error( __( 'Your API Key was invalid. Please try again.', 'wpmudev' ) );
-			}
-		} else {
-			// You did it! Login was successful :)
-			// The current user is our new hero-user with Dashboard access.
-			WPMUDEV_Dashboard::$settings->set( 'limit_to_user', get_current_user_id(), 'general' );
-			WPMUDEV_Dashboard::$api->refresh_profile();
-			// User is logged in: First redirect is done.
-			WPMUDEV_Dashboard::$settings->set( 'redirected_v4', true, 'flags' );
-
-			$this->send_json_success();
-		}
+		_deprecated_function( __METHOD__, '4.11.17' );
 	}
 
 	/**

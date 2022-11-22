@@ -32,7 +32,7 @@
 					<i class="sui-icon-academy sui-md" aria-hidden="true"></i>
 				</a>
 
-				<?php if ( WPMUDEV_Dashboard::$utils->can_access_feature( 'support' ) ) : ?>
+				<?php if ( WPMUDEV_Dashboard::$utils->can_access_feature( 'support' ) || $has_hosted_access ) : ?>
 					<a
 						href="<?php echo esc_url( $url_support ); ?>"
 						class="sui-button-icon sui-tooltip sui-tooltip-bottom sui-tooltip-bottom-left-mobile"

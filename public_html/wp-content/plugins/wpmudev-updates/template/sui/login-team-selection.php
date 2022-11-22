@@ -12,20 +12,23 @@ $form_action = WPMUDEV_Dashboard::$api->rest_url( 'site-authenticate-team' );
 $redirect_url = WPMUDEV_Dashboard::$ui->page_urls->dashboard_url;
 // Authenticating domain.
 $domain = WPMUDEV_Dashboard::$api->network_site_url();
+
+// nonce verifier.
+$auth_verify_nonce = wp_verify_nonce( ( isset( $_REQUEST['auth_nonce'] ) ? $_REQUEST['auth_nonce'] : '' ), 'auth_nonce' );
 // API key.
 $api_key = empty( $_GET['key'] ) ? '' : trim( $_GET['key'] );
 
 // Default error message.
 $error = __( 'Unknown API error occurred. Please try again.', 'wpmudev' );
 
-if ( ! empty( $api_key ) ) {
+if ( $auth_verify_nonce && ! empty( $api_key ) ) {
 	$teams = WPMUDEV_Dashboard::$api->get_user_teams( $api_key );
 	// API error.
 	if ( false === $teams ) {
 		$error = WPMUDEV_Dashboard::$api->api_error;
 	}
 } else {
-	// If key not found redirect to login again.
+	// If nonce invalid or key not found redirect to login again.
 	WPMUDEV_Dashboard::$ui->redirect_to( WPMUDEV_Dashboard::$ui->page_urls->dashboard_url );
 }
 
@@ -72,6 +75,7 @@ $logo3x = WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/onboarding/team-
 					<input type="hidden" name="api_key" value="<?php echo esc_html( $api_key ); ?>">
 					<input type="hidden" name="redirect_url" value="<?php echo esc_url( $redirect_url ); ?>">
 					<input type="hidden" name="domain" value="<?php echo esc_url( $domain ); ?>">
+					<input type="hidden" name="auth_nonce" value="<?php echo esc_attr( wp_create_nonce('auth_nonce') ); ?>">
 
 					<div class="sui-box-selectors sui-box-selectors-col-1">
 						<ul>

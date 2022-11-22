@@ -412,7 +412,7 @@ class WPMUDEV_Dashboard_Site {
 	 */
 	public function first_time_actions() {
 		// On our hosting, if it's first time activation enable few services.
-		if ( defined( 'WPMUDEV_HOSTING_SITE_ID' ) || isset( $_SERVER['WPMUDEV_HOSTED'] ) ) {
+		if ( WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting() ) {
 			$user_id = get_current_user_id();
 			// If we couldn't find a user.
 			if ( empty( $user_id ) ) {
@@ -551,14 +551,18 @@ class WPMUDEV_Dashboard_Site {
 	 */
 	protected function _process_action( $action ) {
 		do_action( 'wpmudev_dashboard_action-' . $action );
-		$success = 'SILENT';
-		$type    = WPMUDEV_Dashboard::$api->get_membership_status();
+		$success               = 'SILENT';
+		$type                  = WPMUDEV_Dashboard::$api->get_membership_status();
+		$is_wpmudev_host       = WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting();
+		$is_standalone_hosting = WPMUDEV_Dashboard::$api->is_standalone_hosting_plan();
+		$has_hosted_access     = $is_wpmudev_host && ! $is_standalone_hosting && 'free' === $type;
+		$has_support_access    = WPMUDEV_Dashboard::$api->is_support_allowed() || $has_hosted_access;
 
 		switch ( $action ) {
 			// Tab: Support
 			// Function Grant support access.
 			case 'remote-grant':
-				if ( ! is_wpmudev_member() && 'unit' !== $type ) {
+				if ( ! $has_support_access ) {
 					$success = false;
 				} else {
 					$success = WPMUDEV_Dashboard::$api->enable_remote_access( 'start' );
@@ -579,7 +583,7 @@ class WPMUDEV_Dashboard_Site {
 			// Tab: Support
 			// Function Extend support access.
 			case 'remote-extend':
-				if ( ! is_wpmudev_member() && 'unit' !== $type ) {
+				if ( ! $has_support_access ) {
 					$success = false;
 				} else {
 					$success = WPMUDEV_Dashboard::$api->enable_remote_access( 'extend' );
@@ -2033,71 +2037,19 @@ class WPMUDEV_Dashboard_Site {
 	/**
 	 * Check user permissions to see if we can install this project.
 	 *
-	 * @since  1.0.0
+	 * NOTE: Not sure why this duplicate exist. Since it's a public function we can not
+	 * remove it for now. So deprecating.
 	 *
-	 * @param  int  $project_id   The project to check.
-	 * @param  bool $only_license Skip permission check, only validate license.
+	 * @since      1.0.0
+	 * @deprecated 4.11.17
+	 *
+	 * @param int  $project_id   The project to check.
+	 * @param bool $only_license Skip permission check, only validate license.
 	 *
 	 * @return bool
 	 */
 	public function user_can_install( $project_id, $only_license = false ) {
-		$data              = WPMUDEV_Dashboard::$api->get_projects_data();
-		$membership_type   = WPMUDEV_Dashboard::$api->get_membership_status();
-		$licensed_projects = WPMUDEV_Dashboard::$api->get_membership_projects();
-
-		if ( 'unit' === $membership_type ) {
-			foreach ( $licensed_projects as $p ) {
-				$is_allowed = intval( $project_id ) === $p;
-				if ( $is_allowed ) {
-					return true;
-				}
-			}
-		}
-
-		// Basic check if we have valid data.
-		if ( empty( $data['projects'] ) ) {
-			return false;
-		}
-		if ( empty( $data['projects'][ $project_id ] ) ) {
-			return false;
-		}
-
-		$project = $data['projects'][ $project_id ];
-
-		if ( ! $only_license ) {
-			if ( ! $this->allowed_user() ) {
-				return false;
-			}
-			if ( ! WPMUDEV_Dashboard::$upgrader->can_auto_install( $project['type'] ) ) {
-				return false;
-			}
-		}
-
-		$is_upfront = WPMUDEV_Dashboard::$site->id_upfront == $project_id;
-		$package    = isset( $project['package'] ) ? $project['package'] : '';
-		$access     = false;
-
-		if ( 'full' == $membership_type ) {
-			// User has full membership.
-			$access = true;
-		} elseif ( 'single' == $membership_type && $licensed_projects == $project_id ) {
-			// User has single membership for the requested project.
-			$access = true;
-		} elseif ( 'free' == $project['paid'] ) {
-			// It's a free project. All users can install this.
-			$access = true;
-		} elseif ( 'lite' == $project['paid'] ) {
-			// It's a lite project. All users can install this.
-			$access = true;
-		} elseif ( 'single' == $membership_type && $package && $package == $licensed_projects ) {
-			// A packaged project that the user bought.
-			$access = true;
-		} elseif ( $is_upfront && 'single' == $membership_type ) {
-			// User wants to get Upfront parent theme.
-			$access = true;
-		}
-
-		return $access;
+		return WPMUDEV_Dashboard::$upgrader->user_can_install( $project_id, $only_license );
 	}
 
 	/**

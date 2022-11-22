@@ -87,7 +87,7 @@ class Rest {
 
 		$combined_stats = WP_Smush::get_instance()->core()->combined_stats( $wp_smush_data, $wp_resize_savings );
 
-		return WP_Smush::get_instance()->core()->combine_conversion_stats( $combined_stats, $conversion_savings );		 		   	   	    		  
+		return WP_Smush::get_instance()->core()->combine_conversion_stats( $combined_stats, $conversion_savings );
 	}
 
 	/**

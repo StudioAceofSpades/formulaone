@@ -233,6 +233,20 @@ class WPMUDEV_Dashboard_Utils {
 	}
 
 	/**
+	 * Check if current page is Dashboard's admin page.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return bool
+	 */
+	public function is_wpmudev_admin_page() {
+		$screen = get_current_screen();
+
+		// All dashboard page ids starts with wpmudev.
+		return isset( $screen->parent_base ) && 'wpmudev' === $screen->parent_base;
+	}
+
+	/**
 	 * Rename a folder to new name for backup.
 	 *
 	 * @param string $from Current folder name.
@@ -265,11 +279,12 @@ class WPMUDEV_Dashboard_Utils {
 	 * @return bool
 	 */
 	public function can_access_feature( $feature ) {
-		$membership_type = WPMUDEV_Dashboard::$api->get_membership_status();
+		$is_hosted_third_party = WPMUDEV_Dashboard::$api->is_hosted_third_party();
+		$membership_type       = WPMUDEV_Dashboard::$api->get_membership_status();
 
 		// Items not allowed for free users.
 		$free_disallow = array( 'plugins', 'support', 'whitelabel', 'translations' );
 
-		return 'free' !== $membership_type || ! in_array( $feature, $free_disallow, true );
+		return ( 'free' !== $membership_type && ! $is_hosted_third_party ) || ! in_array( $feature, $free_disallow, true );
 	}
 }

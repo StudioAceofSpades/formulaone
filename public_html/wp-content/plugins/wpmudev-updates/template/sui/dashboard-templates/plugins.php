@@ -2,13 +2,15 @@
 /**
  * Installed/Update available box on dashboard home
  *
- * @var string                          $type             Membership type.
- * @var array                           $membership_data  Membership data.
- * @var array                           $selected_plugins Plugins.
- * @var WPMUDEV_Dashboard_Sui_Page_Urls $urls             URLs class.
- * @var int                             $update_plugins   Updates count.
- * @var array                           $free_plugins     Installed free plugins.
- * @var array                           $data             Data.
+ * @var string                          $type                  Membership type.
+ * @var array                           $membership_data       Membership data.
+ * @var array                           $selected_plugins      Plugins.
+ * @var WPMUDEV_Dashboard_Sui_Page_Urls $urls                  URLs class.
+ * @var int                             $update_plugins        Updates count.
+ * @var array                           $free_plugins          Installed free plugins.
+ * @var array                           $data                  Data.
+ * @var bool                            $has_hosted_access     Has hosted access?.
+ * @var bool                            $is_hosted_third_party Is third party site.
  *
  * @package WPMUDEV DASHBOARD 4.9.0
  */
@@ -21,7 +23,7 @@ $projects = wp_list_pluck( $data['projects'], 'id', 'name' );
 
 // sort by name.
 ksort( $projects );
-if ( $update_plugins > 0 && ! $is_free ) :
+if ( $update_plugins > 0 && ( ( ! $is_free && ! $is_hosted_third_party ) || $has_hosted_access ) ) :
 	foreach ( $projects as $key => $item ) {
 		// if update is complete break.
 		if ( $update_plugins <= count( $selected_plugins ) ) {
@@ -52,13 +54,13 @@ foreach ( $projects as $key => $item ) {
 	$wpmu_plugin = WPMUDEV_Dashboard::$site->get_project_info( $item );
 
 	// if update is complete break.
-	if ( ! $is_free && 5 <= count( $selected_plugins ) ) {
+	if ( ! $is_free && ! $is_hosted_third_party && 5 <= count( $selected_plugins ) ) {
 		break;
 	}
 
 	if (
 		// ignore plugin with updates.
-		( $wpmu_plugin->has_update && ! $is_free ) ||
+		( $wpmu_plugin->has_update && ( ( ! $is_free && ! $is_hosted_third_party ) || $has_hosted_access ) ) ||
 		// Skip plugin if it's not installed.
 		! $wpmu_plugin->is_active ||
 		// Skip plugins that are not compatible with current site.
@@ -85,7 +87,7 @@ $plugins_install_url = $urls->hub_url . '/plugins/add/wpOrg/';
 	</div>
 	<div class="sui-box-body">
 		<p>
-			<?php if ( $is_free ) : ?>
+			<?php if ( $is_free && ! $has_hosted_access ) : ?>
 				<?php esc_html_e( 'Here are all your active WPMU DEV plugins.', 'wpmudev' ); ?>
 			<?php else : ?>
 				<?php esc_html_e( 'Install, update and configure our Pro plugins.', 'wpmudev' ); ?>
@@ -98,17 +100,17 @@ $plugins_install_url = $urls->hub_url . '/plugins/add/wpOrg/';
 		foreach ( $selected_plugins as $item ) {
 			$wp_plugin = WPMUDEV_Dashboard::$site->get_project_info( $item );
 			?>
-			<tr class="<?php echo $wp_plugin->has_update && ! $is_free ? esc_attr( 'has-update' ) : ''; ?>">
+			<tr class="<?php echo $wp_plugin->has_update && ( ( ! $is_free && ! $is_hosted_third_party ) || $has_hosted_access ) ? esc_attr( 'has-update' ) : ''; ?>">
 				<td class="dashui-item-image">
 					<?php
-					echo $wp_plugin->has_update && ! $is_free ? '<span class="dashui-update-dot"></span>' : '';
+					echo $wp_plugin->has_update && ( ( ! $is_free && ! $is_hosted_third_party ) || $has_hosted_access ) ? '<span class="dashui-update-dot"></span>' : '';
 					$config_url = $wp_plugin->has_update ? $urls->plugins_url . '#pid=' . $wp_plugin->pid . '=changelog' : $wp_plugin->url->config;
 					?>
 					<a href="<?php echo esc_url( $config_url ); ?>"><img src="<?php echo esc_url( empty( $wp_plugin->url->icon ) ? $wp_plugin->url->thumbnail_square : $wp_plugin->url->icon ); ?>" class="sui-image plugin-image" style="width:30px;height:30px;"></a>
 				</td>
 				<td class="dashui-item-content">
 					<h4>
-						<?php if ( $wp_plugin->has_update && ! $is_free ) { ?>
+						<?php if ( $wp_plugin->has_update && ( ( ! $is_free && ! $is_hosted_third_party ) || $has_hosted_access ) ) { ?>
 							<a href="<?php echo esc_url( $urls->plugins_url . '#pid=' . $wp_plugin->pid . '=changelog' ); ?>">
 								<a href="<?php echo esc_url( $urls->plugins_url . '#pid=' . $wp_plugin->pid . '=changelog' ); ?>">
 									<?php echo esc_html( $wp_plugin->name ); ?>
@@ -126,7 +128,7 @@ $plugins_install_url = $urls->hub_url . '/plugins/add/wpOrg/';
 							<a href="<?php echo esc_url( $wp_plugin->url->config ); ?>">
 								<?php echo esc_html( $wp_plugin->name ); ?>
 							</a>
-							<?php $version_url = $is_free ? $wp_plugin->url->config : $urls->plugins_url . '#pid=' . $wp_plugin->pid . '=changelog'; ?>
+							<?php $version_url = $is_free || $is_hosted_third_party ? $wp_plugin->url->config : $urls->plugins_url . '#pid=' . $wp_plugin->pid . '=changelog'; ?>
 							<a href="<?php echo esc_url( $version_url ); ?>" style="margin-left: 10px;">
 									<span class="sui-tag sui-tag-sm" style="cursor: pointer;">
 									<?php
@@ -152,7 +154,7 @@ $plugins_install_url = $urls->hub_url . '/plugins/add/wpOrg/';
 						$url_upgrade
 					);
 					?>
-					<?php if ( $wp_plugin->has_update && ! $is_free ) : ?>
+					<?php if ( $wp_plugin->has_update && ( ( ! $is_free && ! $is_hosted_third_party ) || $has_hosted_access ) ) : ?>
 						<?php if ( in_array( $type, array( 'expired', 'paused' ), true ) ) : ?>
 							<a
 								href="<?php echo esc_attr( $reactivate_url ); ?>"
@@ -177,7 +179,7 @@ $plugins_install_url = $urls->hub_url . '/plugins/add/wpOrg/';
 			<?php
 		}
 		?>
-		<?php if ( $is_free ) : ?>
+		<?php if ( $is_free || $is_hosted_third_party ) : ?>
 			<?php foreach ( $free_plugins as $file => $item ) : ?>
 				<?php if ( $item['is_active'] ) : ?>
 					<tr>
@@ -218,7 +220,7 @@ $plugins_install_url = $urls->hub_url . '/plugins/add/wpOrg/';
 		</tbody>
 	</table>
 	<div class="sui-box-footer">
-		<?php if ( 'free' === $type ) : ?>
+		<?php if ( ( 'free' === $type || $is_hosted_third_party ) && ! $has_hosted_access ) : ?>
 			<a href="<?php echo esc_url( $plugins_install_url ); ?>" target="_blank" class="sui-button sui-button-blue">
 				<span class="sui-icon-hub" aria-hidden="true"></span>
 				<?php esc_html_e( 'Install Plugins', 'wpmudev' ); ?>

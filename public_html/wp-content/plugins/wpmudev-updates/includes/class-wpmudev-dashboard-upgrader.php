@@ -446,6 +446,9 @@ class WPMUDEV_Dashboard_Upgrader {
 		} elseif ( $is_upfront && 'single' === $membership_type ) {
 			// User wants to get Upfront parent theme.
 			$access = true;
+		} elseif ( 'free' === $membership_type && in_array( intval( $project_id ), $licensed_projects, true ) ) {
+			// TFH user with plugin access.
+			$access = true;
 		}
 
 		return $access;

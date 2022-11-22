@@ -64,6 +64,9 @@ class WPMUDEV_Dashboard_Ui {
 		// Hide admin notices on login page.
 		add_action( 'in_admin_header', array( $this, 'login_hide_admin_notices' ), 10000 );
 
+		// Upsell notice.
+		add_action( 'all_admin_notices', array( $this, 'expired_upsell_notice' ) );
+
 		/**
 		 * Run custom initialization code for the UI module.
 		 *
@@ -71,6 +74,83 @@ class WPMUDEV_Dashboard_Ui {
 		 * @since  4.0.0
 		 */
 		do_action( 'wpmudev_dashboard_ui_init', $this );
+	}
+
+	/**
+	 * Removes WPMU DEV Dashboard from native plugins page.
+	 *
+	 * @return void
+	 */
+	public function expired_upsell_notice() {
+		// Do not continue.
+		if ( ! $this->can_show_expired_upsell() ) {
+			return;
+		}
+
+		// Enqueue assets.
+		wp_enqueue_style(
+			'wpmudev-dashboard-upsell',
+			WPMUDEV_Dashboard::$site->plugin_url . 'assets/css/dashboard-upsell.min.css',
+			array(),
+			WPMUDEV_Dashboard::$version
+		);
+
+		wp_enqueue_script(
+			'wpmudev-dashboard-upsell',
+			WPMUDEV_Dashboard::$site->plugin_url . 'assets/js/dashboard-upsell.min.js',
+			array( 'jquery' ),
+			WPMUDEV_Dashboard::$version,
+			true
+		);
+
+		wp_localize_script(
+			'wpmudev-dashboard-upsell',
+			'wpmudevDashboard',
+			array(
+				'extend_nonce'  => wp_create_nonce( 'extend-upsell' ),
+				'dismiss_nonce' => wp_create_nonce( 'dismiss-upsell' ),
+			)
+		);
+
+		// Render template.
+		$this->render( 'sui/notice-upsell' );
+
+		// Add modal template.
+		add_action( 'admin_footer', array( $this, 'upsell_modal' ) );
+	}
+
+	/**
+	 * Print upsell modal template.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return void
+	 */
+	public function upsell_modal() {
+		// Render template.
+		$this->render( 'sui/popup-upsell' );
+	}
+
+	/**
+	 * Check if upsell can be shown.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return bool
+	 */
+	public function can_show_expired_upsell() {
+		return (
+			// Only on pages except Dashboard pages.
+			! WPMUDEV_Dashboard::$utils->is_wpmudev_admin_page() &&
+			// Only for expired membership.
+			'expired' === WPMUDEV_Dashboard::$api->get_membership_status() &&
+			// Only for WPMUDEV admin user.
+			WPMUDEV_Dashboard::$site->allowed_user() &&
+			// Only if not dismissed.
+			! WPMUDEV_Dashboard::$settings->get( 'upsell_dismissed', 'flags' ) &&
+			// Only if time has reached.
+			WPMUDEV_Dashboard::$settings->get( 'upsell_notice_time', 'general', time() ) <= time()
+		);
 	}
 
 	/**
@@ -884,14 +964,26 @@ class WPMUDEV_Dashboard_Ui {
 			ob_start();
 		}
 
-		$membership_type = WPMUDEV_Dashboard::$api->get_membership_status();
-		$membership_data = WPMUDEV_Dashboard::$api->get_membership_data();
-		$hide_row        = false;
+		$membership_type       = WPMUDEV_Dashboard::$api->get_membership_status();
+		$membership_data       = WPMUDEV_Dashboard::$api->get_membership_data();
+		$hide_row              = false;
+		$is_wpmudev_host       = WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting();
+		$is_hosted_third_party = WPMUDEV_Dashboard::$api->is_hosted_third_party();
+		$is_standalone_hosting = WPMUDEV_Dashboard::$api->is_standalone_hosting_plan();
 
 		$urls = $this->page_urls;
 		$this->render(
 			'sui/element-project-info',
-			compact( 'pid', 'urls', 'membership_type', 'membership_data', 'hide_row' )
+			compact(
+				'pid',
+				'urls',
+				'membership_type',
+				'membership_data',
+				'hide_row',
+				'is_wpmudev_host',
+				'is_standalone_hosting',
+				'is_hosted_third_party'
+			)
 		);
 
 		if ( $as_json ) {
@@ -1290,7 +1382,12 @@ class WPMUDEV_Dashboard_Ui {
 		);
 
 		if ( $is_logged_in ) {
-			if ( WPMUDEV_Dashboard::$utils->can_access_feature( 'plugins' ) ) {
+			$membership_type       = WPMUDEV_Dashboard::$api->get_membership_status();
+			$is_wpmudev_host       = WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting();
+			$is_standalone_hosting = WPMUDEV_Dashboard::$api->is_standalone_hosting_plan();
+			$has_hosted_access     = $is_wpmudev_host && ! $is_standalone_hosting && 'free' === $membership_type;
+
+			if ( WPMUDEV_Dashboard::$utils->can_access_feature( 'plugins' ) || $has_hosted_access ) {
 				/**
 				 * Use this action to register custom sub-menu items.
 				 *
@@ -1318,7 +1415,7 @@ class WPMUDEV_Dashboard_Ui {
 				);
 			}
 
-			if ( WPMUDEV_Dashboard::$utils->can_access_feature( 'support' ) ) {
+			if ( WPMUDEV_Dashboard::$utils->can_access_feature( 'support' ) || $has_hosted_access ) {
 				do_action( 'wpmudev_dashboard_setup_menu', 'support' );
 
 				// Support page.
@@ -1500,6 +1597,8 @@ class WPMUDEV_Dashboard_Ui {
 			$this->render_with_sui_wrapper( 'sui/no_access' );
 		}
 
+		$auth_verify_nonce = wp_verify_nonce( ( isset( $_REQUEST['auth_nonce'] ) ? $_REQUEST['auth_nonce'] : '' ), 'auth_nonce' );
+
 		// First login redirect is done.
 		if ( ! WPMUDEV_Dashboard::$settings->get( 'redirected_v4', 'flags' ) ) {
 			WPMUDEV_Dashboard::$settings->set( 'redirected_v4', true, 'flags' );
@@ -1509,19 +1608,35 @@ class WPMUDEV_Dashboard_Ui {
 			// User requested to log-out.
 			WPMUDEV_Dashboard::$site->logout();
 		} elseif ( isset( $_REQUEST['is_multi_auth'] ) && 1 === (int) $_REQUEST['is_multi_auth'] && ! empty( $_REQUEST['user_apikey'] ) ) {
+			// nonce verifier.
+			if ( ! $auth_verify_nonce ) {
+				// User has no permission to view the page.
+				$this->render_with_sui_wrapper( 'sui/no_access' );
+
+				return;
+			}
 			$url = add_query_arg(
 				array(
-					'view' => 'team-selection',
-					'key'  => trim( $_REQUEST['user_apikey'] ),
+					'view'       => 'team-selection',
+					'key'        => trim( $_REQUEST['user_apikey'] ),
+					'auth_nonce' => $_REQUEST['auth_nonce'],
 				),
 				$this->page_urls->dashboard_url
 			);
 			$this->redirect_to( $url );
-		} elseif ( ! empty( $_REQUEST['set_apikey'] ) ) {// wpcs csrf ok.
+		} elseif ( ! empty( $_REQUEST['set_apikey'] ) ) {
+			// nonce verifier.
+			if ( ! $auth_verify_nonce ) {
+				// User has no permission to view the page.
+				$this->render_with_sui_wrapper( 'sui/no_access' );
+
+				return;
+			}
 			$url = add_query_arg(
 				array(
-					'view' => 'sync',
-					'key'  => trim( $_REQUEST['set_apikey'] ), // wpcs csrf ok.
+					'view'       => 'sync',
+					'key'        => trim( $_REQUEST['set_apikey'] ),
+					'auth_nonce' => $_REQUEST['auth_nonce'],
 				),
 				$this->page_urls->dashboard_url
 			);
@@ -1899,9 +2014,24 @@ class WPMUDEV_Dashboard_Ui {
 		$member  = WPMUDEV_Dashboard::$api->get_profile();
 		$profile = $member['profile'];
 
+		// WPMUDEV hosting.
+		$membership_type       = WPMUDEV_Dashboard::$api->get_membership_status();
+		$is_wpmudev_host       = WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting();
+		$is_standalone_hosting = WPMUDEV_Dashboard::$api->is_standalone_hosting_plan();
+		$has_hosted_access     = $is_wpmudev_host && ! $is_standalone_hosting && 'free' === $membership_type;
+
 		$this->render(
 			'sui/header',
-			compact( 'page_title', 'is_logged_in', 'url_dash', 'url_logout', 'profile', 'url_support', 'documentation_url' )
+			compact(
+				'page_title',
+				'is_logged_in',
+				'url_dash',
+				'url_logout',
+				'profile',
+				'url_support',
+				'documentation_url',
+				'has_hosted_access'
+			)
 		);
 
 		$data = array();

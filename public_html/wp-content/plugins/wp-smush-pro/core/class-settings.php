@@ -74,6 +74,7 @@ class Settings {
 		'background_images' => true,
 		'rest_api_support'  => false, // CDN option.
 		'webp_mod'          => false, // WebP module.
+		'background_email'  => false,
 	);
 
 	/**
@@ -90,7 +91,7 @@ class Settings {
 	 *
 	 * @var array $basic_features
 	 */
-	public static $basic_features = array( 'bulk', 'auto', 'strip_exif', 'resize', 'original', 'gutenberg', 'js_builder', 'gform', 'lazy_load', 'lossy' );
+	public static $basic_features = array( 'bulk', 'auto', 'strip_exif', 'resize', 'original', 'gutenberg', 'js_builder', 'gform', 'lazy_load', 'lossy', 'background_email' );
 
 	/**
 	 * List of fields in bulk smush form.
@@ -99,7 +100,7 @@ class Settings {
 	 *
 	 * @var array
 	 */
-	private $bulk_fields = array( 'bulk', 'auto', 'lossy', 'strip_exif', 'resize', 'original', 'backup', 'png_to_jpg', 'no_scale' );
+	private $bulk_fields = array( 'bulk', 'auto', 'lossy', 'strip_exif', 'resize', 'original', 'backup', 'png_to_jpg', 'no_scale', 'background_email' );
 
 	/**
 	 * List of fields in integration form.
@@ -169,7 +170,7 @@ class Settings {
 	private function __construct() {
 		// Do not initialize if not in admin area
 		// wp_head runs specifically in the frontend, good check to make sure we're accidentally not loading settings on required pages.
-		if ( ! is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && did_action( 'wp_head' ) ) {
+		if ( ! is_admin() && ! wp_doing_ajax() && did_action( 'wp_head' ) ) {
 			return;
 		}
 
@@ -278,6 +279,11 @@ class Settings {
 				'label'       => esc_html__( 'Allow usage tracking', 'wp-smushit' ),
 				'short_label' => esc_html__( 'Usage Tracking', 'wp-smushit' ),
 				'desc'        => esc_html__( 'Help make Smush better by letting our designers learn how you’re using the plugin.', 'wp-smushit' ),
+			),
+			'background_email'  => array(
+				'label'       => esc_html__( 'Enable email notification', 'wp-smushit' ),
+				'short_label' => esc_html__( 'Email Notification', 'wp-smushit' ),
+				'desc'        => esc_html__( 'Be notified via email about the bulk smush status when the process has completed.', 'wp-smushit' ),
 			),
 		);
 
@@ -427,8 +433,7 @@ class Settings {
 			return false;
 		}
 
-		// Additional check for ajax (is_network_admin() does not work in ajax calls).
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_SERVER['HTTP_REFERER'] ) && preg_match( '#^' . network_admin_url() . '#i', wp_unslash( $_SERVER['HTTP_REFERER'] ) ) ) { // Input var ok.
+		if ( self::is_ajax_network_admin() ) {
 			return true;
 		}
 
@@ -469,8 +474,7 @@ class Settings {
 
 		$is_network_admin = is_network_admin() || 'save_settings' === $action;
 
-		// Additional check for ajax (is_network_admin() does not work in ajax calls).
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_SERVER['HTTP_REFERER'] ) && preg_match( '#^' . network_admin_url() . '#i', wp_unslash( $_SERVER['HTTP_REFERER'] ) ) ) { // Input var ok.
+		if ( self::is_ajax_network_admin() ) {
 			$is_network_admin = true;
 		}
 
@@ -605,12 +609,12 @@ class Settings {
 	public function reset() {
 		check_ajax_referer( 'wp_smush_reset' );
 
-		if ( ! current_user_can( 'manage_options' ) ) {
-			die();
+		// Check capability.
+		if ( ! Helper::is_user_allowed( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Unauthorized', 'wp-smushit' ), 403 );
 		}
 
 		delete_site_option( 'wp-smush-networkwide' );
-		delete_site_option( 'wp-smush-hide_smush_welcome' );
 		delete_site_option( 'wp-smush-webp_hide_wizard' );
 		delete_site_option( 'wp-smush-preset_configs' );
 		$this->delete_setting( 'wp-smush-settings' );
@@ -632,8 +636,12 @@ class Settings {
 	public function save_settings() {
 		check_ajax_referer( 'wp-smush-ajax' );
 
-		if ( ! is_user_logged_in() ) {
-			wp_send_json_error();
+		if ( ! Helper::is_user_allowed( 'manage_options' ) ) {
+			wp_send_json_error(
+				array(
+					'message' => esc_html__( "You don't have permission to do this.", 'wp-smushit' ),
+				)
+			);
 		}
 
 		// Delete S3 alert flag, if S3 option is disabled again.
@@ -717,9 +725,6 @@ class Settings {
 			$settings[ $setting ] = $value;
 		}
 
-		// Store that we need not redirect again on plugin activation.
-		update_site_option( 'wp-smush-hide_smush_welcome', true );
-
 		$this->set_setting( 'wp-smush-settings', $settings );
 		wp_send_json_success();
 	}
@@ -759,9 +764,7 @@ class Settings {
 	 */
 	private function parse_cdn_settings() {
 		// $status = connect to CDN.
-		$status = WP_Smush::get_instance()->core()->mod->cdn->status();
-
-		if ( 'disabled' === $status ) {
+		if ( ! WP_Smush::get_instance()->core()->mod->cdn->get_status() ) {
 			$response = WP_Smush::get_instance()->api()->enable();
 
 			// Probably an exponential back-off.
@@ -837,8 +840,8 @@ class Settings {
 		 */
 		$items = array( 'spinner', 'placeholder' );
 		foreach ( $items as $item ) {
-			$settings['animation'][ $item ]['selected'] = isset( $settings['animation'][ "{$item}-icon" ] ) ? $settings['animation'][ "{$item}-icon" ] : 1;
-			unset( $settings['animation'][ "{$item}-icon" ] );
+			$settings['animation'][ $item ]['selected'] = isset( $settings['animation'][ "$item-icon" ] ) ? $settings['animation'][ "$item-icon" ] : 1;
+			unset( $settings['animation'][ "$item-icon" ] );
 
 			// Custom spinners.
 			if ( ! isset( $previous_settings['animation'][ $item ]['custom'] ) || ! is_array( $previous_settings['animation'][ $item ]['custom'] ) ) {
@@ -849,12 +852,12 @@ class Settings {
 			}
 
 			// Add uploaded custom spinner.
-			if ( isset( $settings['animation'][ "custom-{$item}" ] ) ) {
-				if ( ! empty( $settings['animation'][ "custom-{$item}" ] ) && ! in_array( $settings['animation'][ "custom-{$item}" ], $settings['animation'][ $item ]['custom'], true ) ) {
-					$settings['animation'][ $item ]['custom'][] = $settings['animation'][ "custom-{$item}" ];
-					$settings['animation'][ $item ]['selected'] = $settings['animation'][ "custom-{$item}" ];
+			if ( isset( $settings['animation'][ "custom-$item" ] ) ) {
+				if ( ! empty( $settings['animation'][ "custom-$item" ] ) && ! in_array( $settings['animation'][ "custom-$item" ], $settings['animation'][ $item ]['custom'], true ) ) {
+					$settings['animation'][ $item ]['custom'][] = $settings['animation'][ "custom-$item" ];
+					$settings['animation'][ $item ]['selected'] = $settings['animation'][ "custom-$item" ];
 				}
-				unset( $settings['animation'][ "custom-{$item}" ] );
+				unset( $settings['animation'][ "custom-$item" ] );
 			}
 		}
 
@@ -962,6 +965,19 @@ class Settings {
 		);
 
 		$this->set_setting( 'wp-smush-lazy_load', $defaults );
+	}
+
+	/**
+	 * Check if in network admin.
+	 *
+	 * The is_network_admin() check does not work in ajax calls.
+	 *
+	 * @since 3.10.3
+	 *
+	 * @return bool
+	 */
+	public static function is_ajax_network_admin() {
+		return defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_SERVER['HTTP_REFERER'] ) && preg_match( '#^' . network_admin_url() . '#i', wp_unslash( $_SERVER['HTTP_REFERER'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	}
 
 }

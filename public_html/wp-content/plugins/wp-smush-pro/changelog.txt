@@ -6,6 +6,47 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+= 3.12.3 ( 2022-10-24 )
+- Fix: Free to pro upgrade issue
+
+= 3.12.2 ( 2022-10-19 )
+- Improvement: Security hardening
+- Fix: Issues on older PHP versions
+
+= 3.12.1 ( 2022-10-11 )
+- Fix: PHP error on non-English language sites
+
+= 3.12.0 ( 2022-10-11 )
+- New: Bulk smush images in the background!
+- New: 50 images limit removed for free users
+- New: Better GDPR compliance by replacing Google fonts with Bunny fonts
+- New: Filter on media library page to view media items with errors
+- New: Option to receive an email once bulk smush is complete
+- Fix: Some images incorrectly selected for resmush
+- Fix: Database error while converting PNG to JPG on WordPress 6.1 Beta
+
+= 3.11.1 ( 2022-08-19 ) =
+- Fix: Fallback to sequential processing when parallel processing not possible
+
+= 3.11.0 ( 2022-08-11 ) =
+- New: Smush all image sizes in parallel for improved performance
+- Improvement: Code improvements
+
+= 3.10.3 ( 2022-07-14 ) =
+
+- Enhance: CDN activation process
+- Enhance: Improve media library image filters
+- Enhance: CDN compatibility with Avada theme
+- Enhance: Add notice about disabled folders in directory Smush module
+- Fix: Errors table UI on bulk smush page
+- Fix: Bulk smush UI when images have been removed when page was already loaded
+- Fix: Cron job of logger library not running properly
+- Fix: Remove tools meta box from dashboard page
+- Fix: Recover image from NextGen Gallery button does not reset Smush data
+- Fix: Image dimensions meta does not reset after restoring a resized image in NextGen Gallery
+- Fix: Incorrect percent of total savings on Dashboard page
+- Fix: Pro feature enable/disable toggles are clickable in free version
+
 = 3.10.2 ( 2022-06-16 ) =
 
 - Enhance: Data processing
@@ -103,4 +144,4 @@ Change Log:
 
 
 
-861672-1655729722-au
+861672-1667328511-au
