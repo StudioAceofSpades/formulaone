@@ -67,7 +67,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'info',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'output_info' ),
 			)
@@ -78,7 +78,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'support',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'support_info' ),
 			)
@@ -89,7 +89,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'support/debug/enable',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'rule_debug_enable' ),
 			)
@@ -98,7 +98,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'support/debug/disable',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'rule_debug_disable' ),
 			)
@@ -109,7 +109,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'me',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'get_me' ),
 			)
@@ -120,7 +120,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'campaigns/refresh',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'refresh_campaigns' ),
 			)
@@ -131,7 +131,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'campaigns/(?P<id>\w+)',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'get_campaign_data' ),
 			)
@@ -142,7 +142,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'campaigns/(?P<id>\w+)',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'update_campaign_data' ),
 			)
@@ -153,7 +153,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'campaigns/(?P<id>[\w-]+)/sync',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'sync_campaign' ),
 			)
@@ -164,7 +164,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'resources',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'get_wp_resources' ),
 			)
@@ -174,7 +174,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'notifications',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'get_notifications' ),
 			)
@@ -184,7 +184,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'notifications/dismiss',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'dismiss_notification' ),
 			)
@@ -194,7 +194,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'notifications/create',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'create_event_notification' ),
 			)
@@ -204,7 +204,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'plugins',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'get_am_plugins_list' ),
 			)
@@ -214,7 +214,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'plugins',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'handle_plugin_action' ),
 			)
@@ -224,7 +224,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'api',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'can_store_api_key' ),
 				'callback'            => array( $this, 'init_api_key_connection' ),
 			)
@@ -236,7 +236,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 				$this->namespace,
 				'api/regenerate',
 				array(
-					'methods'             => 'POST',
+					'methods'             => WP_REST_Server::CREATABLE,
 					'permission_callback' => array( $this, 'can_store_regenerated_api_key' ),
 					'callback'            => array( $this, 'store_regenerated_api_key' ),
 				)
@@ -247,7 +247,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'api',
 			array(
-				'methods'             => 'DELETE',
+				'methods'             => WP_REST_Server::DELETABLE,
 				'permission_callback' => array( $this, 'can_delete_api_key' ),
 				'callback'            => array( $this, 'disconnect' ),
 			)
@@ -257,7 +257,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'settings',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'get_settings' ),
 			)
@@ -267,7 +267,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'settings',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'can_update_settings' ),
 				'callback'            => array( $this, 'update_settings' ),
 			)
@@ -277,7 +277,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'review/dismiss',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'can_dismiss_review' ),
 				'callback'            => array( $this, 'dismiss_review' ),
 			)
@@ -287,7 +287,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'omu/courses',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'get_courses' ),
 			)
@@ -297,7 +297,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'omu/guides',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'get_guides' ),
 			)
@@ -307,7 +307,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'account/sync',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'sync_account' ),
 			)

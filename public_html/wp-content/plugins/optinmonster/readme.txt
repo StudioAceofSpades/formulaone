@@ -4,7 +4,7 @@ Tags: popup, popups, optin, conversion, marketing, newsletter, popup builder, po
 Requires at least: 4.7.0
 Tested up to: 6.1
 Requires PHP: 5.3
-Stable tag: 2.11.0
+Stable tag: 2.12.2
 License: GNU General Public License v2.0 or later
 
 🤩 Make popups & optin forms to get more email newsletter subscribers, leads, and sales - #1 most popular popup builder plugin! 🚀
@@ -33,7 +33,7 @@ On top of offering the absolute best WordPress popup plugin, our Customer Succes
 > "Truly amazing. The number of options is great and allows to make campaigns that have the right balance between efficiency and not being too annoying. OptinMonster is constantly evolving and adding useful features, really well integrated with a lot of tools (especially a lot of autoresponders and Google Analytics to measure conversions), and customer support is great. What more to ask ?" ~[@giantjack](https://wordpress.org/support/topic/the-best-optin-plugin/)
 
 <strong>OptinMonster App</strong><br />
-OptinMonster is a SaaS service and requires an OptinMonster account. When you install this plugin, you'll have the opportunity to register for a free account that includes 3 campaigns and up to 300 campaign impressions - perfect for getting started and learning your way around! Or, if you already have an OptinMonster subscription, you can simply connect this plugin to it.
+OptinMonster is a SaaS service and requires an OptinMonster account. When you install this plugin, you'll have the opportunity to register for a free account that includes 3 campaigns and up to 500 campaign impressions. Those 500 pageview credits will NEVER expire, and you’ll only be upgraded if you use all of those credits during the lifetime of your account. It's perfect for getting started and learning your way around! Or, if you already have an OptinMonster subscription, you can simply connect this plugin to it.
 
 When you're ready to truly explode your email list growth, we recommend <a href="https://optinmonster.com/wp/?utm_source=orgplugin&utm_medium=link&utm_campaign=wpreadme" rel="friend" title="OptinMonster">getting started with OptinMonster Pro</a> to access more advanced solutions like Exit-Intent, Campaign Scheduling, Countdown Timers and more.
 
@@ -192,7 +192,6 @@ Other Powerful Popup Features:
 * <a href="https://optinmonster.com/integrations/sendpulse/?utm_source=orgplugin&utm_medium=link&utm_campaign=wpreadme" rel="friend">SendPulse</a> - Create subscription forms and popups for SendPulse to boost your marketing conversions.
 * <a href="https://optinmonster.com/integrations/sharp-spring/?utm_source=orgplugin&utm_medium=link&utm_campaign=wpreadme" rel="friend">SharpSpring</a> - Improve your marketing automation with powerful popups for SharpSpring.
 * <a href="https://optinmonster.com/integrations/totalsend/?utm_source=orgplugin&utm_medium=link&utm_campaign=wpreadme" rel="friend">TotalSend</a> - Reduce bounce rate and generate more leads with TotalSend popups for WordPress.
-* <a href="https://optinmonster.com/docs/how-to-connect-optinmonster-with-bronto/?utm_source=orgplugin&utm_medium=link&utm_campaign=wpreadme" rel="friend">Bronto (Oracle)</a> - Create email popups for Bronto (Oracle) to improve lead generation and conversions.
 * <a href="https://optinmonster.com/integrations/ipost/?utm_source=orgplugin&utm_medium=link&utm_campaign=wpreadme" rel="friend">iPost</a> - Grow your email list faster with iPost popups and newlsetter forms.
 * <a href="https://optinmonster.com/integrations/customer-io/?utm_source=orgplugin&utm_medium=link&utm_campaign=wpreadme" rel="friend">Customer.io</a> - Easily create smart popups and opt-in forms for customer.io.
 * EmailOctopus Subsription Popup - Add EmailOctopus popup subscription forms to WordPress.
@@ -462,6 +461,35 @@ Syed Balkhi
 
 **Most Recent Changes:**
 
+= Popup Builder 2.12.2 =
+* Security update to ensure OptinMonster shortcodes can only load from the campaign post-type.
+
+= Popup Builder 2.12.1 =
+* Fixed Template preview button text stuck on "Loading Preview".
+
+= Popup Builder 2.12.0 =
+* Fixed wp_enqueue_script error on widgets page.
+* Addresses issues with page caching by fetching rules data for Easy Digital Downloads and WooCommerce via ajax.
+* Small improvements to onbaording
+* Updated bundled version of Vue and related dependencies to address some security scanners.
+* Introduced Playbooks to the plugin
+
+= Popup Builder 2.11.2 =
+* Fixed issue where plain-text shortcode output could be parsed by search engines.
+* Set minimum Elementor support to 3.1.0, and fix deprecated function warnings.
+* Update code initialization logic to allow just-in-time loading and preventing some errors.
+* Various npm packages updates used for generating our JavaScript code.
+* Remove references to Bronto, as Bronto shutdown as a service.
+* Fix issue where inline campaigns would be could show excerpts.
+
+= Popup Builder 2.11.1 =
+* Fix occasional undefined variable warning in logs
+* Maintenance updates to some JS packages
+* Removed some unused development files
+* Improve date-oriented rules
+* Improved performance on notifications
+* Improved some of the Output Settings labels to be more accurate.
+
 = Popup Builder 2.11.0 =
 * Added new `optinmonster_prevent_all_campaigns` filter to allow preventing campaigns in custom conditions.
 * Updated the schedule link to actually display the campaign schedule feature.
@@ -481,18 +509,5 @@ Syed Balkhi
 = Popup Builder 2.9.0 =
 * Introduce integration support with WPForms! Now WPForms forms will be able to be embedded within campaigns, and conversions/success tracked.
 * Minification to our frontend JS helper file.
-
-= Popup Builder 2.8.1 =
-* Fix issue with Ecommerce Output rules being applied even when the Ecommerce was not connected anymore.
-* Fix issue with `optin-monster-inline` shortcode not working in many cases.
-* Fix issue in built JS files which caused them to be falsely-flagged in virus software.
-* Updated build script to keep file-names consistent when possible.
-
-= Popup Builder 2.8.0 =
-* Introduce integration support with Easy Digital Downloads!
-* Fix issue with the OptinMonster "Disable All" setting in block editor when custom fields not supported for the post-type.
-* Fix issue where "This account does not have any campaigns to retrieve" error would show incorrectly.
-* Fix issue with output settings link having an incorrect trailing slash sometimes causing 404s.
-* Code refactor and function/method deprecations.
 
 **[View entire popup builder changelog](https://plugins.svn.wordpress.org/optinmonster/trunk/CHANGELOG.md)**

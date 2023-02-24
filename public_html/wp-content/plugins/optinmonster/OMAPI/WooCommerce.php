@@ -744,6 +744,9 @@ class OMAPI_WooCommerce {
 			return array();
 		}
 
+		// Initialize the cart.
+		wc_load_cart();
+
 		// Bail if we don't have a cart object.
 		if ( ! isset( WC()->cart ) || '' === WC()->cart ) {
 			return array();

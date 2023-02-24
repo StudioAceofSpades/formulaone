@@ -2,6 +2,8 @@
 /**
  * Dashboard plugin template
  *
+ * @var WPMUDEV_Dashboard_Sui_Page_Urls $urls URLs class.
+ *
  * @package WPMUDEV DASHBOARD 4.9.0
  */
 
@@ -397,7 +399,7 @@ foreach ( $data['projects'] as $project ) {
 				foreach ( $plugin_actions as $plugin_action ) :
 					// Message for page reload.
 					$msg = '<p>' . esc_html__( 'This page needs to be reloaded before changes you just made become visible.', 'wpmudev' ) . '</p>';
-					$msg        .= '<div class="sui-notice-buttons"><a href="' . add_query_arg( 'success-action', $plugin_action ) . '" class="sui-button">' . esc_html__( 'Reload now', 'wpmudev' ) . '</a></div>';
+					$msg        .= '<div class="sui-notice-buttons"><a href="' . esc_url( add_query_arg( 'success-action', $plugin_action, $urls->plugins_url ) ) . '" class="sui-button">' . esc_html__( 'Reload now', 'wpmudev' ) . '</a></div>';
 					?>
 					<div
 						role="alert"

@@ -1912,7 +1912,7 @@ class WPMUDEV_Dashboard_Api {
 			// sort installed plugins
 			foreach ( $translations as $key => $value ) {
 				$project = WPMUDEV_Dashboard::$site->get_project_info( $value['dev_project_id'] );
-				if ( $project->is_installed ) {
+				if ( ! empty( $project->is_installed ) ) {
 					// Handle Snapshot translation slug.
 					// https://incsub.atlassian.net/browse/WDD-187
 					$value['translation_slug'] = 3760011 === (int) $value['dev_project_id'] ? 'snapshot' : $value['slug'];

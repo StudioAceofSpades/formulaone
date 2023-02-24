@@ -859,7 +859,7 @@ class WPMUDEV_Dashboard_Site {
 				$status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : ''; // wpcs CSRF ok. already validated on process_ajax
 				switch ( $status ) {
 					case 'settings':
-						$auto_update = isset( $_REQUEST['autoupdate_dashboard'] ) ? filter_var( $_REQUEST['autoupdate_dashboard'], FILTER_VALIDATE_BOOLEAN ) : false;
+						$auto_update = isset( $_REQUEST['autoupdate_dashboard'] ) ? filter_var( $_REQUEST['autoupdate_dashboard'], FILTER_VALIDATE_BOOLEAN ) : false;		 	  	  		  	 					
 						WPMUDEV_Dashboard::$settings->set( 'autoupdate_dashboard', $auto_update, 'flags' );
 
 						$enable_sso   = isset( $_REQUEST['enable_sso'] ) ? absint( $_REQUEST['enable_sso'] ) : 0;
@@ -1703,6 +1703,16 @@ class WPMUDEV_Dashboard_Site {
 		$allowed[] = $user_id;
 		WPMUDEV_Dashboard::$settings->set( 'limit_to_user', $allowed, 'general' );
 
+		/**
+		 * Action hook to trigger when a admin user is added to permissions.
+		 *
+		 * @since 4.11.18
+		 *
+		 * @param int   $user_id Added user ID.
+		 * @param array $allowed Allowed user IDs.
+		 */
+		do_action( 'wpmudev_after_add_allowed_user', $user_id, $allowed );
+
 		return true;
 	}
 
@@ -1731,6 +1741,16 @@ class WPMUDEV_Dashboard_Site {
 		unset( $allowed[ $key ] );
 		$allowed = array_values( $allowed );
 		WPMUDEV_Dashboard::$settings->set( 'limit_to_user', $allowed, 'general' );
+
+		/**
+		 * Action hook to trigger when a admin user is removed from permissions.
+		 *
+		 * @since 4.11.18
+		 *
+		 * @param int   $user_id Removed user ID.
+		 * @param array $allowed Allowed user IDs.
+		 */
+		do_action( 'wpmudev_after_remove_allowed_user', $user_id, $allowed );
 
 		return true;
 	}

@@ -364,7 +364,7 @@ var bounds;
         var distance        = google.maps.geometry.spherical.computeDistanceBetween(center, dealerCenter);
         distance            = metersToMiles(distance).toFixed(1);
 
-        address = address.substring(1, address.length-1);
+        // address = address.substring(1, address.length-1);
 
         var output = 
             '<div class="col-6 col-xs-12">' +
@@ -419,7 +419,7 @@ var bounds;
     function showDealer(dealer, marker) {
 
         var address = dealer.property.address;
-        address = address.substring(1, address.length-1);
+ //       address = address.substring(1, address.length-1);
 
         var contentString   =   
             '<div class="map-content">' +

@@ -28,7 +28,7 @@ class WPMUDEV_Dashboard_Compatibility {
 		add_filter( "wp_consent_api_registered_$basename", '__return_true' );
 		add_action( 'plugins_loaded', array( $this, 'register_cookies' ) );
 		add_filter( 'wpmudev_dashboard_analytics_tracking', array( $this, 'check_analytics_cookie_consent' ) );
-		// add_action( 'deleted_plugin', array( $this, 'clear_plugins_cache' ), 1, 2 );
+		add_action( 'deleted_plugin', array( $this, 'clear_plugins_cache' ), 1, 2 );
 	}
 
 	/**

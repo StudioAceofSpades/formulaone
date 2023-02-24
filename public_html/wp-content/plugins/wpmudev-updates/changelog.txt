@@ -5,6 +5,16 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+4.11.18 - 25/01/2023 - Joel
+- Enhance: Security improvements.
+- Enhance: Handle new login errors.
+- Enhance: Update icons.
+- Fix: WooCommerce compatibility issues with Hub.
+- Fix: Incorrect SSO user ID when an admin user is removed from the permissions.
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
 4.11.17 - 21/10/2022 - Joel, Hendrawan
 - Enhance: Security improvements.
 - Enhance: Update Shared UI.
@@ -903,4 +913,4 @@ Added option to disable admin notices.
 Initial Release.
 
 
-861672-1666631770-au
+861672-1675786324-au

@@ -32,7 +32,7 @@ class OMAPI_EasyDigitalDownloads_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'edd/autogenerate',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'can_manage_shop' ),
 				'callback'            => array( $this, 'autogenerate' ),
 			)
@@ -42,7 +42,7 @@ class OMAPI_EasyDigitalDownloads_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'edd/save',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'can_update_settings' ),
 				'callback'            => array( $this, 'save' ),
 			)
@@ -52,7 +52,7 @@ class OMAPI_EasyDigitalDownloads_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'edd/disconnect',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'permission_callback' => array( $this, 'can_update_settings' ),
 				'callback'            => array( $this, 'disconnect' ),
 			)
@@ -62,7 +62,7 @@ class OMAPI_EasyDigitalDownloads_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'edd/settings',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_and_can_access_route' ),
 				'callback'            => array( $this, 'get_settings' ),
 			)
@@ -70,11 +70,11 @@ class OMAPI_EasyDigitalDownloads_RestApi extends OMAPI_BaseRestApi {
 
 		register_rest_route(
 			$this->namespace,
-			'edd/info',
+			'edd/display-rules',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => '__return_true',
-				'callback'            => array( $this, 'get_display_rules_infos' ),
+				'callback'            => array( $this, 'get_display_rules_info' ),
 			)
 		);
 	}
@@ -221,18 +221,19 @@ class OMAPI_EasyDigitalDownloads_RestApi extends OMAPI_BaseRestApi {
 	 * Gets the necessary information for Display Rules.
 	 * This is used when there's an event on cart page to update information in the frontend.
 	 *
-	 * Route: GET omapp/v1/edd/info
+	 * Route: GET omapp/v1/edd/display-rules
 	 *
 	 * @since 2.8.0
 	 *
 	 * @return WP_REST_Response The API Response
 	 * @throws Exception If plugin action fails.
 	 */
-	public function get_display_rules_infos() {
+	public function get_display_rules_info() {
 		$edd_output = new OMAPI_EasyDigitalDownloads_Output();
 
-		return array(
-			'data' => $edd_output->display_rules_data(),
+		return new WP_REST_Response(
+			$edd_output->display_rules_data(),
+			200
 		);
 	}
 }

@@ -60,6 +60,19 @@ class OMAPI_Urls {
 	}
 
 	/**
+	 * Get the playbooks url.
+	 *
+	 * @since 2.12.0
+	 *
+	 * @param  array $args Array of query args.
+	 *
+	 * @return string
+	 */
+	public static function playbooks( $args = array() ) {
+		return self::om_admin( 'playbooks', $args );
+	}
+
+	/**
 	 * Get the OM wizard url.
 	 *
 	 * @since 2.2.0

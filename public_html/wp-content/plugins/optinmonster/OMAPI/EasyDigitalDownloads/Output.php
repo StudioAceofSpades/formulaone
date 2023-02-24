@@ -67,13 +67,10 @@ class OMAPI_EasyDigitalDownloads_Output {
 	 * @return array The
 	 */
 	public function display_rules_data() {
-		$output = array(
-			'cart' => $this->get_cart(),
-		);
-
-		$user_id = get_current_user_id();
-
+		$cart               = $this->get_cart();
+		$user_id            = get_current_user_id();
 		$purchased_products = edd_get_users_purchased_products( $user_id );
+		$cart['customer']   = null;
 
 		if ( ! empty( $purchased_products ) ) {
 			$customer_products = array_map(
@@ -83,13 +80,13 @@ class OMAPI_EasyDigitalDownloads_Output {
 				$purchased_products
 			);
 
-			$output['customer'] = array(
+			$cart['customer'] = array(
 				'products' => $customer_products,
 				'stats'    => edd_get_purchase_stats_by_user( $user_id ),
 			);
 		}
 
-		return $output;
+		return $cart;
 	}
 
 	/**

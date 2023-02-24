@@ -279,7 +279,7 @@ class OMAPI_Menu {
 		// Maybe add an upgrade link to the plugin links.
 		$upgrade_links = array();
 		if ( $this->base->can_show_upgrade() ) {
-			$upgrade_links[] = sprintf( '<a class="om-plugin-upgrade-link" href="%s">%s</a>', OMAPI_Urls::upgrade( 'plugin_action_link' ), 'vbp_pro' === $level ? __( 'Upgrade to Growth', 'optin-monster-api' ) : __( 'Upgrade to Pro', 'optin-monster-api' ) );
+			$upgrade_links[] = sprintf( '<a class="om-plugin-upgrade-link" href="%s">%s</a>', OMAPI_Urls::upgrade( 'plugin_action_link' ), 'vbp_pro' === $this->base->get_level() ? __( 'Upgrade to Growth', 'optin-monster-api' ) : __( 'Upgrade to Pro', 'optin-monster-api' ) );
 		}
 
 		$new_links = $this->base->get_api_credentials()
@@ -311,7 +311,7 @@ class OMAPI_Menu {
 
 			// If user upgradeable or not registered yet, let's put an upgrade link.
 			if ( $this->base->can_show_upgrade() ) {
-				$label = 'vbp_pro' === $level
+				$label = 'vbp_pro' === $this->base->get_level()
 					? __( 'Upgrade to Growth', 'optin-monster-api' )
 					: __( 'Upgrade to Pro', 'optin-monster-api' );
 

@@ -33,6 +33,8 @@ class WPMUDEV_Dashboard_Utils {
 		add_action( 'wp_ajax_nopriv_wpmudev_dashboard_admin_request', array( $this, 'run_admin_request' ) );
 		// Clear staff flag on logout.
 		add_action( 'wp_logout', array( $this, 'unset_staff_flag' ) );
+		// Make sure SSO is valid.
+		add_action( 'wpmudev_after_remove_allowed_user', array( $this, 'recheck_sso_user' ) );
 	}
 
 	/**
@@ -215,6 +217,54 @@ class WPMUDEV_Dashboard_Utils {
 	 */
 	public function unset_staff_flag() {
 		setcookie( 'wpmudev_is_staff', '', 1 );
+	}
+
+	/**
+	 * Make sure the user ID is valid for SSO.
+	 *
+	 * @since 4.11.18
+	 *
+	 * @param int $user_id User ID.
+	 *
+	 * @return void
+	 */
+	public function recheck_sso_user( $user_id ) {
+		$sso_user_id = WPMUDEV_Dashboard::$settings->get( 'userid', 'sso' );
+		// If the removed user id is matching sso user id.
+		if ( (int) $sso_user_id === (int) $user_id ) {
+			$new_sso_user_id = $this->get_admin_user_for_sso();
+			// Set new user id for SSO.
+			WPMUDEV_Dashboard::$settings->set( 'userid', $new_sso_user_id, 'sso' );
+		}
+	}
+
+	/**
+	 * Get a admin user id for SSO.
+	 *
+	 * @since 4.11.18
+	 *
+	 * @return int
+	 */
+	public function get_admin_user_for_sso() {
+		$user_id = get_current_user_id();
+		// If we couldn't find a user.
+		if ( empty( $user_id ) ) {
+			$users = WPMUDEV_Dashboard::$site->get_allowed_users( true );
+			if ( ! empty( $users[0] ) ) {
+				$user_id = $users[0];
+			}
+
+			// Still empty?.
+			if ( empty( $user_id ) ) {
+				// Let's get an admin user now.
+				$users = WPMUDEV_Dashboard::$site->get_available_users();
+				if ( ! empty( $users[0] ) ) {
+					$user_id = $users[0]->ID;
+				}
+			}
+		}
+
+		return $user_id;
 	}
 
 	/**

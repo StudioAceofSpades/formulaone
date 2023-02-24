@@ -30,7 +30,7 @@ class OMAPI_WPForms_RestApi extends OMAPI_BaseRestApi {
 			$this->namespace,
 			'wpforms/forms',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'permission_callback' => array( $this, 'logged_in_or_has_api_key' ),
 				'callback'            => array( $this, 'forms' ),
 			)
