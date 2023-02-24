@@ -41,6 +41,9 @@ E-Mail: jon@studioaceofspade.com
         gravity_form_enqueue_scripts( 5, true );
     ?>
 
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-MEYDLXX7NN"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-MEYDLXX7NN');</script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-EGJBJJKLG7"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-EGJBJJKLG7');</script>
+
     <?php wp_head(); ?>
 </head>
 
