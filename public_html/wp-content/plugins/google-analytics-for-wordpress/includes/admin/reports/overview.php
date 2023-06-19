@@ -75,6 +75,6 @@ final class MonsterInsights_Report_Overview extends MonsterInsights_Report {
 			);
 		}
 
-		return $data;
+		return apply_filters( 'monsterinsights_report_overview_data', $data );
 	}
 }

@@ -518,10 +518,15 @@ class OMAPI_Api {
 		}
 
 		if ( isset( $result->id ) ) {
+			/*
+			 * The user id connecting the plugin. It could be the owner or any sub-account.
+			 * This key should not be used to embed codes or other API usage.
+			 * In those cases, the owner's id (accountUserId) would be the one to use.
+			 */
 			$option['userId'] = $result->id;
 		}
 
-		$to_store = array( 'accountId', 'currentLevel', 'plan', 'revenueAttribution' );
+		$to_store = array( 'accountId', 'accountUserId', 'currentLevel', 'plan', 'revenueAttribution' );
 		foreach ( $to_store as $key ) {
 			if ( isset( $result->{$key} ) ) {
 				$option[ $key ] = is_object( $result->{$key} ) ? (array) $result->{$key} : $result->{$key};
@@ -534,4 +539,20 @@ class OMAPI_Api {
 
 		return $option;
 	}
+
+	/**
+	 * Get the home/rest/admin url args.
+	 *
+	 * @since 2.13.0
+	 *
+	 * @return array
+	 */
+	public static function getUrlArgs() {
+		return array(
+			'homeUrl'  => esc_url_raw( home_url() ),
+			'restUrl'  => esc_url_raw( get_rest_url() ),
+			'adminUrl' => esc_url_raw( get_admin_url() ),
+		);
+	}
+
 }

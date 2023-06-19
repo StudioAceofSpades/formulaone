@@ -93,15 +93,6 @@ class OMAPI_Output {
 	public $shortcodes = array();
 
 	/**
-	 * The OMAPI_EasyDigitalDownloads_Output instance.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @var null|OMAPI_EasyDigitalDownloads_Output
-	 */
-	public $edd_output = null;
-
-	/**
 	 * Whether we are in a live campaign preview.
 	 *
 	 * @since 2.2.0
@@ -168,10 +159,6 @@ class OMAPI_Output {
 
 		// Keep these around for back-compat.
 		$this->fields = $rules->fields;
-
-		if ( OMAPI_EasyDigitalDownloads::is_active() ) {
-			$this->edd_output = new OMAPI_EasyDigitalDownloads_Output();
-		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		self::$live_preview       = ! empty( $_GET['om-live-preview'] )
@@ -472,9 +459,9 @@ class OMAPI_Output {
 
 			$embed = self::om_script_tag(
 				array(
-					'id'         => 'omapi-script-preview-' . $campaign_id,
-					'campaignId' => $campaign_id,
-					'userId'     => $this->base->get_option( 'userId' ),
+					'id'         	=> 'omapi-script-preview-' . $campaign_id,
+					'campaignId' 	=> $campaign_id,
+					'accountUserId' => $this->base->get_option( 'accountUserId' ),
 				)
 			);
 
@@ -497,7 +484,7 @@ class OMAPI_Output {
 		$option = $this->base->get_option();
 
 		// If we don't have the data we need, return early.
-		if ( empty( $option['userId'] ) || empty( $option['accountId'] ) ) {
+		if ( empty( $option['accountUserId'] ) || empty( $option['accountId'] ) ) {
 			return;
 		}
 
@@ -554,7 +541,7 @@ class OMAPI_Output {
 		$this->set_slug( $optin );
 
 		// Request the shortcodes from the campaign preview object.
-		$user_id = $this->base->get_option( 'userId' );
+		$user_id = $this->base->get_option( 'accountUserId' );
 		$route   = "embed/{$user_id}/{$slug}/preview/shortcodes";
 		$body    = OMAPI_Api::build( 'v2', $route, 'GET' )->request();
 
@@ -902,8 +889,8 @@ class OMAPI_Output {
 			$campaign_or_account_id = sprintf( 's.dataset.campaign="%s";', esc_attr( $args['campaignId'] ) );
 		}
 
-		$user_id = ! empty( $args['userId'] )
-			? sprintf( 's.dataset.user="%s";', esc_attr( $args['userId'] ) )
+		$user_id = ! empty( $args['accountUserId'] )
+			? sprintf( 's.dataset.user="%s";', esc_attr( $args['accountUserId'] ) )
 			: '';
 
 		$api_cname = OMAPI::get_instance()->get_option( 'apiCname' );

@@ -30,24 +30,6 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 	protected $allow_header_set = false;
 
 	/**
-	 * The OMAPI_WooCommerce_RestApi instance.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @var null|OMAPI_WooCommerce_RestApi
-	 */
-	public $woocommerce = null;
-
-	/**
-	 * The OMAPI_EasyDigitalDownloads_RestApi instance.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @var null|OMAPI_EasyDigitalDownloads_RestApi
-	 */
-	public $edd = null;
-
-	/**
 	 * Registers our Rest Routes for this App
 	 *
 	 * @since 1.8.0
@@ -313,17 +295,7 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 			)
 		);
 
-		if ( OMAPI_WooCommerce::is_active() ) {
-			$this->woocommerce = new OMAPI_WooCommerce_RestApi();
-		}
-
-		if ( OMAPI_WPForms::is_active() ) {
-			new OMAPI_WPForms_RestApi();
-		}
-
-		if ( OMAPI_EasyDigitalDownloads::is_active() ) {
-			$this->edd = new OMAPI_EasyDigitalDownloads_RestApi();
-		}
+		do_action( 'optin_monster_api_rest_register_routes', $this );
 	}
 
 	/**
@@ -757,13 +729,14 @@ class OMAPI_RestApi extends OMAPI_BaseRestApi {
 		$response_data = apply_filters(
 			'optin_monster_api_setting_ui_data',
 			array(
-				'config'     => $config,
-				'campaigns'  => $campaign_data,
-				'taxonomies' => $taxonomy_map,
-				'posts'      => $posts,
-				'post_types' => $post_types,
-				'siteId'     => $this->base->get_site_id(),
-				'siteIds'    => $this->base->get_site_ids(),
+				'config'      => $config,
+				'campaigns'   => $campaign_data,
+				'taxonomies'  => $taxonomy_map,
+				'posts'       => $posts,
+				'post_types'  => $post_types,
+				'siteId'      => $this->base->get_site_id(),
+				'siteIds'     => $this->base->get_site_ids(),
+				'pluginsInfo' => ( new OMAPI_Plugins() )->get_active_plugins_header_value(),
 			)
 		);
 

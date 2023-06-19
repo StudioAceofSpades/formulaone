@@ -8,6 +8,7 @@
 
 namespace Smush\Core;
 
+use Smush\Core\Stats\Global_Stats;
 use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
@@ -20,6 +21,8 @@ if ( ! defined( 'WPINC' ) ) {
  * @since 3.0
  */
 class Settings {
+
+	const SUBSITE_CONTROLS_OPTION_KEY = 'wp-smush-networkwide';
 
 	/**
 	 * Plugin instance.
@@ -91,7 +94,7 @@ class Settings {
 	 *
 	 * @var array $basic_features
 	 */
-	public static $basic_features = array( 'bulk', 'auto', 'strip_exif', 'resize', 'original', 'gutenberg', 'js_builder', 'gform', 'lazy_load', 'lossy', 'background_email' );
+	public static $basic_features = array( 'bulk', 'auto', 'strip_exif', 'resize', 'original', 'gutenberg', 'js_builder', 'gform', 'lazy_load', 'lossy' );
 
 	/**
 	 * List of fields in bulk smush form.
@@ -101,6 +104,13 @@ class Settings {
 	 * @var array
 	 */
 	private $bulk_fields = array( 'bulk', 'auto', 'lossy', 'strip_exif', 'resize', 'original', 'backup', 'png_to_jpg', 'no_scale', 'background_email' );
+
+	/**
+	 * @since 3.12.6
+	 *
+	 * Upsell fields.
+	 */
+	private $upsell_fields = array( 'background_email' );
 
 	/**
 	 * List of fields in integration form.
@@ -148,6 +158,11 @@ class Settings {
 	 * @var array
 	 */
 	private $lazy_load_fields = array( 'lazy_load' );
+
+	/**
+	 * @var array
+	 */
+	private $activated_subsite_pages;
 
 	/**
 	 * Return the plugin instance.
@@ -220,7 +235,22 @@ class Settings {
 	 * @return string
 	 */
 	public static function get_setting_data( $id, $type = '' ) {
+		$bg_optimization = WP_Smush::get_instance()->core()->mod->bg_optimization;
+		if ( $bg_optimization->can_use_background() ) {
+			$bg_email_desc = esc_html__( 'Be notified via email about the bulk smush status when the process has completed.', 'wp-smushit' );
+		} else {
+			$bg_email_desc = sprintf(
+				/* translators: %s Email address */
+				esc_html__( "Be notified via email about the bulk smush status when the process has completed. You'll receive an email at %s.", 'wp-smushit' ),
+				'<strong>' . $bg_optimization->get_mail_recipient() . '</strong>'
+			);
+		}
 		$settings = array(
+			'background_email'  => array(
+				'label'       => esc_html__( 'Enable email notification', 'wp-smushit' ),
+				'short_label' => esc_html__( 'Email Notification', 'wp-smushit' ),
+				'desc'        => $bg_email_desc,
+			),
 			'bulk'              => array(
 				'short_label' => esc_html__( 'Image Sizes', 'wp-smushit' ),
 				'desc'        => esc_html__( 'WordPress generates multiple image thumbnails for each image you upload. Choose which of those thumbnail sizes you want to include when bulk smushing.', 'wp-smushit' ),
@@ -280,11 +310,6 @@ class Settings {
 				'short_label' => esc_html__( 'Usage Tracking', 'wp-smushit' ),
 				'desc'        => esc_html__( 'Help make Smush better by letting our designers learn how you’re using the plugin.', 'wp-smushit' ),
 			),
-			'background_email'  => array(
-				'label'       => esc_html__( 'Enable email notification', 'wp-smushit' ),
-				'short_label' => esc_html__( 'Email Notification', 'wp-smushit' ),
-				'desc'        => esc_html__( 'Be notified via email about the bulk smush status when the process has completed.', 'wp-smushit' ),
-			),
 		);
 
 		/**
@@ -341,6 +366,23 @@ class Settings {
 	 */
 	public function get_cdn_fields() {
 		return $this->cdn_fields;
+	}
+
+	public function is_upsell_field( $field ) {
+		return in_array( $field, $this->upsell_fields, true );
+	}
+
+	public function is_pro_field( $field ) {
+		return ! in_array( $field, self::$basic_features, true );
+	}
+
+	public function can_access_pro_field( $field ) {
+		if ( WP_Smush::is_pro() ) {
+			return true;
+		}
+
+		$bg_optimization = WP_Smush::get_instance()->core()->mod->bg_optimization;
+		return 'background_email' === $field && $bg_optimization->can_use_background();
 	}
 
 	/**
@@ -438,7 +480,7 @@ class Settings {
 		}
 
 		// Get directly from db.
-		$network_enabled = get_site_option( 'wp-smush-networkwide' );
+		$network_enabled = get_site_option( self::SUBSITE_CONTROLS_OPTION_KEY );
 		if ( ! isset( $network_enabled ) || false === (bool) $network_enabled ) {
 			return true;
 		}
@@ -467,7 +509,7 @@ class Settings {
 			return true;
 		}
 
-		$access = get_site_option( 'wp-smush-networkwide' );
+		$access = get_site_option( self::SUBSITE_CONTROLS_OPTION_KEY );
 
 		// Check to if the settings update is network-wide or not ( only if in network admin ).
 		$action = filter_input( INPUT_POST, 'action', FILTER_SANITIZE_SPECIAL_CHARS );
@@ -614,7 +656,7 @@ class Settings {
 			wp_die( esc_html__( 'Unauthorized', 'wp-smushit' ), 403 );
 		}
 
-		delete_site_option( 'wp-smush-networkwide' );
+		delete_site_option( self::SUBSITE_CONTROLS_OPTION_KEY );
 		delete_site_option( 'wp-smush-webp_hide_wizard' );
 		delete_site_option( 'wp-smush-preset_configs' );
 		$this->delete_setting( 'wp-smush-settings' );
@@ -624,6 +666,8 @@ class Settings {
 		$this->delete_setting( 'wp-smush-lazy_load' );
 		$this->delete_setting( 'skip-smush-setup' );
 		$this->delete_setting( 'wp-smush-hide-tutorials' );
+		delete_option( 'wp-smush-png2jpg-rewrite-rules-flushed' );
+		delete_option( 'wp_smush_scan_slice_size' );
 
 		wp_send_json_success();
 	}
@@ -658,6 +702,9 @@ class Settings {
 		}
 
 		$new_settings = array();
+		$status       = array(
+			'is_outdated_stats' => false,
+		);
 
 		if ( 'bulk' === $page ) {
 			foreach ( $this->get_bulk_fields() as $field ) {
@@ -726,7 +773,8 @@ class Settings {
 		}
 
 		$this->set_setting( 'wp-smush-settings', $settings );
-		wp_send_json_success();
+		$status['is_outdated_stats'] = Global_Stats::get()->is_outdated();
+		wp_send_json_success( $status );
 	}
 
 	/**
@@ -895,7 +943,7 @@ class Settings {
 	 * @return mixed
 	 */
 	private function parse_access_settings() {
-		$current_value = get_site_option( 'wp-smush-networkwide' );
+		$current_value = get_site_option( self::SUBSITE_CONTROLS_OPTION_KEY );
 
 		$new_value = filter_input( INPUT_POST, 'wp-smush-subsite-access', FILTER_SANITIZE_SPECIAL_CHARS );
 		$access    = filter_input( INPUT_POST, 'wp-smush-access', FILTER_SANITIZE_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY );
@@ -905,7 +953,7 @@ class Settings {
 		}
 
 		if ( $current_value !== $new_value ) {
-			update_site_option( 'wp-smush-networkwide', $new_value );
+			update_site_option( self::SUBSITE_CONTROLS_OPTION_KEY, $new_value );
 		}
 
 		return $new_value;
@@ -980,4 +1028,89 @@ class Settings {
 		return defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_SERVER['HTTP_REFERER'] ) && preg_match( '#^' . network_admin_url() . '#i', wp_unslash( $_SERVER['HTTP_REFERER'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	}
 
+	public function is_png2jpg_module_active() {
+		return $this->is_module_active( 'png_to_jpg' );
+	}
+
+	public function is_webp_module_active() {
+		return $this->is_module_active( 'webp_mod' );
+	}
+
+	public function is_resize_module_active() {
+		return $this->is_module_active( 'resize' );
+	}
+
+	public function is_backup_active() {
+		return $this->is_module_active( 'backup' );
+	}
+
+	public function is_s3_active() {
+		return $this->is_module_active( 's3' );
+	}
+
+	public function is_module_active( $module ) {
+		$pro_modules = array(
+			'cdn',
+			'png_to_jpg',
+			'webp_mod',
+			's3',
+		);
+
+		$module_active = self::get_instance()->get( $module );
+		if ( in_array( $module, $pro_modules, true ) ) {
+			$module_active = $module_active && WP_Smush::is_pro();
+		}
+
+		return $module_active;
+	}
+
+	public function has_bulk_smush_page() {
+		return $this->is_page_active( 'bulk' );
+	}
+
+	private function is_page_active( $page_slug ) {
+		if ( ! is_multisite() ) {
+			return true;
+		}
+
+		$is_page_active_on_subsite = in_array( $page_slug, $this->get_activated_subsite_pages(), true );
+
+		if ( is_network_admin() ) {
+			return ! $is_page_active_on_subsite;
+		}
+
+		return $is_page_active_on_subsite;
+	}
+
+	/**
+	 * @return array
+	 */
+	private function get_activated_subsite_pages() {
+		if ( is_array( $this->activated_subsite_pages ) ) {
+			return $this->activated_subsite_pages;
+		}
+
+		$this->activated_subsite_pages = array();
+		$subsite_controls              = get_site_option( self::SUBSITE_CONTROLS_OPTION_KEY );
+		if ( empty( $subsite_controls ) ) {
+			return $this->activated_subsite_pages;
+		}
+
+		$this->activated_subsite_pages = array_keys( $this->get_subsite_page_modules() );
+		if ( is_array( $subsite_controls ) ) {
+			$this->activated_subsite_pages = $subsite_controls;
+		}
+
+		return $this->activated_subsite_pages;
+	}
+
+	private function get_subsite_page_modules() {
+		return array(
+			'bulk'         => __( 'Bulk Smush', 'wp-smushit' ),
+			'integrations' => __( 'Integrations', 'wp-smushit' ),
+			'lazy_load'    => __( 'Lazy Load', 'wp-smushit' ),
+			'cdn'          => __( 'CDN', 'wp-smushit' ),
+			'tutorials'    => __( 'Tutorials', 'wp-smushit' ),
+		);
+	}
 }

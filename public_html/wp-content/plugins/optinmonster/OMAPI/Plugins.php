@@ -172,6 +172,15 @@ class OMAPI_Plugins {
 						'url'    => 'https://trustpulse.com/?utm_source=WordPress&utm_medium=Plugin&utm_campaign=OptinMonsterAboutUs',
 					),
 				),
+				'pushengage/main.php'           => array(
+					'slug'  => 'pushengage',
+					'icon'  => $this->base->url . 'assets/images/about/plugin-pushengage.png',
+					'class' => 'pushengagemainphp',
+					'check' => array( 'constant' => 'PUSHENGAGE_VERSION' ),
+					'name'  => 'PushEngage',
+					'desc'  => __( 'Plugin to push notifications for Chrome, Firefox, Opera, Microsoft Edge, Safari, UC Browser and Samsung Internet browsers.', 'optin-monster-api' ),
+					'url'   => 'https://downloads.wordpress.org/plugin/pushengage.zip',
+				),
 			);
 			foreach ( self::$plugins as $plugin_id => $plugin ) {
 				self::$plugins[ $plugin_id ]['id'] = $plugin_id;
@@ -354,7 +363,7 @@ class OMAPI_Plugins {
 			// of if it's active. We'll use this to "disconnect" WPForms if it's not active.
 			'wpf' => array(
 				'a' => $wpf_active,
-				'v' => $wpf_active ? $this->base->wpforms->get_version() : 0,
+				'v' => $wpf_active ? $this->base->wpforms->version() : 0,
 			),
 		);
 

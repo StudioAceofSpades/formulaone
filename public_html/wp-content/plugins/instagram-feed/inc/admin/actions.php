@@ -48,11 +48,22 @@ function sb_instagram_menu() {
 	add_submenu_page(
 		'sb-instagram-feed',
 		__( 'Upgrade to Pro', 'instagram-feed' ),
-		__( '<span class="sbi_get_pro">Try the Pro Demo</span>', 'instagram-feed' ),
+		'<span class="sbi_get_pro">' . __( 'Upgrade to Pro', 'instagram-feed' ) . '</span>',
 		$cap,
-		'https://smashballoon.com/instagram-feed/demo/?utm_campaign=instagram-free&utm_source=menu-link&utm_medium=upgrade-link',
+		'https://smashballoon.com/instagram-feed/?utm_campaign=instagram-free&utm_source=menu-link&utm_medium=upgrade-link&utm_content=UpgradeToPro',
 		''
 	);
+
+	if ( version_compare(PHP_VERSION, '7.1.0') >= 0 && !is_plugin_active( 'reviews-feed/sb-reviews.php' ) && !is_plugin_active( 'reviews-feed-pro/sb-reviews-pro.php' )  ) {
+		add_submenu_page(
+			'sb-instagram-feed',
+			__( 'Reviews Feed', 'instagram-feed' ) ,
+			'<span class="sbi_get_sbr">' . __( 'Reviews Feed', 'instagram-feed' ) . '</span>'. '<span class="sbi-notice-alert sbi-new-indicator"><span>New!</span></span>',
+			$cap,
+			'admin.php?page=sbr',
+			''
+		);
+	}
 
 	//Show a Instagram plugin menu item if it isn't already installed
 	if( !is_plugin_active( 'custom-facebook-feed/custom-facebook-feed.php' ) && !is_plugin_active( 'custom-facebook-feed-pro/custom-facebook-feed.php' )  && current_user_can( 'activate_plugins' ) && current_user_can( 'install_plugins' ) ){
@@ -93,7 +104,7 @@ function sb_instagram_menu() {
 add_action( 'admin_menu', 'sb_instagram_menu' );
 
 function sbi_add_settings_link( $links ) {
-	$pro_link = '<a href="https://smashballoon.com/instagram-feed/demo/?utm_campaign=instagram-free&utm_source=plugins-page&utm_medium=upgrade-link" target="_blank" style="font-weight: bold; color: #1da867;">' . __( 'Try the Pro Demo', 'instagram-feed' ) . '</a>';
+	$pro_link = '<a href="https://smashballoon.com/instagram-feed/?utm_campaign=instagram-free&utm_source=plugins-page&utm_medium=upgrade-link&utm_content=UpgradeToPro" target="_blank" style="font-weight: bold; color: #1da867;">' . __( 'Upgrade to Pro', 'instagram-feed' ) . '</a>';
 
 	$sbi_settings_link = '<a href="' . esc_url( admin_url( 'admin.php?page=sbi-settings' ) ) . '">' . esc_html__( 'Settings', 'instagram-feed' ) . '</a>';
 	array_unshift( $links, $pro_link, $sbi_settings_link );

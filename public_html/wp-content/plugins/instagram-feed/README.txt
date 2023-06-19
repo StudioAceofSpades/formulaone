@@ -2,8 +2,9 @@
 Contributors: smashballoon, craig-at-smash-balloon, am, smub
 Tags: Instagram, Instagram feed, Instagram photos, Instagram widget, Instagram gallery
 Requires at least: 4.1
-Tested up to: 6.1
-Stable tag: 6.1.1
+Tested up to: 6.2
+Stable tag: 6.1.5
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +13,8 @@ Formerly "Instagram Feed". Display clean, customizable, and responsive Instagram
 == Description ==
 
 Display Instagram posts from your Instagram accounts, either in the same single feed or in multiple different ones.
+
+https://www.youtube.com/watch?v=517rApIqzbw
 
 = Features =
 * **New:** Now automatically powers your **Instagram oEmbeds**
@@ -331,10 +334,27 @@ We understand that sometimes you need help, have issues or just have questions. 
 * Plus more customization options added all the time!
 
 == Changelog ==
+= 6.1.5 =
+* Fix: Fixed personal accounts unable to retrieve new tweets and showing an error with the code 100.
+* Fix: Updated API calls for business accounts to work with upcoming changes from Instagram.
+
+= 6.1.4 =
+* Fix: Removed the option to add a feed to a widget if the current theme does not support widgets.
+* New: Added a menu item to easily install our new [Reviews Feed](https://wordpress.org/plugins/reviews-feed/) plugin!
+
+= 6.1.3 =
+* Fix: Fixed a PHP Warning: strtotime(): Epoch doesn’t fit in a PHP integer.
+* Fix: Header bio was not updating when the bio for the connected Instagram account was updated.
+* Fix: Fixed a few text items not being translatable.
+
+= 6.1.2 =
+* Fix: When enabling Facebook oEmbeds from the oEmbed page, an Instagram icon would appear when the Custom Facebook Feed plugin was being activated.
+* Fix: Fixed a CSS parsing error.
+
 = 6.1.1 =
-* Fix: When using the customizer to enable the setting for the header "show outside scrollable area" and adding a background color. The preview would not show the same result as the actual feed.
+* Fix: When using the customizer to enable the setting for the header "show outside scrollable area" and adding a background color, the preview would not show the same result as the actual feed.
 * Fix: Disabling the JavaScript image loading on the "Advanced" settings tab would cause the customizer preview to look distorted.
-* Fix: When customizing a feed, the load more button would be come active when switching the device preview.
+* Fix: When customizing a feed, the load more button would become active when switching the device preview.
 * Fix: Fixed a PHP warning that would occur when bulk deleting feeds.
 
 = 6.1 =

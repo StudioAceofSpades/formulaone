@@ -391,6 +391,7 @@ class OMAPI_Menu {
 		add_filter( 'admin_footer_text', array( $this, 'footer' ) );
 		add_action( 'in_admin_header', array( $this, 'output_plugin_screen_banner' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'fix_plugin_js_conflicts' ), 100 );
+		add_action( 'admin_print_footer_scripts', array( $this, 'fix_plugin_js_conflicts' ), 100 );
 	}
 
 	/**
@@ -437,26 +438,29 @@ class OMAPI_Menu {
 	 * Deque specific scripts that cause conflicts on settings page. E.g.
 	 * - optimizely
 	 * - bigcommerce
+	 * - learnpress
 	 *
 	 * @since 1.1.5.9
 	 */
 	public function fix_plugin_js_conflicts() {
 		if ( $this->is_om_page() ) {
+			global $wp_scripts;
 
-			// Dequeue scripts that might cause our settings not to work properly.
-			wp_dequeue_script( 'optimizely_config' );
+			$remove = array(
+				'lp-',
+				'optimizely',
+				'bigcommerce-',
+			);
+			foreach ( $wp_scripts->queue as $script ) {
+				foreach ( $remove as $search ) {
+					if ( 0 === strpos( $script, $search ) ) {
 
-			add_action( 'admin_print_footer_scripts', array( $this, 'dequeue_bigcommerce_admin_script' ), 100 );
+						// Dequeue scripts that might cause our settings not to work properly.
+						wp_dequeue_script( $script );
+					}
+				}
+			}
 		}
-	}
-
-	/**
-	 * Deque bigcommerce admin script, as it contains conflict with our app.
-	 *
-	 * @since 2.3.0
-	 */
-	public function dequeue_bigcommerce_admin_script() {
-		wp_dequeue_script( 'bigcommerce-admin-scripts' );
 	}
 
 	/**

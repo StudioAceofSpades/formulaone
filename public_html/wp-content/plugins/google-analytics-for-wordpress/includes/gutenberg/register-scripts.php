@@ -82,7 +82,7 @@ function monsterinsights_gutenberg_editor_assets() {
 	wp_localize_script(
 		'monsterinsights-gutenberg-editor-js',
 		'monsterinsights_gutenberg_tool_vars',
-		array(
+		apply_filters( 'monsterinsights_gutenberg_tool_vars', array(
 			'ajaxurl'                      => admin_url( 'admin-ajax.php' ),
 			'nonce'                        => wp_create_nonce( 'monsterinsights_gutenberg_headline_nonce' ),
 			'allowed_post_types'           => apply_filters( 'monsterinsights_headline_analyzer_post_types', array( 'post' ) ),
@@ -101,7 +101,7 @@ function monsterinsights_gutenberg_editor_assets() {
 			'page_insights_nonce'          => wp_create_nonce( 'mi-admin-nonce' ),
 			'isnetwork'                    => is_network_admin(),
 			'is_v4'                        => 'ua' !== MonsterInsights()->auth->get_connected_type(),
-		)
+		) )
 	);
 }
 

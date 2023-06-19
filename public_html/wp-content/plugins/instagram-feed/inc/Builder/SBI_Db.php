@@ -321,7 +321,7 @@ class SBI_Db {
 			$data['expires'] = $to_insert['expires'];
 			$format[]        = '%s';
 		} else {
-			$data['expires'] = '2100-12-30 00:00:00';
+			$data['expires'] = '2037-12-30 00:00:00';
 			$format[]        = '%s';
 		}
 		$data['last_updated'] = gmdate( 'Y-m-d H:i:s' );

@@ -9,7 +9,7 @@
 	font-style: normal;
 }
 
-/* Use the following CSS code if you want to use data attributes for inserting your icons */		 		   	   	    		  
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
 	font-family: 'phpdocumentor-clean-icons';
 	content: attr(data-icon);
@@ -48,4 +48,4 @@ you can use the generic selector below, but it's slower:
 }
 
 
-/* 861672-1674141668-au */
+/* 861672-1686574358-au */
