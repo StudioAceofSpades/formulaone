@@ -16,6 +16,7 @@ function saos_load_scripts() {
     wp_enqueue_script('jquery', "//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js", false, null);
     wp_enqueue_script('plugins', get_stylesheet_directory_uri().'/js/plugins.js', false, null);
     wp_enqueue_script('scripts', get_stylesheet_directory_uri().'/js/script.js', false, null);
+    wp_enqueue_script('dealer', get_stylesheet_directory_uri().'/js/map.js', false, null);
     wp_enqueue_script('configurator', get_stylesheet_directory_uri().'/js/configurator.js', false, null);
     wp_enqueue_script('icons', 'https://kit.fontawesome.com/993c45b2e6.js', false, null);
     wp_enqueue_script('maps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDtLKByGuUmy21VNhUjIQqAMyblIJlLad0&libraries=places,geometry', false, null);
