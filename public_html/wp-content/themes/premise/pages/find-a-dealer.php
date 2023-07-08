@@ -112,15 +112,17 @@ var geojson = {
             setup_postdata($post); 
             $lat        = get_field('latitude');
             $long       = get_field('longitude');
-            $address    = htmlspecialchars(get_field('address'));
+            $address    = str_replace("'", "&#39;", htmlspecialchars(get_field('address')));
+            $address2   = str_replace("'", "&#39;", htmlspecialchars(get_field('address_2')));
+            $city       = str_replace("'", "&#39;", htmlspecialchars(get_field('city')));
+            $state      = str_replace("'", "&#39;", htmlspecialchars(get_field('state')));
+            $zip        = str_replace("'", "&#39;", htmlspecialchars(get_field('zip')));
 
-            if($address2 = htmlspecialchars(get_field('address_2'))) {
+            if($address2) {
                 $address .= '<br>'.$address2;
             }
             $address .= '<br>';
-            $address .= get_field('city').', '.get_field('state') . ' ' .get_field('zip_code');
-
-            $address = str_replace("\u0022","\\\\\"",json_encode($address,JSON_HEX_QUOT)); 
+            $address .= $city.', '.$state. ' ' .$zip;
 
             if($lat && $long):
             ?>
@@ -132,7 +134,7 @@ var geojson = {
                 },
                 'property'  : {
                     'title'         : '<?php the_title(); ?>',
-                    'address'       : <?php echo $address; ?>,
+                    'address'       : '<?php echo $address; ?>',
                     'phone'         : '<?php the_field('phone'); ?>',
                     'website'       : '<?php the_field('website'); ?>',
                     'marker-color'  : '#000000',
