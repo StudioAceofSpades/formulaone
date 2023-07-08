@@ -21,7 +21,7 @@ class MonsterInsights_Site_Notes_DB_Base
 	{
 		$args = array(
 			'public'             => false,
-			'publicly_queryable' => true,
+			'publicly_queryable' => false,
 			'show_ui'            => false,
 			'show_in_menu'       => false,
 			'query_var'          => true,
@@ -36,9 +36,10 @@ class MonsterInsights_Site_Notes_DB_Base
 	private function create_taxonomy()
 	{
 		$args = array(
-			'hierarchical'      => false,
-			'show_ui'           => false,
-			'query_var'         => true,
+			'hierarchical' => false,
+			'show_ui'      => false,
+			'query_var'    => true,
+			'public'       => false,
 		);
 
 		register_taxonomy('monsterinsights_note_category', array('monsterinsights_note'), $args);

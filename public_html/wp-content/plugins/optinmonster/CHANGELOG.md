@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to the OptinMonster plugin will be documented in this file.
 
+### 2.13.5 - 2023-06-22
+* Improvements to onboarding flow.
+* Improvements MemberPress integration.
+* Changes to prepare for the upcoming retirement of legacy campaigns.
+
 ### 2.13.4 - 2023-06-06
 * Fixed a bug where elementor support could cause JavaScript errors.
 * Fixed various issues the could occur as a result of connecting to the OptinMonster app as a sub-account.

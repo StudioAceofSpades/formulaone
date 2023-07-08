@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
 /**
  * Print Monsterinsights frontend tracking script.
  *
@@ -233,8 +232,8 @@ function monsterinsights_administrator_tracking_notice() {
 	}
 
 	// Only show when tracking.
-	$ua = monsterinsights_get_ua();
-	if ( empty( $ua ) ) {
+	$tracking_tag = monsterinsights_get_v4_id();
+	if ( empty( $tracking_tag ) ) {
 		return;
 	}
 

@@ -100,7 +100,7 @@ function monsterinsights_gutenberg_editor_assets() {
 			'page_insights_addon_active'   => class_exists( 'MonsterInsights_Page_Insights' ),
 			'page_insights_nonce'          => wp_create_nonce( 'mi-admin-nonce' ),
 			'isnetwork'                    => is_network_admin(),
-			'is_v4'                        => 'ua' !== MonsterInsights()->auth->get_connected_type(),
+			'is_v4'                        => true
 		) )
 	);
 }
