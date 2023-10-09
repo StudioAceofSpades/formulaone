@@ -105,3 +105,4 @@ if ( ( 'free' === $type || $is_hosted_third_party ) && ! $has_hosted_access ) {
 		</div>
 	<?php endif; ?>
 </div>
+

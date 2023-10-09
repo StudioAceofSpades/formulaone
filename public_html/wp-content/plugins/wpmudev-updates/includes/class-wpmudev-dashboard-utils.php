@@ -35,6 +35,8 @@ class WPMUDEV_Dashboard_Utils {
 		add_action( 'wp_logout', array( $this, 'unset_staff_flag' ) );
 		// Make sure SSO is valid.
 		add_action( 'wpmudev_after_remove_allowed_user', array( $this, 'recheck_sso_user' ) );
+		// Do hub sync if server properties change.
+		add_action( 'admin_init', array( $this, 'sync_on_site_info_change' ) );
 	}
 
 	/**
@@ -44,6 +46,7 @@ class WPMUDEV_Dashboard_Utils {
 	 * Don't let WP Cron to slow down the request.
 	 *
 	 * @since 4.11.7
+	 *
 	 * @return void
 	 */
 	public function maybe_disable_cron() {
@@ -60,9 +63,10 @@ class WPMUDEV_Dashboard_Utils {
 	 * priority in plugin initialization order. Some plugins may change
 	 * it, but that's okay.
 	 *
+	 * @since 4.11.4
+	 *
 	 * @param array $plugins Plugin list.
 	 *
-	 * @since 4.11.4
 	 * @return array
 	 */
 	public function set_plugin_priority( $plugins ) {
@@ -87,8 +91,6 @@ class WPMUDEV_Dashboard_Utils {
 	 * Make an HTTP request to our own WP Admin to process admin side actions
 	 * specifically hub sync or status updates which requires to be run on wp admin.
 	 *
-	 * @param array $data Request data.
-	 *
 	 * @since 4.11.6
 	 *
 	 * @uses  admin_url()
@@ -96,6 +98,8 @@ class WPMUDEV_Dashboard_Utils {
 	 * @uses  wp_generate_password()
 	 * @uses  set_site_transient()
 	 * @uses  delete_site_transient()
+	 *
+	 * @param array $data Request data.
 	 *
 	 * @return string|bool
 	 */
@@ -201,9 +205,10 @@ class WPMUDEV_Dashboard_Utils {
 		 * Always remember to send a json response using wp_send_json_error
 		 * or wp_send_json_success.
 		 *
+		 * @since 4.11.6
+		 *
 		 * @param array $data Request data.
 		 *
-		 * @since 4.11.6
 		 */
 		do_action( 'wpmudev_dashboard_admin_request', $data );
 	}
@@ -299,10 +304,11 @@ class WPMUDEV_Dashboard_Utils {
 	/**
 	 * Rename a folder to new name for backup.
 	 *
-	 * @param string $from Current folder name.
+	 * @since 4.11.9
+	 *
 	 * @param string $to   New folder name.
 	 *
-	 * @since 4.11.9
+	 * @param string $from Current folder name.
 	 *
 	 * @return bool
 	 */
@@ -322,9 +328,9 @@ class WPMUDEV_Dashboard_Utils {
 	 *
 	 * Currently only free memberships are being checked.
 	 *
-	 * @param string $feature Feature name.
-	 *
 	 * @since 4.11.9
+	 *
+	 * @param string $feature Feature name.
 	 *
 	 * @return bool
 	 */
@@ -336,5 +342,92 @@ class WPMUDEV_Dashboard_Utils {
 		$free_disallow = array( 'plugins', 'support', 'whitelabel', 'translations' );
 
 		return ( 'free' !== $membership_type && ! $is_hosted_third_party ) || ! in_array( $feature, $free_disallow, true );
+	}
+
+	/**
+	 * Get site information.
+	 *
+	 * Get site and server properties to show in Hub widget.
+	 *
+	 * @since 4.11.19
+	 *
+	 * @return bool
+	 */
+	public function get_site_info() {
+		global $wp_version;
+
+		// Prepare info.
+		$info = array(
+			'wp_version'   => $wp_version,
+			'php_version'  => phpversion(),
+			'wp_debug'     => defined( 'WP_DEBUG' ) && WP_DEBUG,
+			'issues_total' => $this->get_site_health_issues_total(),
+			'php_memory'   => ini_get( 'memory_limit' ),
+			'is_multisite' => is_multisite(),
+			'server_ip'    => isset( $_SERVER['SERVER_ADDR'] ) ? $_SERVER['SERVER_ADDR'] : '',
+		);
+
+		/**
+		 * Filter hook to modify site info data.
+		 *
+		 * @since 4.11.19
+		 *
+		 * @param array $info Info.
+		 */
+		return apply_filters( 'wpmudev_dashboard_get_site_info', $info );
+	}
+
+	/**
+	 * Get site properties.
+	 *
+	 * Get site and server properties to show in Hub widget.
+	 *
+	 * @since 4.11.19
+	 *
+	 * @return int
+	 */
+	public function get_site_health_issues_total() {
+		// Get site health issues count.
+		$issues = get_transient( 'health-check-site-status-result' );
+		if ( ! empty( $issues ) ) {
+			$issues = json_decode( $issues, true );
+		}
+
+		// If issues found.
+		if ( isset( $issues['recommended'], $issues['critical'] ) ) {
+			return $issues['recommended'] + $issues['critical'];
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Do a hub sync when site info changes.
+	 *
+	 * @since 4.11.19
+	 *
+	 * @return void
+	 */
+	public function sync_on_site_info_change() {
+		// Get previous info.
+		$previous = WPMUDEV_Dashboard::$settings->get( 'site_info', 'general', array() );
+		// Get current site info.
+		$current = $this->get_site_info();
+		if ( $current !== $previous ) {
+			// Do hub sync to update on Hub.
+			WPMUDEV_Dashboard::$site->schedule_shutdown_refresh();
+
+			WPMUDEV_Dashboard::$settings->set( 'site_info', $current, 'general' );
+
+			/**
+			 * Action hook to trigger on site info change.
+			 *
+			 * @since 4.11.19
+			 *
+			 * @param array $previous Previous info.
+			 * @param array $previous Current info.
+			 */
+			do_action( 'wpmudev_dashboard_site_info_changed', $previous, $current );
+		}
 	}
 }

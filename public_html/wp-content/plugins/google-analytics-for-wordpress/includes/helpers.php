@@ -1323,15 +1323,6 @@ function monsterinsights_count_addon_codes( $current_code ) {
 		}
 	}
 
-	// If the performance addon is installed and its Google Optimize ID is the same as the current code, then increase the count
-	if ( class_exists( 'MonsterInsights_Performance' ) ) {
-		$container_id = monsterinsights_get_option( 'goptimize_container', '' );
-
-		if ( $container_id === $current_code ) {
-			$count ++;
-		}
-	}
-
 	return $count;
 }
 
@@ -1397,6 +1388,18 @@ function monsterinsights_detect_tracking_code_error( $body ) {
 		-- $total_count;
 	}
 
+	// Test for Advanced Ads plugin tracking code.
+	$pattern = '/advanced_ads_ga_UID.*?"' . $current_code . '"/m';
+	if ( preg_match_all( $pattern, $body, $matches ) ) {
+		$total_count -= count( $matches[0] );
+	}
+
+	// Test for WP Popups tracking code.
+	$pattern = '/wppopups_pro_vars.*?"' . $current_code . '"/m';
+	if ( preg_match_all( $pattern, $body, $matches ) ) {
+		$total_count -= count( $matches[0] );
+	}
+
 	if ( $total_count > $limit ) {
 		// Translators: The placeholders are for making the "We have detected multiple tracking codes" text bold & adding a link to support.
 		$message           = esc_html__( '%1$sWe have detected multiple tracking codes%2$s! You should remove non-MonsterInsights ones. If you need help finding them please %3$sread this article%4$s.', 'google-analytics-for-wordpress' );
@@ -1441,10 +1444,7 @@ function monsterinsights_is_code_installed_frontend() {
 	if ( in_array( $response_code, $accepted_http_codes, true ) ) {
 		$body = wp_remote_retrieve_body( $request );
 
-		$errors = array_merge(
-			monsterinsights_detect_tracking_code_error( $body ),
-			monsterinsights_detect_tracking_code_error( $body, 'v4' )
-		);
+		$errors = monsterinsights_detect_tracking_code_error( $body );
 	}
 
 	return $errors;
@@ -1489,7 +1489,6 @@ function monsterinsights_custom_track_pretty_links_redirect( $url ) {
 		}
 	}
 	// Check if this is an affiliate link and use the appropriate category.
-	$ec            = 'outbound-link';
 	$inbound_paths = monsterinsights_get_option( 'affiliate_links', array() );
 	$path          = empty( $_SERVER['REQUEST_URI'] ) ? '' : $_SERVER['REQUEST_URI']; // phpcs:ignore
 	if ( ! empty( $inbound_paths ) && is_array( $inbound_paths ) && ! empty( $path ) ) {
@@ -1500,7 +1499,6 @@ function monsterinsights_custom_track_pretty_links_redirect( $url ) {
 			}
 			if ( 0 === strpos( $path, trim( $inbound_path['path'] ) ) ) {
 				$label = ! empty( $inbound_path['label'] ) ? trim( $inbound_path['label'] ) : 'aff';
-				$ec   .= '-' . $label;
 				$found = true;
 				break;
 			}
@@ -1515,23 +1513,26 @@ function monsterinsights_custom_track_pretty_links_redirect( $url ) {
 
 	if ( monsterinsights_get_v4_id_to_output() ) {
 		$url_components = parse_url( $url );
-		$args           = array(
-			'events' => array(
-				array(
-					'link_text'   => 'external-redirect',
-					'link_url'    => $url,
-					'link_domain' => $url_components['host'],
-					'outbound'    => true,
-				),
-			),
+		$params_args    = array(
+			'link_text'   => 'external-redirect',
+			'link_url'    => $url,
+			'link_domain' => $url_components['host'],
+			'outbound'    => 'true',
 		);
 
 		if ( ! empty( $label ) ) {
-			$args['events'][0]['affiliate_label']   = $label;
-			$args['events'][0]['is_affiliate_link'] = true;
+			$params_args['affiliate_label']   = $label;
+			$params_args['is_affiliate_link'] = 'true';
 		}
 
-		monsterinsights_mp_collect_v4( $args );
+		monsterinsights_mp_collect_v4( array(
+			'events' => array(
+				array(
+					'name'   => 'click',
+					'params' => $params_args,
+				)
+			),
+		) );
 	}
 }
 

@@ -2,9 +2,9 @@
 Contributors: WPbeginner, smub, gripgrip, wpcodeteam
 Tags: code, css, php, footer, functions, content, facebook pixel, footer code, footer scripts, footers, google analytics, head, header, header code, header scripts, headers, insert, insert code, insert scripts, js, meta, meta tags, scripts, html, javascript, multisite, code snippets
 Requires at least: 4.6
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 5.5
-Stable tag: 2.0.13
+Stable tag: 2.1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -307,6 +307,32 @@ Thank you
 Syed Balkhi
 
 == Changelog ==
+
+= 2.1.3.1 =
+* Fix: Shortcode attributes were not being correctly parsed in some scenarios.
+
+= 2.1.3 =
+* New: We improved how we manage automatic snippet disabling when errors occur. You'll now get detailed insights into which snippet is responsible for the error and the exact line where the problem occurred.
+* Tweak: We adjusted the way snippets are preloaded to improve compatibility with object cache.
+* Fix: The snippets added as shortcodes were not correctly displayed in the admin bar.
+
+= 2.1.2 =
+* Tweak: We adjusted the way snippets are tracked in the Admin Bar Code Spotter to avoid wrong numbers in certain locations.
+* Tweak: We improved the way the Admin Bar Code Spotter menu is loaded for better compatibility with other plugins and older themes.
+* Tweak: Changed the way assets used by the admin bar are loaded to avoid errors if the head is loaded multiple times.
+
+= 2.1.1 =
+* New: Easily duplicate a snippet with all of its settings with the new Duplicate link in the list of snippets.
+* Fix: Taxonomy page conditional logic was not being correctly assigned for category and tags archives.
+* Tweak: Adjust admin bar markup to avoid using a heading.
+
+= 2.1.0 =
+* New: See exactly which scripts and snippets are loaded on the current page with the WPCode admin bar info menu.
+* Tweak: Minor update to connect process.
+
+= 2.0.13.1 =
+* Fix: Improve compatibility with older WordPress versions before version 4.7.
+* Fix: Add escaping to tag filter links in the list of snippets.
 
 = 2.0.13 =
 * New: We have added user customization options for the list of snippets in the admin. Now, you can choose snippet list columns, determine the number of snippets to display, and set the default order of the snippets.

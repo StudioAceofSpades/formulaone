@@ -141,10 +141,10 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 					foreach ( $tags as $tag ) {
 						$tags_links[] = sprintf(
 							'<a href="%1$s" title="%2$s">%3$s</a>',
-							add_query_arg( 'tag', $tag ),
+							esc_url( add_query_arg( 'tag', $tag ) ),
 							// Translators: The tag by which to filter the list of snippets in the admin.
-							sprintf( __( 'Filter snippets by tag: %s', 'insert-headers-and-footers' ), $tag ),
-							$tag
+							sprintf( __( 'Filter snippets by tag: %s', 'insert-headers-and-footers' ), esc_attr( $tag ) ),
+							esc_html( $tag )
 						);
 					}
 				} else {
@@ -186,7 +186,7 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 			if ( ! empty( $recently_deactivated ) ) {
 				$tooltip_text = sprintf(
 				// Translators: %1$s is the time since the snippet was deactivated, %2$s is the date and time of deactivation.
-					__( 'This snippet was automatically deactivated because of a fatal erorr at %2$s on %3$s (%1$s ago)', 'insert-headers-and-footers' ),
+					__( 'This snippet was automatically deactivated because of a fatal error at %2$s on %3$s (%1$s ago)', 'insert-headers-and-footers' ),
 					human_time_diff( $recently_deactivated, time() ),
 					gmdate( 'H:i:s', $recently_deactivated ),
 					gmdate( 'Y-m-d', $recently_deactivated )
@@ -331,6 +331,26 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 					esc_html__( 'Trash', 'insert-headers-and-footers' )
 				);
 			}
+
+			if ( current_user_can( 'edit_post', $snippet->ID ) ) {
+				$actions['duplicate'] = sprintf(
+					'<a href="%s" title="%s">%s</a>',
+					esc_url(
+						wp_nonce_url(
+							add_query_arg(
+								array(
+									'action'     => 'duplicate',
+									'snippet_id' => $snippet->ID,
+								),
+								admin_url( 'admin.php?page=wpcode' )
+							),
+							'wpcode_duplicate_nonce'
+						)
+					),
+					esc_attr__( 'Duplicate this snippet', 'insert-headers-and-footers' ),
+					esc_html__( 'Duplicate', 'insert-headers-and-footers' )
+				);
+			}
 		}
 
 		return $this->row_actions( apply_filters( 'wpcode_code_snippets_row_actions', $actions, $snippet, $this->view ) );
@@ -429,7 +449,8 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 			$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 				array(
 					'taxonomy' => 'wpcode_location',
-					'terms'    => array( absint( $_GET['location'] ) ),
+					'terms'    => array( sanitize_key( $_GET['location'] ) ),
+					'field'    => 'slug',
 				),
 			);
 		}
@@ -794,7 +815,7 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 		$used_locations = get_terms(
 			array(
 				'taxonomy'   => 'wpcode_location',
-				'hide_empty' => false,
+				'hide_empty' => true,
 			)
 		);
 
@@ -803,7 +824,7 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 			return;
 		}
 
-		$displayed_location = isset( $_GET['location'] ) ? absint( $_GET['location'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$displayed_location = isset( $_GET['location'] ) ? sanitize_key( $_GET['location'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 		<label for="filter-by-location" class="screen-reader-text"><?php esc_html_e( 'Filter by location', 'insert-headers-and-footers' ); ?></label>
 		<select name="location" id="filter-by-location">
@@ -812,7 +833,7 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 			foreach ( $used_locations as $used_location ) {
 				$pretty_name = wpcode()->auto_insert->get_location_label( $used_location->slug );
 				?>
-				<option<?php selected( $displayed_location, $used_location->term_id ); ?> value="<?php echo esc_attr( $used_location->term_id ); ?>"><?php echo esc_html( $pretty_name ); ?></option>
+				<option<?php selected( $displayed_location, $used_location->slug ); ?> value="<?php echo esc_attr( $used_location->slug ); ?>"><?php echo esc_html( $pretty_name ); ?></option>
 				<?php
 			}
 			?>
@@ -858,6 +879,7 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 			array(
 				'view',
 				'trashed',
+				'duplicated',
 				'untrashed',
 				'deleted',
 				'enabled',
@@ -869,6 +891,6 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 		$class    = $this->view === $slug ? ' class="current"' : '';
 		$count    = isset( $this->count[ $slug ] ) ? $this->count[ $slug ] : 0;
 
-		return sprintf( '<a href="%1$s"%2$s>%3$s&nbsp;<span class="count">(%4$d)</span></a>', esc_url( $url ), $class, $label, $count );
+		return sprintf( '<a href="%1$s"%2$s>%3$s&nbsp;<span class="count">(%4$d)</span></a>', esc_url( $url ), $class, esc_html( $label ), esc_html( $count ) );
 	}
 }
