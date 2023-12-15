@@ -20,7 +20,7 @@ $slug = $post->post_name;
     <div class="buttons block">
         <a href="<?php the_permalink(); ?>" class="button orange-border">Learn More</a>
         <?php if($related = get_field('associated_buildable_trailer')):?>
-            <a href="<?php bloginfo('url'); ?>/build-yours?model=<?php echo $related[0]->post_name; ?>" class="button orange">Build Yours</a>
+            <a href="<?php bloginfo('url'); ?>/enclosed-cargo-trailer-quote-request/" class="button orange">Request a Quote</a>
         <?php endif; ?>
     </div>
 </div>

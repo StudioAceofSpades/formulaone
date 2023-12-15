@@ -62,7 +62,7 @@ get_header(); ?>
                                 <p><?php the_field('build_subheader'); ?></p>
                             <?php endif; ?>
                             <div class="buttons">
-                                <a href="<?php bloginfo('url'); ?>/build-yours" class="button orange">Build your Trailer</a>
+                                <a href="<?php bloginfo('url'); ?>/enclosed-cargo-trailer-quote-request/" class="button orange">Request a Quote</a>
                             </div>
                         </div>
                     </div>

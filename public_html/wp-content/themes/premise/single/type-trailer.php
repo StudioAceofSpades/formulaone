@@ -28,11 +28,9 @@ get_header(); ?>
                         the_field('introduction');
                     endif;
                     ?>
-                    <?php if($related): ?>
                     <div class="buttons left">
-                        <a href="<?php bloginfo('url'); ?>/build-yours/?model=<?php echo $related[0]->post_name; ?>" class="button orange">Build Yours</a>
+                        <a href="<?php bloginfo('url'); ?>/enclosed-cargo-trailer-quote-request/" class="button orange">Request a Quote</a>
                     </div>
-                    <?php endif; ?>
                 </div>
                 <div class="col-xl col-lg-5 d-none d-lg-block">
                     <?php
@@ -234,7 +232,7 @@ get_header(); ?>
                 <div class="row">
                     <div class="col-md-6 offset-md-3 col-sm-12">
                         <div class="buttons">
-                            <a href="<?php bloginfo('url'); ?>/build-yours" class="button orange">Build Your Perfect Formula</a>
+                            <a href="<?php bloginfo('url'); ?>/enclosed-cargo-trailer-quote-request/" class="button orange">Request a Quote</a>
                         </div>
                     </div>
                 </div>
