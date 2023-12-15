@@ -203,8 +203,6 @@ var bounds;
         var distance        = google.maps.geometry.spherical.computeDistanceBetween(center, dealerCenter);
         distance            = metersToMiles(distance).toFixed(1);
 
-        address = address.substring(1, address.length-1);
-
         var output = 
             '<div class="col-6 col-xs-12">' +
                 '<div class="dealer-result">' +
