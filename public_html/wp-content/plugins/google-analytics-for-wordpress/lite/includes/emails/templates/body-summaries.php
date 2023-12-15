@@ -34,7 +34,7 @@ $icon_bulb        = plugins_url("lite/assets/img/emails/summaries/icon-bulb.png"
 $icon_bulb_2x     = plugins_url("lite/assets/img/emails/summaries/icon-bulb@2x.png", MONSTERINSIGHTS_PLUGIN_FILE);
 
 $site_url   = get_site_url();
-$start_date = isset($startDate) ? $startDate : date("Y-m-d", strtotime("-1 day, last week"));
+$start_date = isset($startDate) ? $startDate : date("Y-m-d", strtotime("-1 day, last month"));
 $start_date = date("F j, Y", strtotime($start_date));
 $end_date   = isset($endDate) ? $endDate : date("Y-m-d", strtotime("last saturday"));
 $end_date   = date("F j, Y", strtotime($end_date));
@@ -89,7 +89,7 @@ if ((int) $prev_engagement_percentage === (int) $prev_engagement_percentage && (
 }
 ?>
 <tr>
-	<td valign="top" class="mcnTextBlockInner" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%; border-radius:0 0 5px 5px; background: #ffffff;">
+	<td valign="top" class="mcnTextBlockInner" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%; border-radius:0 0 5px 5px; background-color: #FFFFFF;">
 
 		<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnTextContentContainer">
 			<tbody>
@@ -283,15 +283,18 @@ if ((int) $prev_engagement_percentage === (int) $prev_engagement_percentage && (
 					</tr>
 				</tbody>
 			</table>
-			<table style="margin:0px 25px; font-family: Helvetica; width:400px; color: #9CA4B5; font-size: 12px;">
+			<table style="margin:0px 25px; font-family: Helvetica; width:400px; color: #9CA4B5; font-size: 12px; width:400px;">
 				<tbody>
 					<?php $i = 0; ?>
 					<?php while ($i <= 9) : ?>
 						<?php if (isset($top_pages[$i])) : ?>
-							<tr style="display:flex;">
-								<td style="width:67%;float:left;padding-top:8px;padding-bottom:8px;text-align:left;font-weight: normal;font-size: 14px;line-height: 16px;color: #393F4C;overflow:hidden;" class="mcnTextContent"><a href="<?php echo esc_url($top_pages[$i]['hostname'] . $top_pages[$i]['url']); ?>" target="_blank" style="text-decoration:none;color: #393F4C;"><?php echo esc_html($i + 1 . '. ' . monsterinsights_trim_text($top_pages[$i]['title'], 2)); ?></a>
+							<tr>
+								<td style="width:300px;padding-top:8px;padding-bottom:8px;text-align:left;font-weight: normal;font-size: 14px;line-height: 16px;color: #393F4C;overflow:hidden;" class="mcnTextContent">
+									<a href="<?php echo esc_url($top_pages[$i]['hostname'] . $top_pages[$i]['url']); ?>" target="_blank" style="text-decoration:none;color: #393F4C;"><?php echo esc_html($i + 1 . '. ' . monsterinsights_trim_text($top_pages[$i]['title'], 2)); ?></a>
 								</td>
-								<td style="width:33%;float:left;padding-top:8px;padding-bottom:8px;text-align:right;font-weight: normal;font-size: 14px;line-height: 16px;color: #509FE2;overflow:hidden;text-overflow: ellipsis;" class="mcnTextContent"><?php echo esc_html(number_format_i18n($top_pages[$i]['sessions'])); ?></td>
+								<td style="width:100px;padding-top:8px;padding-bottom:8px;text-align:right;font-weight: normal;font-size: 14px;line-height: 16px;color: #509FE2;overflow:hidden;text-overflow: ellipsis;" class="mcnTextContent">
+									<?php echo esc_html(number_format_i18n($top_pages[$i]['sessions'])); ?>
+								</td>
 							</tr>
 						<?php endif; ?>
 						<?php $i++; ?>
@@ -304,7 +307,8 @@ if ((int) $prev_engagement_percentage === (int) $prev_engagement_percentage && (
 			</table>
 		<?php endif; ?>
 
-		<table style="margin: 25px; font-family: Helvetica; width:400px; color: #9CA4B5;">
+		<br>
+		<table style="margin: 0 25px; font-family: Helvetica; width:400px; color: #9CA4B5;">
 			<tbody>
 				<tr>
 					<td style="text-align: center; background-color: #F9FBFF; border-radius: 3px; outline: 1px solid #D6E2ED; padding: 20px 20px 25px;">
@@ -336,35 +340,23 @@ if ((int) $prev_engagement_percentage === (int) $prev_engagement_percentage && (
 									</td>
 								</tr>
 								<tr>
-									<td>
-										<a href="<?php echo monsterinsights_get_upgrade_link('weekly-lite-email', 'weekly-lite-email', "https://www.monsterinsights.com/pricing/"); ?>" target="_blank" style="background-color: #338EEF; text-decoration: none; border-width: 1px 1px 2px 1px; border-style: solid; border-color: #1177E3; border-radius: 3px; padding: 8px 20px; text-align: center; display:inline-block; color: #ffffff; font-size:14px; font-weight: 700; ">
-											<?php _e('Upgrade to Pro', 'google-analytics-for-wordpress'); ?>
-											<?php
-											if (!empty($icon_button_arrow)) {
-												echo '<img src="' . esc_url($icon_button_arrow) . '" srcset="' . esc_url($icon_button_arrow_2x) . ' 2x" target="_blank" alt="' . esc_attr__('Upgrade To Pro', 'google-analytics-for-wordpress') . '" style="padding-left: 3px;" />';
-											}
-											?>
-										</a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div>
-										<!--[if mso]>
-											<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="<?php echo monsterinsights_get_upgrade_link('weekly-lite-email', 'weekly-lite-email', "https://www.monsterinsights.com/pricing/"); ?>" style="height:35px;v-text-anchor:middle;width:164px;" arcsize="9%" strokecolor="#338EEF" fillcolor="#338EEF">
+									<td style="text-align:center;">
+										<div style="text-align:center; margin:0 auto;">
+											<!--[if mso]>
+											<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="<?php echo monsterinsights_get_upgrade_link('monthly-lite-email', 'monthly-lite-email', "https://www.monsterinsights.com/pricing/"); ?>" style="height:35px;v-text-anchor:middle;width:164px;" arcsize="9%" strokecolor="#338EEF" fillcolor="#338EEF">
 												<w:anchorlock/>
 												<center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;"><?php _e('Upgrade to Pro', 'google-analytics-for-wordpress'); ?></center>
 											</v:roundrect>
 										<![endif]-->
-										<a href="<?php echo monsterinsights_get_upgrade_link('weekly-lite-email', 'weekly-lite-email', "https://www.monsterinsights.com/pricing/"); ?>" target="_blank" style="background-color:#338EEF;border-width:1px 1px 2px 1px;border-color:#1177E3;border-style:solid;border-radius:3px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:35px;text-align:center;text-decoration:none;width:164px;-webkit-text-size-adjust:none;mso-hide:all;">
-											<?php _e('Upgrade to Pro', 'google-analytics-for-wordpress'); ?>
-											<?php
-											if (!empty($icon_button_arrow)) {
-												echo '<img src="' . esc_url($icon_button_arrow) . '" srcset="' . esc_url($icon_button_arrow_2x) . ' 2x" target="_blank" alt="' . esc_attr__('Upgrade To Pro', 'google-analytics-for-wordpress') . '" style="padding-left: 3px;" />';
-											}
-											?>
-										</a>
-									</div>
+											<a href="<?php echo monsterinsights_get_upgrade_link('monthly-lite-email', 'monthly-lite-email', "https://www.monsterinsights.com/pricing/"); ?>" target="_blank" style="background-color:#338EEF;border-width:1px 1px 2px 1px;border-color:#1177E3;border-style:solid;border-radius:3px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:13px;font-weight:bold;line-height:35px;text-align:center;text-decoration:none;width:164px;-webkit-text-size-adjust:none;mso-hide:all;">
+												<?php _e('Upgrade to Pro', 'google-analytics-for-wordpress'); ?>
+												<?php
+												if (!empty($icon_button_arrow)) {
+													echo '<img src="' . esc_url($icon_button_arrow) . '" srcset="' . esc_url($icon_button_arrow_2x) . ' 2x" target="_blank" alt="' . esc_attr__('Upgrade To Pro', 'google-analytics-for-wordpress') . '" style="padding-left: 3px;" />';
+												}
+												?>
+											</a>
+										</div>
 									</td>
 								</tr>
 							</tbody>
@@ -374,45 +366,39 @@ if ((int) $prev_engagement_percentage === (int) $prev_engagement_percentage && (
 			</tbody>
 		</table>
 		<?php if (isset($info_block['title']) && !empty($info_block['title'])) : ?>
-			<table style="margin: 25px; font-family: Helvetica; width:400px; color: #9CA4B5;">
+
+
+			<br>
+			<table style="font-family: Helvetica; width:400px; color: #9CA4B5; width:400px; margin: 0 25px 0 25px; background-color: #F8F8F8; outline: 1px solid rgba(119, 119, 119, 0.15); font-size: 13px; border-radius: 3px;">
 				<tbody>
 					<tr>
-						<td style="background-color: #F8F8F8; padding: 20px 15px; outline: 1px solid rgba(119, 119, 119, 0.15); font-size: 13px; border-radius: 3px;">
-							<table style="width: 100%;">
-								<tbody>
-									<tr>
-										<td style="width: 30px;">
-											<?php
-											if (!empty($icon_bulb)) {
-												echo '<img src="' . esc_url($icon_bulb) . '" srcset="' . esc_url($icon_bulb_2x) . ' 2x" target="_blank" alt="' . esc_attr__('', 'google-analytics-for-wordpress') . '" style="padding-left: 3px;" />';
-											}
-											?>
-										</td>
-										<td style="padding-bottom: 4px;"><?php _e('Pro Tip from our experts', 'google-analytics-for-wordpress'); ?></td>
-									</tr>
-									<tr>
-										<td colspan="2" style="font-weight: 700; color: #393F4C; padding-left: 31px; padding-bottom:9px;">
-											<?php echo esc_html($info_block['title']); ?>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2" style="padding-left: 31px; padding-bottom:9px;">
-											<?php echo wp_kses_post($info_block['html']); ?>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2" style="padding-left: 31px;">
-											<a href="<?php echo esc_url($info_block['link_url']); ?>" target="_blank" style="color: #338EEF;">
-												<?php echo esc_html($info_block['link_text']); ?>
-											</a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+						<td valign="top" style="padding: 20px 5px 0px 20px; text-align:center;">
+							<?php
+							if (!empty($icon_bulb)) {
+								echo '<img src="' . esc_url($icon_bulb) . '" srcset="' . esc_url($icon_bulb_2x) . ' 2x" target="_blank" alt="' . esc_attr__('', 'google-analytics-for-wordpress') . '" style="padding-left: 3px;" />';
+							}
+							?>
+						</td>
+						<td style="padding: 20px 15px 20px 5px;">
+							<div style="font-weight: normal; padding: 3px 0 10px 0;">
+								<?php _e('Pro Tip from our experts', 'google-analytics-for-wordpress'); ?>
+							</div>
+							<div style="font-weight: 700;  color: #393F4C; padding-bottom:10px;">
+								<?php echo esc_html($info_block['title']); ?>
+							</div>
+							<div>
+								<?php echo wp_kses_post($info_block['html']); ?>
+							</div>
+							<div style="padding: 10px 0;">
+								<a href="<?php echo esc_url($info_block['link_url']); ?>" target="_blank" style="color: #338EEF;">
+									<?php echo esc_html($info_block['link_text']); ?>
+								</a>
+							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<br />
 		<?php endif; ?>
 		<!-- end table here.. -->
 	</td>

@@ -1502,7 +1502,7 @@ class WPMUDEV_Dashboard_Api {
 		$data_hash = md5( json_encode( $hash_data ) ); // get a hash of the data to see if it changed (minus auth cookies)
 		unset( $hash_data );
 
-		$last_run = WPMUDEV_Dashboard::$settings->get( 'last_run_sync', 'general', array() );
+		$last_run = (array) WPMUDEV_Dashboard::$settings->get( 'last_run_sync', 'general', array() );
 
 		// used to bypass the cache on api side when logging in or upgrading
 		if ( $force || empty( $last_run ) ) {

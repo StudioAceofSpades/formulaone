@@ -3,7 +3,7 @@ Contributors: catchplugins, catchthemes, sakinshrestha, pratikshrestha, maheshma
 Donate link: https://catchplugins.com/plugins/hide-metadata/
 Tags: hide, hide author, show hide author, hide posted-on, date, byline, author, hide meta
 Requires at least: 5.7
-Tested up to: 6.1
+Tested up to: 6.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,9 @@ Not so easy way (via FTP) :
 * Go to **Hide/Remove Metadata** from Dashboard menu
 
 == Changelog ==
+
+= 1.2.7 (Released: November 15, 2023) =
+* Compatibility check up to version 6.4
 
 = 1.2.6 (Released: December 14, 2022) =
 * Compatibility check up to version 6.1

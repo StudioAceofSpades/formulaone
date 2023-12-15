@@ -1094,6 +1094,7 @@ class WPMUDEV_Dashboard_Site {
 		}
 		WPMUDEV_Dashboard::$settings->reset();
 		WPMUDEV_Dashboard::$api->set_key( '' );
+		WPMUDEV_Dashboard::$settings->set( 'connected_admin', 0, 'general' );
 		WPMUDEV_Dashboard::$api->hub_sync( false, true ); // force a sync so that site is removed from user's hub.
 
 		if ( $redirect ) {

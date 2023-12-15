@@ -1361,7 +1361,9 @@ function monsterinsights_detect_tracking_code_error( $body ) {
 	}
 
 	if ( false === strpos( $body, '__gtagTracker' ) ) {
-		$errors[] = $cache_error;
+		if ( ! isset ( $errors ) ) {
+			$errors[] = $cache_error;
+		}
 
 		return $errors;
 	}
@@ -1512,10 +1514,21 @@ function monsterinsights_custom_track_pretty_links_redirect( $url ) {
 	}
 
 	if ( monsterinsights_get_v4_id_to_output() ) {
+		// Get Pretty Links settings.
+		$pretty_track = monsterinsights_get_option( 'pretty_links_backend_track', '' );
+
+		if ( 'pretty_link' == $pretty_track ) {
+			global $prli_link;
+			$pretty_link = $prli_link->get_one_by( 'url', $url );
+			$link_url    = PrliUtils::get_pretty_link_url( $pretty_link->slug );
+		} else {
+			$link_url = $url;
+		}
+
 		$url_components = parse_url( $url );
 		$params_args    = array(
 			'link_text'   => 'external-redirect',
-			'link_url'    => $url,
+			'link_url'    => $link_url,
 			'link_domain' => $url_components['host'],
 			'outbound'    => 'true',
 		);
@@ -2246,5 +2259,13 @@ if ( ! function_exists( 'current_datetime' ) ) {
 	 */
 	function current_datetime() {
 		return new DateTimeImmutable( 'now', wp_timezone() );
+	}
+}
+
+
+if ( ! function_exists( 'monsterinsights_is_authed' ) ) {
+	function monsterinsights_is_authed() {
+		$site_profile = get_option('monsterinsights_site_profile');
+		return isset($site_profile['key']);
 	}
 }

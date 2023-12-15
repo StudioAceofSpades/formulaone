@@ -51,12 +51,16 @@ class MonsterInsights_Email_Summaries {
 		$this->email_options = $options;
 		$this->hooks();
 
+		// Remove weekly cron job.
+		wp_clear_scheduled_hook( 'monsterinsights_email_summaries_weekly' );
+
+		// Schedule or clear Monthly cron job.
 		if ( ! empty( $email_summaries ) && 'on' !== $email_summaries && wp_next_scheduled( 'monsterinsights_email_summaries_cron' ) ) {
 			wp_clear_scheduled_hook( 'monsterinsights_email_summaries_cron' );
 		}
 
 		if ( ! empty( $email_summaries ) && 'on' === $email_summaries && ! wp_next_scheduled( 'monsterinsights_email_summaries_cron' ) ) {
-			wp_schedule_event( $this->get_first_cron_date(), 'monsterinsights_email_summaries_weekly', 'monsterinsights_email_summaries_cron' );
+			wp_schedule_event( $this->get_first_cron_date(), 'monsterinsights_email_summaries_monthly', 'monsterinsights_email_summaries_cron' );
 		}
 	}
 
@@ -72,7 +76,7 @@ class MonsterInsights_Email_Summaries {
 			add_action( 'init', array( $this, 'preview' ) );
 			add_filter( 'monsterinsights_email_template_paths', array( $this, 'add_email_template_path' ) );
 			add_filter( 'monsterinsights_emails_templates_set_initial_args', array( $this, 'set_template_args' ) );
-			add_filter( 'cron_schedules', array( $this, 'add_weekly_cron_schedule' ) );
+			add_filter( 'cron_schedules', array( $this, 'add_monthly_cron_schedule' ) );
 			add_action( 'monsterinsights_email_summaries_cron', array( $this, 'cron' ) );
 			add_action( 'wp_ajax_monsterinsights_send_test_email', array( $this, 'send_test_email' ) );
 			add_action( 'monsterinsights_after_update_settings', array(
@@ -109,7 +113,7 @@ class MonsterInsights_Email_Summaries {
 			$this->is_enabled = false;
 
 			if ( ! $this->is_preview() ) {
-				
+
 				$info_block      = new MonsterInsights_Summaries_InfoBlocks();
 				$info_block      = $info_block->fetch_data();
 				$email_addresses = $this->get_email_addresses();
@@ -242,10 +246,10 @@ class MonsterInsights_Email_Summaries {
 	 * @since 8.19.0
 	 *
 	 */
-	public function add_weekly_cron_schedule( $schedules ) {
-		$schedules['monsterinsights_email_summaries_weekly'] = array(
-			'interval' => WEEK_IN_SECONDS,
-			'display'  => esc_html__( 'Weekly MonsterInsights Email Summaries', 'google-analytics-for-wordpress' ),
+	public function add_monthly_cron_schedule( $schedules ) {
+		$schedules['monsterinsights_email_summaries_monthly'] = array(
+			'interval' => MONTH_IN_SECONDS,
+			'display'  => esc_html__( 'Monthly MonsterInsights Email Summaries', 'google-analytics-for-wordpress' ),
 		);
 
 		return $schedules;
@@ -275,7 +279,7 @@ class MonsterInsights_Email_Summaries {
 	 */
 	public function get_email_addresses() {
 		$emails          = $this->email_options['summaries_email_addresses'];
-		return apply_filters( 'monsterinsights_email_addressses_to_send', $emails );
+		return apply_filters( 'monsterinsights_email_addresses_to_send', $emails );
 	}
 
 	/**
@@ -314,10 +318,15 @@ class MonsterInsights_Email_Summaries {
 	 * @since 8.19.0
 	 */
 	public function cron() {
-		
+
 		if ( ! $this->is_enabled() ) {
 			return;
 		}
+
+		if( !monsterinsights_is_authed() ){
+			return;
+		}
+
 		$email            = array();
 		$email['subject'] = $this->get_email_subject();
 		$email['address'] = $this->get_email_addresses();
@@ -343,7 +352,7 @@ class MonsterInsights_Email_Summaries {
 		if( !empty( $email['address'] ) ){
 			foreach ( $email['address'] as $address ) {
 				$sent = $emails->send( trim( $address ), $email['subject'] );
-	
+
 				if ( true === $sent && ! empty( $next_block ) ) {
 					$info_blocks->register_sent( $next_block );
 				}
@@ -404,7 +413,7 @@ class MonsterInsights_Email_Summaries {
 		}
 
 		$args['body']['title']       = esc_html__( 'Website Traffic Summary', 'google-analytics-for-wordpress' );
-		$args['body']['description'] = esc_html__( 'Let’s take a look at how your website traffic performed in the past week.', 'google-analytics-for-wordpress' );
+		$args['body']['description'] = esc_html__( 'Let’s take a look at how your website traffic performed in the past month.', 'google-analytics-for-wordpress' );
 		$args['body']['summaries']   = $this->get_summaries();
 		$args['body']['startDate']   = $this->get_summaries_start_date();
 		$args['body']['endDate']     = $this->get_summaries_end_date();
@@ -419,16 +428,18 @@ class MonsterInsights_Email_Summaries {
 		$args['body']['settings_tab_url']   = esc_url( admin_url( 'admin.php?page=monsterinsights_settings#/advanced' ) );
 		$args['footer']['settings_tab_url'] = esc_url( admin_url( 'admin.php?page=monsterinsights_settings#/advanced' ) );
 
+		$args['body']['summaries']['data']['galinks']['topposts']  = admin_url( 'admin.php?page=monsterinsights_reports#/' );
+
 		return apply_filters( 'monsterinsights_email_summaries_template_args', $args );
 	}
 
 	/**
-	 * get the start date from the last week
+	 * get the start date from the last month
 	 *
 	 * @since 8.19.0
 	 */
 	public function get_summaries_start_date() {
-		return date( "Y-m-d", strtotime( "-1 day, last week" ) ); // sunday of last week
+		return date( "Y-m-d", strtotime( "first day of last month" ) ); // first day of last month
 	}
 
 	/**
@@ -437,7 +448,7 @@ class MonsterInsights_Email_Summaries {
 	 * @since 8.19.0
 	 */
 	public function get_summaries_end_date() {
-		return date( "Y-m-d", strtotime( "last saturday" ) ); // last saturday
+		return date( "Y-m-d", strtotime( "last day of last month" ) ); // last day of last month
 	}
 
 	/**
@@ -454,7 +465,7 @@ class MonsterInsights_Email_Summaries {
 
 		$isnetwork = ! empty( $_REQUEST['isnetwork'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['isnetwork'] ) ) : '';
 
-		// get the data of last week
+		// get the data of last month
 		$args = array(
 			'start' => $this->get_summaries_start_date(),
 			'end'   => $this->get_summaries_end_date(),
