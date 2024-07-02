@@ -31,6 +31,11 @@ get_header(); ?>
                     <div class="buttons left">
                         <a href="<?php bloginfo('url'); ?>/enclosed-cargo-trailer-quote-request/" class="button orange">Request a Quote</a>
                     </div>
+                    <?php if($spec = get_field('spec_sheet')): ?>
+                        <div class="buttons left">
+                            <a href="<?php bloginfo('url'); ?>/request-a-quote-enclosed-cargo-trailers/" class="button orange" target="_blank">Download Spec Sheet</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="col-xl col-lg-5 d-none d-lg-block">
                     <?php
