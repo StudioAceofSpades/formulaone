@@ -24,21 +24,21 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 	 *
 	 * @var string
 	 */
-	private $action = 'insert-headers-and-footers';
+	protected $action = 'insert-headers-and-footers';
 
 	/**
 	 * If the page should be a submenu of Settings instead of wpcode.
 	 *
 	 * @var bool
 	 */
-	private $settings_submenu = false;
+	protected $settings_submenu = false;
 
 	/**
 	 * The nonce name field.
 	 *
 	 * @var string
 	 */
-	private $nonce_name = 'insert-headers-and-footers_nonce';
+	protected $nonce_name = 'insert-headers-and-footers_nonce';
 
 	/**
 	 * The capability required to view this page.
@@ -191,7 +191,7 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 	 * @return void
 	 */
 	public function textarea_field( $option, $title, $desc ) {
-		$value = wp_unslash( get_option( 'ihaf_insert_' . $option ) );
+		$value = wp_unslash( $this->get_option( $option ) );
 		?>
 		<div class="wpcode-code-textarea" id="wpcode-global-<?php echo esc_attr( $option ); ?>">
 			<h2><label for="ihaf_insert_<?php echo esc_attr( $option ); ?>"><?php echo esc_html( $title ); ?></label>
@@ -202,6 +202,17 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 			</p>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Get the value of an option.
+	 *
+	 * @param string $option The option name.
+	 *
+	 * @return mixed
+	 */
+	public function get_option( $option ) {
+		return get_option( 'ihaf_insert_' . $option );
 	}
 
 	/**
@@ -275,6 +286,11 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 			update_option( 'ihaf_insert_header', $_REQUEST['ihaf_insert_header'] );
 			update_option( 'ihaf_insert_footer', $_REQUEST['ihaf_insert_footer'] );
 			update_option( 'ihaf_insert_body', isset( $_REQUEST['ihaf_insert_body'] ) ? $_REQUEST['ihaf_insert_body'] : '' );
+
+			// Clear the cache.
+			if ( apply_filters( 'wpcode_clear_cache_on_global_save', true ) ) {
+				wpcode_clear_all_plugins_page_cache();
+			}
 		}
 
 		if ( wpcode()->settings->get_option( 'headers_footers_mode' ) && ! isset( $_REQUEST['headers_footers_mode'] ) ) {
@@ -291,7 +307,7 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 			exit;
 		}
 
-		$this->set_success_message( __( 'Settings Saved.', 'insert-headers-and-footers' ) );
+		$this->set_success_message( __( 'Settings Saved. Please don\'t forget to clear the site cache if you are using a cache plugin, so that the changes will be reflected for all users.', 'insert-headers-and-footers' ) );
 	}
 
 	/**

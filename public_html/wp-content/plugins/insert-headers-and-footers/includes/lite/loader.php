@@ -50,14 +50,20 @@ function wpcode_plugins_loaded_load_lite_files() {
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/auto-insert/class-wpcode-auto-insert-memberpress.php';
 	// Load the insert-anywhere class.
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/auto-insert/class-wpcode-auto-insert-anywhere.php';
+	// Load the content class.
+	require_once WPCODE_PLUGIN_PATH . 'includes/lite/auto-insert/class-wpcode-auto-insert-content.php';
 	// Load Device type conditional logic.
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-device.php';
+	// Load Location conditional logic.
+	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-location.php';
 	// Load WooCommerce conditional logic.
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-woocommerce.php';
 	// Load EDD conditional logic.
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-edd.php';
 	// Load MemberPress conditional logic.
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-memberpress.php';
+	// Load Snippet conditional logic.
+	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-snippet.php';
 	// Load Schedule conditional logic.
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-schedule.php';
 }

@@ -358,6 +358,11 @@
 			$('input[name=taxonomy_type]').val(selectedData.selectedData.value);
 		}
 	});
+	
+	$('#taxonomy_to_import li').each(function() {
+        var toolTipText = $(this).find('.dd-option-value').val();
+        $(this).attr('title', toolTipText);
+    });
 
 	// enter-submit form on step 1
 	$('.wpallimport-step-1').each(function(){
@@ -848,6 +853,14 @@
 	// template form: preview button
 	$('form.wpallimport-template').each(function () {
 		var $form = $(this);
+
+		// The form should not submit when Enter is pressed.
+		$form.on('keypress', function (event) {
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if (keycode == '13') {
+				event.preventDefault();
+			}
+		});
 
 		var $detected_cf = new Array();
 
@@ -1787,7 +1800,17 @@
 				}, 'json');
 				return false;
 			});
-			$tag.find('input[name="tagno"]').on('change', function () {
+			$tag.find('input[name="tagno"]').on('change keypress', function (event) {
+
+				// Check if the key pressed is enter, if not exit the function unless a
+				// 'change' event triggered it.
+				if(event.type === "keypress") {
+					var keycode = (event.keyCode ? event.keyCode : event.which);
+					if(keycode != '13'){
+						return;
+					}
+				}
+
 				tagno = (parseInt($(this).val()) > parseInt($tag.find('.pmxi_count').html())) ? $tag.find('.pmxi_count').html() : ( (parseInt($(this).val())) ? $(this).val() : 1 );
 				$(this).val(tagno);
 				$tag.addClass('loading').css('opacity', 0.7);
@@ -1800,7 +1823,7 @@
 						$('#variations_xpath').data('checkedValue', '').trigger('change');
 					}
 				}, 'json');
-				return false;
+
 			});
 		});
 		return this;

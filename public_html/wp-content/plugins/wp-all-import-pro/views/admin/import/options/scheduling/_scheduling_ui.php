@@ -237,7 +237,7 @@
 												</a>
 											</div>
 											<div class="text-container" style="position: absolute; left: 151px; top: 1px;">
-												<p><?php _e('Get automatic scheduling for unlimited sites, just $9/mo.'); ?></p>
+												<p><?php _e('Get automatic scheduling for unlimited sites, just $19/mo.'); ?></p>
 												<p><?php _e('Have a license?'); ?>
 													<a href="javascript:void(0);" id="add-subscription"><?php _e('Register this site.'); ?></a> <?php _e('Questions?', PMXI_Plugin::LANGUAGE_DOMAIN); ?> <a href="javascript:void(0);" class="help_scheduling">Read more.</a></p>
 												<input type="password" id="add-subscription-field" style="position: absolute; z-index: 2; font-size:14px;" placeholder="<?php _e('Enter your license', PMXI_Plugin::LANGUAGE_DOMAIN); ?>" />

@@ -955,6 +955,10 @@ class PMXI_CsvParser
 
         if ($is_html) return;
 
+        // TODO: replace when PHP 9 releases
+        $originalAutoDetectLineEndings = @ini_get('auto_detect_line_endings'); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+        @ini_set('auto_detect_line_endings', true); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+
         $res = fopen($this->_filename, 'rb');
 
         $xmlWriter = new XMLWriter();
@@ -1059,6 +1063,9 @@ class PMXI_CsvParser
         fclose($res);
         $xmlWriter->endElement();
         $xmlWriter->flush(TRUE);
+
+        // TODO: replace when PHP 9 releases
+        @ini_set('auto_detect_line_endings', $originalAutoDetectLineEndings); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
         return TRUE;
     }

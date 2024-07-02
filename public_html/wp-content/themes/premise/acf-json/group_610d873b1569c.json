@@ -6,6 +6,7 @@
             "key": "field_610d882502b86",
             "label": "Intro",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -22,6 +23,7 @@
             "key": "field_6192c2abfeb04",
             "label": "Associated Buildable Trailer",
             "name": "associated_buildable_trailer",
+            "aria-label": "",
             "type": "relationship",
             "instructions": "",
             "required": 0,
@@ -43,12 +45,14 @@
             "elements": "",
             "min": "",
             "max": 1,
-            "return_format": "object"
+            "return_format": "object",
+            "bidirectional_target": []
         },
         {
             "key": "field_610d87f902b84",
             "label": "Introduction",
             "name": "introduction",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -68,6 +72,7 @@
             "key": "field_610d880e02b85",
             "label": "Trailer Image",
             "name": "trailer_image",
+            "aria-label": "",
             "type": "image",
             "instructions": "This should have a transparent background.",
             "required": 0,
@@ -92,6 +97,7 @@
             "key": "field_610d884202b87",
             "label": "Specifications",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -108,6 +114,7 @@
             "key": "field_610d884d02b88",
             "label": "Intro",
             "name": "spec_intro",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -127,6 +134,7 @@
             "key": "field_610d886602b89",
             "label": "Specifications",
             "name": "specifications",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "Specifications are per size.",
             "required": 0,
@@ -146,6 +154,7 @@
                     "key": "field_610d887502b8a",
                     "label": "Size",
                     "name": "size",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -159,12 +168,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_610d886602b89"
                 },
                 {
                     "key": "field_610d8d3e02b8c",
                     "label": "Specification",
                     "name": "specification",
+                    "aria-label": "",
                     "type": "repeater",
                     "instructions": "Example Name: <i>Curb Weight<\/i>\r\nExample Value: <i>1000 lbs.<\/i>",
                     "required": 0,
@@ -184,6 +195,7 @@
                             "key": "field_610d8d0d02b8b",
                             "label": "Name",
                             "name": "name",
+                            "aria-label": "",
                             "type": "text",
                             "instructions": "",
                             "required": 0,
@@ -197,12 +209,14 @@
                             "placeholder": "",
                             "prepend": "",
                             "append": "",
-                            "maxlength": ""
+                            "maxlength": "",
+                            "parent_repeater": "field_610d8d3e02b8c"
                         },
                         {
                             "key": "field_610d8d6102b8d",
                             "label": "Value",
                             "name": "value",
+                            "aria-label": "",
                             "type": "text",
                             "instructions": "",
                             "required": 0,
@@ -216,16 +230,21 @@
                             "placeholder": "",
                             "prepend": "",
                             "append": "",
-                            "maxlength": ""
+                            "maxlength": "",
+                            "parent_repeater": "field_610d8d3e02b8c"
                         }
-                    ]
+                    ],
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_610d886602b89"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_610d8d7202b8e",
             "label": "Standard Features",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -242,6 +261,7 @@
             "key": "field_610d8d9d02b8f",
             "label": "Features",
             "name": "features",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -261,6 +281,7 @@
                     "key": "field_610d8dbe02b90",
                     "label": "Feature",
                     "name": "feature",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -274,14 +295,17 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_610d8d9d02b8f"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_610d8dcb02b92",
             "label": "Options & Upgrades",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -298,6 +322,7 @@
             "key": "field_610d8df002b93",
             "label": "Options & Upgrades",
             "name": "options_upgrades",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -317,6 +342,7 @@
                     "key": "field_610d8df002b94",
                     "label": "Option\/Upgrade",
                     "name": "option_upgrade",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -330,14 +356,17 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_610d8df002b93"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_6111691122bcd",
             "label": "Colors",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -354,6 +383,7 @@
             "key": "field_610d8e2302b95",
             "label": "Standard Colors",
             "name": "standard_colors",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -373,6 +403,7 @@
                     "key": "field_610d966602b96",
                     "label": "Color Name",
                     "name": "color_name",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -386,12 +417,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_610d8e2302b95"
                 },
                 {
                     "key": "field_610d967602b97",
                     "label": "Color",
                     "name": "color",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -410,14 +443,17 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_610d8e2302b95"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_610d96c202b98",
             "label": "Optional Colors",
             "name": "optional_colors",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -437,6 +473,7 @@
                     "key": "field_610d96c202b99",
                     "label": "Color Name",
                     "name": "color_name",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -450,12 +487,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_610d96c202b98"
                 },
                 {
                     "key": "field_610d96c202b9a",
                     "label": "Color",
                     "name": "color",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -474,14 +513,17 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_610d96c202b98"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_610d970e02b9d",
             "label": "Photos",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -498,6 +540,7 @@
             "key": "field_610d96e302b9b",
             "label": "Photos",
             "name": "photos",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -517,6 +560,7 @@
                     "key": "field_610d96f202b9c",
                     "label": "Image",
                     "name": "image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -535,14 +579,17 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_610d96e302b9b"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_610d97f602b9f",
             "label": "Video",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -559,6 +606,7 @@
             "key": "field_610d97a502b9e",
             "label": "Videos",
             "name": "videos",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -572,12 +620,13 @@
             "min": 0,
             "max": 0,
             "layout": "table",
-            "button_label": "",
+            "button_label": "Add Row",
             "sub_fields": [
                 {
                     "key": "field_6155da3a09efe",
                     "label": "Video",
                     "name": "video",
+                    "aria-label": "",
                     "type": "oembed",
                     "instructions": "",
                     "required": 0,
@@ -588,9 +637,31 @@
                         "id": ""
                     },
                     "width": "",
-                    "height": ""
+                    "height": "",
+                    "parent_repeater": "field_610d97a502b9e"
                 }
-            ]
+            ],
+            "rows_per_page": 20
+        },
+        {
+            "key": "field_65fb28dc5b6e3",
+            "label": "Spec Sheet",
+            "name": "spec_sheet",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ""
         }
     ],
     "location": [
@@ -613,5 +684,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1637008082
+    "modified": 1710958829
 }

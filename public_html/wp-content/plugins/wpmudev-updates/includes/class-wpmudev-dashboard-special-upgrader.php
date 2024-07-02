@@ -296,6 +296,41 @@ class WPMUDEV_Dashboard_Special_Upgrader {
 	}
 
 	/**
+	 * Retrieves the path to the file that contains the plugin info.
+	 *
+	 * This is an alternative for Plugin_Upgrader::plugin_info() to make sure to use
+	 * renamed plugin directory.
+	 *
+	 * @since 4.11.24
+	 *
+	 * @param string|bool|WP_Error $result Upgrader result.
+	 *
+	 * @return string|false The full path to the main plugin file, or false.
+	 */
+	public function get_plugin_info_path( $result ) {
+		// Should be an array.
+		if ( ! is_array( $result ) ) {
+			return false;
+		}
+
+		// Make sure destination name exists.
+		if ( empty( $result['destination_name'] ) ) {
+			return false;
+		}
+
+		// Ensure to pass with leading slash.
+		$plugin = get_plugins( '/' . $result['destination_name'] );
+		if ( empty( $plugin ) ) {
+			return false;
+		}
+
+		// Assume the requested plugin is the first in the list.
+		$plugin_files = array_keys( $plugin );
+
+		return $result['destination_name'] . '/' . $plugin_files[0];
+	}
+
+	/**
 	 * Remove renamed version if they are downgrading to old version.
 	 *
 	 * Do this only if required.

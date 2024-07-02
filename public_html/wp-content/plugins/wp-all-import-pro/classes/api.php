@@ -641,7 +641,16 @@ class PMXI_API
 					'image_url' => $img_url,
 					'image_filename' => $image_filename
 				))->insert();
-				$logger and call_user_func($logger, sprintf(__('- Attachment has been successfully created for image `%s`', 'wp_all_import_plugin'), $targetUrl . '/' . basename($image_filename)));
+
+                // Generate file type string where it can be internationalized.
+                if('images' == $file_type){
+                    $file_type_display = __('image', 'wp_all_import_plugin');
+                }else{
+                    $file_type_display = __('file', 'wp_all_import_plugin');
+                }
+
+				// translators: 1: 'file' or 'image' based on type being imported, 2: URL or filename provided in the import
+				$logger and call_user_func($logger, sprintf(__('- Attachment has been successfully created for %s `%s`', 'wp_all_import_plugin'), $file_type_display, $targetUrl . '/' . basename($image_filename)));
 				return $attid;
 			}
 		}

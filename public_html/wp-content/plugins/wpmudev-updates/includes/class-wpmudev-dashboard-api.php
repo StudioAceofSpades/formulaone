@@ -2720,10 +2720,12 @@ class WPMUDEV_Dashboard_Api {
 		if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
 			$data = json_decode( wp_remote_retrieve_body( $response ), true );
 
-			WPMUDEV_Dashboard::$settings->set( 'site_id', $data['site_id'], 'analytics' );
-			WPMUDEV_Dashboard::$settings->set( 'tracker', $data['tracker'], 'analytics' );
+			if ( isset( $data['site_id'], $data['tracker'] ) ) {
+				WPMUDEV_Dashboard::$settings->set( 'site_id', $data['site_id'], 'analytics' );
+				WPMUDEV_Dashboard::$settings->set( 'tracker', $data['tracker'], 'analytics' );
 
-			return true;
+				return true;
+			}
 		} else {
 			$this->parse_api_error( $response );
 		}
@@ -2767,7 +2769,7 @@ class WPMUDEV_Dashboard_Api {
 	 *
 	 * @since  4.6
 	 *
-	 * @param int $days_ago How many days in the past to look back
+	 * @param int $days_ago How many days in the past to look back.
 	 * @param int $subsite  If filtering to a subsite pass the blog_id of it.
 	 *
 	 * @return mixed
@@ -2796,6 +2798,9 @@ class WPMUDEV_Dashboard_Api {
 		if ( $subsite ) {
 			$remote_path = add_query_arg( 'subsite', $subsite, $remote_path );
 		}
+
+		// Add hub site ID.
+		$remote_path = add_query_arg( 'domain', $this->network_site_url(), $remote_path );
 
 		// Using version name in key to force clear cache on update.
 		$transient_key = 'wdp_analytics_v4117_' . md5( $remote_path );
@@ -3178,6 +3183,7 @@ class WPMUDEV_Dashboard_Api {
 			array(
 				'filter'   => $filter,
 				'days_ago' => $days_ago,
+				'domain'   => $this->network_site_url(),
 			),
 			"{$api_base}site/{$site_id}/{$type}"
 		);

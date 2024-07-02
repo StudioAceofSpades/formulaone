@@ -1,14 +1,14 @@
 === Hide/Remove Metadata ===
 Contributors: catchplugins, catchthemes, sakinshrestha, pratikshrestha, maheshmaharjan, dreamsapana
 Donate link: https://catchplugins.com/plugins/hide-metadata/
-Tags: hide, hide author, show hide author, hide posted-on, date, byline, author, hide meta
-Requires at least: 5.7
-Tested up to: 6.4
+Tags: hide, remove, metadata, author, date, posted-on
+Requires at least: 5.9
+Tested up to: 6.5
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Hide/Remove Metadata is a free, simple yet extremely handy WordPress plugin that helps you hide author and published date either by CSS or PHP from your website effortlessly.
+Hide/Remove Metadata is a free WordPress plugin that helps you hide author and published date either by CSS or PHP from your website effortlessly.
 
 == Description ==
 
@@ -38,6 +38,9 @@ Not so easy way (via FTP) :
 * Go to **Hide/Remove Metadata** from Dashboard menu
 
 == Changelog ==
+
+= 1.2.8 (Released: April 09, 2024) =
+* Compatibility check up to version 6.5
 
 = 1.2.7 (Released: November 15, 2023) =
 * Compatibility check up to version 6.4

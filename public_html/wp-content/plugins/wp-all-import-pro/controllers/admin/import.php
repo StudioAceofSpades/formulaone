@@ -777,7 +777,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
                 $history_file->getBy( array('import_id' => PMXI_Plugin::$session->update_previous), 'id DESC' );
                 $local_paths = ( ! $history_file->isEmpty() ) ? array(wp_all_import_get_absolute_path($history_file->path)) : array();
             } else {
-                $local_paths = ( ! empty(PMXI_Plugin::$session->local_paths) ) ? PMXI_Plugin::$session->local_paths : array(PMXI_Plugin::$session->filePath);
+                $local_paths = ( ! empty(PMXI_Plugin::$session->local_paths) && isset(PMXI_Plugin::$session->local_paths[0]) && file_exists(PMXI_Plugin::$session->local_paths[0])) ? PMXI_Plugin::$session->local_paths : array(PMXI_Plugin::$session->filePath);
             }
             $local_paths = array_filter($local_paths);
 			PMXI_Plugin::$session->set('local_paths', $local_paths);
@@ -1984,6 +1984,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 				$post['custom_fields_list'] = explode(",", $post['custom_fields_except_list']);
 			}
 
+
 			$upload_result = false;
 
 			if ( ! $this->isWizard) {
@@ -2830,8 +2831,10 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 										$log_data = ob_get_clean();
 										if ($log_storage) {
 											$log = @fopen($log_file, 'a+');
-											@fwrite($log, $log_data);
-											@fclose($log);
+											if ( is_resource( $log ) ) {
+												@fwrite($log, $log_data);
+												@fclose($log);
+											}
 										}
 										$iteration_execution_time = time() - $iteration_start_time;
 										wp_send_json(array(
@@ -2879,8 +2882,10 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			$log_data = ob_get_clean();
 			if ($log_storage) {
 				$log = @fopen($log_file, 'a+');
-				@fwrite($log, $log_data);
-				@fclose($log);
+				if ( is_resource( $log ) ) {
+					@fwrite($log, $log_data);
+					@fclose($log);
+				}
 			}
 			$iteration_execution_time = time() - $iteration_start_time;
 			if ( $ajax_processing and ! $is_all_records_deleted ) {

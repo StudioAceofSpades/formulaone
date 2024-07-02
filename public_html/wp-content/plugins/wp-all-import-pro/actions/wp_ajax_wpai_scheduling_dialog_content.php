@@ -866,7 +866,7 @@ function pmxi_wp_ajax_wpai_scheduling_dialog_content()
                                 </a>
                             </div>
                             <div class="text-container">
-                                <p class="wpai-first-line"><?php _e('Get automatic scheduling for unlimited sites, just $9/mo.'); ?></p>
+                                <p class="wpai-first-line"><?php _e('Get automatic scheduling for unlimited sites, just $19/mo.'); ?></p>
                                 <p class="wpai-second-line"><?php _e('Have a license?'); ?>
                                     <a href="#"
                                        id="add-subscription"><?php _e('Register this site.'); ?></a> <?php _e('Questions?'); ?>

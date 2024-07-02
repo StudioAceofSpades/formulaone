@@ -49,6 +49,13 @@ class WPMUDEV_Dashboard_Upgrader {
 	public $min_php = '5.6';
 
 	/**
+	 * Special upgrader instance holder.
+	 *
+	 * @var WPMUDEV_Dashboard_Special_Upgrader
+	 */
+	protected $special_upgrader;
+
+	/**
 	 * Set up actions for the Upgrader module.
 	 *
 	 * @internal
@@ -79,7 +86,7 @@ class WPMUDEV_Dashboard_Upgrader {
 		}
 
 		// Init special upgrader.
-		new WPMUDEV_Dashboard_Special_Upgrader();
+		$this->special_upgrader = new WPMUDEV_Dashboard_Special_Upgrader();
 	}
 
 	/**
@@ -1269,7 +1276,7 @@ class WPMUDEV_Dashboard_Upgrader {
 
 				// If installed and activation is required.
 				if ( ! empty( $options['activate'] ) && true === $result ) {
-					$plugin = $upgrader->plugin_info();
+					$plugin = $this->special_upgrader->get_plugin_info_path( $upgrader->skin->result );
 					// Plugin file found.
 					if ( ! empty( $plugin ) ) {
 						/**

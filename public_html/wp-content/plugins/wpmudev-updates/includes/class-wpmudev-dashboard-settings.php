@@ -275,7 +275,7 @@ class WPMUDEV_Dashboard_Settings {
 
 				// If needs an update.
 				if ( $update ) {
-					$this->set_option( $name, $value );
+					$this->set_option( $name, $existing );
 				}
 			} else {
 				$value = null === $value ? '' : $value;

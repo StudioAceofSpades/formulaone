@@ -93,12 +93,16 @@ class PMXI_Chunk {
 
     $is_html = false;
     $f = @fopen($file, "rb");
-    while (!@feof($f)) {
-      $chunk = @fread($f, 1024);
-      if (strpos($chunk, "<!DOCTYPE") === 0) $is_html = true;
-      break;
-    }
-    @fclose($f);
+	if(is_resource($file)) {
+		while ( ! @feof( $f ) ) {
+			$chunk = @fread( $f, 1024 );
+			if ( strpos( $chunk, "<!DOCTYPE" ) === 0 ) {
+				$is_html = true;
+			}
+			break;
+		}
+		@fclose( $f );
+	}
 
     if ($is_html)
     {

@@ -2039,6 +2039,9 @@ class WPMUDEV_Dashboard_Ui {
 		$member  = WPMUDEV_Dashboard::$api->get_profile();
 		$profile = $member['profile'];
 
+		// Check if hub free services active.
+		$free_services_active = WPMUDEV_Dashboard::$compatibility->is_free_services_active();
+
 		// WPMUDEV hosting.
 		$membership_type       = WPMUDEV_Dashboard::$api->get_membership_status();
 		$is_wpmudev_host       = WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting();
@@ -2055,7 +2058,8 @@ class WPMUDEV_Dashboard_Ui {
 				'profile',
 				'url_support',
 				'documentation_url',
-				'has_hosted_access'
+				'has_hosted_access',
+				'free_services_active'
 			)
 		);
 
